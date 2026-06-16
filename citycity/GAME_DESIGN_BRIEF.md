@@ -4,7 +4,7 @@
 
 这是一个基于《看不见的城市》灵感的简单体验游戏原型。
 
-当前白盒实现“记忆”和“欲望”两个主题入口，但初始只允许进入“记忆”：
+当前白盒实现“记忆”“欲望”“符号”“轻盈”“贸易”五个主题入口，但初始只允许进入“记忆”：
 
 1. 主菜单
 2. 剧情幻灯片
@@ -15,24 +15,30 @@
 7. 显现对应主题城市并恢复碰撞
 8. 记忆主题：寻找中心建筑“回声塔”
 9. 欲望主题：收集 5 件欲望物，进入月光迷宫终点
-10. 阅读幻灯片
-11. 选择“留 / 去”
+10. 符号主题：读取 5 处符号断点，进入无名广场
+11. 轻盈主题：读取 5 个悬空节点，进入网心瞭望台
+12. 贸易主题：完成 5 次交换，进入中心交易核
+13. 阅读幻灯片
+14. 选择“留 / 去”
 
 当前解锁规则：
 
 - 新开局只开放“记忆”。
-- 玩家完成记忆之城阅读并进入“留 / 去”选择后，运行时解锁“欲望”。
+- 玩家完成记忆之城阅读并进入“留 / 去”选择后，运行时解锁“欲望”“符号”“轻盈”“贸易”。
 - 当前还没有跨启动存档；关闭游戏后解锁状态会重置。
 
 ## 设计原则
 
 - 核心机制是寻声，不是战斗。
 - 不加入战斗、生命值、失败惩罚；移动只保留轻微加速和基础跳跃，服务于白盒通行。
-- 当前构建了“记忆”和“欲望”主题，但“欲望”需要先通关记忆后才可选择。
+- 当前构建了“记忆”“欲望”“符号”“轻盈”“贸易”主题，但非记忆主题需要先通关记忆后才可选择。
 - 记忆主题下目前把 5 个记忆篇章合并为同一座白盒城市。
 - 欲望主题下目前把 5 个欲望篇章合并为同一座白盒城市，通关逻辑为拾取物品。
+- 符号主题通关逻辑为读取 5 个符号断点。
+- 轻盈主题通关逻辑为读取 5 个悬空节点，再进入中心网心瞭望台。
+- 贸易主题通关逻辑为完成 5 次交换，再进入中心交易核。
 - 每次进入记忆中心后，显现这座合并后的记忆之城。
-- 其他主题只作为后续关卡入口展示。
+- 其他未实现主题只作为后续关卡入口展示。
 - 白盒城市只使用 Godot 内置基础几何。
 - 不导入外部建筑模型。
 - 灰域视觉先使用轻量雾效、低对比轮廓和粒子。
@@ -42,7 +48,7 @@
 - 记忆
 - 欲望
 - 标志
-- 薄的
+- 轻盈
 - 贸易
 - 眼睛
 - 姓名
@@ -358,3 +364,41 @@
 后续每个主题城市可以更换地形、视觉风格、阅读内容和中心建筑，但建议继续保持同一主循环：
 
 选择主题 -> 进入灰域 -> 听声寻找 -> 城市显形 -> 到达中心建筑 -> 阅读 -> 留 / 去。
+
+## 2026-06-16 接力记录
+
+- 使用 Godot v4.6.3 stable 对项目做了无头启动检查，项目可启动。
+- 增加并运行了一次临时 P0 smoke 流程验证：记忆主题显形、`EchoTower` 阅读、留/去、回到主题选择、欲望主题显形、5 件欲望物收集、`MoonTrapPlaza` 阅读、留/去、欲望状态重置均通过。临时脚本位于本次 Codex 工作区 `work/godot_p0_smoke_test.gd`，未放入项目目录。
+- 修复显形阶段灰域粒子淡出时把 `GPUParticles3D.amount` tween 到 `0` 的 Godot 4.6 运行期报错；现在最低淡到 `1`，显形结束仍通过 `emitting = false` 关闭粒子。
+- 校正 `ZONE_SHAPES` 为 11 项，使其与 11 个主题、11 个位置和 11 个调试色块保持一致。
+- 仍建议下一位接手者在有窗口环境时补一轮真正人工走路测试，重点看建筑边缘、空气墙、跳跃落点和月光迷宫局部卡位。
+
+## 2026-06-16 视觉强化记录
+
+- 强化 `shaders/grey_post_process.gdshader`：增加风格化墨线描边、块面阴影、低频色彩漂移和轻微高光扩散；灰域和城市阶段共用该后处理，但使用不同强度。
+- 城市阶段现在默认开启轻量后处理：白盒建筑会有更明显轮廓和风格化阴影，强度由 `city_post_process_enabled`、`city_post_effect_strength`、`city_post_ink_outline_strength`、`city_post_stylized_shadow_strength` 等 Inspector 参数控制。
+- 强化 `shaders/city_style_veil.gdshader` 与 `shaders/grey_chaos.gdshader`：透明雾幕/残影层加入边缘墨线、阴影带和轻微颜色漂移，不使用裂纹、网状密集纹理或强噪声。
+- 灰域粒子整体改得更细：主尘粒、沙流、海流、柳絮、风暴线、乱流碎片都缩小，并增加 `MemoryGoldMicroGlimmerParticles`、`OldFilmSpeckParticles`、`ColorDriftMistParticles`、`LowRedEmberParticles` 等新层。
+- 记忆城、欲望城、符号城的城市气氛粒子也做了微粒化和多色层补强，方便下一座城市沿用同一套粒子/后处理风格基底。
+
+## 2026-06-16 灰域引导与围墙修复记录
+
+- 灰域进入后左上角显示 `寻声 01:00` 倒计时；超过 `grey_guidance_delay` 后出现克制的线条引导，指向当前选择主题区域。该引导只在灰域超时后出现，进入显形/城市/菜单后隐藏。
+- 欲望/商队白盒城南侧围墙增加中线门洞，并增加对应 `SpringDrawbridgeGate`，避免最后收集物与 `MoonTrapPlaza` 位于围墙外侧时玩家沿主路线被挡住。
+- 围墙保持为分段白盒节点，保留 `DesireCityWall_*` 与 `SpringDrawbridgeGate_*` 命名，方便后续资产替换。
+
+## 2026-06-16 轻盈之城白盒记录
+
+- 新增“轻盈”主题可玩白盒。完成记忆后与“欲望”“符号”一起解锁。
+- 轻盈之城方向修正为悬崖 / 高架 / 空中细桥：主体节点为 `ThinCity_CityOfLightness`，核心空间为 `ThinCity_CliffVoidAndHighSpans`、`ZoneA_CliffArrivalAndAnchorLines`、`ZoneB_StiltScaffoldForest`、`ZoneC_SuspendedRoomsAndBalconies`、`ZoneD_CloudThreadBridges`、`ZoneE_WebCityOverChasm`、`ZoneF_CentralNetLookout`。
+- 核心体验是“城市像一张随时会断的网”：玩家读取 `CliffEdgeAnchorNode`、`StiltScaffoldNode`、`SuspendedRoomNode`、`CloudThreadBridgeNode`、`WebCityKnotNode` 五个悬空节点后，回到 `ThinGoalTrigger` / `CentralNetLookout` 阅读。
+- 新增 `shaders/thin_net_surface.gdshader`，用于半透明材质、线框边缘、淡蓝灰色调和轻微顶点摆动。
+- 轻盈城环境粒子包含 `WindDustParticles`、`CloudSilkParticles`、`ThinLineParticles`、`FallingDustParticles`、`PaleBlueMicroMotes`，用于风尘、云丝、细线粒子和坠落尘埃。
+
+## 2026-06-16 贸易之城白盒记录
+
+- 新增“贸易”主题可玩白盒。完成记忆后与“欲望”“符号”“轻盈”一起解锁。
+- 贸易之城方向为港口 / 河口 / 潮湿集市，主体节点为 `TradeCity_CityOfFiveExchanges`，核心空间为 `ZoneA_EuphemiaMemoryMarket`、`ZoneB_ChloeGlanceAvenue`、`ZoneC_EutropiaMigratingCities`、`ZoneD_ErsiliaStringWebRuin`、`ZoneE_SmeraldinaWaterStreetCity`、`ZoneF_CentralTradeCore`。
+- 通关逻辑为五次交换：`EuphemiaMemoryExchangeNode` 货物换记忆、`ChloeGazeExchangeNode` 目光换幻想、`EutropiaVocationExchangeNode` 职业换生活、`ErsiliaRelationExchangeNode` 关系换废墟、`SmeraldinaRouteExchangeNode` 路线换选择。五次交换完成后，回到 `TradeGoalTrigger` / `MultiRoutePlaza` 阅读。
+- 新增 `shaders/trade_wet_market_surface.gdshader`，用于湿润反射、暖色灯笼、局部蓝绿霓虹和材质混杂。
+- 贸易城环境粒子包含 `WaterVaporParticles`、`MarketClothStripParticles`、`TradeTicketParticles`、`CopperCoinGlimmerParticles`、`MemoryTradeParticle`，用于水汽、布条、货票、铜币微光和交换记忆粒子。

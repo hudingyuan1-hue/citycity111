@@ -9,6 +9,9 @@ uniform float seed = 1.0;
 uniform float flow_speed = 0.18;
 uniform float noise_scale = 4.5;
 uniform float vertical_wave = 0.35;
+uniform float ink_strength = 0.18;
+uniform float shadow_strength = 0.20;
+uniform float color_variation_strength = 0.16;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7)) + seed * 17.31) * 43758.5453123);
@@ -55,6 +58,15 @@ void fragment() {
 	float mask = mix(memory_layer, desire_layer, clamp(style_mode, 0.0, 1.0));
 	vec3 memory_color = mix(tint.rgb, vec3(1.0, 0.78, 0.28), film_gate * 0.35);
 	vec3 desire_color = mix(tint.rgb, vec3(1.0, 0.35, 0.12), heat_band * 0.45);
-	ALBEDO = mix(memory_color, desire_color, clamp(style_mode, 0.0, 1.0)) * (0.72 + mask * 0.45 * intensity);
-	ALPHA = clamp(alpha * mask * intensity, 0.0, 0.85);
+	vec3 color = mix(memory_color, desire_color, clamp(style_mode, 0.0, 1.0)) * (0.72 + mask * 0.45 * intensity);
+	float local_edge = 1.0 - smoothstep(0.0, 0.08, min(min(UV.x, 1.0 - UV.x), min(UV.y, 1.0 - UV.y)));
+	float ink_ridge = 1.0 - smoothstep(0.0, 0.06, abs(cloud - 0.54));
+	float shadow_band = (1.0 - smoothstep(0.28, 0.72, cloud)) * (0.65 + 0.35 * heat_band);
+	float color_cell = hash(floor(UV * 7.0 + seed));
+	vec3 shifted = mix(color, vec3(color.b, color.r, color.g), color_cell * 0.35);
+	color = mix(color, shifted, color_variation_strength * intensity);
+	color = mix(color, color * vec3(0.42, 0.40, 0.36), clamp(shadow_band * shadow_strength * intensity, 0.0, 0.72));
+	color = mix(color, vec3(0.035, 0.033, 0.030), clamp(max(local_edge, ink_ridge) * ink_strength * intensity, 0.0, 0.86));
+	ALBEDO = color;
+	ALPHA = clamp(alpha * mask * intensity + local_edge * alpha * 0.18 * ink_strength, 0.0, 0.85);
 }

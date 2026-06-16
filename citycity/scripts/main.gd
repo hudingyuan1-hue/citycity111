@@ -7,10 +7,13 @@ enum GamePhase { MAIN_MENU, STORY, THEME_SELECT, MECHANIC_PROMPT, GREY_VOID, MAN
 const THEME_MEMORY := 0
 const THEME_DESIRE := 1
 const THEME_SIGNS := 2
+const THEME_THIN := 3
+const THEME_TRADE := 4
 const MEMORY_POS := Vector3(48.0, 0.0, -46.0)
 const PLAYER_SPAWN := Vector3(-56.0, 0.0, -54.0)
 const GREY_WRAP_DEFAULT_HALF_EXTENT := 60.0
 const CITY_BOUNDARY_DEFAULT_HALF_EXTENT := 126.0
+const MIN_GPU_PARTICLE_AMOUNT := 1
 const PLAYER_SPAWN_POINTS := [
 	Vector3(-56, 0, -54),
 	Vector3(-58, 0, 48),
@@ -41,7 +44,7 @@ const THEME_SFX_TEXTS := [
 	["远处有灯同时亮起。", "一声呼喊停在黄昏。", "街道把脚步吞回雾里。", "塔顶的金色报晓还没有发生。"],
 	["欲望在雾里绕行。", "第二个选择尚未结束。", "第三个身影从旁边经过。"],
 	["标志先于道路出现。", "名字贴在不可见的墙上。", "符号互相遮蔽。"],
-	["薄处像纸一样透光。", "边界被揉皱。", "轻声穿过浅灰。"],
+	["空桥在雾里轻轻晃动。", "细柱把脚步传到很远。", "云丝穿过未完成的房间。"],
 	["交换还没有发生。", "摊位在雾后响动。", "空手与空手相遇。"],
 	["有目光从白雾里回看。", "窗后没有脸。", "视线比道路更早抵达。"],
 	["名字被反复念错。", "称呼落在地面。", "陌生人带走一半声音。"],
@@ -51,7 +54,7 @@ const THEME_SFX_TEXTS := [
 	["隐藏之物先发出声音。", "雾后有门。", "不可见处正在靠近。"]
 ]
 const THEME_NAMES := [
-	"记忆", "欲望", "符号", "薄的", "贸易", "眼睛", "姓名", "死的", "天空", "连续的", "隐"
+	"记忆", "欲望", "符号", "轻盈", "贸易", "眼睛", "姓名", "死的", "天空", "连续的", "隐"
 ]
 const ZONE_POSITIONS := [
 	Vector3(48, 0, -46),
@@ -77,15 +80,14 @@ const ZONE_SHAPES := [
 	Vector2(52, 58),
 	Vector2(50, 54),
 	Vector2(70, 30),
-	Vector2(52, 54),
-	Vector2(48, 42)
+	Vector2(52, 54)
 ]
 const ZONE_ROTATIONS := [12.0, -12.0, 18.0, 4.0, -7.0, 10.0, -16.0, 8.0, -5.0, 28.0, -22.0]
 const ZONE_COLORS := [
 	Color(1.00, 0.86, 0.06, 1.0),
 	Color(0.78, 0.35, 0.86, 1.0),
 	Color(0.36, 0.58, 0.95, 1.0),
-	Color(0.58, 0.92, 0.82, 1.0),
+	Color(0.58, 0.74, 0.86, 1.0),
 	Color(0.92, 0.73, 0.32, 1.0),
 	Color(0.32, 0.88, 0.42, 1.0),
 	Color(0.90, 0.42, 0.62, 1.0),
@@ -104,7 +106,9 @@ const READING_PAGES := [
 const MEMORY_CITY_TITLES := [
 	"记忆之城：五重回声",
 	"欲望之城：沙海白城",
-	"符号之城：无名广场"
+	"符号之城：无名广场",
+	"轻盈之城：将断之网",
+	"贸易之城：五重交换"
 ]
 const MEMORY_CITY_READING_PAGES := [
 	[
@@ -128,6 +132,22 @@ const MEMORY_CITY_READING_PAGES := [
 		["重复让记忆变得可靠。", "也让谎言变得可靠。"],
 		["在这里，湖不是湖。", "宫殿也不是宫殿。"],
 		["当所有符号都失效。", "城市才第一次沉默。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["你进入的不是地面上的城市。", "它被拉在两面悬崖之间，像一张还没有断的网。"],
+		["细柱、脚手架和悬空房间把重量分散到看不见的线上。"],
+		["吊桥不是道路。", "只是风暂时允许你踩过去的几根横梁。"],
+		["淡蓝灰的墙半透明地晃动，边缘像线框一样露出骨架。"],
+		["走到网心时，你才明白这座城不是轻。", "它只是一直在承受。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["生姜、棉花、开心果和罂粟籽在黄席子上换手。", "入夜后，人们交换的却是狼、妹妹和隐蔽的宝藏。"],
+		["长街上的人互不问候。", "目光只相遇一秒，却已经交换了所有可能发生的故事。"],
+		["空城在高原上等待迁移者。", "职业、窗景、妻子、朋友和口音都可以被重新分配。"],
+		["房屋消失之后，黑白灰绳仍留在木桩之间。", "交易、亲缘、权威和代表关系继续寻找形式。"],
+		["水路和陆路互相交织。", "最短的路线不是直线，而是可以反复选择的曲线。"],
 		["要把这座城留下吗？"]
 	]
 ]
@@ -158,6 +178,34 @@ const SIGN_FRACTURE_COLORS := [
 	Color(0.92, 0.80, 0.24, 1.0),
 	Color(0.74, 0.28, 0.98, 1.0),
 	Color(0.12, 0.12, 0.12, 1.0)
+]
+const THIN_ASCENT_NODES := [
+	["CliffEdgeAnchorNode", "悬崖边缘：第一根锚线", "空城从悬崖边缘开始，所有桥都先向虚空借一点重量。"],
+	["StiltScaffoldNode", "高脚架城：细柱承重", "细柱、斜撑和脚手架把房间抬起，也把不安放大。"],
+	["SuspendedRoomNode", "悬空房间：吊索居住", "房间不在地上，也不在天上，只被几根绳索暂时说服。"],
+	["CloudThreadBridgeNode", "云丝桥群：风中通行", "桥面像被风吹薄的布，边缘的线框比木板更诚实。"],
+	["WebCityKnotNode", "网心奥塔维亚：将断之城", "蛛网承着整座城市，每一条细线都在提醒你它不是永恒的。"]
+]
+const THIN_ASCENT_COLORS := [
+	Color(0.54, 0.78, 0.98, 1.0),
+	Color(0.80, 0.88, 0.92, 1.0),
+	Color(0.64, 0.90, 1.0, 1.0),
+	Color(0.72, 0.78, 0.92, 1.0),
+	Color(0.86, 0.92, 1.0, 1.0)
+]
+const TRADE_EXCHANGE_NODES := [
+	["EuphemiaMemoryExchangeNode", "欧菲米亚：货物换记忆", "货物在白天交换，入夜后篝火旁交换的是狼、妹妹、宝藏、战斗和情人。"],
+	["ChloeGazeExchangeNode", "克洛艾：目光换幻想", "陌生人没有开口，视线却在一秒钟里换走了约会、诱惑、误解和冲突。"],
+	["EutropiaVocationExchangeNode", "埃乌特洛比亚：职业换生活", "居民迁入新的空城，换掉职业、窗景、朋友和口音，却重复同样的生活。"],
+	["ErsiliaRelationExchangeNode", "艾尔西里亚：关系换废墟", "城市搬走以后，亲缘、交易、权威和代表关系只剩绳索继续纠缠。"],
+	["SmeraldinaRouteExchangeNode", "斯麦拉尔迪那：路线换选择", "水路和陆路彼此交织，两点之间的交换不是直线，而是不断分岔的路线。"]
+]
+const TRADE_EXCHANGE_COLORS := [
+	Color(1.0, 0.58, 0.22, 1.0),
+	Color(0.95, 0.32, 0.72, 1.0),
+	Color(0.86, 0.78, 0.38, 1.0),
+	Color(0.72, 0.72, 0.68, 1.0),
+	Color(0.24, 0.78, 0.68, 1.0)
 ]
 const STORY_PAGES := [
 	["有些城市并不消失。", "它们只是拒绝被看见。"],
@@ -207,6 +255,11 @@ const STORY_PAGES := [
 @export var operation_hint_display_duration := 8.0
 @export var quick_start_hint_duration := 5.0
 @export_range(0.0, 1.0, 0.01) var quick_start_hint_alpha := 0.72
+@export var grey_guidance_delay := 60.0
+@export var grey_guidance_fade_in_duration := 4.0
+@export var grey_guidance_line_count := 7
+@export var grey_guidance_line_spacing := 42.0
+@export_range(0.0, 1.0, 0.01) var grey_guidance_line_alpha := 0.42
 
 @export_group("Interaction")
 @export var reading_interact_radius := 5.0
@@ -261,15 +314,19 @@ const STORY_PAGES := [
 @export_range(0.0, 1.0, 0.01) var chaos_shader_alpha := 0.52
 @export var chaos_veil_count := 16
 @export var chaos_veil_height := 3.0
-@export var grey_mote_particle_amount := 900
-@export var grey_sand_particle_amount := 1800
-@export var grey_current_particle_amount := 1200
-@export var grey_willow_particle_amount := 650
-@export var grey_storm_particle_amount := 1400
-@export var grey_turbulence_particle_amount := 900
-@export var grey_ash_particle_amount := 1300
-@export var grey_pressure_particle_amount := 720
-@export var grey_rain_particle_amount := 1100
+@export var grey_mote_particle_amount := 1500
+@export var grey_sand_particle_amount := 2200
+@export var grey_current_particle_amount := 1600
+@export var grey_willow_particle_amount := 1000
+@export var grey_storm_particle_amount := 1700
+@export var grey_turbulence_particle_amount := 1300
+@export var grey_ash_particle_amount := 1600
+@export var grey_pressure_particle_amount := 1100
+@export var grey_rain_particle_amount := 1400
+@export var grey_micro_glimmer_particle_amount := 900
+@export var grey_film_speck_particle_amount := 1250
+@export var grey_color_drift_particle_amount := 760
+@export var grey_ember_particle_amount := 680
 @export var grey_blindness_veil_count := 14
 @export var grey_echo_wave_count := 9
 @export var grey_post_process_enabled := true
@@ -282,6 +339,10 @@ const STORY_PAGES := [
 @export_range(0.0, 1.0, 0.01) var grey_post_contour_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_solarize_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_tear_strength := 0.0
+@export_range(0.0, 1.0, 0.01) var grey_post_ink_outline_strength := 0.46
+@export_range(0.0, 1.0, 0.01) var grey_post_stylized_shadow_strength := 0.36
+@export_range(0.0, 1.0, 0.01) var grey_post_color_variation_strength := 0.22
+@export_range(0.0, 1.0, 0.01) var grey_post_soft_glow_strength := 0.10
 
 @export_group("Memory Guidance")
 @export var memory_guide_enabled := true
@@ -298,6 +359,18 @@ const STORY_PAGES := [
 @export_range(0.0, 2.0, 0.01) var signs_city_style_intensity := 1.25
 @export_range(0.0, 2.5, 0.05) var sign_fracture_glow_energy := 1.25
 @export_range(0.0, 2.0, 0.05) var sign_fracture_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var thin_city_style_intensity := 1.15
+@export_range(0.0, 2.5, 0.05) var thin_node_glow_energy := 1.18
+@export_range(0.0, 2.0, 0.05) var thin_node_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var trade_city_style_intensity := 1.18
+@export_range(0.0, 2.5, 0.05) var trade_exchange_glow_energy := 1.22
+@export_range(0.0, 2.0, 0.05) var trade_exchange_particle_scale := 1.0
+@export var city_post_process_enabled := true
+@export_range(0.0, 1.0, 0.01) var city_post_effect_strength := 0.34
+@export_range(0.0, 1.0, 0.01) var city_post_ink_outline_strength := 0.38
+@export_range(0.0, 1.0, 0.01) var city_post_stylized_shadow_strength := 0.24
+@export_range(0.0, 1.0, 0.01) var city_post_color_variation_strength := 0.14
+@export_range(0.0, 1.0, 0.01) var city_post_soft_glow_strength := 0.08
 
 var phase := GamePhase.MAIN_MENU
 var previous_phase := GamePhase.MAIN_MENU
@@ -323,6 +396,9 @@ var pause_menu: Control
 var operation_hint_panel: Control
 var operation_hint_label: Label
 var quick_hint_label: Label
+var grey_countdown_label: Label
+var grey_guidance_root: Control
+var grey_guidance_lines: Array[ColorRect] = []
 var grey_post_process_rect: ColorRect
 var grey_post_process_material: ShaderMaterial
 var direction_tint: ColorRect
@@ -362,6 +438,16 @@ var sign_node_areas: Array[Area3D] = []
 var sign_completed_nodes: Array[int] = []
 var sign_active_node_index := -1
 var sign_goal_trigger: Area3D
+var thin_node_visuals: Array[Node3D] = []
+var thin_node_areas: Array[Area3D] = []
+var thin_completed_nodes: Array[int] = []
+var thin_active_node_index := -1
+var thin_goal_trigger: Area3D
+var trade_node_visuals: Array[Node3D] = []
+var trade_node_areas: Array[Area3D] = []
+var trade_completed_nodes: Array[int] = []
+var trade_active_node_index := -1
+var trade_goal_trigger: Area3D
 var memory_zone_player: AudioStreamPlayer3D
 var theme_sfx_player: AudioStreamPlayer3D
 var global_music_player: AudioStreamPlayer
@@ -389,6 +475,7 @@ var theme_sfx_text_tween: Tween
 var global_music_tween: Tween
 var quick_start_hint_locked := false
 var manifest_camera_applied_offset := 0.0
+var grey_search_elapsed := 0.0
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -406,6 +493,7 @@ func _process(delta: float) -> void:
 		_update_grey_wrap()
 		_update_grey_post_process()
 		_update_memory_guide()
+		_update_grey_guidance(delta)
 		_update_memory_audio()
 		_update_grey_audio_sfx(delta)
 		_update_direction_feedback()
@@ -413,14 +501,17 @@ func _process(delta: float) -> void:
 	elif phase == GamePhase.MANIFESTING:
 		_update_grey_post_process()
 		_hide_memory_guide()
+		_hide_grey_guidance()
 	elif phase == GamePhase.CITY:
-		_set_grey_post_process_visible(false)
+		_update_city_post_process()
 		_hide_memory_guide()
+		_hide_grey_guidance()
 		direction_tint.color.a = lerp(direction_tint.color.a, 0.0, delta * 3.0)
 		_update_city_reverb(delta)
 	else:
 		_set_grey_post_process_visible(false)
 		_hide_memory_guide()
+		_hide_grey_guidance()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -440,6 +531,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_collect_desire_relic(desire_active_relic_index)
 		elif selected_theme_index == THEME_SIGNS and sign_active_node_index >= 0:
 			_activate_sign_fracture_node(sign_active_node_index)
+		elif selected_theme_index == THEME_THIN and thin_active_node_index >= 0:
+			_activate_thin_ascent_node(thin_active_node_index)
+		elif selected_theme_index == THEME_TRADE and trade_active_node_index >= 0:
+			_activate_trade_exchange_node(trade_active_node_index)
 		elif can_read_tower or _is_player_near_reading_trigger():
 			_open_reading()
 
@@ -585,7 +680,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_particles.lifetime = 6.5
 	grey_particles.visibility_aabb = AABB(Vector3(-60, -4, -60), Vector3(120, 12, 120))
 	var particle_mesh := QuadMesh.new()
-	particle_mesh.size = Vector2(0.10, 0.10)
+	particle_mesh.size = Vector2(0.045, 0.045)
 	grey_particles.draw_pass_1 = particle_mesh
 	var particle_process := ParticleProcessMaterial.new()
 	particle_process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
@@ -603,7 +698,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_sand_particles = _make_grey_particle_layer(
 		"DesertSandFlowParticles",
 		grey_sand_particle_amount,
-		Vector2(0.055, 0.018),
+		Vector2(0.038, 0.012),
 		Vector3(58, 1.4, 58),
 		Vector3(1.0, 0.02, 0.18),
 		Color(0.82, 0.76, 0.62, 0.34),
@@ -617,7 +712,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_current_particles = _make_grey_particle_layer(
 		"UnderwaterCurrentParticles",
 		grey_current_particle_amount,
-		Vector2(0.16, 0.035),
+		Vector2(0.11, 0.024),
 		Vector3(58, 4.8, 58),
 		Vector3(-0.25, 0.05, 1.0),
 		Color(0.58, 0.70, 0.76, 0.24),
@@ -631,7 +726,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_willow_particles = _make_grey_particle_layer(
 		"WillowFluffParticles",
 		grey_willow_particle_amount,
-		Vector2(0.18, 0.18),
+		Vector2(0.10, 0.10),
 		Vector3(58, 5.5, 58),
 		Vector3(0.18, 0.08, 0.35),
 		Color(0.92, 0.92, 0.84, 0.30),
@@ -645,7 +740,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_storm_particles = _make_grey_particle_layer(
 		"StormShearParticles",
 		grey_storm_particle_amount,
-		Vector2(0.24, 0.026),
+		Vector2(0.18, 0.018),
 		Vector3(60, 7.0, 60),
 		Vector3(1.0, 0.10, -0.35),
 		Color(0.64, 0.63, 0.58, 0.30),
@@ -659,7 +754,7 @@ func _build_grey_void(level: Node3D) -> void:
 	grey_turbulence_particles = _make_grey_particle_layer(
 		"TurbulenceShardParticles",
 		grey_turbulence_particle_amount,
-		Vector2(0.07, 0.07),
+		Vector2(0.045, 0.045),
 		Vector3(56, 6.0, 56),
 		Vector3(-0.55, 0.22, -0.40),
 		Color(0.76, 0.78, 0.76, 0.26),
@@ -764,7 +859,7 @@ func _build_grey_environment_layers() -> void:
 	_register_grey_extra_particle_layer(_make_grey_particle_layer(
 		"AshfallParticles",
 		grey_ash_particle_amount,
-		Vector2(0.045, 0.045),
+		Vector2(0.032, 0.032),
 		Vector3(58, 8.0, 58),
 		Vector3(0.18, -1.0, 0.12),
 		Color(0.72, 0.72, 0.68, 0.28),
@@ -777,7 +872,7 @@ func _build_grey_environment_layers() -> void:
 	_register_grey_extra_particle_layer(_make_grey_particle_layer(
 		"BlindRainStreakParticles",
 		grey_rain_particle_amount,
-		Vector2(0.022, 0.44),
+		Vector2(0.014, 0.34),
 		Vector3(58, 7.5, 58),
 		Vector3(-0.08, -1.0, 0.16),
 		Color(0.70, 0.74, 0.74, 0.24),
@@ -790,7 +885,7 @@ func _build_grey_environment_layers() -> void:
 	_register_grey_extra_particle_layer(_make_grey_particle_layer(
 		"PressureWaveDustParticles",
 		grey_pressure_particle_amount,
-		Vector2(0.32, 0.055),
+		Vector2(0.22, 0.036),
 		Vector3(58, 2.0, 58),
 		Vector3(0.72, 0.02, -0.44),
 		Color(0.80, 0.78, 0.70, 0.20),
@@ -799,6 +894,58 @@ func _build_grey_environment_layers() -> void:
 		96.0,
 		7.0
 	), grey_pressure_particle_amount)
+
+	_register_grey_extra_particle_layer(_make_grey_particle_layer(
+		"MemoryGoldMicroGlimmerParticles",
+		grey_micro_glimmer_particle_amount,
+		Vector2(0.026, 0.026),
+		Vector3(55, 5.6, 55),
+		Vector3(0.08, 0.18, -0.04),
+		Color(1.0, 0.76, 0.24, 0.30),
+		0.05,
+		0.30,
+		100.0,
+		8.5
+	), grey_micro_glimmer_particle_amount)
+
+	_register_grey_extra_particle_layer(_make_grey_particle_layer(
+		"OldFilmSpeckParticles",
+		grey_film_speck_particle_amount,
+		Vector2(0.020, 0.020),
+		Vector3(58, 6.2, 58),
+		Vector3(-0.03, 0.05, 0.02),
+		Color(0.86, 0.84, 0.76, 0.18),
+		0.01,
+		0.16,
+		100.0,
+		6.0
+	), grey_film_speck_particle_amount)
+
+	_register_grey_extra_particle_layer(_make_grey_particle_layer(
+		"ColorDriftMistParticles",
+		grey_color_drift_particle_amount,
+		Vector2(0.070, 0.030),
+		Vector3(58, 5.0, 58),
+		Vector3(0.10, 0.04, 0.22),
+		Color(0.52, 0.62, 0.78, 0.20),
+		0.04,
+		0.24,
+		100.0,
+		12.0
+	), grey_color_drift_particle_amount)
+
+	_register_grey_extra_particle_layer(_make_grey_particle_layer(
+		"LowRedEmberParticles",
+		grey_ember_particle_amount,
+		Vector2(0.030, 0.050),
+		Vector3(56, 3.6, 56),
+		Vector3(0.16, 0.22, -0.08),
+		Color(0.92, 0.30, 0.16, 0.22),
+		0.06,
+		0.34,
+		100.0,
+		9.5
+	), grey_ember_particle_amount)
 
 	for i in range(grey_blindness_veil_count):
 		var veil := MeshInstance3D.new()
@@ -907,6 +1054,8 @@ func _build_manifested_city() -> void:
 	_build_merged_memory_city()
 	_build_desire_city()
 	_build_signs_city()
+	_build_thin_city()
+	_build_trade_city()
 	_select_memory_city_variant(0)
 	_set_city_collision_enabled(false)
 
@@ -948,6 +1097,32 @@ func _build_signs_city() -> void:
 	active_city_visual_parent = root
 
 	_build_signs_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_thin_city() -> void:
+	active_memory_city_build_index = THEME_THIN
+	var root := Node3D.new()
+	root.name = "ThinCity_CityOfLightness"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_thin_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_trade_city() -> void:
+	active_memory_city_build_index = THEME_TRADE
+	var root := Node3D.new()
+	root.name = "TradeCity_CityOfFiveExchanges"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_trade_city_whitebox(root)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1385,11 +1560,14 @@ func _build_memory_city_atmosphere(parent: Node3D) -> void:
 	var atmosphere := Node3D.new()
 	atmosphere.name = "MemoryCityAtmosphere_StyleDirection"
 	parent.add_child(atmosphere)
-	atmosphere.add_child(_make_city_particle_layer("CityDustParticles", 1500, Vector2(0.06, 0.06), Vector3(116, 6.5, 116), Vector3(0.28, 0.05, -0.12), Color(0.70, 0.68, 0.60, 0.24), 0.12, 0.72, 96.0, 10.0))
-	atmosphere.add_child(_make_city_particle_layer("PaperScrapParticles", 430, Vector2(0.25, 0.14), Vector3(106, 5.5, 106), Vector3(0.16, 0.08, 0.28), Color(0.84, 0.79, 0.64, 0.34), 0.08, 0.42, 100.0, 13.0))
-	atmosphere.add_child(_make_city_particle_layer("OldPhotoFragmentParticles", 340, Vector2(0.21, 0.13), Vector3(110, 5.2, 110), Vector3(-0.18, 0.04, 0.22), Color(0.58, 0.46, 0.35, 0.30), 0.06, 0.32, 100.0, 14.0))
-	atmosphere.add_child(_make_city_particle_layer("FaintGoldenMemoryMotes", 760, Vector2(0.08, 0.08), Vector3(92, 6.0, 92), Vector3(0.08, 0.18, -0.04), Color(1.0, 0.78, 0.26, 0.36), 0.04, 0.26, 100.0, 11.0))
-	atmosphere.add_child(_make_city_particle_layer("MemoryAshSlowFall", 620, Vector2(0.05, 0.11), Vector3(114, 8.0, 114), Vector3(-0.05, -0.22, 0.03), Color(0.55, 0.53, 0.47, 0.24), 0.04, 0.22, 92.0, 16.0))
+	atmosphere.add_child(_make_city_particle_layer("CityDustParticles", 2200, Vector2(0.040, 0.040), Vector3(116, 6.5, 116), Vector3(0.28, 0.05, -0.12), Color(0.70, 0.68, 0.60, 0.22), 0.12, 0.72, 96.0, 10.0))
+	atmosphere.add_child(_make_city_particle_layer("PaperScrapParticles", 520, Vector2(0.18, 0.08), Vector3(106, 5.5, 106), Vector3(0.16, 0.08, 0.28), Color(0.84, 0.79, 0.64, 0.30), 0.08, 0.42, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("OldPhotoFragmentParticles", 420, Vector2(0.14, 0.075), Vector3(110, 5.2, 110), Vector3(-0.18, 0.04, 0.22), Color(0.58, 0.46, 0.35, 0.28), 0.06, 0.32, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("FaintGoldenMemoryMotes", 1120, Vector2(0.045, 0.045), Vector3(92, 6.0, 92), Vector3(0.08, 0.18, -0.04), Color(1.0, 0.78, 0.26, 0.34), 0.04, 0.26, 100.0, 11.0))
+	atmosphere.add_child(_make_city_particle_layer("MemoryAshSlowFall", 900, Vector2(0.032, 0.080), Vector3(114, 8.0, 114), Vector3(-0.05, -0.22, 0.03), Color(0.55, 0.53, 0.47, 0.22), 0.04, 0.22, 92.0, 16.0))
+	atmosphere.add_child(_make_city_particle_layer("BlueAfterimageMotes", 680, Vector2(0.035, 0.035), Vector3(104, 6.2, 104), Vector3(-0.06, 0.08, 0.18), Color(0.42, 0.58, 0.82, 0.20), 0.03, 0.20, 100.0, 12.5))
+	atmosphere.add_child(_make_city_particle_layer("SepiaDustSecondPass", 1350, Vector2(0.026, 0.026), Vector3(116, 4.8, 116), Vector3(0.10, 0.04, -0.08), Color(0.78, 0.58, 0.34, 0.16), 0.02, 0.18, 100.0, 9.0))
+	atmosphere.add_child(_make_city_particle_layer("MemoryRustNeedleParticles", 440, Vector2(0.16, 0.014), Vector3(108, 5.8, 108), Vector3(0.22, 0.06, 0.04), Color(0.56, 0.34, 0.24, 0.22), 0.04, 0.24, 100.0, 13.5))
 	for i in range(8):
 		var angle := TAU * float(i) / 8.0
 		var pos := Vector3(cos(angle) * 42.0, 5.4 + float(i % 3) * 1.4, sin(angle) * 42.0)
@@ -1408,6 +1586,791 @@ func _make_city_particle_layer(layer_name: String, amount: int, quad_size: Vecto
 	var particles := _make_grey_particle_layer(layer_name, amount, quad_size, extents, direction, color, velocity_min, velocity_max, spread, lifetime)
 	particles.visibility_aabb = AABB(Vector3(-130, -8, -130), Vector3(260, 24, 260))
 	return particles
+
+func _build_thin_city_whitebox(parent: Node3D) -> void:
+	_build_thin_city_terrain(parent)
+	_build_thin_cliff_arrival(parent)
+	_build_thin_scaffold_zone(parent)
+	_build_thin_suspended_rooms(parent)
+	_build_thin_cloud_bridge_zone(parent)
+	_build_thin_web_chasm(parent)
+	_build_thin_center(parent)
+	_build_thin_atmosphere(parent)
+
+func _build_thin_city_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "ThinCity_CliffVoidAndHighSpans")
+	_add_thin_block(terrain, "LowerCloudChasmPlane", Vector3(0, -7.8, 0), Vector3(238, 0.10, 238), 0.0, Color(0.34, 0.45, 0.54, 0.14), false, 0.14, 0.018, 0.35)
+	_add_thin_block(terrain, "LeftSheerCliffFace", Vector3(-92, -2.2, 0), Vector3(10, 15, 178), -2.0, Color(0.42, 0.50, 0.56, 0.50), true, 0.50, 0.010, 0.58)
+	_add_thin_block(terrain, "RightDistantCliffFace", Vector3(92, -2.4, 8), Vector3(10, 16, 166), 2.0, Color(0.38, 0.47, 0.55, 0.36), true, 0.36, 0.012, 0.52)
+	_add_thin_block(terrain, "NorthCloudCliffWall", Vector3(0, -2.8, -92), Vector3(176, 13, 8), 0.0, Color(0.39, 0.48, 0.56, 0.32), true, 0.32, 0.012, 0.48)
+	_add_thin_block(terrain, "SouthCloudCliffWall", Vector3(4, -2.9, 92), Vector3(168, 13, 8), 0.0, Color(0.39, 0.48, 0.56, 0.28), true, 0.28, 0.012, 0.48)
+
+	var route_points: Array[Vector3] = [
+		Vector3(-52, 0, 2),
+		Vector3(-42, 0, -16),
+		Vector3(-18, 0, -9),
+		Vector3(0, 0, 0),
+		Vector3(24, 0, -20),
+		Vector3(48, 0, 14),
+		Vector3(20, 0, 26),
+		Vector3(-18, 0, 18),
+		Vector3(-42, 0, 8)
+	]
+	for i in range(route_points.size() - 1):
+		_build_thin_bridge_span(terrain, "MainSuspendedThreadBridge_%02d" % i, route_points[i], route_points[i + 1], 4.8, Color(0.58, 0.72, 0.82, 0.48))
+	_build_thin_bridge_span(terrain, "CrossNetBridge_CenterToRooms", Vector3(0, 0, 0), Vector3(-18, 0, 18), 4.4, Color(0.62, 0.78, 0.88, 0.46))
+	_build_thin_bridge_span(terrain, "CrossNetBridge_CenterToWeb", Vector3(0, 0, 0), Vector3(48, 0, 14), 4.4, Color(0.60, 0.76, 0.88, 0.46))
+	_build_thin_bridge_span(terrain, "CrossNetBridge_CenterToScaffold", Vector3(0, 0, 0), Vector3(-42, 0, -16), 4.4, Color(0.58, 0.74, 0.86, 0.46))
+	for i in range(route_points.size()):
+		_build_thin_support_cluster(terrain, "SuspensionNeedleCluster_%02d" % i, route_points[i], 5.0 + float(i % 3) * 1.7)
+
+func _build_thin_cliff_arrival(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_CliffArrivalAndAnchorLines")
+	_build_thin_platform(zone, "CliffEdgeArrivalDeck", Vector3(-52, 0, 2), Vector2(28, 15), -4.0, Color(0.56, 0.70, 0.80, 0.48))
+	_add_thin_block(zone, "CliffArrivalWindGate_Left", Vector3(-64, 2.8, -5), Vector3(0.18, 5.6, 0.18), 0.0, Color(0.82, 0.92, 0.98, 0.72), false, 0.72, 0.035, 0.95)
+	_add_thin_block(zone, "CliffArrivalWindGate_Right", Vector3(-45, 2.8, 9), Vector3(0.18, 5.6, 0.18), 0.0, Color(0.82, 0.92, 0.98, 0.72), false, 0.72, 0.035, 0.95)
+	_build_thin_line_span(zone, "FirstAnchorCable", Vector3(-64, 5.5, -5), Vector3(-45, 5.5, 9), Color(0.86, 0.94, 1.0, 0.72), 0.085)
+	for i in range(5):
+		_add_thin_block(zone, "WindFrayedFlag_%02d" % i, Vector3(-62.0 + float(i) * 3.8, 4.0 + float(i % 2) * 0.6, -3.5 + float(i) * 2.6), Vector3(1.6, 0.06, 0.72), float(i) * 12.0, Color(0.70, 0.86, 0.96, 0.34), false, 0.34, 0.085, 0.86)
+	_build_thin_ascent_node(zone, 0, Vector3(-50, 0, 2), 18.0)
+
+func _build_thin_scaffold_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_StiltScaffoldForest")
+	_build_thin_platform(zone, "ScaffoldNeedleDeck", Vector3(-42, 0, -16), Vector2(20, 18), 9.0, Color(0.56, 0.70, 0.78, 0.44))
+	for i in range(6):
+		var pos := Vector3(-52.0 + float(i % 3) * 9.0, 0, -25.0 + float(i / 3) * 15.0)
+		_build_thin_scaffold_tower(zone, "ThinScaffoldTower_%02d" % i, pos, float(i) * 11.0, 7.0 + float(i % 3) * 2.2)
+	for i in range(7):
+		_build_thin_line_span(zone, "ScaffoldTensionLine_%02d" % i, Vector3(-56 + float(i) * 4.6, 5.8 + float(i % 2), -29), Vector3(-48 + float(i) * 5.4, 4.6, -3), Color(0.82, 0.92, 1.0, 0.55), 0.060)
+	_build_thin_ascent_node(zone, 1, Vector3(-41, 0, -15), -8.0)
+
+func _build_thin_suspended_rooms(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_SuspendedRoomsAndBalconies")
+	_build_thin_platform(zone, "SuspendedRoomLanding", Vector3(-18, 0, 18), Vector2(21, 16), -7.0, Color(0.62, 0.76, 0.86, 0.42))
+	var rooms := [
+		[Vector3(-31, 4.8, 24), -8.0, Vector3(6.0, 3.0, 5.2)],
+		[Vector3(-18, 6.2, 31), 9.0, Vector3(7.2, 3.2, 4.8)],
+		[Vector3(-4, 4.2, 22), -16.0, Vector3(5.8, 2.8, 5.0)],
+		[Vector3(-23, 7.8, 8), 18.0, Vector3(5.4, 3.0, 4.6)]
+	]
+	for i in range(rooms.size()):
+		_build_thin_suspended_room(zone, "SuspendedRoom_%02d" % i, rooms[i][0], float(rooms[i][1]), rooms[i][2])
+	_build_thin_ascent_node(zone, 2, Vector3(-18, 0, 18), 4.0)
+
+func _build_thin_cloud_bridge_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_CloudThreadBridges")
+	_build_thin_platform(zone, "CloudThreadBridgeDeck", Vector3(24, 0, -20), Vector2(20, 13), 6.0, Color(0.58, 0.76, 0.90, 0.40))
+	for i in range(5):
+		var a := Vector3(10.0 + float(i) * 5.0, 0.0, -34.0 + float(i % 2) * 6.0)
+		var b := Vector3(32.0 + float(i) * 5.0, 0.0, -6.0 - float(i % 2) * 4.0)
+		_build_thin_bridge_span(zone, "ParallelCloudFootbridge_%02d" % i, a, b, 1.6 + float(i % 2) * 0.45, Color(0.62, 0.80, 0.94, 0.36), false)
+		_build_thin_line_span(zone, "HighCloudCable_%02d" % i, a + Vector3(0, 4.6 + float(i) * 0.25, 0), b + Vector3(0, 4.8, 0), Color(0.84, 0.94, 1.0, 0.52), 0.055)
+	for i in range(4):
+		_add_city_style_veil(zone, "CloudSilkVeil_%02d" % i, Vector3(12.0 + float(i) * 9.0, 4.2 + float(i % 2) * 1.1, -28.0 + float(i) * 6.0), Vector2(32.0, 8.0), -18.0 + float(i) * 8.0, Color(0.76, 0.88, 1.0, 0.18), 0.0, 260.0 + float(i) * 5.0, thin_city_style_intensity)
+	_build_thin_ascent_node(zone, 3, Vector3(24, 0, -20), -16.0)
+
+func _build_thin_web_chasm(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_WebCityOverChasm")
+	_build_thin_platform(zone, "WebCityOuterKnotDeck", Vector3(48, 0, 14), Vector2(22, 17), 12.0, Color(0.58, 0.74, 0.88, 0.42))
+	var center := Vector3(48, 0, 14)
+	for i in range(14):
+		var angle := TAU * float(i) / 14.0
+		var outer := center + Vector3(cos(angle) * (15.0 + float(i % 2) * 5.0), 0, sin(angle) * (12.0 + float(i % 3) * 4.0))
+		_build_thin_line_span(zone, "WebRadialLine_%02d" % i, center + Vector3(0, 2.8, 0), outer + Vector3(0, 3.0 + float(i % 3) * 0.4, 0), Color(0.86, 0.94, 1.0, 0.58), 0.060)
+		if i % 2 == 0:
+			_build_thin_bridge_span(zone, "OuterWebWalkLine_%02d" % i, center.lerp(outer, 0.38), outer, 1.5, Color(0.64, 0.78, 0.90, 0.34), false)
+	for ring in range(3):
+		var radius := 8.0 + float(ring) * 5.0
+		for i in range(10):
+			var a_angle := TAU * float(i) / 10.0 + float(ring) * 0.15
+			var b_angle := TAU * float(i + 1) / 10.0 + float(ring) * 0.15
+			_build_thin_line_span(zone, "WebRing_%02d_%02d" % [ring, i], center + Vector3(cos(a_angle) * radius, 2.6 + float(ring) * 0.55, sin(a_angle) * radius), center + Vector3(cos(b_angle) * radius, 2.6 + float(ring) * 0.55, sin(b_angle) * radius), Color(0.80, 0.90, 1.0, 0.42), 0.050)
+	_build_thin_ascent_node(zone, 4, center, 24.0)
+
+func _build_thin_center(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CentralNetLookout")
+	_build_thin_platform(zone, "CentralNetLookout", Vector3(0, 0, 0), Vector2(24, 24), 0.0, Color(0.60, 0.76, 0.88, 0.46))
+	for i in range(16):
+		var angle := TAU * float(i) / 16.0
+		_build_thin_line_span(zone, "CentralLookoutTensionRay_%02d" % i, Vector3(0, 3.8, 0), Vector3(cos(angle) * 24.0, 3.0 + float(i % 3) * 0.35, sin(angle) * 24.0), Color(0.86, 0.94, 1.0, 0.48), 0.050)
+	_add_thin_cylinder(zone, "CentralWindCompassRing", Vector3(0, 0.16, 0), 8.2, 0.08, Color(0.82, 0.92, 1.0, 0.26), 64, false, 0.26, 0.045, 0.86)
+	_add_thin_block(zone, "NetHeartNeedle", Vector3(0, 3.6, 0), Vector3(0.22, 7.2, 0.22), 0.0, Color(0.86, 0.94, 1.0, 0.66), false, 0.66, 0.045, 0.96)
+	thin_goal_trigger = Area3D.new()
+	thin_goal_trigger.name = "ThinGoalTrigger"
+	thin_goal_trigger.position = Vector3(0, 0.9, 0)
+	thin_goal_trigger.collision_layer = 0
+	thin_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 8.0
+	shape.shape = sphere
+	thin_goal_trigger.add_child(shape)
+	thin_goal_trigger.body_entered.connect(_on_thin_goal_entered)
+	thin_goal_trigger.body_exited.connect(_on_thin_goal_exited)
+	manifested_city.add_child(thin_goal_trigger)
+
+func _build_thin_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "ThinCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("WindDustParticles", 1500, Vector2(0.030, 0.030), Vector3(118, 9.0, 118), Vector3(0.34, 0.08, -0.18), Color(0.72, 0.80, 0.84, 0.22), 0.08, 0.46, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("CloudSilkParticles", 820, Vector2(0.20, 0.020), Vector3(116, 10.0, 116), Vector3(0.18, 0.04, 0.12), Color(0.82, 0.92, 1.0, 0.30), 0.04, 0.24, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("ThinLineParticles", 620, Vector2(0.28, 0.012), Vector3(112, 8.0, 112), Vector3(-0.10, 0.12, 0.18), Color(0.86, 0.94, 1.0, 0.34), 0.04, 0.26, 100.0, 13.5))
+	atmosphere.add_child(_make_city_particle_layer("FallingDustParticles", 1050, Vector2(0.035, 0.080), Vector3(112, 12.0, 112), Vector3(0.05, -0.30, -0.02), Color(0.62, 0.68, 0.70, 0.24), 0.04, 0.22, 88.0, 17.0))
+	atmosphere.add_child(_make_city_particle_layer("PaleBlueMicroMotes", 980, Vector2(0.026, 0.026), Vector3(104, 8.0, 104), Vector3(0.04, 0.10, 0.02), Color(0.58, 0.78, 1.0, 0.26), 0.02, 0.18, 100.0, 11.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_city_style_veil(atmosphere, "ThinCloudThreadVeil_%02d" % i, Vector3(cos(angle) * 48.0, 5.8 + float(i % 3) * 0.9, sin(angle) * 48.0), Vector2(72.0, 10.0 + float(i % 2) * 4.0), rad_to_deg(angle) + 90.0, Color(0.72, 0.86, 1.0, 0.20), 0.0, 300.0 + float(i) * 6.0, thin_city_style_intensity)
+
+func _add_thin_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := true, alpha := -1.0, sway := 0.035, edge_strength := 0.78) -> Node3D:
+	var final_alpha := color.a if alpha < 0.0 else alpha
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _thin_net_material(color, final_alpha, pos.x + pos.z + size.length(), sway, edge_strength)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _add_local_thin_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true, alpha := -1.0, sway := 0.035, edge_strength := 0.78) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var full_name := "%s_%s" % [asset.name, part_name]
+	if _should_keep_clear_for_echo_tower(full_name, global_pos, size):
+		return null
+	var final_alpha := color.a if alpha < 0.0 else alpha
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _thin_net_material(color, final_alpha, global_pos.x + global_pos.z + size.length(), sway, edge_strength)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision(full_name + "Collision", global_pos, size, global_yaw)
+	return box
+
+func _add_thin_cylinder(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, sides := 32, collision := false, alpha := -1.0, sway := 0.035, edge_strength := 0.78) -> Node3D:
+	var final_alpha := color.a if alpha < 0.0 else alpha
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = sides
+	cylinder.position = pos
+	cylinder.material = _thin_net_material(color, final_alpha, pos.x + pos.z + radius + height, sway, edge_strength)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _build_thin_platform(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_thin_block(asset, "SuspendedDeck", Vector3(0, 0.06, 0), Vector3(size.x, 0.14, size.y), 0.0, color, true, color.a, 0.030, 0.82)
+	_add_local_thin_block(asset, "LeftEdgeCable", Vector3(-size.x * 0.5, 0.92, 0), Vector3(0.08, 0.08, size.y), 0.0, Color(0.86, 0.94, 1.0, 0.62), false, 0.62, 0.055, 0.96)
+	_add_local_thin_block(asset, "RightEdgeCable", Vector3(size.x * 0.5, 0.92, 0), Vector3(0.08, 0.08, size.y), 0.0, Color(0.86, 0.94, 1.0, 0.62), false, 0.62, 0.055, 0.96)
+	_add_local_thin_block(asset, "FrontEdgeCable", Vector3(0, 0.92, -size.y * 0.5), Vector3(size.x, 0.08, 0.08), 0.0, Color(0.86, 0.94, 1.0, 0.56), false, 0.56, 0.055, 0.96)
+	_add_local_thin_block(asset, "BackEdgeCable", Vector3(0, 0.92, size.y * 0.5), Vector3(size.x, 0.08, 0.08), 0.0, Color(0.86, 0.94, 1.0, 0.56), false, 0.56, 0.055, 0.96)
+	for x in [-0.42, 0.42]:
+		for z in [-0.42, 0.42]:
+			_add_local_thin_block(asset, "LongDropLine_%s_%s" % [str(x), str(z)], Vector3(size.x * x, -2.6, size.y * z), Vector3(0.09, 5.3, 0.09), 0.0, Color(0.80, 0.90, 0.98, 0.40), false, 0.40, 0.060, 0.84)
+	return asset
+
+func _build_thin_bridge_span(parent: Node3D, name: String, a: Vector3, b: Vector3, width: float, color: Color, collision := true) -> Node3D:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	var asset := _make_city_asset(parent, name, mid, yaw)
+	_add_local_thin_block(asset, "FlexibleDeck", Vector3(0, 0.07, 0), Vector3(width, 0.12, flat_length), 0.0, color, collision, color.a, 0.060, 0.86)
+	_add_local_thin_block(asset, "LeftTensionCable", Vector3(-width * 0.55, 1.05, 0), Vector3(0.07, 0.07, flat_length), 0.0, Color(0.86, 0.94, 1.0, 0.62), false, 0.62, 0.075, 0.96)
+	_add_local_thin_block(asset, "RightTensionCable", Vector3(width * 0.55, 1.05, 0), Vector3(0.07, 0.07, flat_length), 0.0, Color(0.86, 0.94, 1.0, 0.62), false, 0.62, 0.075, 0.96)
+	var hanger_count := maxi(2, int(flat_length / 6.0))
+	for i in range(hanger_count + 1):
+		var z := -flat_length * 0.5 + flat_length * float(i) / float(hanger_count)
+		_add_local_thin_block(asset, "LeftHanger_%02d" % i, Vector3(-width * 0.55, 0.50, z), Vector3(0.045, 1.1, 0.045), 0.0, Color(0.84, 0.94, 1.0, 0.46), false, 0.46, 0.080, 0.92)
+		_add_local_thin_block(asset, "RightHanger_%02d" % i, Vector3(width * 0.55, 0.50, z), Vector3(0.045, 1.1, 0.045), 0.0, Color(0.84, 0.94, 1.0, 0.46), false, 0.46, 0.080, 0.92)
+	return asset
+
+func _build_thin_line_span(parent: Node3D, name: String, a: Vector3, b: Vector3, color: Color, thickness := 0.06) -> Node3D:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	var size := Vector3(thickness, thickness, maxf(flat_length, 0.1))
+	return _add_thin_block(parent, name, mid, size, yaw, color, false, color.a, 0.090, 0.98)
+
+func _build_thin_support_cluster(parent: Node3D, name: String, pos: Vector3, height: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, 0.0)
+	for i in range(5):
+		var angle := TAU * float(i) / 5.0
+		var radius := 1.6 + float(i % 2) * 0.9
+		_add_local_thin_block(asset, "NeedleSupport_%02d" % i, Vector3(cos(angle) * radius, -height * 0.5, sin(angle) * radius), Vector3(0.10, height, 0.10), 0.0, Color(0.78, 0.88, 0.94, 0.36), false, 0.36, 0.065, 0.86)
+		_add_local_thin_block(asset, "NeedleCapLine_%02d" % i, Vector3(cos(angle) * radius * 0.5, 1.8 + float(i % 3) * 0.3, sin(angle) * radius * 0.5), Vector3(0.08, 0.08, radius * 2.0), rad_to_deg(angle), Color(0.82, 0.92, 1.0, 0.34), false, 0.34, 0.080, 0.92)
+
+func _build_thin_scaffold_tower(parent: Node3D, name: String, pos: Vector3, yaw: float, height: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	for x in [-1.8, 1.8]:
+		for z in [-1.8, 1.8]:
+			_add_local_thin_block(asset, "ScaffoldLeg_%s_%s" % [str(x), str(z)], Vector3(x, height * 0.5, z), Vector3(0.12, height, 0.12), 0.0, Color(0.78, 0.88, 0.94, 0.50), false, 0.50, 0.050, 0.90)
+	for level in range(4):
+		var y := 1.2 + float(level) * height / 4.0
+		_add_local_thin_block(asset, "ScaffoldCrossX_%02d" % level, Vector3(0, y, -1.8), Vector3(4.0, 0.10, 0.10), 0.0, Color(0.84, 0.94, 1.0, 0.42), false, 0.42, 0.065, 0.92)
+		_add_local_thin_block(asset, "ScaffoldCrossZ_%02d" % level, Vector3(-1.8, y, 0), Vector3(0.10, 0.10, 4.0), 0.0, Color(0.84, 0.94, 1.0, 0.42), false, 0.42, 0.065, 0.92)
+
+func _build_thin_suspended_room(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_thin_block(asset, "TransparentRoomShell", Vector3(0, 0, 0), size, 0.0, Color(0.66, 0.82, 0.92, 0.28), false, 0.28, 0.055, 0.96)
+	_add_local_thin_block(asset, "RoomFloorLine", Vector3(0, -size.y * 0.5 - 0.05, 0), Vector3(size.x * 1.08, 0.08, size.z * 1.08), 0.0, Color(0.86, 0.94, 1.0, 0.44), false, 0.44, 0.070, 0.95)
+	for x in [-0.45, 0.45]:
+		for z in [-0.45, 0.45]:
+			_add_local_thin_block(asset, "SuspensionCable_%s_%s" % [str(x), str(z)], Vector3(size.x * x, size.y * 0.5 + 2.2, size.z * z), Vector3(0.055, 4.4, 0.055), 0.0, Color(0.84, 0.94, 1.0, 0.52), false, 0.52, 0.085, 0.98)
+
+func _thin_node_color(node_index: int) -> Color:
+	return THIN_ASCENT_COLORS[clampi(node_index, 0, THIN_ASCENT_COLORS.size() - 1)]
+
+func _build_thin_ascent_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = THIN_ASCENT_NODES[node_index]
+	var color := _thin_node_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_thin_block(asset, "ReadingNeedle", Vector3(0, 2.1, 0), Vector3(0.28, 4.2, 0.28), 0.0, Color(0.84, 0.94, 1.0, 0.70), true, 0.70, 0.055, 0.98)
+	_add_local_thin_block(asset, "ActiveNetFrame", Vector3(0, 4.3, -0.28), Vector3(4.2, 2.0, 0.10), 0.0, color, false, 0.45, 0.075, 1.0)
+	var resolved := _add_local_thin_block(asset, "ResolvedTensionFrame", Vector3(0, 4.3, -0.45), Vector3(4.2, 2.0, 0.10), 0.0, Color(0.88, 0.94, 0.98, 0.28), false, 0.28, 0.020, 0.42)
+	if resolved != null:
+		resolved.visible = false
+	_add_thin_node_glow(asset, color, node_index)
+	while thin_node_visuals.size() <= node_index:
+		thin_node_visuals.append(null)
+	thin_node_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.2, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.4
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_thin_node_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_thin_node_exited(body, node_index))
+	manifested_city.add_child(area)
+	while thin_node_areas.size() <= node_index:
+		thin_node_areas.append(null)
+	thin_node_areas[node_index] = area
+
+func _add_thin_node_glow(asset: Node3D, color: Color, node_index: int) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "ThinNodeActiveGlow"
+	halo.radius = 3.4
+	halo.height = 0.035
+	halo.sides = 48
+	halo.position = Vector3(0, 0.10, 0)
+	halo.material = _emissive_mat(color, 0.28, thin_node_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "ThinNodeLight"
+	light.position = Vector3(0, 3.8, 0)
+	light.light_color = color
+	light.light_energy = thin_node_glow_energy
+	light.omni_range = 8.5
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "ThinNodeThreadParticles"
+	particles.amount = int(maxf(1.0, 78.0 * thin_node_particle_scale))
+	particles.lifetime = 2.7
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.18, 0.018)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.8
+	process.gravity = Vector3(0.0, -0.04, 0.0)
+	process.initial_velocity_min = 0.04
+	process.initial_velocity_max = 0.24
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.70)
+	particles.process_material = process
+	particles.position = Vector3(0, 2.8, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_thin_node_visual_state(node_index: int, resolved: bool) -> void:
+	if node_index < 0 or node_index >= thin_node_visuals.size():
+		return
+	var asset := thin_node_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveNetFrame")
+	if active != null:
+		active.visible = not resolved
+	var resolved_frame := asset.get_node_or_null("ResolvedTensionFrame")
+	if resolved_frame != null:
+		resolved_frame.visible = resolved
+	for name in ["ThinNodeActiveGlow", "ThinNodeLight", "ThinNodeThreadParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not resolved
+
+func _build_trade_city_whitebox(parent: Node3D) -> void:
+	_build_trade_city_terrain(parent)
+	_build_trade_memory_market(parent)
+	_build_trade_glance_avenue(parent)
+	_build_trade_migration_city(parent)
+	_build_trade_string_ruin(parent)
+	_build_trade_water_route_city(parent)
+	_build_trade_center_core(parent)
+	_build_trade_atmosphere(parent)
+
+func _build_trade_city_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "TradeCity_EstuaryWetMarketTerrain")
+	_add_trade_block(terrain, "WetEstuaryGround", Vector3(0, -0.06, 0), Vector3(238, 0.12, 238), 0.0, Color(0.45, 0.39, 0.29), true, 0.62, 0.06, 0.36)
+	_add_trade_block(terrain, "RiverMouthWater_East", Vector3(76, 0.015, 18), Vector3(50, 0.05, 146), -4.0, Color(0.10, 0.42, 0.36, 0.74), false, 0.88, 0.16, 0.42)
+	_add_trade_block(terrain, "CanalGreenWater_South", Vector3(24, 0.03, 63), Vector3(84, 0.05, 9), 0.0, Color(0.12, 0.50, 0.40, 0.70), false, 0.86, 0.14, 0.38)
+	_add_trade_block(terrain, "HighPlateauShelf_West", Vector3(-62, 0.14, 0), Vector3(48, 0.22, 68), 0.0, Color(0.56, 0.47, 0.32), true, 0.28, 0.02, 0.30)
+	_add_trade_block(terrain, "NorthernPlainRuinFloor", Vector3(0, 0.02, -65), Vector3(82, 0.08, 50), 0.0, Color(0.36, 0.35, 0.32), true, 0.36, 0.02, 0.52)
+	_build_trade_route_span(terrain, "MarketToCoreWetStreet", Vector3(0, 0, 72), Vector3(0, 0, 0), 9.5, Color(0.58, 0.46, 0.30))
+	_build_trade_route_span(terrain, "CoreToGlanceAvenueWetStreet", Vector3(0, 0, 0), Vector3(54, 0, 4), 9.0, Color(0.42, 0.36, 0.31))
+	_build_trade_route_span(terrain, "CoreToMigratingCityRoad", Vector3(0, 0, 0), Vector3(-56, 0, 0), 8.2, Color(0.50, 0.43, 0.30))
+	_build_trade_route_span(terrain, "CoreToStringRuinCauseway", Vector3(0, 0, 0), Vector3(0, 0, -64), 7.6, Color(0.42, 0.40, 0.36))
+	_build_trade_route_span(terrain, "CoreToWaterStreetRoad", Vector3(0, 0, 0), Vector3(42, 0, 50), 8.6, Color(0.34, 0.42, 0.38))
+
+func _build_trade_memory_market(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_EuphemiaMemoryMarket")
+	_build_trade_seasonal_plaza(zone, Vector3(0, 0, 72), 0.0)
+	_build_trade_seven_nations_bazaar(zone, Vector3(0, 0, 72), 0.0)
+	_build_trade_river_dock(zone, Vector3(34, 0, 76), 90.0)
+	_build_trade_caravan_gate(zone, Vector3(-36, 0, 74), -90.0)
+	_build_trade_campfire_yard(zone, Vector3(0, 0, 72), 0.0)
+	var goods := [
+		["GingerCrate", Vector3(-15, 0, 60), Color(0.78, 0.46, 0.20)],
+		["CottonBale", Vector3(22, 0, 78), Color(0.86, 0.82, 0.68)],
+		["PistachioSack", Vector3(-8, 0, 58), Color(0.46, 0.62, 0.24)],
+		["PoppySeedJar", Vector3(9, 0, 58), Color(0.22, 0.18, 0.16)],
+		["NutmegBox", Vector3(-31, 0, 69), Color(0.54, 0.30, 0.14)],
+		["RaisinSack", Vector3(13, 0, 84), Color(0.36, 0.20, 0.16)],
+		["GoldenGauze", Vector3(-24, 0, 82), Color(1.0, 0.72, 0.22, 0.52)]
+	]
+	for item in goods:
+		_build_trade_simple_prop(zone, String(item[0]), item[1], 0.0, Vector3(2.4, 1.1, 1.8), item[2], true)
+	_build_trade_simple_prop(zone, "YellowMat", Vector3(0, 0.10, 59), 0.0, Vector3(24, 0.05, 8), Color(0.82, 0.62, 0.22), false)
+	_build_trade_simple_prop(zone, "FlyClothCanopy", Vector3(0, 4.2, 64), 0.0, Vector3(32, 0.12, 12), Color(0.84, 0.78, 0.56, 0.42), false)
+	_build_trade_simple_prop(zone, "MemorySack", Vector3(-5, 0, 74), 0.0, Vector3(1.4, 1.0, 1.2), Color(0.48, 0.34, 0.20), true)
+	_build_trade_simple_prop(zone, "MemoryBarrel", Vector3(6, 0, 73), 0.0, Vector3(1.3, 1.5, 1.3), Color(0.36, 0.24, 0.14), true)
+	_build_trade_simple_prop(zone, "WolfToken", Vector3(-2, 0.65, 68), 0.0, Vector3(1.0, 0.22, 1.0), Color(0.18, 0.18, 0.16), false)
+	_build_trade_simple_prop(zone, "HiddenTreasureChest", Vector3(8, 0, 66), 0.0, Vector3(2.4, 1.1, 1.5), Color(0.42, 0.24, 0.10), true)
+	_build_trade_exchange_node(zone, 0, Vector3(0, 0, 70), 0.0)
+
+func _build_trade_glance_avenue(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_ChloeGlanceAvenue")
+	_build_trade_route_span(zone, "GlanceAvenue", Vector3(54, 0, -38), Vector3(54, 0, 44), 12.0, Color(0.38, 0.33, 0.32))
+	for z in [-30, -16, -2, 12, 26, 40]:
+		_build_trade_rain_arcade(zone, Vector3(44, 0, float(z)), 0.0, "Left")
+		_build_trade_rain_arcade(zone, Vector3(64, 0, float(z)), 180.0, "Right")
+	_build_trade_umbrella_market(zone, Vector3(70, 0, -12), -8.0)
+	_build_trade_band_plaza(zone, Vector3(54, 0, 20), 0.0)
+	_build_trade_carousel_hall(zone, Vector3(54, 0, 4), 0.0)
+	var figures := [
+		["ParasolGirlFigure", Vector3(47, 0, -31), Color(0.95, 0.74, 0.42)],
+		["BlackVeilWoman", Vector3(61, 0, -22), Color(0.06, 0.05, 0.05)],
+		["TattooedGiant", Vector3(45, 0, -6), Color(0.58, 0.42, 0.34)],
+		["CoralTwins", Vector3(63, 0, 10), Color(0.92, 0.28, 0.24)],
+		["BlindLeopardKeeper", Vector3(48, 0, 29), Color(0.28, 0.24, 0.18)],
+		["OstrichFan", Vector3(64, 0, 31), Color(0.92, 0.86, 0.72)]
+	]
+	for item in figures:
+		_build_trade_figure(zone, String(item[0]), item[1], item[2])
+	for i in range(figures.size() - 1):
+		_build_trade_line_span(zone, "GlanceLineParticle_%02d" % i, figures[i][1] + Vector3(0, 2.1, 0), figures[i + 1][1] + Vector3(0, 2.1, 0), Color(0.95, 0.42, 0.78, 0.50), 0.05)
+	_build_trade_ground_mark(zone, "TriangleGazeMark", Vector3(54, 0.18, -10), Vector2(8, 0.08), Color(0.95, 0.38, 0.74, 0.48))
+	_build_trade_ground_mark(zone, "StarGazeMark", Vector3(54, 0.18, 24), Vector2(11, 0.08), Color(0.16, 0.82, 0.72, 0.44))
+	_build_trade_exchange_node(zone, 1, Vector3(54, 0, 4), 0.0)
+
+func _build_trade_migration_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_EutropiaMigratingCities")
+	_build_trade_empty_plateau_city(zone, Vector3(-70, 0, -18), -6.0)
+	_build_trade_migrating_main_city(zone, Vector3(-48, 0, 12), 5.0)
+	_build_trade_empty_city_grid(zone, Vector3(-56, 0, -2), 0.0)
+	_build_trade_new_vocation_street(zone, Vector3(-52, 0, 25), 0.0)
+	_build_trade_mercury_temple(zone, Vector3(-52, 0, 0), 0.0)
+	for i in range(4):
+		_build_trade_simple_prop(zone, "MigrationCart_%02d" % i, Vector3(-75 + float(i) * 9.0, 0, 19 + float(i % 2) * 7.0), float(i) * 8.0, Vector3(3.4, 1.5, 2.2), Color(0.36, 0.25, 0.15), true)
+		_build_trade_simple_prop(zone, "NewJobSign_%02d" % i, Vector3(-61 + float(i) * 5.5, 0, 31), 0.0, Vector3(1.6, 2.4, 0.18), Color(0.88, 0.70, 0.34), false)
+		_build_trade_simple_prop(zone, "NewViewFrame_%02d" % i, Vector3(-75 + float(i) * 7.0, 2.6, -12), 0.0, Vector3(2.4, 2.0, 0.16), Color(0.36, 0.62, 0.70, 0.40), false)
+	_build_trade_simple_prop(zone, "MercuryIdol", Vector3(-52, 1.1, 0), 0.0, Vector3(1.5, 2.2, 1.0), Color(0.86, 0.72, 0.30), false)
+	_build_trade_exchange_node(zone, 2, Vector3(-52, 0, 0), 0.0)
+
+func _build_trade_string_ruin(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_ErsiliaStringWebRuin")
+	_build_trade_string_web_ruin(zone, Vector3(0, 0, -64), 0.0)
+	_build_trade_stake_plaza(zone, Vector3(0, 0, -64), 0.0)
+	_build_trade_relation_support_frame(zone, Vector3(12, 0, -74), 10.0)
+	_build_trade_hillside_refuge_camp(zone, Vector3(-34, 0, -72), -12.0)
+	_build_trade_second_ersilia(zone, Vector3(36, 0, -88), 8.0)
+	for i in range(11):
+		var a := Vector3(-24.0 + float(i % 4) * 15.0, 2.4 + float(i % 3) * 0.4, -78.0 + float(i / 4) * 11.0)
+		var b := Vector3(-18.0 + float((i + 2) % 5) * 13.0, 2.9, -52.0 + float(i % 3) * 8.0)
+		var color := Color(0.05, 0.05, 0.045, 0.62) if i % 4 == 0 else (Color(0.86, 0.84, 0.78, 0.48) if i % 4 == 1 else Color(0.46, 0.46, 0.42, 0.55))
+		_build_trade_line_span(zone, "RelationString_%02d" % i, a, b, color, 0.07)
+	_build_trade_exchange_node(zone, 3, Vector3(0, 0, -64), 0.0)
+
+func _build_trade_water_route_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_SmeraldinaWaterStreetCity")
+	_build_trade_water_street_city(zone, Vector3(42, 0, 50), 0.0)
+	_build_trade_canal_district(zone, Vector3(42, 0, 50), 0.0)
+	_build_trade_zigzag_bridge_road(zone, Vector3(42, 0, 50), 0.0)
+	_build_trade_boat_alley(zone, Vector3(62, 0, 52), 0.0)
+	_build_trade_simple_prop(zone, "SmallBoat", Vector3(62, 0.22, 52), 8.0, Vector3(5.5, 0.8, 1.5), Color(0.30, 0.18, 0.10), false)
+	_build_trade_simple_prop(zone, "StoneBridge", Vector3(41, 0.65, 42), 20.0, Vector3(12, 1.0, 2.2), Color(0.58, 0.56, 0.50), true)
+	_build_trade_simple_prop(zone, "WaterFork", Vector3(52, 0.18, 60), 0.0, Vector3(8, 0.08, 8), Color(0.08, 0.44, 0.38, 0.74), false)
+	_build_trade_simple_prop(zone, "StreetFork", Vector3(32, 0.18, 42), 0.0, Vector3(8, 0.08, 8), Color(0.50, 0.42, 0.30), false)
+	_build_trade_simple_prop(zone, "SecretRatPath", Vector3(38, -0.35, 66), 0.0, Vector3(18, 0.45, 2.2), Color(0.08, 0.07, 0.055), false)
+	_build_trade_line_span(zone, "SwallowRoute", Vector3(26, 8.0, 39), Vector3(70, 9.2, 66), Color(0.70, 0.90, 1.0, 0.50), 0.055)
+	_build_trade_exchange_node(zone, 4, Vector3(42, 0, 50), 0.0)
+
+func _build_trade_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CentralTradeCore")
+	_build_trade_multi_route_plaza(zone, Vector3(0, 0, 0), 0.0)
+	_build_trade_river_dock(zone, Vector3(18, 0, 0), 90.0)
+	_build_trade_simple_prop(zone, "MemoryTradeParticleCluster", Vector3(0, 1.2, 0), 0.0, Vector3(2.4, 2.4, 2.4), Color(1.0, 0.62, 0.20, 0.28), false)
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_build_trade_line_span(zone, "ExchangeRouteLine_%02d" % i, Vector3(0, 0.55, 0), Vector3(cos(angle) * 18.0, 0.55, sin(angle) * 18.0), Color(0.18, 0.76, 0.62, 0.34), 0.045)
+	trade_goal_trigger = Area3D.new()
+	trade_goal_trigger.name = "TradeGoalTrigger"
+	trade_goal_trigger.position = Vector3(0, 0.9, 0)
+	trade_goal_trigger.collision_layer = 0
+	trade_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 9.0
+	shape.shape = sphere
+	trade_goal_trigger.add_child(shape)
+	trade_goal_trigger.body_entered.connect(_on_trade_goal_entered)
+	trade_goal_trigger.body_exited.connect(_on_trade_goal_exited)
+	manifested_city.add_child(trade_goal_trigger)
+
+func _build_trade_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "TradeCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("WaterVaporParticles", 1320, Vector2(0.12, 0.040), Vector3(116, 5.5, 116), Vector3(0.16, 0.04, -0.10), Color(0.54, 0.76, 0.72, 0.28), 0.04, 0.26, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("MarketClothStripParticles", 520, Vector2(0.22, 0.055), Vector3(112, 7.0, 112), Vector3(0.22, 0.06, 0.05), Color(0.96, 0.62, 0.22, 0.30), 0.05, 0.30, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("TradeTicketParticles", 760, Vector2(0.14, 0.075), Vector3(110, 6.5, 110), Vector3(-0.10, 0.09, 0.18), Color(0.86, 0.78, 0.56, 0.34), 0.05, 0.32, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("CopperCoinGlimmerParticles", 920, Vector2(0.040, 0.040), Vector3(106, 5.8, 106), Vector3(0.06, 0.08, 0.04), Color(1.0, 0.56, 0.16, 0.40), 0.03, 0.22, 100.0, 10.0))
+	atmosphere.add_child(_make_city_particle_layer("MemoryTradeParticle", 980, Vector2(0.036, 0.036), Vector3(104, 6.8, 104), Vector3(0.03, 0.12, -0.05), Color(1.0, 0.68, 0.28, 0.34), 0.03, 0.22, 100.0, 12.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_city_style_veil(atmosphere, "TradeCrowdFlowVeil_%02d" % i, Vector3(cos(angle) * 46.0, 4.8 + float(i % 3) * 0.8, sin(angle) * 46.0), Vector2(70.0, 12.0 + float(i % 2) * 4.0), rad_to_deg(angle) + 90.0, Color(1.0, 0.52, 0.18, 0.20), 1.0, 360.0 + float(i) * 5.0, trade_city_style_intensity)
+		_add_city_style_veil(atmosphere, "CanalReflectionVeil_%02d" % i, Vector3(52.0 + float(i % 3) * 8.0, 2.2, -42.0 + float(i) * 13.0), Vector2(36.0, 6.0), 4.0 + float(i) * 7.0, Color(0.08, 0.70, 0.62, 0.18), 1.0, 420.0 + float(i) * 4.0, trade_city_style_intensity * 0.85)
+
+func _add_trade_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := true, wetness := 0.55, neon := 0.08, material_mix := 0.35) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _trade_wet_material(color, color.a, pos.x + pos.z + size.length(), wetness, neon, material_mix)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _add_local_trade_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true, wetness := 0.55, neon := 0.08, material_mix := 0.35) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var full_name := "%s_%s" % [asset.name, part_name]
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _trade_wet_material(color, color.a, global_pos.x + global_pos.z + size.length(), wetness, neon, material_mix)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision(full_name + "Collision", global_pos, size, global_yaw)
+	return box
+
+func _add_local_trade_cylinder(asset: Node3D, part_name: String, local_pos: Vector3, radius: float, height: float, color: Color, sides := 32, collision := false, wetness := 0.45, neon := 0.05, material_mix := 0.30) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = part_name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = sides
+	cylinder.position = local_pos
+	cylinder.material = _trade_wet_material(color, color.a, global_pos.x + global_pos.z + radius + height, wetness, neon, material_mix)
+	asset.add_child(cylinder)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, Vector3(radius * 2.0, height, radius * 2.0), asset.rotation_degrees.y)
+	return cylinder
+
+func _build_trade_route_span(parent: Node3D, name: String, a: Vector3, b: Vector3, width: float, color: Color, collision := true) -> void:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	_add_trade_block(parent, name, mid + Vector3(0, 0.04, 0), Vector3(width, 0.08, flat_length), yaw, color, collision, 0.72, 0.05, 0.46)
+
+func _build_trade_line_span(parent: Node3D, name: String, a: Vector3, b: Vector3, color: Color, thickness := 0.06) -> void:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	_add_trade_block(parent, name, mid, Vector3(thickness, thickness, maxf(flat_length, 0.1)), yaw, color, false, 0.34, 0.24, 0.50)
+
+func _build_trade_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_trade_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision, 0.40, 0.05, 0.36)
+	return asset
+
+func _build_trade_seasonal_plaza(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "SeasonalTradePlaza", pos, yaw)
+	_add_local_trade_cylinder(asset, "RoundMarketDisk", Vector3(0, 0.08, 0), 17.0, 0.14, Color(0.66, 0.50, 0.25), 64, true, 0.76, 0.05, 0.40)
+	for i in range(4):
+		var angle := TAU * float(i) / 4.0
+		_add_local_trade_block(asset, "SeasonMarker_%02d" % i, Vector3(cos(angle) * 13.5, 0.34, sin(angle) * 13.5), Vector3(2.6, 0.35, 1.2), rad_to_deg(angle), Color(0.90, 0.68, 0.28), false, 0.50, 0.04, 0.34)
+
+func _build_trade_seven_nations_bazaar(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "SevenNationsBazaar", pos, yaw)
+	for i in range(7):
+		var angle := TAU * float(i) / 7.0
+		var stall_pos := Vector3(cos(angle) * 22.0, 0, sin(angle) * 17.0)
+		_add_local_trade_block(asset, "BazaarStall_%02d" % i, stall_pos + Vector3(0, 1.0, 0), Vector3(5.0, 2.0, 3.4), rad_to_deg(-angle), Color(0.62, 0.42, 0.22), true, 0.52, 0.05, 0.45)
+		_add_local_trade_block(asset, "ClothAwning_%02d" % i, stall_pos + Vector3(0, 2.45, 0), Vector3(5.8, 0.18, 4.0), rad_to_deg(-angle), Color(0.92, 0.62, 0.24, 0.64), false, 0.42, 0.12, 0.52)
+
+func _build_trade_river_dock(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "RiverDock", pos, yaw)
+	_add_local_trade_block(asset, "DockDeck", Vector3(0, 0.38, 0), Vector3(20, 0.55, 6.0), 0.0, Color(0.30, 0.20, 0.12), true, 0.82, 0.04, 0.52)
+	for i in range(5):
+		_add_local_trade_block(asset, "DockPost_%02d" % i, Vector3(-8.0 + float(i) * 4.0, 1.2, -2.8), Vector3(0.32, 2.4, 0.32), 0.0, Color(0.22, 0.14, 0.08), false, 0.75, 0.04, 0.44)
+
+func _build_trade_caravan_gate(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CaravanGate", pos, yaw)
+	_add_local_trade_block(asset, "LeftTower", Vector3(-4.2, 3.0, 0), Vector3(2.6, 6.0, 3.2), 0.0, Color(0.58, 0.42, 0.24), true, 0.36, 0.04, 0.38)
+	_add_local_trade_block(asset, "RightTower", Vector3(4.2, 3.0, 0), Vector3(2.6, 6.0, 3.2), 0.0, Color(0.58, 0.42, 0.24), true, 0.36, 0.04, 0.38)
+	_add_local_trade_block(asset, "GateLintel", Vector3(0, 5.8, 0), Vector3(9.8, 1.0, 3.0), 0.0, Color(0.74, 0.56, 0.28), false, 0.32, 0.05, 0.36)
+
+func _build_trade_campfire_yard(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CampfireStoryYard", pos, yaw)
+	_add_local_trade_cylinder(asset, "CampfireRing", Vector3(0, 0.18, 0), 5.4, 0.12, Color(0.30, 0.23, 0.16), 32, false, 0.32, 0.02, 0.26)
+	_add_local_trade_block(asset, "Campfire", Vector3(0, 0.55, 0), Vector3(2.2, 1.1, 2.2), 0.0, Color(1.0, 0.36, 0.08, 0.68), false, 0.22, 0.24, 0.30)
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_local_trade_block(asset, "StorySeat_%02d" % i, Vector3(cos(angle) * 7.6, 0.40, sin(angle) * 7.6), Vector3(2.0, 0.65, 1.2), rad_to_deg(angle), Color(0.36, 0.24, 0.14), true, 0.45, 0.04, 0.40)
+
+func _build_trade_rain_arcade(parent: Node3D, pos: Vector3, yaw: float, side: String) -> void:
+	var asset := _make_city_asset(parent, "RainArcade_%s_%s" % [side, str(int(pos.z))], pos, yaw)
+	for i in range(4):
+		_add_local_trade_block(asset, "ArcadePillar_%02d" % i, Vector3(-5.4 + float(i) * 3.6, 2.0, 0), Vector3(0.42, 4.0, 0.42), 0.0, Color(0.44, 0.38, 0.34), true, 0.84, 0.08, 0.48)
+	_add_local_trade_block(asset, "RainRoof", Vector3(0, 4.25, 0), Vector3(13.2, 0.55, 3.0), 0.0, Color(0.30, 0.30, 0.32), false, 0.88, 0.08, 0.52)
+
+func _build_trade_umbrella_market(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "UmbrellaMarket", pos, yaw)
+	for i in range(9):
+		var local := Vector3(-8.0 + float(i % 3) * 8.0, 2.5, -6.0 + float(i / 3) * 6.0)
+		_add_local_trade_cylinder(asset, "UmbrellaCanopy_%02d" % i, local, 2.4, 0.18, Color(0.84, 0.32 + float(i % 3) * 0.12, 0.28), 24, false, 0.34, 0.16, 0.58)
+		_add_local_trade_block(asset, "UmbrellaPole_%02d" % i, local + Vector3(0, -1.15, 0), Vector3(0.16, 2.3, 0.16), 0.0, Color(0.28, 0.20, 0.12), false, 0.56, 0.04, 0.30)
+
+func _build_trade_band_plaza(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "BandPlaza", pos, yaw)
+	_add_local_trade_cylinder(asset, "BandstandDisk", Vector3(0, 0.25, 0), 7.2, 0.35, Color(0.56, 0.42, 0.24), 40, true, 0.60, 0.12, 0.40)
+	for i in range(5):
+		_add_local_trade_block(asset, "MusicStand_%02d" % i, Vector3(-4.0 + float(i) * 2.0, 1.1, -1.5), Vector3(0.7, 1.3, 0.12), 0.0, Color(0.12, 0.10, 0.08), false, 0.44, 0.06, 0.28)
+
+func _build_trade_carousel_hall(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "DesireCarouselHall", pos, yaw)
+	_add_local_trade_cylinder(asset, "CarouselFloor", Vector3(0, 0.20, 0), 8.0, 0.26, Color(0.54, 0.28, 0.32), 48, true, 0.66, 0.20, 0.46)
+	_add_local_trade_cylinder(asset, "CarouselCanopy", Vector3(0, 4.2, 0), 8.5, 0.22, Color(0.92, 0.38, 0.24, 0.70), 48, false, 0.44, 0.22, 0.56)
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_local_trade_block(asset, "CarouselGhost_%02d" % i, Vector3(cos(angle) * 5.2, 1.45, sin(angle) * 5.2), Vector3(0.6, 2.0, 0.35), rad_to_deg(-angle), Color(0.92, 0.72, 0.62, 0.30), false, 0.34, 0.18, 0.50)
+
+func _build_trade_figure(parent: Node3D, name: String, pos: Vector3, color: Color) -> void:
+	var asset := _make_city_asset(parent, name, pos, 0.0)
+	_add_local_trade_block(asset, "FigureBody", Vector3(0, 1.1, 0), Vector3(0.75, 2.2, 0.50), 0.0, color, false, 0.38, 0.08, 0.42)
+	_add_local_trade_block(asset, "FigureHead", Vector3(0, 2.55, 0), Vector3(0.65, 0.65, 0.65), 0.0, color.lerp(Color(0.90, 0.74, 0.58), 0.45), false, 0.34, 0.06, 0.38)
+
+func _build_trade_ground_mark(parent: Node3D, name: String, pos: Vector3, size: Vector2, color: Color) -> void:
+	var asset := _make_city_asset(parent, name, pos, 0.0)
+	for i in range(3):
+		_add_local_trade_block(asset, "GazeStroke_%02d" % i, Vector3(0, 0, 0), Vector3(size.x, size.y, 0.08), float(i) * 60.0, color, false, 0.42, 0.30, 0.60)
+
+func _build_trade_empty_plateau_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "EmptyPlateauCity", pos, yaw)
+	for i in range(8):
+		_add_local_trade_block(asset, "EmptyHouse_%02d" % i, Vector3(-12.0 + float(i % 4) * 8.0, 2.0, -6.0 + float(i / 4) * 12.0), Vector3(5.0, 4.0, 4.4), 0.0, Color(0.58, 0.52, 0.42, 0.60), true, 0.32, 0.03, 0.44)
+
+func _build_trade_migrating_main_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "MigratingMainCity", pos, yaw)
+	for i in range(6):
+		_add_local_trade_block(asset, "OccupiedBlock_%02d" % i, Vector3(-10.0 + float(i % 3) * 10.0, 2.4, -6.0 + float(i / 3) * 10.0), Vector3(6.2, 4.8, 5.0), 0.0, Color(0.64, 0.48, 0.28), true, 0.42, 0.08, 0.46)
+
+func _build_trade_empty_city_grid(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "EmptyCityGrid", pos, yaw)
+	for i in range(5):
+		_add_local_trade_block(asset, "GridStreetX_%02d" % i, Vector3(0, 0.10, -18.0 + float(i) * 9.0), Vector3(38, 0.08, 0.55), 0.0, Color(0.32, 0.30, 0.26), false, 0.30, 0.02, 0.34)
+		_add_local_trade_block(asset, "GridStreetZ_%02d" % i, Vector3(-18.0 + float(i) * 9.0, 0.11, 0), Vector3(0.55, 0.08, 38), 0.0, Color(0.32, 0.30, 0.26), false, 0.30, 0.02, 0.34)
+
+func _build_trade_new_vocation_street(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "NewVocationStreet", pos, yaw)
+	_add_local_trade_block(asset, "StreetDeck", Vector3(0, 0.06, 0), Vector3(32, 0.10, 7.0), 0.0, Color(0.48, 0.38, 0.24), true, 0.44, 0.06, 0.42)
+	for i in range(6):
+		_add_local_trade_block(asset, "VocationBooth_%02d" % i, Vector3(-13.0 + float(i) * 5.2, 1.2, 3.8), Vector3(3.0, 2.4, 2.0), 0.0, Color(0.62, 0.42, 0.24), true, 0.38, 0.05, 0.44)
+
+func _build_trade_mercury_temple(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "MercuryTemple", pos, yaw)
+	_add_local_trade_block(asset, "TempleBase", Vector3(0, 0.8, 0), Vector3(13, 1.6, 10), 0.0, Color(0.58, 0.48, 0.30), true, 0.36, 0.06, 0.42)
+	_add_local_trade_block(asset, "TempleBody", Vector3(0, 3.8, 0), Vector3(10, 6.0, 7.5), 0.0, Color(0.70, 0.58, 0.34), true, 0.34, 0.08, 0.44)
+	_add_local_trade_block(asset, "MercuryWingSign", Vector3(0, 7.1, -3.9), Vector3(7.5, 1.0, 0.16), 0.0, Color(0.96, 0.72, 0.24, 0.70), false, 0.32, 0.18, 0.52)
+
+func _build_trade_string_web_ruin(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "StringWebRuin", pos, yaw)
+	for i in range(9):
+		var p := Vector3(-24.0 + float(i % 3) * 24.0, 1.6, -14.0 + float(i / 3) * 14.0)
+		_add_local_trade_block(asset, "RuinCornerStake_%02d" % i, p, Vector3(0.32, 3.2, 0.32), 0.0, Color(0.22, 0.18, 0.14), true, 0.34, 0.02, 0.32)
+
+func _build_trade_stake_plaza(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "StakePlaza", pos, yaw)
+	_add_local_trade_cylinder(asset, "StakePlazaDisk", Vector3(0, 0.08, 0), 12.5, 0.12, Color(0.36, 0.34, 0.30), 48, true, 0.44, 0.04, 0.38)
+
+func _build_trade_relation_support_frame(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "RelationSupportFrame", pos, yaw)
+	for i in range(4):
+		_add_local_trade_block(asset, "SupportPost_%02d" % i, Vector3(-6.0 + float(i) * 4.0, 2.6, 0), Vector3(0.32, 5.2, 0.32), 0.0, Color(0.20, 0.17, 0.13), true, 0.32, 0.02, 0.30)
+	_add_local_trade_block(asset, "SupportTopLine", Vector3(0, 5.2, 0), Vector3(15, 0.22, 0.22), 0.0, Color(0.72, 0.70, 0.64), false, 0.24, 0.04, 0.34)
+
+func _build_trade_hillside_refuge_camp(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "HillsideRefugeCamp", pos, yaw)
+	for i in range(5):
+		_add_local_trade_block(asset, "RefugeTent_%02d" % i, Vector3(-10.0 + float(i) * 5.0, 1.1, float(i % 2) * 5.0), Vector3(3.8, 2.2, 3.0), 0.0, Color(0.50, 0.42, 0.32), true, 0.34, 0.03, 0.42)
+		_build_trade_simple_prop(asset, "RefugeeBelongings_%02d" % i, Vector3(-10.0 + float(i) * 5.0, 0, 4.0 + float(i % 2) * 3.0), 0.0, Vector3(1.8, 0.8, 1.4), Color(0.30, 0.22, 0.16), false)
+
+func _build_trade_second_ersilia(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "SecondErsilia", pos, yaw)
+	for i in range(6):
+		_add_local_trade_block(asset, "SecondCityFrame_%02d" % i, Vector3(-9.0 + float(i % 3) * 9.0, 2.4, float(i / 3) * 9.0), Vector3(4.4, 4.8, 0.24), float(i) * 12.0, Color(0.56, 0.54, 0.48, 0.34), false, 0.24, 0.04, 0.42)
+
+func _build_trade_water_street_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "WaterStreetCity", pos, yaw)
+	_add_local_trade_block(asset, "WaterStreetBase", Vector3(0, 0.06, 0), Vector3(36, 0.10, 28), 0.0, Color(0.35, 0.43, 0.35), true, 0.78, 0.08, 0.45)
+
+func _build_trade_canal_district(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CanalDistrict", pos, yaw)
+	for i in range(4):
+		_add_local_trade_block(asset, "Canal_%02d" % i, Vector3(-13.5 + float(i) * 9.0, 0.12, 0), Vector3(2.0, 0.06, 28), 0.0, Color(0.08, 0.48, 0.40, 0.74), false, 0.86, 0.12, 0.42)
+		_add_local_trade_block(asset, "CanalHouse_%02d" % i, Vector3(-15.0 + float(i) * 10.0, 2.0, -10), Vector3(5.2, 4.0, 4.5), 0.0, Color(0.52, 0.42, 0.30), true, 0.58, 0.08, 0.48)
+
+func _build_trade_zigzag_bridge_road(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "ZigzagBridgeRoad", pos, yaw)
+	var points := [Vector3(-16, 0, -10), Vector3(-7, 0, 1), Vector3(6, 0, -3), Vector3(15, 0, 9)]
+	for i in range(points.size() - 1):
+		_build_trade_route_span(asset, "ZigzagBridgeSegment_%02d" % i, points[i], points[i + 1], 3.0, Color(0.58, 0.52, 0.44), false)
+
+func _build_trade_boat_alley(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "BoatAlley", pos, yaw)
+	_add_local_trade_block(asset, "BoatAlleyWater", Vector3(0, 0.12, 0), Vector3(26, 0.06, 5.0), 0.0, Color(0.08, 0.42, 0.36, 0.76), false, 0.88, 0.12, 0.42)
+	for i in range(4):
+		_add_local_trade_block(asset, "LowWaterDoor_%02d" % i, Vector3(-10.0 + float(i) * 6.5, 1.5, -3.0), Vector3(3.2, 3.0, 0.35), 0.0, Color(0.38, 0.30, 0.22), false, 0.72, 0.08, 0.46)
+
+func _build_trade_multi_route_plaza(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "MultiRoutePlaza", pos, yaw)
+	_add_local_trade_cylinder(asset, "MultiRouteDisk", Vector3(0, 0.10, 0), 14.0, 0.14, Color(0.50, 0.42, 0.28), 64, true, 0.68, 0.10, 0.48)
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_local_trade_block(asset, "RouteChoiceMarker_%02d" % i, Vector3(cos(angle) * 10.5, 0.35, sin(angle) * 10.5), Vector3(3.2, 0.32, 0.8), rad_to_deg(angle), Color(0.14, 0.70, 0.60, 0.62), false, 0.56, 0.24, 0.50)
+
+func _trade_exchange_color(node_index: int) -> Color:
+	return TRADE_EXCHANGE_COLORS[clampi(node_index, 0, TRADE_EXCHANGE_COLORS.size() - 1)]
+
+func _build_trade_exchange_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = TRADE_EXCHANGE_NODES[node_index]
+	var color := _trade_exchange_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_trade_block(asset, "LedgerPost", Vector3(0, 1.8, 0), Vector3(0.42, 3.6, 0.42), 0.0, Color(0.24, 0.16, 0.10), true, 0.42, 0.06, 0.38)
+	_add_local_trade_block(asset, "ActiveTradeOffer", Vector3(0, 3.9, -0.32), Vector3(4.6, 2.0, 0.16), 0.0, color, false, 0.44, 0.24, 0.58)
+	var settled := _add_local_trade_block(asset, "SettledLedger", Vector3(0, 3.9, -0.52), Vector3(4.6, 2.0, 0.16), 0.0, Color(0.86, 0.78, 0.56, 0.32), false, 0.34, 0.08, 0.44)
+	settled.visible = false
+	_add_trade_exchange_glow(asset, color, node_index)
+	while trade_node_visuals.size() <= node_index:
+		trade_node_visuals.append(null)
+	trade_node_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.2, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.5
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_trade_node_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_trade_node_exited(body, node_index))
+	manifested_city.add_child(area)
+	while trade_node_areas.size() <= node_index:
+		trade_node_areas.append(null)
+	trade_node_areas[node_index] = area
+
+func _add_trade_exchange_glow(asset: Node3D, color: Color, node_index: int) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "TradeExchangeGlow"
+	halo.radius = 3.4
+	halo.height = 0.035
+	halo.sides = 48
+	halo.position = Vector3(0, 0.10, 0)
+	halo.material = _emissive_mat(color, 0.30, trade_exchange_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "TradeExchangeLight"
+	light.position = Vector3(0, 3.6, 0)
+	light.light_color = color
+	light.light_energy = trade_exchange_glow_energy
+	light.omni_range = 8.5
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "TradeExchangeParticles"
+	particles.amount = int(maxf(1.0, 84.0 * trade_exchange_particle_scale))
+	particles.lifetime = 2.4
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.09, 0.09)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.6
+	process.gravity = Vector3(0, 0.02, 0)
+	process.initial_velocity_min = 0.04
+	process.initial_velocity_max = 0.26
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.72)
+	particles.process_material = process
+	particles.position = Vector3(0, 2.4, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_trade_exchange_visual_state(node_index: int, resolved: bool) -> void:
+	if node_index < 0 or node_index >= trade_node_visuals.size():
+		return
+	var asset := trade_node_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveTradeOffer")
+	if active != null:
+		active.visible = not resolved
+	var settled := asset.get_node_or_null("SettledLedger")
+	if settled != null:
+		settled.visible = resolved
+	for name in ["TradeExchangeGlow", "TradeExchangeLight", "TradeExchangeParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not resolved
 
 func _build_desire_city_whitebox(parent: Node3D) -> void:
 	_build_desire_terrain_and_wall(parent)
@@ -1434,7 +2397,7 @@ func _build_desire_terrain_and_wall(parent: Node3D) -> void:
 	var gates := [
 		Vector3(0, 0, -84), Vector3(-42, 0, -84), Vector3(42, 0, -84),
 		Vector3(-84, 0, 0), Vector3(84, 0, 0),
-		Vector3(-32, 0, 84), Vector3(32, 0, 84)
+		Vector3(-32, 0, 84), Vector3(0, 0, 84), Vector3(32, 0, 84)
 	]
 	for i in range(gates.size()):
 		var yaw := 0.0 if abs(gates[i].z) > abs(gates[i].x) else 90.0
@@ -1523,12 +2486,15 @@ func _build_desire_atmosphere(parent: Node3D) -> void:
 	var atmosphere := Node3D.new()
 	atmosphere.name = "DesireCityAtmosphere_StyleDirection"
 	parent.add_child(atmosphere)
-	atmosphere.add_child(_make_city_particle_layer("HeatHazeLayer", 820, Vector2(0.48, 0.09), Vector3(112, 5.5, 112), Vector3(0.35, 0.06, -0.18), Color(1.0, 0.70, 0.22, 0.22), 0.05, 0.38, 100.0, 13.0))
-	atmosphere.add_child(_make_city_particle_layer("DesireGoldMote", 1250, Vector2(0.07, 0.07), Vector3(112, 6.8, 112), Vector3(0.12, 0.10, 0.05), Color(1.0, 0.74, 0.18, 0.42), 0.06, 0.48, 100.0, 11.0))
-	atmosphere.add_child(_make_city_particle_layer("RedDesireParticles", 780, Vector2(0.055, 0.055), Vector3(110, 5.8, 110), Vector3(-0.08, 0.12, 0.18), Color(0.92, 0.18, 0.10, 0.34), 0.04, 0.34, 100.0, 12.0))
-	atmosphere.add_child(_make_city_particle_layer("FarMirageLightSpots", 360, Vector2(0.28, 0.28), Vector3(122, 8.5, 122), Vector3(0.03, 0.02, -0.02), Color(1.0, 0.88, 0.52, 0.34), 0.01, 0.10, 100.0, 18.0))
-	atmosphere.add_child(_make_city_particle_layer("CanalMist", 620, Vector2(0.24, 0.07), Vector3(78, 2.8, 78), Vector3(0.10, 0.04, 0.10), Color(0.48, 0.76, 0.62, 0.28), 0.03, 0.22, 100.0, 12.5))
-	atmosphere.add_child(_make_city_particle_layer("OverexposedEdgeSparks", 460, Vector2(0.12, 0.05), Vector3(118, 7.0, 118), Vector3(0.20, 0.02, 0.10), Color(1.0, 0.92, 0.62, 0.42), 0.04, 0.22, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("HeatHazeLayer", 980, Vector2(0.34, 0.060), Vector3(112, 5.5, 112), Vector3(0.35, 0.06, -0.18), Color(1.0, 0.70, 0.22, 0.20), 0.05, 0.38, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("DesireGoldMote", 1750, Vector2(0.042, 0.042), Vector3(112, 6.8, 112), Vector3(0.12, 0.10, 0.05), Color(1.0, 0.74, 0.18, 0.38), 0.06, 0.48, 100.0, 11.0))
+	atmosphere.add_child(_make_city_particle_layer("RedDesireParticles", 1120, Vector2(0.036, 0.036), Vector3(110, 5.8, 110), Vector3(-0.08, 0.12, 0.18), Color(0.92, 0.18, 0.10, 0.30), 0.04, 0.34, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("FarMirageLightSpots", 520, Vector2(0.16, 0.16), Vector3(122, 8.5, 122), Vector3(0.03, 0.02, -0.02), Color(1.0, 0.88, 0.52, 0.30), 0.01, 0.10, 100.0, 18.0))
+	atmosphere.add_child(_make_city_particle_layer("CanalMist", 820, Vector2(0.16, 0.045), Vector3(78, 2.8, 78), Vector3(0.10, 0.04, 0.10), Color(0.48, 0.76, 0.62, 0.26), 0.03, 0.22, 100.0, 12.5))
+	atmosphere.add_child(_make_city_particle_layer("OverexposedEdgeSparks", 720, Vector2(0.070, 0.032), Vector3(118, 7.0, 118), Vector3(0.20, 0.02, 0.10), Color(1.0, 0.92, 0.62, 0.38), 0.04, 0.22, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("GreenCanalSparkParticles", 660, Vector2(0.038, 0.038), Vector3(82, 4.0, 82), Vector3(0.04, 0.10, 0.16), Color(0.20, 0.86, 0.58, 0.26), 0.04, 0.28, 100.0, 10.0))
+	atmosphere.add_child(_make_city_particle_layer("WhiteMirageDustParticles", 1180, Vector2(0.030, 0.030), Vector3(122, 7.6, 122), Vector3(0.08, 0.06, -0.05), Color(1.0, 0.92, 0.76, 0.18), 0.02, 0.18, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("ScarletNeedleParticles", 520, Vector2(0.14, 0.014), Vector3(112, 6.2, 112), Vector3(0.24, 0.08, 0.04), Color(1.0, 0.22, 0.10, 0.26), 0.05, 0.30, 100.0, 11.5))
 	for i in range(10):
 		var z := -74.0 + float(i) * 16.5
 		var x := -58.0 if i % 2 == 0 else 58.0
@@ -1546,10 +2512,26 @@ func _build_green_canal(parent: Node3D, name: String, pos: Vector3, size: Vector
 	_add_city_block(parent, name, pos, size, yaw, Color(0.12, 0.54, 0.38))
 
 func _build_desire_city_wall(parent: Node3D) -> void:
-	_add_city_block(parent, "DesireCityWall_North", Vector3(0, 4.0, -84), Vector3(160, 8, 2.4), 0.0, Color(0.73, 0.68, 0.58))
-	_add_city_block(parent, "DesireCityWall_South", Vector3(0, 4.0, 84), Vector3(160, 8, 2.4), 0.0, Color(0.73, 0.68, 0.58))
-	_add_city_block(parent, "DesireCityWall_West", Vector3(-84, 4.0, 0), Vector3(2.4, 8, 160), 0.0, Color(0.73, 0.68, 0.58))
-	_add_city_block(parent, "DesireCityWall_East", Vector3(84, 4.0, 0), Vector3(2.4, 8, 160), 0.0, Color(0.73, 0.68, 0.58))
+	var wall_color := Color(0.73, 0.68, 0.58)
+	var north_segments := [
+		["DesireCityWall_North_WestWing", Vector3(-64.25, 4.0, -84), Vector3(31.5, 8, 2.4)],
+		["DesireCityWall_North_LeftCenter", Vector3(-21.0, 4.0, -84), Vector3(29.0, 8, 2.4)],
+		["DesireCityWall_North_RightCenter", Vector3(21.0, 4.0, -84), Vector3(29.0, 8, 2.4)],
+		["DesireCityWall_North_EastWing", Vector3(64.25, 4.0, -84), Vector3(31.5, 8, 2.4)]
+	]
+	for segment in north_segments:
+		_add_city_block(parent, String(segment[0]), segment[1], segment[2], 0.0, wall_color)
+	var south_segments := [
+		["DesireCityWall_South_WestWing", Vector3(-59.5, 4.0, 84), Vector3(41.0, 8, 2.4)],
+		["DesireCityWall_South_LeftCenter", Vector3(-16.0, 4.0, 84), Vector3(18.0, 8, 2.4)],
+		["DesireCityWall_South_RightCenter", Vector3(16.0, 4.0, 84), Vector3(18.0, 8, 2.4)],
+		["DesireCityWall_South_EastWing", Vector3(59.5, 4.0, 84), Vector3(41.0, 8, 2.4)]
+	]
+	for segment in south_segments:
+		_add_city_block(parent, String(segment[0]), segment[1], segment[2], 0.0, wall_color)
+	for z in [-43.5, 43.5]:
+		_add_city_block(parent, "DesireCityWall_West_%s" % ("North" if z < 0.0 else "South"), Vector3(-84, 4.0, z), Vector3(2.4, 8, 73.0), 0.0, wall_color)
+		_add_city_block(parent, "DesireCityWall_East_%s" % ("North" if z < 0.0 else "South"), Vector3(84, 4.0, z), Vector3(2.4, 8, 73.0), 0.0, wall_color)
 
 func _build_aluminum_tower(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, name, pos, yaw)
@@ -1558,7 +2540,9 @@ func _build_aluminum_tower(parent: Node3D, name: String, pos: Vector3, yaw: floa
 
 func _build_spring_drawbridge_gate(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, name, pos, yaw)
-	_add_local_city_block(asset, "GateFrame", Vector3(0, 3.5, 0), Vector3(10, 7, 1.4), 0.0, Color(0.60, 0.56, 0.48))
+	_add_local_city_block(asset, "GatePillar_Left", Vector3(-4.8, 3.5, 0), Vector3(0.75, 7, 1.4), 0.0, Color(0.60, 0.56, 0.48), true)
+	_add_local_city_block(asset, "GatePillar_Right", Vector3(4.8, 3.5, 0), Vector3(0.75, 7, 1.4), 0.0, Color(0.60, 0.56, 0.48), true)
+	_add_local_city_block(asset, "GateLintel", Vector3(0, 6.8, 0), Vector3(10, 0.9, 1.4), 0.0, Color(0.60, 0.56, 0.48), true)
 	_add_local_city_block(asset, "DrawbridgeDeck", Vector3(0, 0.35, -5.0), Vector3(10, 0.7, 10), 0.0, Color(0.44, 0.32, 0.20), true)
 	_add_local_city_block(asset, "SpringBar", Vector3(-5.4, 4.2, 0), Vector3(0.35, 2.6, 0.35), 0.0, Color(0.80, 0.80, 0.75), false)
 	_add_local_city_block(asset, "SpringBarMirror", Vector3(5.4, 4.2, 0), Vector3(0.35, 2.6, 0.35), 0.0, Color(0.80, 0.80, 0.75), false)
@@ -1946,10 +2930,12 @@ func _build_signs_atmosphere(parent: Node3D) -> void:
 	var atmosphere := Node3D.new()
 	atmosphere.name = "SignsCityAtmosphere_StyleDirection"
 	parent.add_child(atmosphere)
-	atmosphere.add_child(_make_city_particle_layer("FloatingLetterParticles", 880, Vector2(0.08, 0.12), Vector3(112, 8, 112), Vector3(0.05, 0.12, -0.03), Color(0.02, 0.02, 0.02, 0.34), 0.04, 0.26, 100.0, 13.0))
-	atmosphere.add_child(_make_city_particle_layer("InkDotParticles", 1120, Vector2(0.05, 0.05), Vector3(114, 6.0, 114), Vector3(-0.08, 0.06, 0.04), Color(0.02, 0.02, 0.018, 0.38), 0.05, 0.34, 100.0, 10.0))
-	atmosphere.add_child(_make_city_particle_layer("SymbolFragmentParticles", 560, Vector2(0.16, 0.07), Vector3(108, 6.5, 108), Vector3(0.18, 0.06, 0.08), Color(0.86, 0.82, 0.58, 0.30), 0.06, 0.28, 100.0, 12.0))
-	atmosphere.add_child(_make_city_particle_layer("GlowingLineParticles", 360, Vector2(0.32, 0.035), Vector3(106, 7.0, 106), Vector3(0.10, 0.10, 0.10), Color(0.30, 0.56, 1.0, 0.36), 0.05, 0.22, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("FloatingLetterParticles", 1120, Vector2(0.052, 0.085), Vector3(112, 8, 112), Vector3(0.05, 0.12, -0.03), Color(0.02, 0.02, 0.02, 0.32), 0.04, 0.26, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("InkDotParticles", 1500, Vector2(0.030, 0.030), Vector3(114, 6.0, 114), Vector3(-0.08, 0.06, 0.04), Color(0.02, 0.02, 0.018, 0.35), 0.05, 0.34, 100.0, 10.0))
+	atmosphere.add_child(_make_city_particle_layer("SymbolFragmentParticles", 740, Vector2(0.11, 0.045), Vector3(108, 6.5, 108), Vector3(0.18, 0.06, 0.08), Color(0.86, 0.82, 0.58, 0.28), 0.06, 0.28, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("GlowingLineParticles", 520, Vector2(0.22, 0.024), Vector3(106, 7.0, 106), Vector3(0.10, 0.10, 0.10), Color(0.30, 0.56, 1.0, 0.32), 0.05, 0.22, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("PaleLabelDustParticles", 920, Vector2(0.026, 0.026), Vector3(108, 5.4, 108), Vector3(0.04, 0.05, -0.06), Color(0.94, 0.90, 0.72, 0.18), 0.02, 0.18, 100.0, 11.0))
+	atmosphere.add_child(_make_city_particle_layer("BlackStrokeNeedleParticles", 440, Vector2(0.15, 0.012), Vector3(108, 6.2, 108), Vector3(-0.16, 0.04, 0.10), Color(0.02, 0.02, 0.018, 0.30), 0.04, 0.24, 100.0, 13.0))
 	for i in range(10):
 		var angle := TAU * float(i) / 10.0
 		_add_sign_projection_veil(atmosphere, "SignProjectionVeil_%02d" % i, Vector3(cos(angle) * 48.0, 5.8 + float(i % 3) * 1.1, sin(angle) * 48.0), Vector2(72, 16 + float(i % 2) * 4.0), rad_to_deg(angle) + 90.0, Color(0.34, 0.58, 1.0, 0.30), 300.0 + float(i) * 7.0, float(i % 3) * 0.25)
@@ -2530,6 +3516,10 @@ func _build_ui() -> void:
 			callback = _on_desire_theme_pressed
 		elif i == THEME_SIGNS:
 			callback = _on_signs_theme_pressed
+		elif i == THEME_THIN:
+			callback = _on_thin_theme_pressed
+		elif i == THEME_TRADE:
+			callback = _on_trade_theme_pressed
 		var b := _button(THEME_NAMES[i], callback)
 		theme_buttons.append(b)
 		theme_select.add_child(b)
@@ -2571,6 +3561,42 @@ func _build_ui() -> void:
 	quick_hint_label.modulate.a = 0.0
 	quick_hint_label.visible = false
 	ui_root.add_child(quick_hint_label)
+
+	grey_countdown_label = Label.new()
+	grey_countdown_label.name = "GreySearchCountdown"
+	grey_countdown_label.text = "寻声 01:00"
+	grey_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	grey_countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	grey_countdown_label.add_theme_font_size_override("font_size", 17)
+	grey_countdown_label.add_theme_color_override("font_color", Color(0.92, 0.90, 0.78, 0.82))
+	grey_countdown_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.42))
+	grey_countdown_label.add_theme_constant_override("shadow_offset_x", 1)
+	grey_countdown_label.add_theme_constant_override("shadow_offset_y", 1)
+	grey_countdown_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	grey_countdown_label.offset_left = 24
+	grey_countdown_label.offset_right = 210
+	grey_countdown_label.offset_top = 22
+	grey_countdown_label.offset_bottom = 52
+	grey_countdown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	grey_countdown_label.visible = false
+	ui_root.add_child(grey_countdown_label)
+
+	grey_guidance_root = Control.new()
+	grey_guidance_root.name = "GreyTimedLineGuidance"
+	grey_guidance_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	grey_guidance_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	grey_guidance_root.visible = false
+	ui_root.add_child(grey_guidance_root)
+	grey_guidance_lines.clear()
+	for i in range(grey_guidance_line_count):
+		var line := ColorRect.new()
+		line.name = "GuideLine_%02d" % i
+		line.color = Color(0.88, 0.84, 0.64, 0.0)
+		line.size = Vector2(46.0 + float(i % 3) * 10.0, 2.0)
+		line.pivot_offset = Vector2(0.0, 1.0)
+		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		grey_guidance_root.add_child(line)
+		grey_guidance_lines.append(line)
 
 	reading_panel = _center_panel("ReadingPanel")
 	reading_text = _label("", 28)
@@ -2681,6 +3707,12 @@ func _on_desire_theme_pressed() -> void:
 func _on_signs_theme_pressed() -> void:
 	_on_theme_pressed(THEME_SIGNS)
 
+func _on_thin_theme_pressed() -> void:
+	_on_theme_pressed(THEME_THIN)
+
+func _on_trade_theme_pressed() -> void:
+	_on_theme_pressed(THEME_TRADE)
+
 func _on_theme_pressed(theme_index: int) -> void:
 	if theme_index != THEME_MEMORY and not memory_completed:
 		_update_theme_unlocks()
@@ -2727,6 +3759,7 @@ func _begin_memory_level() -> void:
 	_set_extra_grey_environment_active(true)
 	_stop_intro_bgm_for_grey()
 	_reset_grey_sfx_timers()
+	_reset_grey_guidance()
 	_show_quick_start_hint()
 
 func _disabled_theme_pressed() -> void:
@@ -2735,17 +3768,18 @@ func _disabled_theme_pressed() -> void:
 func _update_theme_unlocks() -> void:
 	if theme_select_status_label != null:
 		if memory_completed:
-			theme_select_status_label.text = "记忆已完成。当前可选择“记忆”“欲望”“符号”；其他主题仍等待白盒。"
+			theme_select_status_label.text = "记忆已完成。当前可选择“记忆”“欲望”“符号”“轻盈”“贸易”；其他主题仍等待白盒。"
 		else:
 			theme_select_status_label.text = "先完成“记忆”，再自由选择其他城市。"
 	for i in range(theme_buttons.size()):
 		var button := theme_buttons[i]
-		var unlocked := i == THEME_MEMORY or (memory_completed and (i == THEME_DESIRE or i == THEME_SIGNS))
+		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE
+		var unlocked := i == THEME_MEMORY or (memory_completed and playable_after_memory)
 		button.disabled = not unlocked
 		button.text = THEME_NAMES[i]
-		if (i == THEME_DESIRE or i == THEME_SIGNS) and not memory_completed:
+		if playable_after_memory and not memory_completed:
 			button.text = "%s（完成记忆后解锁）" % THEME_NAMES[i]
-		elif i != THEME_MEMORY and i != THEME_DESIRE and i != THEME_SIGNS:
+		elif i != THEME_MEMORY and not playable_after_memory:
 			button.text = "%s（后续）" % THEME_NAMES[i]
 			unlocked = false
 			button.disabled = true
@@ -2814,17 +3848,17 @@ func _start_manifest_sequence() -> void:
 	tween.tween_property(environment, "fog_density", fog_end_value, manifestation_duration).from(fog_start_value).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(environment, "adjustment_saturation", 1.0, manifestation_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(environment, "adjustment_contrast", 1.0, manifestation_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(grey_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(grey_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if grey_sand_particles != null:
-		tween.tween_property(grey_sand_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween.tween_property(grey_sand_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if grey_current_particles != null:
-		tween.tween_property(grey_current_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween.tween_property(grey_current_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if grey_willow_particles != null:
-		tween.tween_property(grey_willow_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween.tween_property(grey_willow_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if grey_storm_particles != null:
-		tween.tween_property(grey_storm_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween.tween_property(grey_storm_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	if grey_turbulence_particles != null:
-		tween.tween_property(grey_turbulence_particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		tween.tween_property(grey_turbulence_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	_fade_extra_grey_particles(tween)
 	if grey_environment_root != null:
 		tween.tween_callback(func(): grey_environment_root.visible = false).set_delay(max(manifestation_duration - 1.0, 0.1))
@@ -2859,6 +3893,10 @@ func _start_manifest_sequence() -> void:
 		_show_hint("%s 已显现。收集欲望物，进入月光迷宫。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
 	elif selected_theme_index == THEME_SIGNS:
 		_show_hint("%s 已显现。读取五处符号断点，进入无名广场。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
+	elif selected_theme_index == THEME_THIN:
+		_show_hint("%s 已显现。读取五个悬空节点，再回到网心瞭望台。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
+	elif selected_theme_index == THEME_TRADE:
+		_show_hint("%s 已显现。完成五次交换，再回到中心交易核。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
 	else:
 		_show_hint("%s 已显现。去寻找最高处的回声塔。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
 
@@ -2883,6 +3921,10 @@ func _is_player_near_reading_trigger() -> bool:
 		return desire_goal_trigger != null and _is_desire_collection_complete() and player.global_position.distance_to(desire_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if selected_theme_index == THEME_SIGNS:
 		return sign_goal_trigger != null and _is_sign_fracture_complete() and player.global_position.distance_to(sign_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_THIN:
+		return thin_goal_trigger != null and _is_thin_ascent_complete() and player.global_position.distance_to(thin_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_TRADE:
+		return trade_goal_trigger != null and _is_trade_exchange_complete() and player.global_position.distance_to(trade_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if reading_trigger == null:
 		return false
 	return player.global_position.distance_to(reading_trigger.global_position) <= reading_interact_radius
@@ -3011,6 +4053,128 @@ func _on_sign_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_SIGNS:
 		can_read_tower = false
 
+func _on_thin_node_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_THIN:
+		return
+	if _is_thin_node_completed(node_index):
+		return
+	thin_active_node_index = node_index
+	var data: Array = THIN_ASCENT_NODES[node_index]
+	_show_hint("按 E 读取悬空节点：%s" % String(data[1]), 2.4)
+
+func _on_thin_node_exited(body: Node3D, node_index: int) -> void:
+	if body == player and thin_active_node_index == node_index:
+		thin_active_node_index = -1
+
+func _activate_thin_ascent_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= THIN_ASCENT_NODES.size():
+		return
+	if _is_thin_node_completed(node_index):
+		return
+	thin_completed_nodes.append(node_index)
+	thin_active_node_index = -1
+	_set_thin_node_visual_state(node_index, true)
+	if node_index < thin_node_areas.size() and thin_node_areas[node_index] != null:
+		thin_node_areas[node_index].set_deferred("monitoring", false)
+		thin_node_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = THIN_ASCENT_NODES[node_index]
+	var count := thin_completed_nodes.size()
+	if _is_thin_ascent_complete():
+		_show_hint("%s\n五个悬空节点已经绷紧。回到中心网心瞭望台。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已读取 %d / %d。" % [String(data[2]), count, THIN_ASCENT_NODES.size()], 4.0)
+
+func _is_thin_node_completed(node_index: int) -> bool:
+	return thin_completed_nodes.has(node_index)
+
+func _is_thin_ascent_complete() -> bool:
+	return thin_completed_nodes.size() >= THIN_ASCENT_NODES.size()
+
+func _reset_thin_ascent_nodes() -> void:
+	thin_completed_nodes.clear()
+	thin_active_node_index = -1
+	for i in range(thin_node_visuals.size()):
+		_set_thin_node_visual_state(i, false)
+	for area in thin_node_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_thin_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_THIN:
+		return
+	if _is_thin_ascent_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读网心瞭望台。", 2.5)
+	else:
+		var missing := THIN_ASCENT_NODES.size() - thin_completed_nodes.size()
+		_show_hint("网心还没有完全绷紧。还需读取 %d 个悬空节点。" % missing, 3.2)
+
+func _on_thin_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_THIN:
+		can_read_tower = false
+
+func _on_trade_node_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_TRADE:
+		return
+	if _is_trade_node_completed(node_index):
+		return
+	trade_active_node_index = node_index
+	var data: Array = TRADE_EXCHANGE_NODES[node_index]
+	_show_hint("按 E 完成交换：%s" % String(data[1]), 2.4)
+
+func _on_trade_node_exited(body: Node3D, node_index: int) -> void:
+	if body == player and trade_active_node_index == node_index:
+		trade_active_node_index = -1
+
+func _activate_trade_exchange_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= TRADE_EXCHANGE_NODES.size():
+		return
+	if _is_trade_node_completed(node_index):
+		return
+	trade_completed_nodes.append(node_index)
+	trade_active_node_index = -1
+	_set_trade_exchange_visual_state(node_index, true)
+	if node_index < trade_node_areas.size() and trade_node_areas[node_index] != null:
+		trade_node_areas[node_index].set_deferred("monitoring", false)
+		trade_node_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = TRADE_EXCHANGE_NODES[node_index]
+	var count := trade_completed_nodes.size()
+	if _is_trade_exchange_complete():
+		_show_hint("%s\n五次交换已经写入账本。回到中心交易核。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已完成交换 %d / %d。" % [String(data[2]), count, TRADE_EXCHANGE_NODES.size()], 4.0)
+
+func _is_trade_node_completed(node_index: int) -> bool:
+	return trade_completed_nodes.has(node_index)
+
+func _is_trade_exchange_complete() -> bool:
+	return trade_completed_nodes.size() >= TRADE_EXCHANGE_NODES.size()
+
+func _reset_trade_exchange_nodes() -> void:
+	trade_completed_nodes.clear()
+	trade_active_node_index = -1
+	for i in range(trade_node_visuals.size()):
+		_set_trade_exchange_visual_state(i, false)
+	for area in trade_node_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_trade_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_TRADE:
+		return
+	if _is_trade_exchange_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读中心交易核。", 2.5)
+	else:
+		var missing := TRADE_EXCHANGE_NODES.size() - trade_completed_nodes.size()
+		_show_hint("中心交易核还没有开账。还需完成 %d 次交换。" % missing, 3.2)
+
+func _on_trade_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_TRADE:
+		can_read_tower = false
+
 func _open_reading() -> void:
 	phase = GamePhase.READING
 	player.set_locked(true)
@@ -3059,6 +4223,10 @@ func _choose_stay() -> void:
 		_show_hint("你仍在欲望之城。回到月光陷阱广场可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_SIGNS:
 		_show_hint("你仍在符号之城。回到无名广场可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_THIN:
+		_show_hint("你仍在轻盈之城。回到网心瞭望台可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_TRADE:
+		_show_hint("你仍在贸易之城。回到中心交易核可再次阅读。", 3.0)
 	else:
 		_show_hint("你仍在记忆之城。回到塔底可再次阅读。", 3.0)
 
@@ -3096,6 +4264,8 @@ func _reset_level_state() -> void:
 	can_read_tower = false
 	_reset_desire_relics()
 	_reset_sign_fracture_nodes()
+	_reset_thin_ascent_nodes()
+	_reset_trade_exchange_nodes()
 	manifested_city.visible = false
 	_set_city_collision_enabled(false)
 	grey_visual_root.visible = true
@@ -3131,6 +4301,7 @@ func _reset_level_state() -> void:
 	world_reverb.room_size = reverb_room_size_max
 	player.set_footstep_set("grey")
 	direction_tint.color.a = 0.0
+	_hide_grey_guidance()
 	if global_music_tween != null:
 		global_music_tween.kill()
 	global_music_player.stop()
@@ -3318,6 +4489,46 @@ func _set_grey_post_process_visible(visible: bool) -> void:
 	if grey_post_process_rect != null:
 		grey_post_process_rect.visible = visible and grey_post_process_enabled
 
+func _update_city_post_process() -> void:
+	if grey_post_process_material == null or grey_post_process_rect == null:
+		return
+	grey_post_process_rect.visible = city_post_process_enabled
+	if not city_post_process_enabled:
+		return
+	var zone_index := clampi(selected_theme_index, 0, ZONE_COLORS.size() - 1)
+	var theme_color: Color = ZONE_COLORS[zone_index]
+	var desire_heat := 1.0 if selected_theme_index == THEME_DESIRE else 0.0
+	var signs_flatten := 1.0 if selected_theme_index == THEME_SIGNS else 0.0
+	var thin_air := 1.0 if selected_theme_index == THEME_THIN else 0.0
+	var trade_wet := 1.0 if selected_theme_index == THEME_TRADE else 0.0
+	grey_post_process_material.set_shader_parameter("effect_strength", city_post_effect_strength)
+	grey_post_process_material.set_shader_parameter("grain_strength", 0.07 + 0.03 * signs_flatten + 0.02 * thin_air + 0.02 * trade_wet)
+	grey_post_process_material.set_shader_parameter("halftone_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("pixel_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("posterize_strength", 0.10 + 0.04 * signs_flatten - 0.03 * thin_air + 0.02 * trade_wet)
+	grey_post_process_material.set_shader_parameter("flatten_strength", 0.10 + 0.12 * signs_flatten - 0.02 * thin_air)
+	grey_post_process_material.set_shader_parameter("scanline_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00045 + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet)
+	grey_post_process_material.set_shader_parameter("wave_strength", 0.0008 + 0.0012 * desire_heat + 0.00065 * thin_air + 0.0010 * trade_wet)
+	grey_post_process_material.set_shader_parameter("tear_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("edge_strength", 0.10 + 0.04 * thin_air)
+	grey_post_process_material.set_shader_parameter("contour_strength", 0.05 + 0.08 * signs_flatten + 0.06 * thin_air + 0.03 * trade_wet)
+	grey_post_process_material.set_shader_parameter("solarize_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("inversion_flicker_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air)
+	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.05 + 0.04 * desire_heat + 0.08 * thin_air + 0.07 * trade_wet)
+	grey_post_process_material.set_shader_parameter("zone_tint", Vector3(theme_color.r, theme_color.g, theme_color.b))
+	grey_post_process_material.set_shader_parameter("ink_outline_strength", city_post_ink_outline_strength)
+	grey_post_process_material.set_shader_parameter("ink_outline_width", 1.15)
+	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", city_post_stylized_shadow_strength - 0.06 * thin_air)
+	grey_post_process_material.set_shader_parameter("color_variation_strength", city_post_color_variation_strength + 0.03 * thin_air + 0.06 * trade_wet)
+	grey_post_process_material.set_shader_parameter("soft_glow_strength", city_post_soft_glow_strength + 0.04 * desire_heat + 0.06 * thin_air + 0.07 * trade_wet)
+	var ink_color := Vector3(0.035, 0.034, 0.030).lerp(Vector3(0.06, 0.08, 0.10), thin_air)
+	grey_post_process_material.set_shader_parameter("ink_color", ink_color.lerp(Vector3(0.04, 0.055, 0.045), trade_wet))
+	var shadow_color := Vector3(0.13, 0.12, 0.10).lerp(Vector3(0.18, 0.08, 0.045), desire_heat)
+	shadow_color = shadow_color.lerp(Vector3(0.10, 0.13, 0.16), thin_air)
+	grey_post_process_material.set_shader_parameter("shadow_color", shadow_color.lerp(Vector3(0.10, 0.16, 0.13), trade_wet))
+
 func _update_grey_post_process() -> void:
 	if grey_post_process_material == null:
 		return
@@ -3346,6 +4557,13 @@ func _update_grey_post_process() -> void:
 	grey_post_process_material.set_shader_parameter("vignette_strength", 0.12 + 0.10 * style.y)
 	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.08 + 0.14 * closeness)
 	grey_post_process_material.set_shader_parameter("zone_tint", Vector3(ZONE_COLORS[zone_index].r, ZONE_COLORS[zone_index].g, ZONE_COLORS[zone_index].b))
+	grey_post_process_material.set_shader_parameter("ink_outline_strength", grey_post_ink_outline_strength * (0.78 + 0.30 * style.y))
+	grey_post_process_material.set_shader_parameter("ink_outline_width", 1.0 + style.w * 0.75)
+	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", grey_post_stylized_shadow_strength * (0.75 + 0.40 * closeness))
+	grey_post_process_material.set_shader_parameter("color_variation_strength", grey_post_color_variation_strength * (0.80 + 0.35 * style.x))
+	grey_post_process_material.set_shader_parameter("soft_glow_strength", grey_post_soft_glow_strength)
+	grey_post_process_material.set_shader_parameter("ink_color", Vector3(0.025, 0.027, 0.024))
+	grey_post_process_material.set_shader_parameter("shadow_color", Vector3(0.075, 0.078, 0.072))
 
 func _update_memory_guide() -> void:
 	if not memory_guide_enabled or memory_guide_particles == null or memory_guide_light == null:
@@ -3384,7 +4602,7 @@ func _reset_extra_grey_environment() -> void:
 func _fade_extra_grey_particles(tween: Tween) -> void:
 	for particles in grey_extra_particles:
 		if particles != null:
-			tween.tween_property(particles, "amount", 0, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+			tween.tween_property(particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 
 func _nearest_zone_index(pos: Vector3) -> int:
 	var best_index := 0
@@ -3522,6 +4740,72 @@ func _hide_quick_start_hint() -> void:
 		quick_hint_label.visible = false
 		quick_hint_label.modulate.a = 0.0
 
+func _reset_grey_guidance() -> void:
+	grey_search_elapsed = 0.0
+	if grey_countdown_label != null:
+		grey_countdown_label.visible = true
+		grey_countdown_label.modulate.a = 1.0
+	if grey_guidance_root != null:
+		grey_guidance_root.visible = false
+	for line in grey_guidance_lines:
+		if line != null:
+			line.color.a = 0.0
+
+func _hide_grey_guidance() -> void:
+	if grey_countdown_label != null:
+		grey_countdown_label.visible = false
+	if grey_guidance_root != null:
+		grey_guidance_root.visible = false
+
+func _update_grey_guidance(delta: float) -> void:
+	grey_search_elapsed += delta
+	var remaining := maxf(grey_guidance_delay - grey_search_elapsed, 0.0)
+	if grey_countdown_label != null:
+		var seconds := int(ceil(remaining))
+		grey_countdown_label.visible = true
+		grey_countdown_label.text = "寻声 %02d:%02d" % [seconds / 60, seconds % 60]
+		grey_countdown_label.modulate.a = 0.82 if remaining > 0.0 else 0.48
+	if grey_guidance_root == null:
+		return
+	if grey_search_elapsed < grey_guidance_delay:
+		grey_guidance_root.visible = false
+		return
+	grey_guidance_root.visible = true
+	var fade: float = clamp((grey_search_elapsed - grey_guidance_delay) / maxf(grey_guidance_fade_in_duration, 0.1), 0.0, 1.0)
+	var to_target: Vector3 = _selected_theme_position() - player.global_position
+	to_target.y = 0.0
+	if to_target.length_squared() < 0.001:
+		to_target = -player.global_transform.basis.z
+	var target_dir: Vector3 = to_target.normalized()
+	var forward: Vector3 = -player.global_transform.basis.z
+	forward.y = 0.0
+	forward = forward.normalized()
+	var right: Vector3 = player.global_transform.basis.x
+	right.y = 0.0
+	right = right.normalized()
+	var screen_dir: Vector2 = Vector2(right.dot(target_dir), -forward.dot(target_dir))
+	if screen_dir.length_squared() < 0.001:
+		screen_dir = Vector2(0.0, -1.0)
+	screen_dir = screen_dir.normalized()
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var center: Vector2 = viewport_size * 0.5
+	var drift: Vector2 = Vector2(-screen_dir.y, screen_dir.x)
+	var time: float = float(Time.get_ticks_msec()) / 1000.0
+	var base: Vector2 = center + screen_dir * minf(viewport_size.x, viewport_size.y) * 0.10
+	for i in range(grey_guidance_lines.size()):
+		var line := grey_guidance_lines[i]
+		if line == null:
+			continue
+		var index := float(i)
+		var pulse := 0.5 + 0.5 * sin(time * 2.1 + index * 0.76)
+		var offset := screen_dir * (index - float(grey_guidance_lines.size() - 1) * 0.5) * grey_guidance_line_spacing
+		var side := drift * sin(time * 0.9 + index * 1.3) * 10.0
+		line.position = base + offset + side
+		line.rotation = screen_dir.angle()
+		line.size = Vector2(38.0 + float(i % 4) * 9.0, 1.4 + float(i % 2) * 0.7)
+		line.pivot_offset = Vector2(0.0, line.size.y * 0.5)
+		line.color = Color(0.88, 0.84, 0.64, grey_guidance_line_alpha * fade * (0.45 + pulse * 0.55))
+
 func _toggle_grey_debug_visibility() -> void:
 	show_grey_zone_debug = not show_grey_zone_debug
 	if grey_zone_debug_root != null:
@@ -3530,6 +4814,7 @@ func _toggle_grey_debug_visibility() -> void:
 
 func _hide_all_ui() -> void:
 	_hide_quick_start_hint()
+	_hide_grey_guidance()
 	for c in [main_menu, story_panel, options_panel, theme_select, mechanic_prompt, reading_panel, choice_panel, pause_menu]:
 		if c != null:
 			c.visible = false
@@ -3720,6 +5005,39 @@ func _emissive_mat(color: Color, alpha: float, energy: float) -> StandardMateria
 	material.no_depth_test = alpha < 0.45
 	return material
 
+func _thin_net_material(color: Color, alpha: float, seed: float, sway := 0.035, edge_strength := 0.78) -> Material:
+	var shader := load("res://shaders/thin_net_surface.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("edge_color", Color(0.86, 0.94, 1.0, 0.92))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("edge_strength", edge_strength)
+	material.set_shader_parameter("wire_density", 6.0 + fmod(abs(seed), 5.0))
+	material.set_shader_parameter("sway_amount", sway)
+	material.set_shader_parameter("sway_speed", 0.65 + fmod(abs(seed), 4.0) * 0.12)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _trade_wet_material(color: Color, alpha: float, seed: float, wetness := 0.58, neon_mix := 0.10, material_mix := 0.42) -> Material:
+	var shader := load("res://shaders/trade_wet_market_surface.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("lantern_color", Color(1.0, 0.48, 0.16, 1.0))
+	material.set_shader_parameter("neon_color", Color(0.08, 0.72, 0.62, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("wetness", wetness)
+	material.set_shader_parameter("lantern_glow", 0.16 + trade_city_style_intensity * 0.08)
+	material.set_shader_parameter("neon_mix", neon_mix)
+	material.set_shader_parameter("material_mix", material_mix)
+	material.set_shader_parameter("seed", seed)
+	return material
+
 func _city_style_veil_material(color: Color, alpha: float, style_mode: float, seed: float, intensity: float) -> Material:
 	var shader := load("res://shaders/city_style_veil.gdshader") as Shader
 	if shader == null:
@@ -3734,6 +5052,9 @@ func _city_style_veil_material(color: Color, alpha: float, style_mode: float, se
 	material.set_shader_parameter("flow_speed", 0.12 + style_mode * 0.16)
 	material.set_shader_parameter("noise_scale", 3.2 + style_mode * 2.4)
 	material.set_shader_parameter("vertical_wave", 0.12 + style_mode * 0.38)
+	material.set_shader_parameter("ink_strength", 0.16 + intensity * 0.08)
+	material.set_shader_parameter("shadow_strength", 0.18 + style_mode * 0.10)
+	material.set_shader_parameter("color_variation_strength", 0.12 + intensity * 0.05)
 	return material
 
 func _add_city_style_veil(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw_degrees: float, color: Color, style_mode: float, seed: float, intensity: float) -> void:
@@ -3812,6 +5133,9 @@ func _grey_chaos_material(color: Color, alpha: float, noise_scale: float, flow_s
 	material.set_shader_parameter("flow_speed", flow_speed)
 	material.set_shader_parameter("distortion", distortion)
 	material.set_shader_parameter("seed", seed)
+	material.set_shader_parameter("ink_strength", 0.14 + alpha * 0.16)
+	material.set_shader_parameter("shadow_strength", 0.14 + distortion * 0.30)
+	material.set_shader_parameter("color_variation_strength", 0.08 + alpha * 0.12)
 	return material
 
 func _audio_stream_or_generator(paths: Array, loop_stream := false) -> AudioStream:

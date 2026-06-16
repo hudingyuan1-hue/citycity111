@@ -19,6 +19,13 @@ uniform float inversion_flicker_strength = 0.0;
 uniform float vignette_strength = 0.18;
 uniform float zone_tint_strength = 0.12;
 uniform vec3 zone_tint = vec3(0.78, 0.76, 0.68);
+uniform float ink_outline_strength = 0.0;
+uniform float ink_outline_width = 1.0;
+uniform float stylized_shadow_strength = 0.0;
+uniform float color_variation_strength = 0.0;
+uniform float soft_glow_strength = 0.0;
+uniform vec3 ink_color = vec3(0.025, 0.027, 0.024);
+uniform vec3 shadow_color = vec3(0.08, 0.08, 0.075);
 uniform float time_scale = 1.0;
 
 float hash(vec2 p) {
@@ -72,13 +79,37 @@ void fragment() {
 	col = mix(col, flat_col, clamp(flatten_strength * effect_strength, 0.0, 1.0));
 	col = mix(col, posterize(col, 5.0), clamp(posterize_strength * effect_strength, 0.0, 1.0));
 
-	vec2 px = vec2(1.0 / 1280.0, 1.0 / 720.0);
+	vec2 px = SCREEN_PIXEL_SIZE * max(ink_outline_width, 0.5);
 	float l1 = luma(texture(screen_texture, uv + vec2(px.x, 0.0)).rgb);
 	float l2 = luma(texture(screen_texture, uv - vec2(px.x, 0.0)).rgb);
 	float l3 = luma(texture(screen_texture, uv + vec2(0.0, px.y)).rgb);
 	float l4 = luma(texture(screen_texture, uv - vec2(0.0, px.y)).rgb);
-	float edge = clamp(abs(l1 - l2) + abs(l3 - l4), 0.0, 1.0);
+	float ld1 = luma(texture(screen_texture, uv + px * vec2(1.0, 1.0)).rgb);
+	float ld2 = luma(texture(screen_texture, uv + px * vec2(-1.0, -1.0)).rgb);
+	float ld3 = luma(texture(screen_texture, uv + px * vec2(-1.0, 1.0)).rgb);
+	float ld4 = luma(texture(screen_texture, uv + px * vec2(1.0, -1.0)).rgb);
+	float edge = clamp(abs(l1 - l2) + abs(l3 - l4) + (abs(ld1 - ld2) + abs(ld3 - ld4)) * 0.55, 0.0, 1.0);
+	float ink = smoothstep(0.045, 0.28, edge);
 	col = mix(col, vec3(edge), clamp(edge_strength * effect_strength, 0.0, 1.0));
+	col = mix(col, ink_color, clamp(ink * ink_outline_strength * effect_strength, 0.0, 0.92));
+
+	float shadow_cell = hash(floor(FRAGCOORD.xy / 46.0) + vec2(floor(t * 1.3), 19.0));
+	float shadow_band = 1.0 - smoothstep(0.26, 0.76, grey);
+	float shadow_weight = shadow_band * (0.78 + shadow_cell * 0.22);
+	col = mix(col, shadow_color, clamp(shadow_weight * stylized_shadow_strength * effect_strength, 0.0, 0.78));
+
+	float glow_mask = smoothstep(0.62, 0.92, grey) * (1.0 - ink * 0.65);
+	vec3 glow_sample = (
+		texture(screen_texture, uv + px * vec2(2.0, 0.0)).rgb +
+		texture(screen_texture, uv + px * vec2(-2.0, 0.0)).rgb +
+		texture(screen_texture, uv + px * vec2(0.0, 2.0)).rgb +
+		texture(screen_texture, uv + px * vec2(0.0, -2.0)).rgb
+	) * 0.25;
+	col = mix(col, max(col, glow_sample), clamp(glow_mask * soft_glow_strength * effect_strength, 0.0, 0.45));
+
+	float color_cell = hash(floor(FRAGCOORD.xy / 74.0) + vec2(7.0, floor(t * 0.7)));
+	vec3 variation_tint = mix(zone_tint, vec3(zone_tint.b, zone_tint.r, zone_tint.g), color_cell);
+	col = mix(col, col * (0.86 + variation_tint * 0.26), clamp(color_variation_strength * effect_strength, 0.0, 0.35));
 
 	float contour = smoothstep(0.92, 1.0, sin((grey * 18.0 + cell_noise(uv * 18.0) * 2.2 + t * 0.18) * 3.14159) * 0.5 + 0.5);
 	col = mix(col, vec3(contour), clamp(contour_strength * effect_strength, 0.0, 1.0));
