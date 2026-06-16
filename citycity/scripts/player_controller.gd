@@ -1,6 +1,11 @@
 extends CharacterBody3D
 
 @export var move_speed := 4.2
+@export var sprint_enabled := true
+@export_range(1.0, 1.8, 0.05) var sprint_multiplier := 1.28
+@export var jump_enabled := true
+@export var jump_velocity := 4.4
+@export var gravity := 14.0
 @export var mouse_sensitivity := 0.0025
 @export var mouse_smoothing_enabled := true
 @export_range(1.0, 40.0, 0.5) var mouse_smoothing_factor := 14.0
@@ -17,7 +22,7 @@ extends CharacterBody3D
 
 @export var footstep_enabled := true
 @export var footstep_interval := 0.56
-@export var footstep_volume := -18.0
+@export var footstep_volume := -12.0
 @export var footstep_pitch_random_min := 0.92
 @export var footstep_pitch_random_max := 1.08
 @export var grey_footstep_duration := 0.18
@@ -103,7 +108,7 @@ func _process(delta: float) -> void:
 	_update_head_bob(delta)
 	_update_footsteps(delta)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if movement_locked:
 		velocity = Vector3.ZERO
 		is_moving_on_ground = false
@@ -112,9 +117,18 @@ func _physics_process(_delta: float) -> void:
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var wish_dir := (global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
-	velocity.x = wish_dir.x * move_speed
-	velocity.z = wish_dir.z * move_speed
-	velocity.y = 0.0
+	var speed := move_speed
+	if sprint_enabled and Input.is_action_pressed("sprint"):
+		speed *= sprint_multiplier
+	velocity.x = wish_dir.x * speed
+	velocity.z = wish_dir.z * speed
+	if is_on_floor():
+		if jump_enabled and Input.is_action_just_pressed("jump"):
+			velocity.y = jump_velocity
+		elif velocity.y < 0.0:
+			velocity.y = -0.1
+	else:
+		velocity.y -= gravity * delta
 	move_and_slide()
 	is_moving_on_ground = input_dir.length() > 0.05 and is_on_floor()
 
@@ -189,13 +203,13 @@ func _trigger_footstep(speed_factor: float) -> void:
 	if current_footstep_set == "city":
 		footstep_duration = city_footstep_duration
 		footstep_frequency = footstep_rng.randf_range(145.0, 235.0)
-		footstep_noise_amount = 0.42
-		footstep_tone_amount = 0.22
+		footstep_noise_amount = 0.46
+		footstep_tone_amount = 0.30
 	else:
 		footstep_duration = grey_footstep_duration
 		footstep_frequency = footstep_rng.randf_range(55.0, 105.0)
-		footstep_noise_amount = 0.78
-		footstep_tone_amount = 0.12
+		footstep_noise_amount = 0.95
+		footstep_tone_amount = 0.16
 	footstep_time_left = footstep_duration
 	footstep_elapsed = 0.0
 	footstep_player.volume_db = footstep_volume
@@ -220,8 +234,9 @@ func _fill_footstep_burst(_delta: float) -> void:
 		var envelope := pow(max(1.0 - t / footstep_duration, 0.0), 2.3)
 		var noise := footstep_rng.randf_range(-1.0, 1.0) * footstep_noise_amount
 		var tone := sin(TAU * footstep_frequency * t) * footstep_tone_amount
-		var sample := (noise + tone) * envelope * 0.18
-		footstep_playback.push_frame(Vector2(sample, sample))
+		var sample := (noise + tone) * envelope * 0.24
+		var pan := footstep_rng.randf_range(-0.08, 0.08)
+		footstep_playback.push_frame(Vector2(sample * (1.0 - pan), sample * (1.0 + pan)))
 		footstep_elapsed += 1.0 / footstep_generator.mix_rate
 		footstep_time_left -= 1.0 / footstep_generator.mix_rate
 
