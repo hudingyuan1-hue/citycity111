@@ -101,13 +101,13 @@
 - `grey_post_process_enabled`：是否启用灰域全屏视觉后处理。
 - `grey_post_effect_strength`：全屏视觉效果总强度。
 - `grey_post_grain_strength`：噪点颗粒强度。
-- `grey_post_halftone_strength`：网点/半色调强度。
+- `grey_post_halftone_strength`：轻微网点/半色调强度。
 - `grey_post_pixel_strength`：像素化强度。
 - `grey_post_flatten_strength`：二维化/灰度平面化强度。
 - `grey_post_edge_strength`：边缘描线强度。
 - `grey_post_contour_strength`：等高线/轮廓线强度。
 - `grey_post_solarize_strength`：日晒化/反相质感强度。
-- `grey_post_tear_strength`：画面横向撕裂漂移强度。
+- `grey_post_tear_strength`：历史参数，屏幕撕裂/裂纹位移已在 shader 中禁用，不再作为可用效果。
 
 记忆区域轻引导：
 
@@ -125,6 +125,14 @@
 `shaders/city_style_veil.gdshader`
 
 该 shader 只用于城市内透明雾幕、残影、热浪和海市蜃楼层，不再使用裂纹、网状或密集屏幕纹理。
+
+屏幕后处理硬限制：
+
+- 禁止新增屏幕裂纹。
+- 禁止新增屏幕网状覆盖。
+- 禁止新增类似中毒视野的密集纹理。
+- 可以保留轻微噪点、轻微网点、低强度色彩漂移和环境雾幕。
+- 城市阶段可以保留少量灰域残留感，但应主要通过环境粒子、空间雾幕、建筑材质 shader 和局部风格层完成。
 
 它会混合以下效果：
 
@@ -170,6 +178,7 @@
 - 到达记忆中心后，灰域视觉关闭，`ManifestedCity` 显示并恢复碰撞。
 - 回声塔阅读交互同时使用 `Area3D` 触发和距离兜底；选择“留”后，玩家仍可回到塔底按 E 再次打开阅读和“留 / 去”选择。
 - 欲望主题不会直接使用回声塔触发通关。玩家需要拾取 `CitronCrate`、`AgateStone`、`WineSkin`、`GlassSphere`、`DreamRoadFragment` 五件欲望物，然后进入 `MoonTrapPlaza` 的 `DesireGoalTrigger` 按 E 阅读。
+- 城市阶段若玩家 60 秒内没有推进通关目标，会显示一次轻提示；之后仍无推进会按 `city_guidance_repeat_delay` 间隔再次提示。
 
 ## 记忆之城白盒规划
 
@@ -402,3 +411,46 @@
 - 通关逻辑为五次交换：`EuphemiaMemoryExchangeNode` 货物换记忆、`ChloeGazeExchangeNode` 目光换幻想、`EutropiaVocationExchangeNode` 职业换生活、`ErsiliaRelationExchangeNode` 关系换废墟、`SmeraldinaRouteExchangeNode` 路线换选择。五次交换完成后，回到 `TradeGoalTrigger` / `MultiRoutePlaza` 阅读。
 - 新增 `shaders/trade_wet_market_surface.gdshader`，用于湿润反射、暖色灯笼、局部蓝绿霓虹和材质混杂。
 - 贸易城环境粒子包含 `WaterVaporParticles`、`MarketClothStripParticles`、`TradeTicketParticles`、`CopperCoinGlimmerParticles`、`MemoryTradeParticle`，用于水汽、布条、货票、铜币微光和交换记忆粒子。
+
+## 2026-06-17 眼睛之城白盒记录
+
+- 新增“眼睛”主题可玩白盒。完成记忆后与“欲望”“符号”“轻盈”“贸易”一起解锁。
+- 眼睛之城方向为镜湖 / 水上城市 / 双面观察城，主体节点为 `EyesCity_CityOfDoubleSight`，核心空间为 `ZoneA_ValdradaMirrorLake`、`ZoneB_ZemrudeLowSight`、`ZoneC_BaucisCloudStilt`、`ZoneD_PhyllisBridgeWindow`、`ZoneE_MorianaTwoFace`、`ZoneF_CentralObservationCore`。
+- 通关逻辑为五处观察校准：`ValdradaMirrorNode`、`ZemrudeLowSightNode`、`BaucisEarthwatchNode`、`PhyllisMemorySightNode`、`MorianaTwoFaceNode`。五处校准完成后，回到 `EyeGoalTrigger` / `CentralObservationCore` 阅读。
+- 新增 `shaders/eye_mirror_water.gdshader` 和 `shaders/eye_mirror_offset_veil.gdshader`，用于镜湖冷色反射、镜像错位、轻微鱼眼/水波感与空间残影。
+- 眼睛城环境粒子包含 `EyeMistParticles`、`LensShardParticles`、`ColdLightMotes`、`PupilRippleParticles`，用于水雾、镜片碎屑、冷白光粒和瞳孔状涟漪。
+- 城市阶段后处理已加入眼睛主题分支：提高冷色偏移、轻微波纹、轮廓与柔光，不使用裂纹、网状或密集屏幕纹理。
+
+## 2026-06-17 姓名之城白盒记录
+
+- 新增“姓名”主题可玩白盒。完成记忆后与“欲望”“符号”“轻盈”“贸易”“眼睛”一起解锁。
+- 姓名之城方向为山地碑林 / 石刻谷地 / 档案城的合并方案，主体节点为 `NamesCity_VanishedNameHighland`，核心空间为 `ZoneA_AglauraLegendGreyCity`、`ZoneB_LeandraHouseholdSpirits`、`ZoneC_PyrrhaWrongName`、`ZoneD_ClariceReassembledRelics`、`ZoneE_IreneDistantOverlook`、`ZoneF_CentralNamingCore`。
+- 通关逻辑为五次“解名”：`LegendNameSeal` 解除传说封词、`HouseholdSpiritSeal` 解除宅神/守护神混名、`WrongNameSeal` 解除皮拉错名、`ReassembledRelicSeal` 解除旧物重组命名、`DistantCitySeal` 解除伊莱那远望之名。五处完成后，回到 `NameGoalTrigger` / `VanishedNameStele` 阅读。
+- 新增 `shaders/name_carved_stone.gdshader` 与 `shaders/name_misnamed_veil.gdshader`，用于灰白石材、浅刻铭文、局部发光文字、错名薄雾和低密度姓名残片。
+- 姓名城环境粒子包含 `WhiteDustParticles`、`CarvedNameChipParticles`、`InkLineParticles`、`FloatingNameFragments`、`RelicReassemblyGlowParticles`，用于白尘、刻字碎屑、墨线、名字残片和旧物重组弱光。
+- 城市阶段后处理已加入姓名主题分支：提高石灰灰颗粒、低密度网点、文字石刻轮廓与黄尘色漂移；继续禁止屏幕裂纹、网状覆盖和中毒感密集纹理。
+
+## 2026-06-17 死者之城白盒记录
+
+- 新增“死的”主题可玩白盒，城市标题为“死者之城：三重劳多米亚”。完成记忆后与“欲望”“符号”“轻盈”“贸易”“眼睛”“姓名”一起解锁。
+- 死者之城方向为地下墓城 / 黄昏码头 / 三重墓地城的合并方案，主体节点为 `DeadCity_TripleLaudomiaNecropolis`，核心空间为 `ZoneA_MelaniaRolePlaza`、`ZoneB_AdelmaDuskDock`、`ZoneC_EusapiaSisterCity`、`ZoneD_ArgiaBuriedBlackCity`、`ZoneE_TripleLaudomia`、`ZoneF_CentralDeathCore`。
+- 通关逻辑为五处亡者回声安放：`RoleEchoMarker` 角色轮替、`FamiliarFaceEchoMarker` 旧面孔、`SisterCityEchoMarker` 地下姊妹城、`BuriedDoorEchoMarker` 埋土门声、`TripleLaudomiaEchoMarker` 三重劳多米亚。五处完成后，回到 `DeadGoalTrigger` / `HourglassTower` 阅读。
+- 新增 `shaders/dead_bone_dissolve.gdshader` 与 `shaders/dead_cold_mist_veil.gdshader`，用于骨白材质、冷色低光、慢速溶解边缘和低处冷雾。
+- 死者城环境粒子包含 `ColdMistParticles`、`AshParticles`、`WhiteSaltDustParticles`、`PaleBlueGlowParticles`、`UnbornDustMotes`，用于冷雾、灰烬、盐尘、幽蓝微光和未生者尘粒。
+- 城市阶段后处理已加入死者主题分支：提高暗角、冷蓝阴影、骨白颗粒、轻微慢波和低光轮廓；继续禁止屏幕裂纹、网状覆盖、jumpscare、死亡惩罚和中毒感密集纹理。
+
+## 2026-06-17 天空之城白盒记录
+
+- 新增“天空”主题可玩白盒，城市标题为“天空之城：星图工地城”。完成记忆后与“欲望”“符号”“轻盈”“贸易”“眼睛”“姓名”“死的”一起解锁。
+- 天空之城方向为天文高原 / 云海 / 星图工地城的合并方案，主体节点为 `SkyCity_CelestialBlueprintHighland`，核心空间为 `ZoneA_EudoxiaVerticalMaze`、`ZoneB_BersabeaSkyUnderCity`、`ZoneC_TheklaConstruction`、`ZoneD_PerinthiaZodiac`、`ZoneE_AndriaOrbitCity`、`ZoneF_CelestialCore`。
+- 通关逻辑为五处天体锚点校准：`CarpetShrineAnchor` 地毯神殿、`SkyUnderProjectionAnchor` 天地投影、`StarBlueprintAnchor` 星空蓝图、`EclipseGateAnchor` 月蚀城门、`PlanetOrbitAnchor` 行星轨道。五处完成后，前往 `SkyGoalTrigger` / `StarObservatoryTower` 阅读。
+- 新增 `shaders/sky_star_surface.gdshader` 与 `shaders/sky_stardust_veil.gdshader`，用于星图材质、渐变星尘雾幕、发光线轨和低重力漂浮感。
+- 天空城环境粒子包含 `StarDustParticles`、`CloudMoteParticles`、`FallingLightMotes`、`BlueprintLightLineParticles`，用于星尘、云粒、慢坠光点和蓝图光线。
+- 城市阶段后处理已加入天空主题分支：提高深蓝/星紫色漂移、柔光、轻微波纹和轮廓；继续禁止屏幕裂纹、网状覆盖和密集中毒感纹理。
+
+## 2026-06-17 城市提示与屏幕效果规则
+
+- 所有城市显形完成后会立即显示“通关玩法：...”提示，说明当前主题需要收集、读取、校准或安放的目标。
+- 城市中若玩家超过 `city_guidance_delay` 仍未推进，会继续弹出对应城市的低侵入提示；默认 60 秒，重复间隔由 `city_guidance_repeat_delay` 控制。
+- 城市阶段保留少量灰域残留感，参数入口为 `city_residual_grey_chaos_strength`、`city_residual_grey_grain_strength`、`city_residual_halftone_strength`、`city_residual_wave_strength`。
+- 已从 `grey_post_process.gdshader` 和主脚本中删除屏幕裂纹 / 撕裂参数。后续禁止新增屏幕裂纹、网状覆盖、强毒性密集纹理；可以使用轻微噪点、低强度网点、环境粒子、空间雾幕和材质 shader。

@@ -9,6 +9,10 @@ const THEME_DESIRE := 1
 const THEME_SIGNS := 2
 const THEME_THIN := 3
 const THEME_TRADE := 4
+const THEME_EYES := 5
+const THEME_NAMES_CITY := 6
+const THEME_DEAD := 7
+const THEME_SKY := 8
 const MEMORY_POS := Vector3(48.0, 0.0, -46.0)
 const PLAYER_SPAWN := Vector3(-56.0, 0.0, -54.0)
 const GREY_WRAP_DEFAULT_HALF_EXTENT := 60.0
@@ -108,7 +112,11 @@ const MEMORY_CITY_TITLES := [
 	"欲望之城：沙海白城",
 	"符号之城：无名广场",
 	"轻盈之城：将断之网",
-	"贸易之城：五重交换"
+	"贸易之城：五重交换",
+	"眼睛之城：双面镜湖",
+	"姓名之城：消逝名字碑",
+	"死者之城：三重劳多米亚",
+	"天空之城：星图工地城"
 ]
 const MEMORY_CITY_READING_PAGES := [
 	[
@@ -148,6 +156,42 @@ const MEMORY_CITY_READING_PAGES := [
 		["空城在高原上等待迁移者。", "职业、窗景、妻子、朋友和口音都可以被重新分配。"],
 		["房屋消失之后，黑白灰绳仍留在木桩之间。", "交易、亲缘、权威和代表关系继续寻找形式。"],
 		["水路和陆路互相交织。", "最短的路线不是直线，而是可以反复选择的曲线。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["你看见了一座城市。", "湖里也看见了一座城市。"],
+		["岸上的不比倒影更真实。", "倒影也不比岸上更虚假。"],
+		["抬头的人看见窗帘和喷泉。", "低头的人看见水沟和废纸。"],
+		["有些城市住在高处。", "它们用望远镜确认地面仍然存在。"],
+		["第一次看见的桥和窗。", "久住以后，会变成一条最快的路。"],
+		["正面与背面不能分开。", "它们合起来，才薄得像一张纸。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["这座城不是由石头固定的。", "它先被名字固定。"],
+		["传说替它说话。", "于是亲眼所见反而变得无声。"],
+		["有些名字属于门口。", "有些名字藏在厨房和壁炉下。"],
+		["你曾把一座想象中的城叫作皮拉。", "后来真实的皮拉夺走了这个名字。"],
+		["旧物被搬走、重组、供奉。", "名字却留在原地。"],
+		["远方那座城叫伊莱那。", "走近以后，它也许不再叫这个名字。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["这里没有终点。", "只有角色被另一个人接过。"],
+		["你看见的面孔并不属于他们。", "它们带着你已经失去的人。"],
+		["地下的城市模仿生者。", "后来，生者开始模仿地下。"],
+		["有一座城在土里。", "你看不见它，只能听见门声。"],
+		["劳多米亚有三座。", "生者、死者，以及还没有出生的人。"],
+		["每一粒沙都在等待通过。", "最后一粒还停在上方。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["城市把混乱藏进地毯。", "又把秩序挂到星上。"],
+		["天上的城并不纯洁。", "地下的城也不一定卑劣。"],
+		["他们不断建造。", "仿佛停下，毁灭就会开始。"],
+		["月蚀被框在城门里。", "畸形的影子也被算进天象。"],
+		["每一次街道改变。", "远处都有一颗星回应。"],
+		["天空不是答案。", "它也在模仿城市。"],
 		["要把这座城留下吗？"]
 	]
 ]
@@ -206,6 +250,62 @@ const TRADE_EXCHANGE_COLORS := [
 	Color(0.86, 0.78, 0.38, 1.0),
 	Color(0.72, 0.72, 0.68, 1.0),
 	Color(0.24, 0.78, 0.68, 1.0)
+]
+const EYE_OBSERVATION_NODES := [
+	["ValdradaMirrorNode", "瓦尔德拉达：镜湖双城", "你看见岸上的城市，湖中那座并不更虚假。"],
+	["ZemrudeLowSightNode", "珍茹德：低视街区", "抬头的人看见窗帘和喷泉，低头的人只看见水沟、鱼鳞和废纸。"],
+	["BaucisEarthwatchNode", "宝琪：云端观察", "城市不触碰地面，它只用望远镜确认地球仍在那里。"],
+	["PhyllisMemorySightNode", "菲利德：桥窗记忆", "第一次看见时桥与窗都在闪光，住久之后只剩最快的路线。"],
+	["MorianaTwoFaceNode", "莫里亚纳：正反双面", "正面是玻璃、珊瑚和水母灯，背面是铁板、煤灰和废罐。"]
+]
+const EYE_OBSERVATION_COLORS := [
+	Color(0.62, 0.90, 1.0, 1.0),
+	Color(0.38, 0.64, 0.82, 1.0),
+	Color(0.86, 0.94, 1.0, 1.0),
+	Color(0.72, 0.82, 1.0, 1.0),
+	Color(0.74, 0.78, 0.82, 1.0)
+]
+const NAME_SEAL_NODES := [
+	["LegendNameSeal", "阿格劳拉：传说封词", "传说替城市说话，亲眼所见被封在词外。"],
+	["HouseholdSpiritSeal", "莱安德拉：宅神低语", "门口的神灵与厨房里的神灵争辩同一座城的名字。"],
+	["WrongNameSeal", "皮拉：错名之城", "想象里的城堡失去了名字，真实皮拉只剩黄尘和泵声。"],
+	["ReassembledRelicSeal", "克拉莉切：旧物重组", "宫殿碎片被搬进茅舍、鸡舍和展柜，名字仍留在原地。"],
+	["DistantCitySeal", "伊莱那：远望之名", "高原上看到的城市叫伊莱那，走近以后它就变成另一座城。"]
+]
+const NAME_SEAL_COLORS := [
+	Color(0.88, 0.84, 0.72, 1.0),
+	Color(0.78, 0.72, 0.58, 1.0),
+	Color(0.92, 0.76, 0.42, 1.0),
+	Color(0.86, 0.86, 0.78, 1.0),
+	Color(0.94, 0.62, 0.52, 1.0)
+]
+const DEAD_ECHO_NODES := [
+	["RoleEchoMarker", "梅拉尼亚：角色轮替", "角色换人，对话没有停止。"],
+	["FamiliarFaceEchoMarker", "阿德尔玛：旧面孔码头", "每一张脸都像某个已经离开的人。"],
+	["SisterCityEchoMarker", "埃乌萨皮娅：地下姊妹城", "地下城正在改写地上的城市。"],
+	["BuriedDoorEchoMarker", "阿尔嘉：埋土门声", "门在土层下面响了一声。"],
+	["TripleLaudomiaEchoMarker", "劳多米亚：三重城市", "未生者比死者更多。"]
+]
+const DEAD_ECHO_COLORS := [
+	Color(0.70, 0.82, 1.0, 1.0),
+	Color(0.58, 0.72, 0.86, 1.0),
+	Color(0.78, 0.86, 1.0, 1.0),
+	Color(0.46, 0.54, 0.64, 1.0),
+	Color(0.92, 0.86, 0.74, 1.0)
+]
+const SKY_ANCHOR_NODES := [
+	["CarpetShrineAnchor", "埃乌多西亚：地毯神殿", "一张地毯把弯曲小巷、台阶和死胡同压成对称图案。"],
+	["SkyUnderProjectionAnchor", "贝尔萨贝阿：天地投影", "黄金上城与地下机械城互相解释，真正的废物在天上拖成彗星。"],
+	["StarBlueprintAnchor", "泰克拉：星空蓝图", "工地不能停下。夜色落下时，蓝图就是满天繁星。"],
+	["EclipseGateAnchor", "佩林奇亚：月蚀城门", "黄道与天空轴线被刻进城墙，现实的阴影也被框在其中。"],
+	["PlanetOrbitAnchor", "安德里亚：行星轨道", "每条街道都循着星轨变化，城市的改动会在远方点亮新星。"]
+]
+const SKY_ANCHOR_COLORS := [
+	Color(0.64, 0.76, 1.0, 1.0),
+	Color(1.0, 0.78, 0.26, 1.0),
+	Color(0.38, 0.72, 1.0, 1.0),
+	Color(0.74, 0.64, 1.0, 1.0),
+	Color(0.96, 0.92, 1.0, 1.0)
 ]
 const STORY_PAGES := [
 	["有些城市并不消失。", "它们只是拒绝被看见。"],
@@ -338,7 +438,6 @@ const STORY_PAGES := [
 @export_range(0.0, 1.0, 0.01) var grey_post_edge_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_contour_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_solarize_strength := 0.0
-@export_range(0.0, 1.0, 0.01) var grey_post_tear_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_ink_outline_strength := 0.46
 @export_range(0.0, 1.0, 0.01) var grey_post_stylized_shadow_strength := 0.36
 @export_range(0.0, 1.0, 0.01) var grey_post_color_variation_strength := 0.22
@@ -365,12 +464,30 @@ const STORY_PAGES := [
 @export_range(0.0, 2.0, 0.01) var trade_city_style_intensity := 1.18
 @export_range(0.0, 2.5, 0.05) var trade_exchange_glow_energy := 1.22
 @export_range(0.0, 2.0, 0.05) var trade_exchange_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var eyes_city_style_intensity := 1.22
+@export_range(0.0, 2.5, 0.05) var eye_observation_glow_energy := 1.28
+@export_range(0.0, 2.0, 0.05) var eye_observation_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var names_city_style_intensity := 1.12
+@export_range(0.0, 2.5, 0.05) var name_seal_glow_energy := 1.18
+@export_range(0.0, 2.0, 0.05) var name_seal_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var dead_city_style_intensity := 1.18
+@export_range(0.0, 2.5, 0.05) var dead_echo_glow_energy := 1.20
+@export_range(0.0, 2.0, 0.05) var dead_echo_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var sky_city_style_intensity := 1.22
+@export_range(0.0, 2.5, 0.05) var sky_anchor_glow_energy := 1.26
+@export_range(0.0, 2.0, 0.05) var sky_anchor_particle_scale := 1.0
 @export var city_post_process_enabled := true
 @export_range(0.0, 1.0, 0.01) var city_post_effect_strength := 0.34
+@export_range(0.0, 1.0, 0.01) var city_residual_grey_chaos_strength := 0.18
+@export_range(0.0, 1.0, 0.01) var city_residual_grey_grain_strength := 0.09
+@export_range(0.0, 1.0, 0.01) var city_residual_halftone_strength := 0.025
+@export_range(0.0, 1.0, 0.01) var city_residual_wave_strength := 0.0012
 @export_range(0.0, 1.0, 0.01) var city_post_ink_outline_strength := 0.38
 @export_range(0.0, 1.0, 0.01) var city_post_stylized_shadow_strength := 0.24
 @export_range(0.0, 1.0, 0.01) var city_post_color_variation_strength := 0.14
 @export_range(0.0, 1.0, 0.01) var city_post_soft_glow_strength := 0.08
+@export var city_guidance_delay := 60.0
+@export var city_guidance_repeat_delay := 45.0
 
 var phase := GamePhase.MAIN_MENU
 var previous_phase := GamePhase.MAIN_MENU
@@ -448,6 +565,26 @@ var trade_node_areas: Array[Area3D] = []
 var trade_completed_nodes: Array[int] = []
 var trade_active_node_index := -1
 var trade_goal_trigger: Area3D
+var eye_observation_visuals: Array[Node3D] = []
+var eye_observation_areas: Array[Area3D] = []
+var eye_completed_observations: Array[int] = []
+var eye_active_observation_index := -1
+var eye_goal_trigger: Area3D
+var name_seal_visuals: Array[Node3D] = []
+var name_seal_areas: Array[Area3D] = []
+var name_completed_seals: Array[int] = []
+var name_active_seal_index := -1
+var name_goal_trigger: Area3D
+var dead_echo_visuals: Array[Node3D] = []
+var dead_echo_areas: Array[Area3D] = []
+var dead_completed_echoes: Array[int] = []
+var dead_active_echo_index := -1
+var dead_goal_trigger: Area3D
+var sky_anchor_visuals: Array[Node3D] = []
+var sky_anchor_areas: Array[Area3D] = []
+var sky_completed_anchors: Array[int] = []
+var sky_active_anchor_index := -1
+var sky_goal_trigger: Area3D
 var memory_zone_player: AudioStreamPlayer3D
 var theme_sfx_player: AudioStreamPlayer3D
 var global_music_player: AudioStreamPlayer
@@ -476,6 +613,8 @@ var global_music_tween: Tween
 var quick_start_hint_locked := false
 var manifest_camera_applied_offset := 0.0
 var grey_search_elapsed := 0.0
+var city_guidance_timer := 0.0
+var city_guidance_has_shown := false
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -504,6 +643,7 @@ func _process(delta: float) -> void:
 		_hide_grey_guidance()
 	elif phase == GamePhase.CITY:
 		_update_city_post_process()
+		_update_city_guidance(delta)
 		_hide_memory_guide()
 		_hide_grey_guidance()
 		direction_tint.color.a = lerp(direction_tint.color.a, 0.0, delta * 3.0)
@@ -535,6 +675,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			_activate_thin_ascent_node(thin_active_node_index)
 		elif selected_theme_index == THEME_TRADE and trade_active_node_index >= 0:
 			_activate_trade_exchange_node(trade_active_node_index)
+		elif selected_theme_index == THEME_EYES and eye_active_observation_index >= 0:
+			_activate_eye_observation_node(eye_active_observation_index)
+		elif selected_theme_index == THEME_NAMES_CITY and name_active_seal_index >= 0:
+			_activate_name_seal_node(name_active_seal_index)
+		elif selected_theme_index == THEME_DEAD and dead_active_echo_index >= 0:
+			_activate_dead_echo_node(dead_active_echo_index)
+		elif selected_theme_index == THEME_SKY and sky_active_anchor_index >= 0:
+			_activate_sky_anchor_node(sky_active_anchor_index)
 		elif can_read_tower or _is_player_near_reading_trigger():
 			_open_reading()
 
@@ -1056,6 +1204,10 @@ func _build_manifested_city() -> void:
 	_build_signs_city()
 	_build_thin_city()
 	_build_trade_city()
+	_build_eyes_city()
+	_build_names_city()
+	_build_dead_city()
+	_build_sky_city()
 	_select_memory_city_variant(0)
 	_set_city_collision_enabled(false)
 
@@ -1123,6 +1275,58 @@ func _build_trade_city() -> void:
 	active_city_visual_parent = root
 
 	_build_trade_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_eyes_city() -> void:
+	active_memory_city_build_index = THEME_EYES
+	var root := Node3D.new()
+	root.name = "EyesCity_MirrorLakeDoubleCity"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_eyes_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_names_city() -> void:
+	active_memory_city_build_index = THEME_NAMES_CITY
+	var root := Node3D.new()
+	root.name = "NamesCity_VanishedNameHighland"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_names_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_dead_city() -> void:
+	active_memory_city_build_index = THEME_DEAD
+	var root := Node3D.new()
+	root.name = "DeadCity_TripleLaudomiaNecropolis"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_dead_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_sky_city() -> void:
+	active_memory_city_build_index = THEME_SKY
+	var root := Node3D.new()
+	root.name = "SkyCity_CelestialBlueprintHighland"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_sky_city_whitebox(root)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -3150,6 +3354,1166 @@ func _set_sign_fracture_visual_state(node_index: int, resolved: bool) -> void:
 		if child != null:
 			child.visible = not resolved
 
+func _build_eyes_city_whitebox(parent: Node3D) -> void:
+	_build_eyes_terrain(parent)
+	_build_eyes_valdrada_mirror_lake(parent)
+	_build_eyes_zemrude_low_sight(parent)
+	_build_eyes_baucis_cloud_stilt(parent)
+	_build_eyes_phyllis_bridge_window(parent)
+	_build_eyes_moriana_two_face(parent)
+	_build_eyes_center_core(parent)
+	_build_eyes_atmosphere(parent)
+
+func _build_eyes_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "EyesTerrain_MirrorLakeDoubleCity")
+	_add_eye_block(terrain, "ColdStoneBasinGround", Vector3(0, -0.06, 0), Vector3(238, 0.12, 238), 0.0, Color(0.42, 0.50, 0.54), true, 0.0)
+	_add_eye_water_plane(terrain, "MirrorLakeSurface", Vector3(0, 0.035, -46), Vector2(150, 58), 0.0, Color(0.28, 0.62, 0.82, 0.64), 3.0)
+	_add_eye_block(terrain, "CentralViewAxis", Vector3(0, 0.035, 0), Vector3(12, 0.05, 168), 0.0, Color(0.72, 0.80, 0.84, 0.72), true, 4.0)
+	_add_eye_block(terrain, "MirrorViewAxis", Vector3(0, 0.055, 0), Vector3(128, 0.04, 4), 0.0, Color(0.86, 0.94, 1.0, 0.38), false, 6.0)
+
+func _build_eyes_valdrada_mirror_lake(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_ValdradaMirrorLake")
+	_build_eye_simple_prop(zone, "MirrorLakeShore", Vector3(0, 0, -76), 0.0, Vector3(82, 1.4, 8), Color(0.50, 0.58, 0.60), true)
+	for i in range(7):
+		_build_stacked_balcony_house(zone, "StackedBalconyHouse_%02d" % i, Vector3(-42.0 + float(i) * 14.0, 0, -64.0 + float(i % 2) * 6.0), float(i % 3) * 3.0)
+	_build_eye_simple_prop(zone, "HighStreetRailing", Vector3(0, 2.1, -54), 0.0, Vector3(92, 1.2, 0.8), Color(0.78, 0.88, 0.92), false)
+	_build_reflected_lake_city(zone, Vector3(0, -2.2, -34), 0.0)
+	_build_eye_simple_prop(zone, "MirrorInteriorHouse", Vector3(46, 0, -52), -8.0, Vector3(14, 6, 12), Color(0.62, 0.86, 0.94, 0.58), true)
+	_build_eye_simple_prop(zone, "InteriorMirror", Vector3(46, 3.2, -58.3), -8.0, Vector3(8, 3.8, 0.18), Color(0.84, 0.96, 1.0, 0.44), false)
+	_build_eye_simple_prop(zone, "ReliefWallPattern", Vector3(-50, 3.2, -58), 0.0, Vector3(8, 2.8, 0.18), Color(0.80, 0.86, 0.84), false)
+	_build_eye_simple_prop(zone, "BloodReflection", Vector3(-22, 0.09, -38), 0.0, Vector3(14, 0.05, 6), Color(0.55, 0.02, 0.03, 0.42), false)
+	_build_eye_simple_prop(zone, "EmbraceReflection", Vector3(22, 0.10, -38), 0.0, Vector3(12, 0.05, 6), Color(0.90, 0.78, 0.72, 0.34), false)
+	_build_eye_observation_node(zone, 0, Vector3(0, 0, -50), 0.0)
+
+func _build_eyes_zemrude_low_sight(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_ZemrudeLowSight")
+	for i in range(5):
+		_build_eye_simple_prop(zone, "HighWindowHouse_%02d" % i, Vector3(-72, 0, -22 + float(i) * 16), 4.0, Vector3(10, 8, 9), Color(0.58, 0.68, 0.70), true)
+		_build_eye_simple_prop(zone, "FlutteringCurtain_%02d" % i, Vector3(-66.8, 5.3, -23 + float(i) * 16), 4.0, Vector3(0.16, 2.2, 2.4), Color(0.82, 0.92, 1.0, 0.48), false)
+	_build_eye_simple_prop(zone, "LowGutterStreet", Vector3(-50, 0.04, 5), 0.0, Vector3(12, 0.08, 86), Color(0.18, 0.28, 0.30), true)
+	_build_eye_simple_prop(zone, "CellarEntranceHouse", Vector3(-56, 0, 36), -6.0, Vector3(13, 4.5, 10), Color(0.30, 0.34, 0.34), true)
+	_build_eye_simple_prop(zone, "WellCourtyard", Vector3(-72, 0, 42), 0.0, Vector3(18, 0.28, 18), Color(0.42, 0.46, 0.44), true)
+	_build_eye_cylinder_prop(zone, "Fountain", Vector3(-66, 0.4, -36), 2.8, 0.8, Color(0.44, 0.72, 0.84, 0.72), false)
+	_build_eye_cylinder_prop(zone, "SewerCover", Vector3(-48, 0.14, 5), 2.0, 0.12, Color(0.05, 0.06, 0.06), false)
+	_build_eye_simple_prop(zone, "FishScale", Vector3(-44, 0.2, 16), 12.0, Vector3(1.8, 0.08, 1.0), Color(0.80, 0.92, 0.94, 0.48), false)
+	_build_eye_simple_prop(zone, "WastePaper", Vector3(-51, 0.2, -10), 24.0, Vector3(2.2, 0.06, 1.2), Color(0.72, 0.72, 0.66), false)
+	_build_eye_simple_prop(zone, "DrainPipe", Vector3(-60, 1.0, 2), 0.0, Vector3(0.8, 2.0, 0.8), Color(0.12, 0.14, 0.14), false)
+	_build_eye_simple_prop(zone, "PebblePavement", Vector3(-50, 0.16, 28), 0.0, Vector3(16, 0.08, 20), Color(0.34, 0.36, 0.34), false)
+	_build_eye_observation_node(zone, 1, Vector3(-50, 0, 6), 90.0)
+
+func _build_eyes_baucis_cloud_stilt(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_BaucisCloudStilt")
+	_build_eye_simple_prop(zone, "CloudLadderGate", Vector3(0, 0, 52), 0.0, Vector3(12, 7, 4), Color(0.74, 0.86, 0.88), true)
+	for i in range(14):
+		var x := -42.0 + float(i % 7) * 14.0
+		var z := 70.0 + float(i / 7) * 22.0
+		_build_eye_simple_prop(zone, "SlenderStiltFrame_%02d" % i, Vector3(x, 0, z), 0.0, Vector3(0.7, 20, 0.7), Color(0.70, 0.82, 0.84), true)
+	_build_eye_simple_prop(zone, "CloudStiltCity", Vector3(0, 20, 82), 0.0, Vector3(88, 2.2, 42), Color(0.78, 0.90, 0.94, 0.68), true)
+	for i in range(6):
+		_build_eye_simple_prop(zone, "SkyDwellingPlatform_%02d" % i, Vector3(-35.0 + float(i) * 14.0, 21.4, 82.0 + float(i % 2) * 12.0), 0.0, Vector3(10, 2.8, 9), Color(0.56, 0.70, 0.74), true)
+	_build_eye_simple_prop(zone, "EarthwatchTower", Vector3(50, 0, 86), 0.0, Vector3(9, 25, 9), Color(0.62, 0.78, 0.84), true)
+	_build_eye_simple_prop(zone, "Telescope", Vector3(50, 26, 80), 0.0, Vector3(1.4, 1.0, 6), Color(0.82, 0.92, 0.96), false)
+	_build_eye_simple_prop(zone, "LeafObservationPoint", Vector3(-40, 0.15, 58), 0.0, Vector3(8, 0.08, 5), Color(0.12, 0.35, 0.18), false)
+	_build_eye_simple_prop(zone, "AntObservationPoint", Vector3(-28, 0.15, 64), 0.0, Vector3(5, 0.08, 3), Color(0.05, 0.04, 0.035), false)
+	_build_eye_simple_prop(zone, "PerforatedPolygonShadow", Vector3(0, 0.14, 66), 0.0, Vector3(44, 0.06, 18), Color(0.02, 0.03, 0.03, 0.34), false)
+	_build_eye_observation_node(zone, 2, Vector3(18, 0, 58), 0.0)
+
+func _build_eyes_phyllis_bridge_window(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_PhyllisBridgeWindow")
+	_build_eye_simple_prop(zone, "ManyBridgesCanalCity", Vector3(58, 0, 4), 0.0, Vector3(32, 0.3, 78), Color(0.34, 0.52, 0.58), true)
+	_add_eye_water_plane(zone, "CanalMirrorStrip", Vector3(58, 0.08, 4), Vector2(22, 80), 0.0, Color(0.18, 0.56, 0.72, 0.62), 72.0)
+	_build_eye_simple_prop(zone, "HumpbackBridge", Vector3(58, 1.0, -18), 0.0, Vector3(28, 2.0, 5), Color(0.62, 0.66, 0.62), true)
+	_build_eye_simple_prop(zone, "CoveredBridge", Vector3(58, 2.2, 8), 0.0, Vector3(26, 4.4, 5), Color(0.46, 0.56, 0.60), true)
+	_build_eye_simple_prop(zone, "HangingBridge", Vector3(58, 7.0, 34), 0.0, Vector3(30, 1.0, 4), Color(0.78, 0.86, 0.90, 0.58), true)
+	for i in range(6):
+		_build_eye_simple_prop(zone, "StainedWindowHouse_%02d" % i, Vector3(36.0 + float(i % 2) * 44.0, 0, -28.0 + float(i / 2) * 24.0), 0.0, Vector3(10, 7, 9), Color(0.56, 0.62, 0.62), true)
+		_build_eye_simple_prop(zone, "RoseStainedWindow_%02d" % i, Vector3(36.0 + float(i % 2) * 44.0, 4.4, -32.5 + float(i / 2) * 24.0), 0.0, Vector3(4.2, 2.0, 0.16), Color(0.42, 0.74, 1.0, 0.58), false)
+	_build_eye_simple_prop(zone, "OnionDomeTower", Vector3(90, 0, 42), 0.0, Vector3(9, 18, 9), Color(0.58, 0.66, 0.74), true)
+	_build_eye_cylinder_prop(zone, "OnionSpire", Vector3(90, 19.5, 42), 4.2, 3.0, Color(0.42, 0.58, 0.86), false)
+	_build_eye_simple_prop(zone, "CaperCastleWall", Vector3(88, 4, -42), 0.0, Vector3(42, 8, 3), Color(0.30, 0.42, 0.30), true)
+	for i in range(5):
+		_build_eye_simple_prop(zone, "MemoryRoutePoint_%02d" % i, Vector3(40.0 + float(i) * 8.0, 0.18, 44.0), 0.0, Vector3(1.6, 0.12, 1.6), Color(0.90, 0.92, 0.86, 0.44), false)
+	_build_eye_observation_node(zone, 3, Vector3(58, 0, 6), -90.0)
+
+func _build_eyes_moriana_two_face(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_MorianaTwoFace")
+	_build_eye_simple_prop(zone, "AlabasterGate", Vector3(0, 0, 26), 0.0, Vector3(22, 11, 4), Color(0.82, 0.94, 1.0, 0.50), true)
+	_build_eye_simple_prop(zone, "CoralColonnade", Vector3(-24, 0, 32), 0.0, Vector3(4, 8, 34), Color(0.78, 0.44, 0.42), true)
+	_build_eye_simple_prop(zone, "SerpentinePediment", Vector3(0, 12, 25), 0.0, Vector3(24, 3, 3), Color(0.32, 0.58, 0.52), false)
+	_build_eye_simple_prop(zone, "GlassVilla", Vector3(18, 0, 42), 6.0, Vector3(18, 8, 14), Color(0.64, 0.92, 1.0, 0.42), true)
+	_build_eye_simple_prop(zone, "AquariumDanceHall", Vector3(-18, 0, 48), -6.0, Vector3(18, 7, 14), Color(0.30, 0.70, 0.86, 0.48), true)
+	_build_eye_simple_prop(zone, "MedusaChandelier", Vector3(-18, 7.2, 48), 0.0, Vector3(3.2, 1.0, 3.2), Color(0.84, 0.96, 1.0, 0.62), false)
+	_build_eye_simple_prop(zone, "SilverScaleDancer", Vector3(-18, 0, 44), 0.0, Vector3(1.2, 3.0, 0.8), Color(0.82, 0.88, 0.92), false)
+	_build_eye_simple_prop(zone, "TwoSidedPaperWall", Vector3(0, 4, 64), 0.0, Vector3(54, 8, 0.8), Color(0.88, 0.90, 0.86, 0.62), true)
+	_build_eye_simple_prop(zone, "RustedIronBackstreet", Vector3(0, 0, 78), 0.0, Vector3(54, 5, 16), Color(0.18, 0.10, 0.06), true)
+	_build_eye_simple_prop(zone, "SootPipeAlley", Vector3(-24, 0, 86), 0.0, Vector3(8, 7, 28), Color(0.04, 0.04, 0.04), true)
+	_build_eye_simple_prop(zone, "TinCanWallDistrict", Vector3(24, 0, 86), 0.0, Vector3(18, 6, 28), Color(0.16, 0.17, 0.16), true)
+	for i in range(6):
+		_build_eye_simple_prop(zone, "ScrapTinCan_%02d" % i, Vector3(16.0 + float(i % 3) * 4.0, 0.35, 76.0 + float(i / 3) * 5.0), 0.0, Vector3(1.2, 0.8, 1.2), Color(0.20, 0.20, 0.18), false)
+	_build_eye_simple_prop(zone, "RustedIronSheet", Vector3(-4, 3.2, 78), 0.0, Vector3(12, 5, 0.2), Color(0.26, 0.12, 0.06), false)
+	_build_eye_simple_prop(zone, "SackclothSheet", Vector3(-14, 3.0, 77.5), 0.0, Vector3(8, 4, 0.18), Color(0.34, 0.28, 0.18), false)
+	_build_eye_simple_prop(zone, "NailedWoodenBoard", Vector3(8, 2.6, 77.2), 0.0, Vector3(10, 1.2, 0.18), Color(0.20, 0.12, 0.07), false)
+	_build_eye_simple_prop(zone, "FadedSignboard", Vector3(24, 4.8, 72), 0.0, Vector3(9, 2.4, 0.18), Color(0.34, 0.34, 0.28), false)
+	_build_eye_simple_prop(zone, "BrokenWickerChair", Vector3(32, 0, 82), 0.0, Vector3(2.4, 2.2, 1.8), Color(0.22, 0.14, 0.08), false)
+	_build_eye_simple_prop(zone, "RottenBeamRope", Vector3(-28, 5.8, 83), 0.0, Vector3(0.35, 5.0, 0.35), Color(0.12, 0.08, 0.04), false)
+	_build_eye_observation_node(zone, 4, Vector3(0, 0, 66), 180.0)
+
+func _build_eyes_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CentralEyeCore")
+	_add_eye_water_plane(zone, "CentralEyeCore", Vector3(0, 0.08, 0), Vector2(32, 32), 0.0, Color(0.40, 0.76, 0.96, 0.62), 160.0)
+	_build_eye_cylinder_prop(zone, "PupilRippleRing", Vector3(0, 0.22, 0), 15.0, 0.06, Color(0.84, 0.96, 1.0, 0.42), false)
+	_build_eye_simple_prop(zone, "ColdWhiteGleam", Vector3(0, 1.2, 0), 0.0, Vector3(2.8, 2.8, 2.8), Color(0.88, 0.96, 1.0, 0.42), false)
+	for i in range(5):
+		var angle := TAU * float(i) / 5.0
+		_build_eye_simple_prop(zone, "SightLine_%02d" % i, Vector3(cos(angle) * 7.5, 0.42, sin(angle) * 7.5), rad_to_deg(angle), Vector3(0.12, 0.10, 15.0), Color(0.78, 0.92, 1.0, 0.38), false)
+	eye_goal_trigger = Area3D.new()
+	eye_goal_trigger.name = "EyeGoalTrigger"
+	eye_goal_trigger.position = Vector3(0, 1.0, 0)
+	eye_goal_trigger.collision_layer = 0
+	eye_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 8.5
+	shape.shape = sphere
+	eye_goal_trigger.add_child(shape)
+	eye_goal_trigger.body_entered.connect(_on_eye_goal_entered)
+	eye_goal_trigger.body_exited.connect(_on_eye_goal_exited)
+	manifested_city.add_child(eye_goal_trigger)
+
+func _build_eyes_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "EyesCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("WaterMistParticles", 980, Vector2(0.16, 0.045), Vector3(112, 4.8, 112), Vector3(0.12, 0.03, -0.08), Color(0.58, 0.82, 0.92, 0.28), 0.04, 0.26, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("LensShardParticles", 560, Vector2(0.11, 0.055), Vector3(110, 7.0, 110), Vector3(-0.08, 0.12, 0.06), Color(0.78, 0.94, 1.0, 0.36), 0.04, 0.24, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("EyeLightParticles", 860, Vector2(0.045, 0.045), Vector3(108, 6.8, 108), Vector3(0.06, 0.10, 0.04), Color(0.70, 0.90, 1.0, 0.38), 0.03, 0.22, 100.0, 11.0))
+	atmosphere.add_child(_make_city_particle_layer("PupilRippleParticles", 420, Vector2(0.22, 0.035), Vector3(96, 3.5, 96), Vector3(0.04, 0.03, 0.04), Color(0.86, 0.96, 1.0, 0.30), 0.02, 0.12, 100.0, 16.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_eye_offset_veil(atmosphere, "MirrorOffsetVeil_%02d" % i, Vector3(cos(angle) * 46.0, 5.2 + float(i % 3) * 1.0, sin(angle) * 46.0), Vector2(68, 13 + float(i % 2) * 4), rad_to_deg(angle) + 90.0, Color(0.60, 0.86, 1.0, 0.22), 500.0 + float(i) * 5.1, 0.35)
+
+func _add_eye_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := true, seed := 0.0) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _eye_glass_material(color, color.a, 0.12 + eyes_city_style_intensity * 0.08)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _build_eye_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_eye_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision)
+	return asset
+
+func _add_local_eye_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _eye_glass_material(color, color.a, 0.12 + eyes_city_style_intensity * 0.08)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_eye_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 48
+	cylinder.position = pos
+	cylinder.material = _eye_glass_material(color, color.a, 0.16 + eyes_city_style_intensity * 0.08)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _add_eye_water_plane(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color, seed: float) -> void:
+	var mesh_instance := MeshInstance3D.new()
+	mesh_instance.name = name
+	var plane := PlaneMesh.new()
+	plane.size = size
+	mesh_instance.mesh = plane
+	mesh_instance.position = pos
+	mesh_instance.rotation_degrees = Vector3(0.0, yaw, 0.0)
+	mesh_instance.material_override = _eye_mirror_water_material(color, color.a, seed, 0.08, 0.44)
+	parent.add_child(mesh_instance)
+
+func _build_stacked_balcony_house(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_eye_block(asset, "HouseBody", Vector3(0, 4.0, 0), Vector3(10, 8, 8), 0.0, Color(0.52, 0.66, 0.70), true)
+	for i in range(3):
+		_add_local_eye_block(asset, "StackedBalcony_%02d" % i, Vector3(0, 2.0 + float(i) * 2.2, -4.6), Vector3(10.8, 0.32, 1.6), 0.0, Color(0.82, 0.94, 0.98, 0.54), false)
+
+func _build_reflected_lake_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "ReflectedLakeCity", pos, yaw)
+	for i in range(7):
+		_add_local_eye_block(asset, "InvertedFacade_%02d" % i, Vector3(-42.0 + float(i) * 14.0, -2.5, float(i % 2) * 5.0), Vector3(9, 5, 7), 0.0, Color(0.30, 0.64, 0.82, 0.28), false)
+	_add_eye_offset_veil(asset, "ReflectionMisalignmentLayer", Vector3(0, 1.2, 0), Vector2(92, 12), 0.0, Color(0.58, 0.88, 1.0, 0.20), 540.0, 0.55)
+
+func _eye_observation_color(node_index: int) -> Color:
+	return EYE_OBSERVATION_COLORS[clampi(node_index, 0, EYE_OBSERVATION_COLORS.size() - 1)]
+
+func _build_eye_observation_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = EYE_OBSERVATION_NODES[node_index]
+	var color := _eye_observation_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_eye_block(asset, "ObservationPillar", Vector3(0, 2.1, 0), Vector3(1.6, 4.2, 1.6), 0.0, Color(0.10, 0.18, 0.22), true)
+	_add_local_eye_block(asset, "ActiveEyePanel", Vector3(0, 4.7, -0.35), Vector3(5.2, 2.4, 0.18), 0.0, color, false)
+	var resolved := _add_local_eye_block(asset, "ResolvedBlindPanel", Vector3(0, 4.7, -0.58), Vector3(5.2, 2.4, 0.18), 0.0, Color(0.92, 0.96, 1.0, 0.42), false)
+	resolved.visible = false
+	_add_eye_observation_glow(asset, color)
+	while eye_observation_visuals.size() <= node_index:
+		eye_observation_visuals.append(null)
+	eye_observation_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.3, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.4
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_eye_observation_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_eye_observation_exited(body, node_index))
+	manifested_city.add_child(area)
+	while eye_observation_areas.size() <= node_index:
+		eye_observation_areas.append(null)
+	eye_observation_areas[node_index] = area
+
+func _add_eye_observation_glow(asset: Node3D, color: Color) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "EyeObservationGlow"
+	halo.radius = 3.4
+	halo.height = 0.04
+	halo.sides = 48
+	halo.position = Vector3(0, 0.12, 0)
+	halo.material = _emissive_mat(color, 0.30, eye_observation_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "EyeObservationLight"
+	light.position = Vector3(0, 4.3, 0)
+	light.light_color = color
+	light.light_energy = eye_observation_glow_energy
+	light.omni_range = 8.5
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "EyeObservationParticles"
+	particles.amount = int(maxf(1.0, 72.0 * eye_observation_particle_scale))
+	particles.lifetime = 2.6
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.08, 0.08)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.7
+	process.gravity = Vector3.ZERO
+	process.initial_velocity_min = 0.04
+	process.initial_velocity_max = 0.28
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.72)
+	particles.process_material = process
+	particles.position = Vector3(0, 3.2, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_eye_observation_visual_state(node_index: int, resolved: bool) -> void:
+	if node_index < 0 or node_index >= eye_observation_visuals.size():
+		return
+	var asset := eye_observation_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveEyePanel")
+	if active != null:
+		active.visible = not resolved
+	var blank := asset.get_node_or_null("ResolvedBlindPanel")
+	if blank != null:
+		blank.visible = resolved
+	for name in ["EyeObservationGlow", "EyeObservationLight", "EyeObservationParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not resolved
+
+func _build_names_city_whitebox(parent: Node3D) -> void:
+	_build_names_terrain(parent)
+	_build_names_aglaura_grey_city(parent)
+	_build_names_leandra_household(parent)
+	_build_names_pyrrha_wrong_name(parent)
+	_build_names_clarice_reassembled(parent)
+	_build_names_irene_overlook(parent)
+	_build_names_center_core(parent)
+	_build_names_atmosphere(parent)
+
+func _build_names_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "NamesTerrain_HighlandMisnamedValley")
+	_add_name_block(terrain, "StoneGreyHighlandGround", Vector3(0, -0.06, 0), Vector3(238, 0.12, 238), 0.0, Color(0.48, 0.47, 0.42), true, 0.0)
+	_add_name_block(terrain, "YellowDustPyrrhaRoad", Vector3(-44, 0.025, -30), Vector3(46, 0.05, 64), -8.0, Color(0.62, 0.52, 0.34), true, 12.0)
+	_add_name_block(terrain, "CentralArchiveAxis", Vector3(0, 0.04, -16), Vector3(10, 0.06, 156), 0.0, Color(0.58, 0.56, 0.49), true, 24.0)
+	_add_name_block(terrain, "CrossNamedRoad", Vector3(0, 0.045, 5), Vector3(142, 0.06, 8), 0.0, Color(0.54, 0.53, 0.48), true, 36.0)
+	_add_name_block(terrain, "IreneValleyMistFloor", Vector3(0, -0.02, 92), Vector3(128, 0.06, 36), 0.0, Color(0.34, 0.36, 0.34, 0.44), false, 48.0)
+
+func _build_names_aglaura_grey_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_AglauraLegendGreyCity")
+	_build_name_simple_prop(zone, "LegendGate", Vector3(0, 0, -88), 0.0, Vector3(28, 12, 4), Color(0.46, 0.44, 0.39), true)
+	_build_name_simple_prop(zone, "LegendGateInscription", Vector3(0, 8.8, -90.2), 0.0, Vector3(22, 2.0, 0.18), Color(0.82, 0.78, 0.62, 0.72), false)
+	_build_name_simple_prop(zone, "SpokenPlaza", Vector3(0, 0, -62), 0.0, Vector3(42, 0.35, 32), Color(0.52, 0.50, 0.45), true)
+	for i in range(12):
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var z := -82.0 + float(i / 2) * 7.6
+		_build_name_simple_prop(zone, "ProverbCorridor_%02d" % i, Vector3(side * 17.0, 0, z), 0.0, Vector3(8, 4.2, 1.2), Color(0.42, 0.41, 0.38), true)
+		_build_name_simple_prop(zone, "MoralProverbSign_%02d" % i, Vector3(side * 17.0, 3.0, z - 0.72), 0.0, Vector3(6.2, 1.1, 0.12), Color(0.78, 0.74, 0.58, 0.60), false)
+	for i in range(10):
+		var x := -45.0 + float(i % 5) * 22.0
+		var z := -76.0 + float(i / 5) * 14.0
+		_build_name_simple_prop(zone, "NamelessGreyCity_%02d" % i, Vector3(x, 0, z), float(i % 4) * 3.5, Vector3(10, 5 + float(i % 3) * 1.4, 9), Color(0.40, 0.40, 0.38), true)
+	_build_name_simple_prop(zone, "LegendStele", Vector3(-23, 0, -58), 10.0, Vector3(2.8, 5.8, 0.8), Color(0.38, 0.37, 0.34), true)
+	_build_name_simple_prop(zone, "SealedWordSlab", Vector3(18, 0.18, -58), -8.0, Vector3(9, 0.12, 5), Color(0.58, 0.54, 0.42, 0.58), false)
+	_build_name_simple_prop(zone, "RareGloryGleam", Vector3(31, 1.4, -71), 0.0, Vector3(2.5, 2.5, 2.5), Color(1.0, 0.82, 0.30, 0.46), false)
+	_build_name_seal_node(zone, 0, Vector3(0, 0, -54), 0.0)
+
+func _build_names_leandra_household(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_LeandraHouseholdSpirits")
+	for i in range(6):
+		var x := 44.0 + float(i % 2) * 22.0
+		var z := -30.0 + float(i / 2) * 20.0
+		_build_name_simple_prop(zone, "PenatesDoorHouse_%02d" % i, Vector3(x, 0, z), -8.0 + float(i) * 3.0, Vector3(13, 5.2, 10), Color(0.46, 0.41, 0.35), true)
+		_build_name_simple_prop(zone, "UmbrellaHall_%02d" % i, Vector3(x - 4.2, 1.0, z - 5.2), 0.0, Vector3(2.4, 2.0, 1.2), Color(0.30, 0.25, 0.20), false)
+		_build_name_simple_prop(zone, "PenatesSpirit_%02d" % i, Vector3(x + 4.4, 2.4, z - 5.4), 0.0, Vector3(0.8, 1.2, 0.25), Color(0.86, 0.78, 0.54, 0.50), false)
+	_build_name_simple_prop(zone, "LaresKitchen", Vector3(74, 0, 20), 8.0, Vector3(15, 4.6, 12), Color(0.40, 0.34, 0.28), true)
+	_build_name_simple_prop(zone, "Cookware", Vector3(70, 1.4, 14), 0.0, Vector3(3, 1.0, 1.8), Color(0.22, 0.20, 0.18), false)
+	_build_name_simple_prop(zone, "LaresSpirit", Vector3(76, 2.0, 14), 0.0, Vector3(0.9, 1.1, 0.25), Color(0.80, 0.74, 0.58, 0.48), false)
+	_build_name_simple_prop(zone, "FireplaceHoodHouse", Vector3(44, 0, 38), -4.0, Vector3(16, 5.5, 11), Color(0.43, 0.35, 0.30), true)
+	_build_name_simple_prop(zone, "BroomCloset", Vector3(58, 0, 42), 0.0, Vector3(5, 3.4, 4), Color(0.30, 0.25, 0.20), true)
+	_build_name_simple_prop(zone, "EavePipeHouse", Vector3(70, 0, -8), 0.0, Vector3(14, 7.5, 9), Color(0.42, 0.40, 0.36), true)
+	_build_name_simple_prop(zone, "RustedTinCan", Vector3(83, 0.35, 32), 0.0, Vector3(1.3, 0.7, 1.3), Color(0.42, 0.20, 0.10), false)
+	_build_name_seal_node(zone, 1, Vector3(58, 0, 6), -90.0)
+
+func _build_names_pyrrha_wrong_name(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_PyrrhaWrongName")
+	_build_name_simple_prop(zone, "ImaginedCastle", Vector3(-72, 0, -48), 10.0, Vector3(24, 14, 16), Color(0.50, 0.48, 0.44, 0.62), true)
+	_build_name_cylinder_prop(zone, "ImaginedCastleTowerA", Vector3(-84, 7.5, -58), 3.0, 15.0, Color(0.48, 0.46, 0.42, 0.62), true)
+	_build_name_cylinder_prop(zone, "ImaginedCastleTowerB", Vector3(-60, 7.5, -38), 3.0, 15.0, Color(0.48, 0.46, 0.42, 0.62), true)
+	_build_name_cylinder_prop(zone, "DeepWellMouth", Vector3(-72, 0.35, -28), 5.2, 0.7, Color(0.18, 0.16, 0.13), true)
+	_build_name_cylinder_prop(zone, "DeepWellDarkness", Vector3(-72, 0.78, -28), 4.2, 0.08, Color(0.02, 0.018, 0.014), false)
+	_build_name_simple_prop(zone, "DuneStraightStreet", Vector3(-42, 0.12, -25), -8.0, Vector3(10, 0.16, 72), Color(0.68, 0.56, 0.34), true)
+	for i in range(5):
+		_build_name_simple_prop(zone, "SandDune_%02d" % i, Vector3(-62.0 + float(i) * 14.0, 0.3, -2.0 + sin(float(i)) * 4.0), -12.0 + float(i) * 5.0, Vector3(13, 0.6, 5.4), Color(0.72, 0.60, 0.38, 0.70), false)
+	_build_name_simple_prop(zone, "TimberYard", Vector3(-31, 0, -8), 4.0, Vector3(22, 2.4, 13), Color(0.38, 0.25, 0.15), true)
+	for i in range(6):
+		_build_name_simple_prop(zone, "TimberStack_%02d" % i, Vector3(-39.0 + float(i) * 3.6, 1.9, -11.5), 0.0, Vector3(2.8, 1.0, 9), Color(0.34, 0.22, 0.12), false)
+	_build_name_simple_prop(zone, "CarpentryWorkshop", Vector3(-24, 0, 10), -6.0, Vector3(16, 5.5, 12), Color(0.42, 0.31, 0.20), true)
+	_build_name_simple_prop(zone, "PumpHouse", Vector3(-55, 0, 18), 10.0, Vector3(10, 4.2, 8), Color(0.48, 0.43, 0.34), true)
+	_build_name_cylinder_prop(zone, "PumpWheel", Vector3(-50, 2.8, 14), 2.2, 0.35, Color(0.25, 0.25, 0.22), false)
+	_build_name_simple_prop(zone, "WrongNamePlate", Vector3(-62, 3.4, -37), 10.0, Vector3(7, 1.7, 0.18), Color(0.94, 0.72, 0.28, 0.58), false)
+	_build_name_seal_node(zone, 2, Vector3(-52, 0, -20), 72.0)
+
+func _build_names_clarice_reassembled(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_ClariceReassembledRelics")
+	_build_name_simple_prop(zone, "DecayedPalace", Vector3(-34, 0, 42), -7.0, Vector3(32, 12, 18), Color(0.42, 0.39, 0.34), true)
+	_build_name_simple_prop(zone, "CollapsedPalaceWing", Vector3(-54, 3.5, 52), 16.0, Vector3(20, 7, 7), Color(0.34, 0.32, 0.29), true)
+	_build_name_simple_prop(zone, "CellarRefuge", Vector3(-62, 0, 30), 0.0, Vector3(16, 3.2, 12), Color(0.22, 0.20, 0.18), true)
+	_build_name_simple_prop(zone, "NewClariceHut", Vector3(-12, 0, 46), 8.0, Vector3(11, 3.6, 9), Color(0.46, 0.34, 0.22), true)
+	_build_name_simple_prop(zone, "DrainageSlum", Vector3(-12, 0, 70), 0.0, Vector3(34, 3.8, 16), Color(0.20, 0.18, 0.15), true)
+	_build_name_simple_prop(zone, "PigeonCoopHouse", Vector3(-46, 0, 72), -8.0, Vector3(13, 9, 9), Color(0.33, 0.31, 0.28), true)
+	_build_name_simple_prop(zone, "CapitalMuseum", Vector3(18, 0, 52), 6.0, Vector3(24, 8, 16), Color(0.56, 0.54, 0.48), true)
+	_build_name_simple_prop(zone, "GlassDisplayHall", Vector3(18, 0, 68), 0.0, Vector3(20, 5.4, 10), Color(0.74, 0.78, 0.72, 0.36), true)
+	_build_name_simple_prop(zone, "HenhouseCapitalHouse", Vector3(42, 0, 62), -12.0, Vector3(12, 5, 10), Color(0.48, 0.42, 0.30), true)
+	for i in range(5):
+		_build_name_simple_prop(zone, "MixedRelicFragment_%02d" % i, Vector3(-8.0 + float(i) * 10.0, 0.8, 37.0 + float(i % 2) * 11.0), float(i) * 14.0, Vector3(3.8, 1.6, 2.4), Color(0.70, 0.66, 0.52, 0.62), false)
+	_build_name_cylinder_prop(zone, "MarbleUrn", Vector3(15, 1.0, 66), 1.6, 2.0, Color(0.78, 0.76, 0.68), false)
+	_build_name_simple_prop(zone, "GreekCapital", Vector3(23, 1.6, 66), 0.0, Vector3(4.0, 1.6, 3.0), Color(0.72, 0.70, 0.62), false)
+	_build_name_simple_prop(zone, "VelvetCushion", Vector3(18, 1.2, 70), 0.0, Vector3(4.5, 0.35, 2.8), Color(0.42, 0.08, 0.10), false)
+	_build_name_seal_node(zone, 3, Vector3(-10, 0, 58), 180.0)
+
+func _build_names_irene_overlook(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_IreneDistantOverlook")
+	_build_name_simple_prop(zone, "PlateauViewpoint", Vector3(0, 0, 86), 0.0, Vector3(42, 1.2, 16), Color(0.44, 0.43, 0.38), true)
+	_build_name_simple_prop(zone, "ViewpointRailing", Vector3(0, 2.3, 94), 0.0, Vector3(44, 1.2, 0.8), Color(0.34, 0.32, 0.28), false)
+	for i in range(12):
+		var x := -48.0 + float(i % 6) * 19.0
+		var z := 108.0 + float(i / 6) * 8.0
+		_build_name_simple_prop(zone, "RoseHousingDistrict_%02d" % i, Vector3(x, 0, z), 0.0, Vector3(10, 5.0 + float(i % 3), 6), Color(0.58, 0.34, 0.36, 0.42), false)
+		_build_name_simple_prop(zone, "RoseLitWindow_%02d" % i, Vector3(x, 3.4, z - 3.1), 0.0, Vector3(4, 1.2, 0.12), Color(1.0, 0.48, 0.42, 0.62), false)
+	_build_name_simple_prop(zone, "SparseLightAlley", Vector3(0, 0.12, 104), 0.0, Vector3(9, 0.10, 38), Color(0.30, 0.30, 0.28, 0.50), false)
+	_build_name_simple_prop(zone, "SignalFireTower", Vector3(52, 0, 96), 0.0, Vector3(8, 18, 8), Color(0.34, 0.32, 0.30), true)
+	_build_name_simple_prop(zone, "SignalFireGlow", Vector3(52, 19.5, 96), 0.0, Vector3(3.8, 2.4, 3.8), Color(1.0, 0.22, 0.08, 0.62), false)
+	_build_name_simple_prop(zone, "ValleyMistCity", Vector3(-48, 0, 104), 0.0, Vector3(34, 7, 10), Color(0.40, 0.44, 0.42, 0.28), false)
+	_build_name_simple_prop(zone, "PlateauShepherd", Vector3(-32, 0, 88), 0.0, Vector3(1.0, 2.4, 0.8), Color(0.30, 0.26, 0.20), false)
+	_build_name_simple_prop(zone, "BirdNet", Vector3(-42, 1.4, 91), 10.0, Vector3(7, 0.12, 4), Color(0.72, 0.68, 0.54, 0.42), false)
+	_build_name_simple_prop(zone, "HerbHermit", Vector3(32, 0, 88), 0.0, Vector3(1.2, 2.2, 0.9), Color(0.28, 0.32, 0.24), false)
+	_build_name_seal_node(zone, 4, Vector3(0, 0, 82), 180.0)
+
+func _build_names_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CentralNamingCore")
+	_build_name_cylinder_prop(zone, "ArchiveRingFloor", Vector3(0, 0.10, 0), 18.0, 0.20, Color(0.48, 0.46, 0.40), true)
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_build_name_simple_prop(zone, "ArchiveShelf_%02d" % i, Vector3(cos(angle) * 17.0, 0, sin(angle) * 17.0), rad_to_deg(angle) + 90.0, Vector3(5.0, 5.6, 1.1), Color(0.36, 0.30, 0.22), true)
+		_build_name_simple_prop(zone, "BlankNamePlate_%02d" % i, Vector3(cos(angle) * 11.0, 2.1, sin(angle) * 11.0), rad_to_deg(angle) + 90.0, Vector3(3.4, 1.2, 0.12), Color(0.82, 0.78, 0.62, 0.38), false)
+	_build_name_simple_prop(zone, "VanishedNameStele", Vector3(0, 0, 0), 0.0, Vector3(4.4, 8.4, 1.2), Color(0.30, 0.30, 0.28), true)
+	_build_name_simple_prop(zone, "VanishedNameInscription", Vector3(0, 5.2, -0.82), 0.0, Vector3(5.8, 2.0, 0.14), Color(0.90, 0.86, 0.72, 0.44), false)
+	_build_name_simple_prop(zone, "MisnamedMistCore", Vector3(0, 2.0, 0), 0.0, Vector3(22, 3.2, 22), Color(0.86, 0.84, 0.74, 0.14), false)
+	name_goal_trigger = Area3D.new()
+	name_goal_trigger.name = "NameGoalTrigger"
+	name_goal_trigger.position = Vector3(0, 1.0, 0)
+	name_goal_trigger.collision_layer = 0
+	name_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 8.5
+	shape.shape = sphere
+	name_goal_trigger.add_child(shape)
+	name_goal_trigger.body_entered.connect(_on_name_goal_entered)
+	name_goal_trigger.body_exited.connect(_on_name_goal_exited)
+	manifested_city.add_child(name_goal_trigger)
+
+func _build_names_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "NamesCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("WhiteDustParticles", 1150, Vector2(0.10, 0.035), Vector3(112, 5.2, 112), Vector3(0.04, 0.08, -0.03), Color(0.84, 0.82, 0.72, 0.30), 0.03, 0.18, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("CarvedNameChipParticles", 760, Vector2(0.08, 0.045), Vector3(108, 4.8, 108), Vector3(-0.05, 0.10, 0.04), Color(0.72, 0.68, 0.56, 0.34), 0.04, 0.22, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("InkLineParticles", 520, Vector2(0.20, 0.035), Vector3(104, 5.5, 104), Vector3(0.08, 0.04, 0.02), Color(0.08, 0.07, 0.06, 0.28), 0.03, 0.18, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("FloatingNameFragments", 640, Vector2(0.16, 0.05), Vector3(110, 6.5, 110), Vector3(0.03, 0.06, 0.04), Color(0.92, 0.86, 0.64, 0.28), 0.03, 0.20, 100.0, 16.0))
+	atmosphere.add_child(_make_city_particle_layer("RelicReassemblyGlowParticles", 420, Vector2(0.10, 0.10), Vector3(78, 5.2, 84), Vector3(0.02, 0.08, 0.02), Color(0.95, 0.82, 0.42, 0.26), 0.02, 0.16, 100.0, 11.0))
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_name_text_veil(atmosphere, "MisnamedWordVeil_%02d" % i, Vector3(cos(angle) * 48.0, 5.0 + float(i % 3) * 1.0, sin(angle) * 48.0), Vector2(68, 12 + float(i % 2) * 4), rad_to_deg(angle) + 90.0, Color(0.84, 0.80, 0.62, 0.22), 700.0 + float(i) * 5.3, 0.42)
+
+func _add_name_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := true, seed := 0.0) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _name_carved_stone_material(color, color.a, seed)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _build_name_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_name_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision)
+	return asset
+
+func _add_local_name_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _name_carved_stone_material(color, color.a, global_pos.x * 0.31 + global_pos.z * 0.17)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_name_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 32
+	cylinder.position = pos
+	cylinder.material = _name_carved_stone_material(color, color.a, pos.x * 0.21 + pos.z * 0.37)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _name_seal_color(node_index: int) -> Color:
+	return NAME_SEAL_COLORS[clampi(node_index, 0, NAME_SEAL_COLORS.size() - 1)]
+
+func _build_name_seal_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = NAME_SEAL_NODES[node_index]
+	var color := _name_seal_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_name_block(asset, "SealColumn", Vector3(0, 2.2, 0), Vector3(1.8, 4.4, 1.1), 0.0, Color(0.30, 0.29, 0.26), true)
+	_add_local_name_block(asset, "ActiveNamePlate", Vector3(0, 4.8, -0.62), Vector3(5.6, 2.3, 0.16), 0.0, color, false)
+	var resolved := _add_local_name_block(asset, "ResolvedEmptyNamePlate", Vector3(0, 4.8, -0.82), Vector3(5.6, 2.3, 0.16), 0.0, Color(0.86, 0.84, 0.76, 0.30), false)
+	resolved.visible = false
+	_add_name_seal_glow(asset, color)
+	while name_seal_visuals.size() <= node_index:
+		name_seal_visuals.append(null)
+	name_seal_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.3, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.8
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_name_seal_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_name_seal_exited(body, node_index))
+	manifested_city.add_child(area)
+	while name_seal_areas.size() <= node_index:
+		name_seal_areas.append(null)
+	name_seal_areas[node_index] = area
+
+func _add_name_seal_glow(asset: Node3D, color: Color) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "NameSealGlow"
+	halo.radius = 3.5
+	halo.height = 0.04
+	halo.sides = 48
+	halo.position = Vector3(0, 0.12, 0)
+	halo.material = _emissive_mat(color, 0.26, name_seal_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "NameSealLight"
+	light.position = Vector3(0, 4.3, 0)
+	light.light_color = color
+	light.light_energy = name_seal_glow_energy
+	light.omni_range = 8.0
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "NameSealParticles"
+	particles.amount = int(maxf(1.0, 76.0 * name_seal_particle_scale))
+	particles.lifetime = 3.0
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.10, 0.035)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	process.emission_box_extents = Vector3(2.6, 2.8, 0.35)
+	process.gravity = Vector3.ZERO
+	process.initial_velocity_min = 0.02
+	process.initial_velocity_max = 0.20
+	process.spread = 80.0
+	process.color = Color(color.r, color.g, color.b, 0.68)
+	particles.process_material = process
+	particles.position = Vector3(0, 3.1, -0.55)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_name_seal_visual_state(node_index: int, resolved: bool) -> void:
+	if node_index < 0 or node_index >= name_seal_visuals.size():
+		return
+	var asset := name_seal_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveNamePlate")
+	if active != null:
+		active.visible = not resolved
+	var blank := asset.get_node_or_null("ResolvedEmptyNamePlate")
+	if blank != null:
+		blank.visible = resolved
+	for name in ["NameSealGlow", "NameSealLight", "NameSealParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not resolved
+
+func _build_dead_city_whitebox(parent: Node3D) -> void:
+	_build_dead_terrain(parent)
+	_build_dead_melania_role_plaza(parent)
+	_build_dead_adelma_dusk_dock(parent)
+	_build_dead_eusapia_sister_city(parent)
+	_build_dead_argia_buried_city(parent)
+	_build_dead_laudomia_triple_city(parent)
+	_build_dead_center_core(parent)
+	_build_dead_atmosphere(parent)
+
+func _build_dead_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "DeadTerrain_UndergroundSaltValley")
+	_add_dead_block(terrain, "BoneSaltGround", Vector3(0, -0.06, 0), Vector3(238, 0.12, 238), 0.0, Color(0.48, 0.47, 0.43), true, 0.0)
+	_add_dead_block(terrain, "DuskDockCauseway", Vector3(48, 0.025, -28), Vector3(38, 0.05, 90), 0.0, Color(0.34, 0.34, 0.32), true, 13.0)
+	_add_dead_block(terrain, "BuriedDustFloor", Vector3(-52, 0.015, 20), Vector3(54, 0.05, 90), -4.0, Color(0.32, 0.29, 0.24), true, 27.0)
+	_add_dead_block(terrain, "CentralDeathAxis", Vector3(0, 0.04, -12), Vector3(10, 0.06, 160), 0.0, Color(0.40, 0.40, 0.38), true, 38.0)
+	_add_dead_block(terrain, "LaudomiaGraveRoad", Vector3(0, 0.05, 75), Vector3(132, 0.06, 11), 0.0, Color(0.42, 0.42, 0.39), true, 52.0)
+
+func _build_dead_melania_role_plaza(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_MelaniaRolePlaza")
+	_build_dead_cylinder_prop(zone, "RolePlaza", Vector3(0, 0.12, -78), 27.0, 0.24, Color(0.44, 0.43, 0.40), true)
+	_build_dead_cylinder_prop(zone, "RotatingStage", Vector3(0, 0.7, -78), 8.0, 1.2, Color(0.34, 0.32, 0.30), true)
+	for i in range(12):
+		var angle := TAU * float(i) / 12.0
+		var pos := Vector3(cos(angle) * 28.0, 0.0, -78 + sin(angle) * 21.0)
+		_build_dead_simple_prop(zone, "DialogueArcade_%02d" % i, pos, rad_to_deg(angle) + 90.0, Vector3(4.2, 5.2, 1.0), Color(0.38, 0.37, 0.35), true)
+		_build_dead_simple_prop(zone, "RoleNamePlate_%02d" % i, pos + Vector3(0, 3.2, 0), rad_to_deg(angle) + 90.0, Vector3(2.6, 0.9, 0.12), Color(0.70, 0.64, 0.48, 0.54), false)
+	_build_dead_simple_prop(zone, "ThresholdHouse", Vector3(-31, 0, -58), 12.0, Vector3(13, 5.0, 10), Color(0.36, 0.32, 0.28), true)
+	var mask_specs := [
+		["SoldierMask", Vector3(-7, 2.5, -74), Color(0.58, 0.66, 0.78, 0.58)],
+		["FatherMask", Vector3(-32, 3.1, -63), Color(0.72, 0.62, 0.48, 0.58)],
+		["DaughterMask", Vector3(11, 2.5, -82), Color(0.78, 0.66, 0.72, 0.58)],
+		["ServantMask", Vector3(23, 2.5, -69), Color(0.66, 0.64, 0.58, 0.58)]
+	]
+	for spec in mask_specs:
+		_build_dead_simple_prop(zone, String(spec[0]), spec[1], 0.0, Vector3(1.8, 2.2, 0.22), spec[2], false)
+	_build_dead_simple_prop(zone, "DialogueSoundSource", Vector3(0, 2.0, -78), 0.0, Vector3(2.4, 2.4, 2.4), Color(0.58, 0.72, 1.0, 0.26), false)
+	_build_dead_echo_node(zone, 0, Vector3(0, 0, -66), 0.0)
+
+func _build_dead_adelma_dusk_dock(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_AdelmaDuskDock")
+	_build_dead_simple_prop(zone, "DuskDock", Vector3(58, 0, -40), 0.0, Vector3(36, 1.1, 18), Color(0.28, 0.23, 0.18), true)
+	for i in range(7):
+		_build_dead_simple_prop(zone, "FishMarketShed_%02d" % i, Vector3(40.0 + float(i % 2) * 28.0, 0, -18.0 + float(i / 2) * 11.0), -4.0 + float(i) * 2.0, Vector3(12, 4.0, 8), Color(0.34, 0.31, 0.27), true)
+	_build_dead_simple_prop(zone, "NarrowAlley", Vector3(52, 0.12, 14), 0.0, Vector3(9, 0.10, 54), Color(0.20, 0.20, 0.19), true)
+	for i in range(8):
+		_build_dead_simple_prop(zone, "PorterStoneStep_%02d" % i, Vector3(52, 0.18 + float(i) * 0.12, 31.0 + float(i) * 2.2), 0.0, Vector3(12, 0.24, 2.0), Color(0.40, 0.39, 0.36), true)
+	_build_dead_cylinder_prop(zone, "MooringBollard", Vector3(42, 0.8, -49), 1.0, 1.6, Color(0.22, 0.20, 0.18), true)
+	_build_dead_simple_prop(zone, "SeaUrchinBasket", Vector3(68, 0.7, -16), 0.0, Vector3(2.4, 1.4, 2.0), Color(0.12, 0.10, 0.09), false)
+	_build_dead_simple_prop(zone, "CabbageBasket", Vector3(40, 0.7, 2), 0.0, Vector3(2.6, 1.2, 2.0), Color(0.32, 0.46, 0.28), false)
+	_build_dead_simple_prop(zone, "BalconyBasket", Vector3(66, 4.6, 4), 0.0, Vector3(2.4, 1.0, 1.6), Color(0.44, 0.31, 0.18), false)
+	_build_dead_simple_prop(zone, "SackHood", Vector3(50, 2.2, 42), 0.0, Vector3(1.4, 1.9, 0.36), Color(0.44, 0.38, 0.28), false)
+	for i in range(5):
+		_build_dead_simple_prop(zone, "FamiliarFaceGhost_%02d" % i, Vector3(36.0 + float(i) * 8.0, 1.8, -5.0 + float(i % 2) * 18.0), 0.0, Vector3(1.0, 2.6, 0.18), Color(0.60, 0.70, 0.82, 0.26), false)
+	_build_dead_echo_node(zone, 1, Vector3(54, 0, -4), -90.0)
+
+func _build_dead_eusapia_sister_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_EusapiaSisterCity")
+	_build_dead_simple_prop(zone, "UpperEusapia", Vector3(0, 0, -22), 0.0, Vector3(42, 6.0, 22), Color(0.38, 0.35, 0.31), true)
+	_build_dead_simple_prop(zone, "LowerSisterCity", Vector3(0, -2.2, 4), 0.0, Vector3(50, 3.0, 34), Color(0.20, 0.22, 0.24, 0.72), false)
+	_build_dead_simple_prop(zone, "UpDownPassage", Vector3(-24, 0, -2), 0.0, Vector3(8, 7.5, 8), Color(0.16, 0.18, 0.20), true)
+	_build_dead_simple_prop(zone, "UndergroundBanquetHall", Vector3(0, 0, 16), 0.0, Vector3(28, 4.6, 14), Color(0.24, 0.22, 0.20), true)
+	_build_dead_simple_prop(zone, "DeadDanceHall", Vector3(22, 0, 2), 6.0, Vector3(18, 5.2, 18), Color(0.26, 0.25, 0.27), true)
+	_build_dead_simple_prop(zone, "StoppedClockShop", Vector3(-18, 0, 20), -8.0, Vector3(12, 4.2, 9), Color(0.30, 0.28, 0.24), true)
+	_build_dead_simple_prop(zone, "DryBarberShop", Vector3(18, 0, 22), 8.0, Vector3(12, 4.0, 9), Color(0.31, 0.29, 0.25), true)
+	_build_dead_simple_prop(zone, "HoodedBrotherhoodHall", Vector3(0, 0, -2), 0.0, Vector3(17, 6.8, 12), Color(0.16, 0.15, 0.16), true)
+	_build_dead_simple_prop(zone, "DriedSkeleton", Vector3(0, 2.4, 16), 0.0, Vector3(1.2, 3.0, 0.4), Color(0.78, 0.74, 0.62), false)
+	_build_dead_simple_prop(zone, "StoppedClock", Vector3(-18, 3.2, 15.2), 0.0, Vector3(3.0, 3.0, 0.20), Color(0.70, 0.66, 0.52), false)
+	_build_dead_simple_prop(zone, "DryBrush", Vector3(19, 2.2, 17.2), 0.0, Vector3(0.4, 2.0, 0.2), Color(0.58, 0.48, 0.32), false)
+	_build_dead_simple_prop(zone, "HollowEyedScript", Vector3(23, 1.2, 2), 0.0, Vector3(2.8, 0.18, 1.8), Color(0.80, 0.76, 0.60), false)
+	_build_dead_simple_prop(zone, "CalfSkeleton", Vector3(8, 1.2, 26), 0.0, Vector3(3.8, 1.6, 1.0), Color(0.72, 0.70, 0.62), false)
+	_build_dead_simple_prop(zone, "HoodedMask", Vector3(0, 4.7, -8.3), 0.0, Vector3(2.2, 2.0, 0.20), Color(0.03, 0.03, 0.04), false)
+	_build_dead_echo_node(zone, 2, Vector3(0, 0, 8), 0.0)
+
+func _build_dead_argia_buried_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_ArgiaBuriedBlackCity")
+	_build_dead_simple_prop(zone, "BuriedStreet", Vector3(-58, 0.08, 18), -4.0, Vector3(12, 0.14, 74), Color(0.22, 0.20, 0.17), true)
+	for i in range(7):
+		_build_dead_simple_prop(zone, "DustFilledRoom_%02d" % i, Vector3(-78.0 + float(i % 2) * 32.0, 0, -2.0 + float(i / 2) * 17.0), 4.0, Vector3(17, 4.0, 13), Color(0.28, 0.25, 0.21), true)
+		_build_dead_simple_prop(zone, "RockLayerRoof_%02d" % i, Vector3(-78.0 + float(i % 2) * 32.0, 5.6, -2.0 + float(i / 2) * 17.0), 4.0, Vector3(20, 1.6, 16), Color(0.18, 0.18, 0.17), false)
+	_build_dead_simple_prop(zone, "InvertedStair", Vector3(-58, 2.8, 42), -8.0, Vector3(16, 1.1, 5.0), Color(0.30, 0.28, 0.24), true)
+	for i in range(8):
+		_build_dead_simple_prop(zone, "BurrowPassage_%02d" % i, Vector3(-88.0 + float(i) * 8.0, 1.4, 59.0), 0.0, Vector3(5.0, 2.8, 2.0), Color(0.18, 0.16, 0.14), true)
+	_build_dead_simple_prop(zone, "ThickDustLayer", Vector3(-58, 0.18, 18), 0.0, Vector3(54, 0.12, 78), Color(0.54, 0.46, 0.34, 0.42), false)
+	_build_dead_simple_prop(zone, "RootGap", Vector3(-76, 2.4, 46), 18.0, Vector3(14, 0.5, 0.5), Color(0.17, 0.10, 0.06), false)
+	_build_dead_simple_prop(zone, "InsectBurrow", Vector3(-42, 1.2, 38), 0.0, Vector3(1.8, 1.2, 0.22), Color(0.04, 0.035, 0.03), false)
+	_build_dead_simple_prop(zone, "UndergroundDoorSound", Vector3(-58, 1.6, 56), 0.0, Vector3(3.2, 3.2, 0.20), Color(0.36, 0.44, 0.58, 0.32), false)
+	_build_dead_echo_node(zone, 3, Vector3(-58, 0, 46), 90.0)
+
+func _build_dead_laudomia_triple_city(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_TripleLaudomia")
+	_build_dead_simple_prop(zone, "LivingLaudomia", Vector3(-38, 0, 74), 0.0, Vector3(34, 6.0, 22), Color(0.38, 0.36, 0.32), true)
+	_build_dead_simple_prop(zone, "DeadLaudomia", Vector3(0, 0, 76), 0.0, Vector3(34, 4.2, 22), Color(0.34, 0.34, 0.33), true)
+	_build_dead_simple_prop(zone, "UnbornLaudomia", Vector3(38, 0, 74), 0.0, Vector3(34, 6.8, 22), Color(0.44, 0.43, 0.39), true)
+	_build_dead_simple_prop(zone, "TombstoneStreet", Vector3(0, 0.16, 88), 0.0, Vector3(90, 0.12, 8), Color(0.30, 0.30, 0.29), true)
+	for i in range(14):
+		var x := -40.0 + float(i % 7) * 13.0
+		var z := 84.0 + float(i / 7) * 9.0
+		_build_dead_simple_prop(zone, "StoneTombstone_%02d" % i, Vector3(x, 0, z), 0.0, Vector3(2.0, 3.2, 0.6), Color(0.48, 0.48, 0.44), true)
+		_build_dead_simple_prop(zone, "FamilyNameStone_%02d" % i, Vector3(x, 2.2, z - 0.38), 0.0, Vector3(1.5, 0.6, 0.10), Color(0.72, 0.68, 0.56, 0.42), false)
+	for i in range(10):
+		_build_dead_simple_prop(zone, "NicheBuilding_%02d" % i, Vector3(24.0 + float(i % 5) * 6.8, 2.2 + float(i / 5) * 3.4, 64.0), 0.0, Vector3(4.8, 2.8, 0.8), Color(0.56, 0.54, 0.48, 0.48), false)
+	_build_dead_cylinder_prop(zone, "FunnelHall", Vector3(38, 2.0, 90), 11.0, 4.0, Color(0.46, 0.45, 0.42), true)
+	_build_dead_simple_prop(zone, "PoreCrowd", Vector3(38, 4.7, 84.4), 0.0, Vector3(12.0, 2.2, 0.12), Color(0.12, 0.12, 0.11, 0.36), false)
+	_build_dead_simple_prop(zone, "HourglassTower", Vector3(0, 0, 108), 0.0, Vector3(9, 30, 9), Color(0.38, 0.36, 0.32), true)
+	_build_dead_simple_prop(zone, "HourglassNeck", Vector3(0, 16.0, 108), 0.0, Vector3(4.0, 4.0, 4.0), Color(0.78, 0.72, 0.54, 0.42), false)
+	_build_dead_simple_prop(zone, "SandGrainGlow", Vector3(0, 27.5, 108), 0.0, Vector3(2.5, 1.2, 2.5), Color(0.92, 0.82, 0.46, 0.58), false)
+	_build_dead_echo_node(zone, 4, Vector3(0, 0, 88), 180.0)
+	dead_goal_trigger = Area3D.new()
+	dead_goal_trigger.name = "DeadGoalTrigger"
+	dead_goal_trigger.position = Vector3(0, 1.0, 108)
+	dead_goal_trigger.collision_layer = 0
+	dead_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 9.0
+	shape.shape = sphere
+	dead_goal_trigger.add_child(shape)
+	dead_goal_trigger.body_entered.connect(_on_dead_goal_entered)
+	dead_goal_trigger.body_exited.connect(_on_dead_goal_exited)
+	manifested_city.add_child(dead_goal_trigger)
+
+func _build_dead_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CentralDeathCore")
+	_build_dead_cylinder_prop(zone, "CentralColdMistBasin", Vector3(0, 0.08, 34), 18.0, 0.16, Color(0.26, 0.30, 0.34, 0.46), false)
+	_build_dead_simple_prop(zone, "TripleCityMarker", Vector3(0, 0, 34), 0.0, Vector3(5.0, 7.2, 1.4), Color(0.44, 0.42, 0.36), true)
+	_build_dead_simple_prop(zone, "DeadEchoSource", Vector3(0, 2.6, 34), 0.0, Vector3(2.6, 2.6, 2.6), Color(0.50, 0.66, 1.0, 0.24), false)
+	for i in range(3):
+		var angle := TAU * float(i) / 3.0
+		_build_dead_simple_prop(zone, "ThreeCityLine_%02d" % i, Vector3(cos(angle) * 9.0, 0.36, 34 + sin(angle) * 9.0), rad_to_deg(angle), Vector3(0.16, 0.10, 18.0), Color(0.72, 0.76, 0.78, 0.32), false)
+
+func _build_dead_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "DeadCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("ColdMistParticles", 1200, Vector2(0.18, 0.045), Vector3(112, 4.2, 112), Vector3(0.04, 0.04, -0.03), Color(0.44, 0.58, 0.74, 0.26), 0.03, 0.16, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("AshParticles", 980, Vector2(0.10, 0.045), Vector3(112, 7.2, 112), Vector3(-0.03, 0.08, 0.02), Color(0.42, 0.42, 0.38, 0.34), 0.04, 0.22, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("WhiteSaltDustParticles", 940, Vector2(0.07, 0.035), Vector3(108, 4.5, 108), Vector3(0.05, 0.05, 0.04), Color(0.82, 0.80, 0.72, 0.32), 0.03, 0.18, 100.0, 12.0))
+	atmosphere.add_child(_make_city_particle_layer("PaleBlueGlowParticles", 520, Vector2(0.11, 0.11), Vector3(104, 5.4, 104), Vector3(0.02, 0.05, 0.03), Color(0.48, 0.66, 1.0, 0.30), 0.02, 0.14, 100.0, 14.0))
+	atmosphere.add_child(_make_city_particle_layer("UnbornDustMotes", 620, Vector2(0.055, 0.055), Vector3(80, 5.8, 70), Vector3(0.02, 0.05, 0.02), Color(0.84, 0.82, 0.76, 0.22), 0.03, 0.18, 100.0, 16.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_dead_cold_mist_veil(atmosphere, "DeadColdMistVeil_%02d" % i, Vector3(cos(angle) * 50.0, 3.0 + float(i % 3) * 0.8, sin(angle) * 50.0), Vector2(72, 12 + float(i % 2) * 4), rad_to_deg(angle) + 90.0, Color(0.44, 0.58, 0.76, 0.20), 800.0 + float(i) * 5.7, 0.45)
+
+func _add_dead_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := true, seed := 0.0) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _dead_bone_dissolve_material(color, color.a, seed)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _build_dead_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_dead_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision)
+	return asset
+
+func _add_local_dead_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _dead_bone_dissolve_material(color, color.a, global_pos.x * 0.19 + global_pos.z * 0.23)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_dead_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 48
+	cylinder.position = pos
+	cylinder.material = _dead_bone_dissolve_material(color, color.a, pos.x * 0.11 + pos.z * 0.29)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _dead_echo_color(node_index: int) -> Color:
+	return DEAD_ECHO_COLORS[clampi(node_index, 0, DEAD_ECHO_COLORS.size() - 1)]
+
+func _build_dead_echo_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = DEAD_ECHO_NODES[node_index]
+	var color := _dead_echo_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_dead_block(asset, "EchoBoneColumn", Vector3(0, 2.0, 0), Vector3(1.5, 4.0, 1.1), 0.0, Color(0.32, 0.32, 0.30), true)
+	_add_local_dead_block(asset, "ActiveDeadEchoPanel", Vector3(0, 4.5, -0.58), Vector3(5.2, 2.2, 0.16), 0.0, color, false)
+	var settled := _add_local_dead_block(asset, "SettledBoneWhitePanel", Vector3(0, 4.5, -0.78), Vector3(5.2, 2.2, 0.16), 0.0, Color(0.82, 0.80, 0.70, 0.32), false)
+	settled.visible = false
+	_add_dead_echo_glow(asset, color)
+	while dead_echo_visuals.size() <= node_index:
+		dead_echo_visuals.append(null)
+	dead_echo_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.3, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.8
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_dead_echo_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_dead_echo_exited(body, node_index))
+	manifested_city.add_child(area)
+	while dead_echo_areas.size() <= node_index:
+		dead_echo_areas.append(null)
+	dead_echo_areas[node_index] = area
+
+func _add_dead_echo_glow(asset: Node3D, color: Color) -> void:
+	var candle := CSGCylinder3D.new()
+	candle.name = "DeadEchoGlow"
+	candle.radius = 3.2
+	candle.height = 0.04
+	candle.sides = 48
+	candle.position = Vector3(0, 0.12, 0)
+	candle.material = _emissive_mat(color, 0.24, dead_echo_glow_energy)
+	asset.add_child(candle)
+	var light := OmniLight3D.new()
+	light.name = "DeadEchoLight"
+	light.position = Vector3(0, 4.0, 0)
+	light.light_color = color
+	light.light_energy = dead_echo_glow_energy
+	light.omni_range = 8.0
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "DeadEchoParticles"
+	particles.amount = int(maxf(1.0, 80.0 * dead_echo_particle_scale))
+	particles.lifetime = 3.2
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.08, 0.08)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.6
+	process.gravity = Vector3.ZERO
+	process.initial_velocity_min = 0.02
+	process.initial_velocity_max = 0.22
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.64)
+	particles.process_material = process
+	particles.position = Vector3(0, 3.0, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_dead_echo_visual_state(node_index: int, settled: bool) -> void:
+	if node_index < 0 or node_index >= dead_echo_visuals.size():
+		return
+	var asset := dead_echo_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveDeadEchoPanel")
+	if active != null:
+		active.visible = not settled
+	var settled_panel := asset.get_node_or_null("SettledBoneWhitePanel")
+	if settled_panel != null:
+		settled_panel.visible = settled
+	for name in ["DeadEchoGlow", "DeadEchoLight", "DeadEchoParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not settled
+
+func _build_sky_city_whitebox(parent: Node3D) -> void:
+	_build_sky_terrain(parent)
+	_build_sky_eudoxia_maze(parent)
+	_build_sky_bersabea_projection(parent)
+	_build_sky_thekla_construction(parent)
+	_build_sky_perinthia_zodiac(parent)
+	_build_sky_andria_orbit(parent)
+	_build_sky_center_core(parent)
+	_build_sky_atmosphere(parent)
+
+func _build_sky_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "SkyCity_AstralHighlandTerrain")
+	_build_sky_simple_prop(terrain, "AstralHighlandGround", Vector3(0, -0.04, 0), 0.0, Vector3(238, 0.08, 238), Color(0.09, 0.12, 0.23), true)
+	_build_sky_simple_prop(terrain, "CloudSeaBelow_NoCollision", Vector3(0, -5.8, 0), 0.0, Vector3(236, 0.08, 236), Color(0.35, 0.48, 0.72, 0.18), false)
+	_build_sky_simple_prop(terrain, "MainCelestialCauseway_SouthNorth", Vector3(0, 0.04, 10), 0.0, Vector3(9, 0.08, 204), Color(0.16, 0.20, 0.34), true)
+	_build_sky_simple_prop(terrain, "CrossSkyCauseway_EastWest", Vector3(0, 0.05, 0), 0.0, Vector3(164, 0.08, 8), Color(0.15, 0.19, 0.32), true)
+	_build_sky_simple_prop(terrain, "ZodiacNorthCauseway", Vector3(-20, 0.055, 52), 15.0, Vector3(8, 0.08, 70), Color(0.16, 0.19, 0.34), true)
+	_build_sky_simple_prop(terrain, "OrbitApproachCauseway", Vector3(12, 0.06, 82), -8.0, Vector3(8, 0.08, 60), Color(0.17, 0.20, 0.35), true)
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_add_sky_line_span(terrain, "GroundStarTrack_%02d" % i, Vector3(cos(angle) * 12.0, 0.14, sin(angle) * 12.0), Vector3(cos(angle) * 105.0, 0.14, sin(angle) * 105.0), Color(0.38, 0.66, 1.0, 0.28), 0.08)
+
+func _build_sky_eudoxia_maze(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_EudoxiaVerticalMaze")
+	_build_sky_simple_prop(zone, "VerticalMazeCity", Vector3(0, 0, -78), 0.0, Vector3(34, 9.0, 24), Color(0.18, 0.18, 0.28), true)
+	for i in range(7):
+		var x := -20.0 + float(i % 4) * 12.0
+		var z := -96.0 + float(i / 4) * 16.0
+		_build_sky_simple_prop(zone, "CurvedAlley_%02d" % i, Vector3(x, 0.10, z), -18.0 + float(i) * 11.0, Vector3(15, 0.12, 3.2), Color(0.14, 0.17, 0.28), true)
+	_build_sky_simple_prop(zone, "DeadEndHut", Vector3(-28, 0, -72), 12.0, Vector3(9, 4.6, 8), Color(0.16, 0.14, 0.18), true)
+	_build_sky_simple_prop(zone, "CarpetShrine", Vector3(0, 0, -58), 0.0, Vector3(22, 7.6, 14), Color(0.24, 0.20, 0.38), true)
+	_build_sky_cylinder_prop(zone, "SpiralPatternPlaza", Vector3(0, 0.12, -66), 15.0, 0.12, Color(0.19, 0.22, 0.38), true)
+	_build_sky_simple_prop(zone, "SymmetricCarpet", Vector3(0, 0.22, -58), 0.0, Vector3(14, 0.08, 9), Color(0.36, 0.18, 0.54, 0.86), false)
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_sky_line_span(zone, "ColorSpiralMotif_%02d" % i, Vector3(cos(angle) * 1.6, 0.30, -58 + sin(angle) * 1.2), Vector3(cos(angle) * 6.6, 0.30, -58 + sin(angle) * 4.0), Color(0.86, 0.72, 1.0, 0.62), 0.10)
+	_build_sky_simple_prop(zone, "MuleSoundSource", Vector3(18, 1.2, -76), 0.0, Vector3(2.8, 2.2, 2.8), Color(0.62, 0.54, 0.42, 0.36), false)
+	_build_sky_simple_prop(zone, "SootStain", Vector3(-28, 2.2, -76.2), 12.0, Vector3(4.0, 3.2, 0.12), Color(0.02, 0.02, 0.02, 0.42), false)
+	_build_sky_simple_prop(zone, "FishySeafoodStall", Vector3(24, 0, -86), -8.0, Vector3(8, 2.6, 5), Color(0.16, 0.26, 0.34), true)
+	_build_sky_anchor_node(zone, 0, Vector3(0, 0, -50), 0.0)
+
+func _build_sky_bersabea_projection(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_BersabeaSkyUnderCity")
+	_build_sky_simple_prop(zone, "GoldenSkyCity", Vector3(66, 15.0, -28), -6.0, Vector3(36, 8.0, 24), Color(0.92, 0.66, 0.18, 0.58), false)
+	_build_sky_simple_prop(zone, "DiamondGate", Vector3(48, 5.0, -24), -12.0, Vector3(8, 10, 1.2), Color(0.82, 0.92, 1.0, 0.64), false)
+	_build_sky_simple_prop(zone, "SilverLockTower", Vector3(82, 0, -16), 7.0, Vector3(8, 16, 8), Color(0.68, 0.72, 0.82), true)
+	_build_sky_simple_prop(zone, "UndergroundMachineCity", Vector3(62, -1.4, 6), 0.0, Vector3(46, 2.8, 30), Color(0.04, 0.05, 0.07, 0.88), false)
+	_build_sky_simple_prop(zone, "GearPipePalace", Vector3(62, 0, 4), 0.0, Vector3(26, 8.4, 16), Color(0.12, 0.12, 0.15), true)
+	for i in range(6):
+		var angle := TAU * float(i) / 6.0
+		_build_sky_cylinder_prop(zone, "GearWheel_%02d" % i, Vector3(62 + cos(angle) * 10.0, 3.2, 4 + sin(angle) * 5.5), 1.9, 0.34, Color(0.44, 0.42, 0.48), false)
+	_build_sky_simple_prop(zone, "CometWasteDepot", Vector3(92, 18.0, -54), -18.0, Vector3(24, 4.0, 9), Color(0.44, 0.34, 0.18, 0.46), false)
+	_add_sky_line_span(zone, "CometTailDust", Vector3(82, 18.0, -54), Vector3(48, 12.0, -44), Color(0.94, 0.76, 0.42, 0.38), 0.18)
+	_build_sky_simple_prop(zone, "PreciousMetalPile", Vector3(58, 0, -36), 0.0, Vector3(6, 1.2, 4), Color(1.0, 0.74, 0.24), false)
+	_build_sky_simple_prop(zone, "RareGem", Vector3(65, 1.2, -38), 0.0, Vector3(2.4, 2.4, 2.4), Color(0.40, 0.86, 1.0, 0.72), false)
+	_build_sky_simple_prop(zone, "TrashCanRoof", Vector3(44, 3.0, 10), 0.0, Vector3(5, 1.0, 5), Color(0.22, 0.22, 0.23), false)
+	for i in range(5):
+		var debris_names := ["PotatoPeel", "BrokenUmbrella", "OldSock", "GlassShard", "UsedTicket"]
+		_build_sky_simple_prop(zone, String(debris_names[i]), Vector3(86.0 + float(i) * 2.4, 19.0 + float(i % 2), -58.0 + float(i % 3) * 3.0), float(i) * 12.0, Vector3(1.8, 0.4, 0.8), Color(0.72, 0.62, 0.46, 0.48), false)
+	_build_sky_anchor_node(zone, 1, Vector3(62, 0, -18), -90.0)
+
+func _build_sky_thekla_construction(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_TheklaConstruction")
+	_build_sky_simple_prop(zone, "EndlessConstructionCity", Vector3(-62, 0, 0), 0.0, Vector3(44, 6.0, 30), Color(0.20, 0.18, 0.17), true)
+	_build_sky_simple_prop(zone, "PlankFence_North", Vector3(-62, 1.7, -20), 0.0, Vector3(48, 3.4, 0.8), Color(0.38, 0.28, 0.16), true)
+	_build_sky_simple_prop(zone, "PlankFence_South", Vector3(-62, 1.7, 20), 0.0, Vector3(48, 3.4, 0.8), Color(0.38, 0.28, 0.16), true)
+	_build_sky_simple_prop(zone, "CanvasBarrier", Vector3(-38, 2.2, 0), 0.0, Vector3(0.8, 4.4, 38), Color(0.72, 0.68, 0.56, 0.42), false)
+	for i in range(5):
+		_build_sky_scaffold_tower(zone, "ScaffoldTower_%02d" % i, Vector3(-78.0 + float(i % 3) * 14.0, 0, -10.0 + float(i / 3) * 18.0), float(i) * 8.0, 9.0 + float(i % 2) * 3.0)
+	for i in range(3):
+		_build_sky_crane(zone, "CraneCluster_%02d" % i, Vector3(-86.0 + float(i) * 22.0, 0, 20.0), float(i) * 12.0)
+	_build_sky_simple_prop(zone, "StarBlueprintPlatform", Vector3(-58, 0, 6), 0.0, Vector3(28, 0.5, 18), Color(0.12, 0.28, 0.54), true)
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_sky_line_span(zone, "StarBlueprintLine_%02d" % i, Vector3(-58, 0.60, 6), Vector3(-58 + cos(angle) * 13.0, 0.60, 6 + sin(angle) * 8.0), Color(0.48, 0.86, 1.0, 0.56), 0.08)
+	for i in range(4):
+		var tool_names := ["Bucket", "PlumbLine", "LongBrush", "RebarFrame"]
+		_build_sky_simple_prop(zone, String(tool_names[i]), Vector3(-74.0 + float(i) * 9.0, 0, 16.0), 0.0, Vector3(2.2, 1.6 + float(i), 1.2), Color(0.46, 0.42, 0.36), false)
+	_build_sky_anchor_node(zone, 2, Vector3(-58, 0, 8), 90.0)
+
+func _build_sky_perinthia_zodiac(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_PerinthiaZodiac")
+	_build_sky_cylinder_prop(zone, "ZodiacCityWall", Vector3(-28, 0.18, 52), 30.0, 0.18, Color(0.22, 0.20, 0.36, 0.55), false)
+	for i in range(12):
+		var angle := TAU * float(i) / 12.0
+		var pos := Vector3(-28 + cos(angle) * 28.0, 0, 52 + sin(angle) * 28.0)
+		_build_sky_simple_prop(zone, "ZodiacTemple_%02d" % i, pos, rad_to_deg(angle), Vector3(5.2, 5.5, 4.2), Color(0.22, 0.20, 0.34), true)
+		_add_sky_line_span(zone, "ZodiacLine_%02d" % i, Vector3(-28, 0.45, 52), pos + Vector3(0, 0.45, 0), Color(0.70, 0.62, 1.0, 0.32), 0.055)
+	_build_sky_simple_prop(zone, "EclipseGate", Vector3(-28, 0, 22), 0.0, Vector3(14, 12, 1.2), Color(0.36, 0.31, 0.58), true)
+	_build_sky_cylinder_prop(zone, "EclipseFrame", Vector3(-28, 7.0, 21.2), 4.2, 0.22, Color(0.92, 0.86, 1.0, 0.62), false)
+	_build_sky_cylinder_prop(zone, "CelestialAxisPlaza", Vector3(-28, 0.16, 52), 12.0, 0.12, Color(0.17, 0.22, 0.40), true)
+	_add_sky_line_span(zone, "SkyAxisLine_NorthSouth", Vector3(-28, 0.50, 20), Vector3(-28, 0.50, 84), Color(0.70, 0.76, 1.0, 0.52), 0.09)
+	_add_sky_line_span(zone, "SkyAxisLine_EastWest", Vector3(-60, 0.50, 52), Vector3(4, 0.50, 52), Color(0.70, 0.76, 1.0, 0.52), 0.09)
+	_build_sky_simple_prop(zone, "ZodiacPlan", Vector3(-48, 0.7, 44), 12.0, Vector3(5.0, 0.20, 3.6), Color(0.74, 0.68, 0.52), false)
+	_build_sky_simple_prop(zone, "DeformedAttic", Vector3(-8, 7.0, 58), -8.0, Vector3(9, 4.0, 7), Color(0.10, 0.08, 0.14), false)
+	_build_sky_simple_prop(zone, "DeformedCellar", Vector3(-8, -1.0, 66), 6.0, Vector3(10, 2.0, 8), Color(0.04, 0.035, 0.05, 0.72), false)
+	_build_sky_simple_prop(zone, "DeformedShadow", Vector3(-11, 0.4, 61), 12.0, Vector3(8, 0.10, 5), Color(0.02, 0.02, 0.03, 0.46), false)
+	_build_sky_simple_prop(zone, "HoarseHowlSource", Vector3(-8, 1.2, 66), 0.0, Vector3(2.4, 2.2, 2.4), Color(0.40, 0.26, 0.62, 0.34), false)
+	_build_sky_anchor_node(zone, 3, Vector3(-28, 0, 34), 0.0)
+
+func _build_sky_andria_orbit(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_AndriaOrbitCity")
+	_build_sky_cylinder_prop(zone, "ConstellationForum", Vector3(18, 0.14, 78), 20.0, 0.12, Color(0.14, 0.22, 0.42), true)
+	for ring in range(4):
+		var radius := 8.0 + float(ring) * 5.0
+		for i in range(12):
+			var a := TAU * float(i) / 12.0
+			var b := TAU * float(i + 1) / 12.0
+			_add_sky_line_span(zone, "PlanetOrbitStreet_%02d_%02d" % [ring, i], Vector3(18 + cos(a) * radius, 0.42, 78 + sin(a) * radius), Vector3(18 + cos(b) * radius, 0.42, 78 + sin(b) * radius), Color(0.50, 0.82, 1.0, 0.36), 0.06)
+	_build_sky_simple_prop(zone, "FloatingNewStreet", Vector3(32, 7.2, 82), -12.0, Vector3(38, 0.6, 4.2), Color(0.42, 0.66, 1.0, 0.30), false)
+	_build_sky_simple_prop(zone, "ShadowTheater", Vector3(48, 0, 70), -8.0, Vector3(16, 6.0, 11), Color(0.12, 0.10, 0.18), true)
+	_build_sky_simple_prop(zone, "RiverPort", Vector3(52, 0, 94), 0.0, Vector3(22, 1.0, 9), Color(0.12, 0.25, 0.38), true)
+	_build_sky_simple_prop(zone, "ThalesStatuePlaza", Vector3(0, 0.12, 78), 0.0, Vector3(18, 0.12, 14), Color(0.18, 0.20, 0.34), true)
+	_build_sky_simple_prop(zone, "ThalesStatue", Vector3(0, 0, 78), 0.0, Vector3(2.6, 6.4, 2.2), Color(0.62, 0.62, 0.68), true)
+	_build_sky_simple_prop(zone, "BambooGrove", Vector3(40, 0, 58), 0.0, Vector3(18, 4.8, 10), Color(0.18, 0.42, 0.32, 0.58), false)
+	_build_sky_simple_prop(zone, "SkiSlope", Vector3(60, 0.7, 110), -12.0, Vector3(26, 1.4, 12), Color(0.78, 0.82, 0.92, 0.52), false)
+	_build_sky_simple_prop(zone, "AntaresSign", Vector3(10, 1.9, 60), 0.0, Vector3(4.4, 1.2, 0.18), Color(1.0, 0.42, 0.24, 0.72), false)
+	_build_sky_simple_prop(zone, "CapellaSign", Vector3(26, 1.9, 62), 0.0, Vector3(4.4, 1.2, 0.18), Color(1.0, 0.88, 0.42, 0.72), false)
+	_build_sky_simple_prop(zone, "SupernovaGlow", Vector3(18, 20.0, 78), 0.0, Vector3(3.2, 3.2, 3.2), Color(1.0, 0.82, 0.38, 0.50), false)
+	_build_star_observatory_tower(zone, Vector3(0, 0, 108), 0.0)
+	_build_sky_anchor_node(zone, 4, Vector3(18, 0, 78), 180.0)
+	sky_goal_trigger = Area3D.new()
+	sky_goal_trigger.name = "SkyGoalTrigger"
+	sky_goal_trigger.position = Vector3(0, 1.1, 108)
+	sky_goal_trigger.collision_layer = 0
+	sky_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 9.0
+	shape.shape = sphere
+	sky_goal_trigger.add_child(shape)
+	sky_goal_trigger.body_entered.connect(_on_sky_goal_entered)
+	sky_goal_trigger.body_exited.connect(_on_sky_goal_exited)
+	manifested_city.add_child(sky_goal_trigger)
+
+func _build_sky_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_CelestialCore")
+	_build_sky_cylinder_prop(zone, "CelestialDial", Vector3(0, 0.16, 0), 18.0, 0.12, Color(0.12, 0.18, 0.36), true)
+	for i in range(16):
+		var angle := TAU * float(i) / 16.0
+		_add_sky_line_span(zone, "CelestialDialSpoke_%02d" % i, Vector3(0, 0.52, 0), Vector3(cos(angle) * 17.0, 0.52, sin(angle) * 17.0), Color(0.44, 0.74, 1.0, 0.38), 0.055)
+	_build_sky_simple_prop(zone, "BlueprintLightLineCore", Vector3(0, 2.8, 0), 0.0, Vector3(0.28, 5.6, 0.28), Color(0.70, 0.88, 1.0, 0.52), false)
+	_build_sky_simple_prop(zone, "GoldenSkyGlowCore", Vector3(0, 5.8, 0), 0.0, Vector3(7.0, 1.0, 7.0), Color(1.0, 0.72, 0.28, 0.22), false)
+
+func _build_sky_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "SkyCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("StarDustParticles", 1700, Vector2(0.040, 0.040), Vector3(118, 16, 118), Vector3(0.04, 0.10, -0.02), Color(0.76, 0.88, 1.0, 0.36), 0.03, 0.22, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("CloudMoteParticles", 1200, Vector2(0.10, 0.045), Vector3(124, 8, 124), Vector3(0.12, 0.02, 0.06), Color(0.46, 0.62, 0.92, 0.18), 0.04, 0.26, 100.0, 18.0))
+	atmosphere.add_child(_make_city_particle_layer("FallingLightMotes", 760, Vector2(0.050, 0.050), Vector3(108, 20, 108), Vector3(-0.02, -0.14, 0.03), Color(1.0, 0.82, 0.36, 0.30), 0.02, 0.16, 80.0, 18.0))
+	atmosphere.add_child(_make_city_particle_layer("BlueprintLightLineParticles", 540, Vector2(0.22, 0.020), Vector3(108, 10, 108), Vector3(0.08, 0.06, 0.12), Color(0.42, 0.78, 1.0, 0.36), 0.04, 0.22, 100.0, 14.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_sky_stardust_veil(atmosphere, "AstralGradientVeil_%02d" % i, Vector3(cos(angle) * 46.0, 8.0 + float(i % 3) * 2.6, sin(angle) * 46.0), Vector2(74, 18), rad_to_deg(angle) + 90.0, Color(0.28, 0.44, 1.0, 0.20), 500.0 + float(i) * 9.0, 0.45)
+	_add_sky_stardust_veil(atmosphere, "DarkUnderMist", Vector3(62, 3.4, 4), Vector2(54, 14), 0.0, Color(0.05, 0.06, 0.12, 0.38), 608.0, 0.72)
+	_add_sky_stardust_veil(atmosphere, "GoldenUpperCityGlow", Vector3(66, 17.2, -28), Vector2(58, 16), -8.0, Color(1.0, 0.74, 0.22, 0.28), 612.0, 0.32)
+
+func _build_sky_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_sky_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision)
+	return asset
+
+func _add_local_sky_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _sky_star_material(color, color.a, global_pos.x * 0.17 + global_pos.z * 0.21, 0.34, 0.28)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_sky_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 64
+	cylinder.position = pos
+	cylinder.material = _sky_star_material(color, color.a, pos.x * 0.13 + pos.z * 0.23, 0.42, 0.38)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _add_sky_line_span(parent: Node3D, name: String, a: Vector3, b: Vector3, color: Color, thickness := 0.06) -> Node3D:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	return _build_sky_simple_prop(parent, name, mid, yaw, Vector3(thickness, thickness, maxf(flat_length, 0.1)), color, false)
+
+func _build_sky_scaffold_tower(parent: Node3D, name: String, pos: Vector3, yaw: float, height: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	for x in [-2.0, 2.0]:
+		for z in [-2.0, 2.0]:
+			_add_local_sky_block(asset, "ScaffoldLeg_%s_%s" % [str(x), str(z)], Vector3(x, height * 0.5, z), Vector3(0.18, height, 0.18), 0.0, Color(0.52, 0.62, 0.80, 0.64), false)
+	for level in range(4):
+		var y := 1.2 + float(level) * height / 4.0
+		_add_local_sky_block(asset, "ScaffoldCrossX_%02d" % level, Vector3(0, y, -2.0), Vector3(4.4, 0.12, 0.12), 0.0, Color(0.46, 0.70, 1.0, 0.44), false)
+		_add_local_sky_block(asset, "ScaffoldCrossZ_%02d" % level, Vector3(-2.0, y, 0), Vector3(0.12, 0.12, 4.4), 0.0, Color(0.46, 0.70, 1.0, 0.44), false)
+
+func _build_sky_crane(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_sky_block(asset, "CraneMast", Vector3(0, 8.0, 0), Vector3(0.6, 16.0, 0.6), 0.0, Color(0.56, 0.54, 0.44), false)
+	_add_local_sky_block(asset, "CraneBoom", Vector3(8.0, 15.4, 0), Vector3(18.0, 0.34, 0.34), 0.0, Color(0.72, 0.64, 0.38), false)
+	_add_local_sky_block(asset, "CraneCounterweight", Vector3(-3.8, 14.9, 0), Vector3(3.0, 1.4, 1.0), 0.0, Color(0.42, 0.36, 0.24), false)
+
+func _build_star_observatory_tower(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "StarObservatoryTower", pos, yaw)
+	_add_local_sky_block(asset, "TowerBase", Vector3(0, 2.0, 0), Vector3(13, 4.0, 13), 0.0, Color(0.18, 0.19, 0.30), true)
+	_add_local_sky_block(asset, "ObservatoryShaft", Vector3(0, 15.0, 0), Vector3(7.0, 26.0, 7.0), 0.0, Color(0.20, 0.23, 0.36), true)
+	_add_local_sky_block(asset, "ObservationDeck", Vector3(0, 29.0, 0), Vector3(16, 2.0, 16), 0.0, Color(0.28, 0.34, 0.52), false)
+	_add_local_sky_block(asset, "StarDome", Vector3(0, 32.0, 0), Vector3(11, 4.0, 11), 0.0, Color(0.46, 0.58, 0.86, 0.54), false)
+	_add_local_sky_block(asset, "TelescopeTube", Vector3(3.6, 33.2, -2.2), Vector3(1.0, 1.0, 8.0), -28.0, Color(0.62, 0.72, 0.88), false)
+	_add_local_sky_block(asset, "HighestStarMarker", Vector3(0, 36.0, 0), Vector3(2.0, 2.0, 2.0), 0.0, Color(1.0, 0.86, 0.34, 0.66), false)
+	var light := OmniLight3D.new()
+	light.name = "ObservatoryStarLight"
+	light.position = Vector3(0, 34.0, 0)
+	light.light_color = Color(0.64, 0.78, 1.0)
+	light.light_energy = 1.05
+	light.omni_range = 24.0
+	asset.add_child(light)
+
+func _sky_anchor_color(node_index: int) -> Color:
+	return SKY_ANCHOR_COLORS[clampi(node_index, 0, SKY_ANCHOR_COLORS.size() - 1)]
+
+func _build_sky_anchor_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = SKY_ANCHOR_NODES[node_index]
+	var color := _sky_anchor_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_sky_block(asset, "AnchorColumn", Vector3(0, 2.2, 0), Vector3(1.4, 4.4, 1.4), 0.0, Color(0.12, 0.16, 0.30), true)
+	_add_local_sky_block(asset, "ActiveSkyAnchorPanel", Vector3(0, 4.9, -0.45), Vector3(5.2, 2.2, 0.16), 0.0, color, false)
+	var calibrated := _add_local_sky_block(asset, "CalibratedStarPanel", Vector3(0, 4.9, -0.65), Vector3(5.2, 2.2, 0.16), 0.0, Color(0.92, 0.96, 1.0, 0.34), false)
+	calibrated.visible = false
+	_add_sky_anchor_glow(asset, color)
+	while sky_anchor_visuals.size() <= node_index:
+		sky_anchor_visuals.append(null)
+	sky_anchor_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.3, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.8
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_sky_anchor_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_sky_anchor_exited(body, node_index))
+	manifested_city.add_child(area)
+	while sky_anchor_areas.size() <= node_index:
+		sky_anchor_areas.append(null)
+	sky_anchor_areas[node_index] = area
+
+func _add_sky_anchor_glow(asset: Node3D, color: Color) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "SkyAnchorGlow"
+	halo.radius = 3.4
+	halo.height = 0.04
+	halo.sides = 48
+	halo.position = Vector3(0, 0.12, 0)
+	halo.material = _emissive_mat(color, 0.28, sky_anchor_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "SkyAnchorLight"
+	light.position = Vector3(0, 4.4, 0)
+	light.light_color = color
+	light.light_energy = sky_anchor_glow_energy
+	light.omni_range = 10.0
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "SkyAnchorParticles"
+	particles.amount = int(maxf(1.0, 86.0 * sky_anchor_particle_scale))
+	particles.lifetime = 3.0
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 9, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.075, 0.075)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.9
+	process.gravity = Vector3.ZERO
+	process.initial_velocity_min = 0.03
+	process.initial_velocity_max = 0.26
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.72)
+	particles.process_material = process
+	particles.position = Vector3(0, 3.2, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_sky_anchor_visual_state(node_index: int, calibrated: bool) -> void:
+	if node_index < 0 or node_index >= sky_anchor_visuals.size():
+		return
+	var asset := sky_anchor_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveSkyAnchorPanel")
+	if active != null:
+		active.visible = not calibrated
+	var done := asset.get_node_or_null("CalibratedStarPanel")
+	if done != null:
+		done.visible = calibrated
+	for name in ["SkyAnchorGlow", "SkyAnchorLight", "SkyAnchorParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not calibrated
+
 func _build_memory_city_diomira() -> void:
 	_build_memory_courtyard()
 	_build_repeated_doors()
@@ -3520,6 +4884,14 @@ func _build_ui() -> void:
 			callback = _on_thin_theme_pressed
 		elif i == THEME_TRADE:
 			callback = _on_trade_theme_pressed
+		elif i == THEME_EYES:
+			callback = _on_eyes_theme_pressed
+		elif i == THEME_NAMES_CITY:
+			callback = _on_names_theme_pressed
+		elif i == THEME_DEAD:
+			callback = _on_dead_theme_pressed
+		elif i == THEME_SKY:
+			callback = _on_sky_theme_pressed
 		var b := _button(THEME_NAMES[i], callback)
 		theme_buttons.append(b)
 		theme_select.add_child(b)
@@ -3713,6 +5085,18 @@ func _on_thin_theme_pressed() -> void:
 func _on_trade_theme_pressed() -> void:
 	_on_theme_pressed(THEME_TRADE)
 
+func _on_eyes_theme_pressed() -> void:
+	_on_theme_pressed(THEME_EYES)
+
+func _on_names_theme_pressed() -> void:
+	_on_theme_pressed(THEME_NAMES_CITY)
+
+func _on_dead_theme_pressed() -> void:
+	_on_theme_pressed(THEME_DEAD)
+
+func _on_sky_theme_pressed() -> void:
+	_on_theme_pressed(THEME_SKY)
+
 func _on_theme_pressed(theme_index: int) -> void:
 	if theme_index != THEME_MEMORY and not memory_completed:
 		_update_theme_unlocks()
@@ -3768,12 +5152,12 @@ func _disabled_theme_pressed() -> void:
 func _update_theme_unlocks() -> void:
 	if theme_select_status_label != null:
 		if memory_completed:
-			theme_select_status_label.text = "记忆已完成。当前可选择“记忆”“欲望”“符号”“轻盈”“贸易”；其他主题仍等待白盒。"
+			theme_select_status_label.text = "记忆已完成。当前可选择“记忆”“欲望”“符号”“轻盈”“贸易”“眼睛”“姓名”“死的”“天空”；其他主题仍等待白盒。"
 		else:
 			theme_select_status_label.text = "先完成“记忆”，再自由选择其他城市。"
 	for i in range(theme_buttons.size()):
 		var button := theme_buttons[i]
-		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE
+		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE or i == THEME_EYES or i == THEME_NAMES_CITY or i == THEME_DEAD or i == THEME_SKY
 		var unlocked := i == THEME_MEMORY or (memory_completed and playable_after_memory)
 		button.disabled = not unlocked
 		button.text = THEME_NAMES[i]
@@ -3883,22 +5267,14 @@ func _start_manifest_sequence() -> void:
 	_set_extra_grey_environment_active(false)
 	_set_city_collision_enabled(true)
 	phase = GamePhase.CITY
+	_reset_city_guidance_timer()
 	player.set_footstep_set("city")
 	player.set_look_locked(false)
 	player.sync_look_targets()
 	player.set_locked(false)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_play_city_bgm()
-	if selected_theme_index == THEME_DESIRE:
-		_show_hint("%s 已显现。收集欲望物，进入月光迷宫。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
-	elif selected_theme_index == THEME_SIGNS:
-		_show_hint("%s 已显现。读取五处符号断点，进入无名广场。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
-	elif selected_theme_index == THEME_THIN:
-		_show_hint("%s 已显现。读取五个悬空节点，再回到网心瞭望台。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
-	elif selected_theme_index == THEME_TRADE:
-		_show_hint("%s 已显现。完成五次交换，再回到中心交易核。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
-	else:
-		_show_hint("%s 已显现。去寻找最高处的回声塔。" % MEMORY_CITY_TITLES[selected_memory_city_index], 4.0)
+	_show_hint("%s 已显现。\n通关玩法：%s" % [MEMORY_CITY_TITLES[selected_memory_city_index], _city_entry_objective_text()], 6.0)
 
 func _apply_manifest_camera_offset(offset_degrees: float) -> void:
 	var delta := offset_degrees - manifest_camera_applied_offset
@@ -3925,6 +5301,14 @@ func _is_player_near_reading_trigger() -> bool:
 		return thin_goal_trigger != null and _is_thin_ascent_complete() and player.global_position.distance_to(thin_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if selected_theme_index == THEME_TRADE:
 		return trade_goal_trigger != null and _is_trade_exchange_complete() and player.global_position.distance_to(trade_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_EYES:
+		return eye_goal_trigger != null and _is_eye_observation_complete() and player.global_position.distance_to(eye_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_NAMES_CITY:
+		return name_goal_trigger != null and _is_name_seal_complete() and player.global_position.distance_to(name_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_DEAD:
+		return dead_goal_trigger != null and _is_dead_echo_complete() and player.global_position.distance_to(dead_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_SKY:
+		return sky_goal_trigger != null and _is_sky_anchor_complete() and player.global_position.distance_to(sky_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if reading_trigger == null:
 		return false
 	return player.global_position.distance_to(reading_trigger.global_position) <= reading_interact_radius
@@ -3949,6 +5333,7 @@ func _collect_desire_relic(relic_index: int) -> void:
 		return
 	desire_collected_relics.append(relic_index)
 	desire_active_relic_index = -1
+	_reset_city_guidance_timer()
 	var data: Array = DESIRE_RELICS[relic_index]
 	if relic_index < desire_relic_visuals.size() and desire_relic_visuals[relic_index] != null:
 		desire_relic_visuals[relic_index].visible = false
@@ -4012,6 +5397,7 @@ func _activate_sign_fracture_node(node_index: int) -> void:
 		return
 	sign_completed_nodes.append(node_index)
 	sign_active_node_index = -1
+	_reset_city_guidance_timer()
 	_set_sign_fracture_visual_state(node_index, true)
 	if node_index < sign_node_areas.size() and sign_node_areas[node_index] != null:
 		sign_node_areas[node_index].set_deferred("monitoring", false)
@@ -4073,6 +5459,7 @@ func _activate_thin_ascent_node(node_index: int) -> void:
 		return
 	thin_completed_nodes.append(node_index)
 	thin_active_node_index = -1
+	_reset_city_guidance_timer()
 	_set_thin_node_visual_state(node_index, true)
 	if node_index < thin_node_areas.size() and thin_node_areas[node_index] != null:
 		thin_node_areas[node_index].set_deferred("monitoring", false)
@@ -4134,6 +5521,7 @@ func _activate_trade_exchange_node(node_index: int) -> void:
 		return
 	trade_completed_nodes.append(node_index)
 	trade_active_node_index = -1
+	_reset_city_guidance_timer()
 	_set_trade_exchange_visual_state(node_index, true)
 	if node_index < trade_node_areas.size() and trade_node_areas[node_index] != null:
 		trade_node_areas[node_index].set_deferred("monitoring", false)
@@ -4175,7 +5563,256 @@ func _on_trade_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_TRADE:
 		can_read_tower = false
 
+func _on_eye_observation_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_EYES:
+		return
+	if _is_eye_observation_completed(node_index):
+		return
+	eye_active_observation_index = node_index
+	var data: Array = EYE_OBSERVATION_NODES[node_index]
+	_show_hint("按 E 校准视线：%s" % String(data[1]), 2.4)
+
+func _on_eye_observation_exited(body: Node3D, node_index: int) -> void:
+	if body == player and eye_active_observation_index == node_index:
+		eye_active_observation_index = -1
+
+func _activate_eye_observation_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= EYE_OBSERVATION_NODES.size():
+		return
+	if _is_eye_observation_completed(node_index):
+		return
+	eye_completed_observations.append(node_index)
+	eye_active_observation_index = -1
+	_reset_city_guidance_timer()
+	_set_eye_observation_visual_state(node_index, true)
+	if node_index < eye_observation_areas.size() and eye_observation_areas[node_index] != null:
+		eye_observation_areas[node_index].set_deferred("monitoring", false)
+		eye_observation_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = EYE_OBSERVATION_NODES[node_index]
+	var count := eye_completed_observations.size()
+	if _is_eye_observation_complete():
+		_show_hint("%s\n五处观察点已经校准。回到中心观景核。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已校准 %d / %d。" % [String(data[2]), count, EYE_OBSERVATION_NODES.size()], 4.0)
+
+func _is_eye_observation_completed(node_index: int) -> bool:
+	return eye_completed_observations.has(node_index)
+
+func _is_eye_observation_complete() -> bool:
+	return eye_completed_observations.size() >= EYE_OBSERVATION_NODES.size()
+
+func _reset_eye_observation_nodes() -> void:
+	eye_completed_observations.clear()
+	eye_active_observation_index = -1
+	for i in range(eye_observation_visuals.size()):
+		_set_eye_observation_visual_state(i, false)
+	for area in eye_observation_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_eye_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_EYES:
+		return
+	if _is_eye_observation_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读中心观景核。", 2.5)
+	else:
+		var missing := EYE_OBSERVATION_NODES.size() - eye_completed_observations.size()
+		_show_hint("中心观景核还没有对焦。还需校准 %d 处观察点。" % missing, 3.2)
+
+func _on_eye_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_EYES:
+		can_read_tower = false
+
+func _on_name_seal_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_NAMES_CITY:
+		return
+	if _is_name_seal_completed(node_index):
+		return
+	name_active_seal_index = node_index
+	var data: Array = NAME_SEAL_NODES[node_index]
+	_show_hint("按 E 解名：%s" % String(data[1]), 2.4)
+
+func _on_name_seal_exited(body: Node3D, node_index: int) -> void:
+	if body == player and name_active_seal_index == node_index:
+		name_active_seal_index = -1
+
+func _activate_name_seal_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= NAME_SEAL_NODES.size():
+		return
+	if _is_name_seal_completed(node_index):
+		return
+	name_completed_seals.append(node_index)
+	name_active_seal_index = -1
+	_reset_city_guidance_timer()
+	_set_name_seal_visual_state(node_index, true)
+	if node_index < name_seal_areas.size() and name_seal_areas[node_index] != null:
+		name_seal_areas[node_index].set_deferred("monitoring", false)
+		name_seal_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = NAME_SEAL_NODES[node_index]
+	var count := name_completed_seals.size()
+	if _is_name_seal_complete():
+		_show_hint("%s\n五处命名封印已经松动。回到消逝名字碑。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已解名 %d / %d。" % [String(data[2]), count, NAME_SEAL_NODES.size()], 4.0)
+
+func _is_name_seal_completed(node_index: int) -> bool:
+	return name_completed_seals.has(node_index)
+
+func _is_name_seal_complete() -> bool:
+	return name_completed_seals.size() >= NAME_SEAL_NODES.size()
+
+func _reset_name_seal_nodes() -> void:
+	name_completed_seals.clear()
+	name_active_seal_index = -1
+	for i in range(name_seal_visuals.size()):
+		_set_name_seal_visual_state(i, false)
+	for area in name_seal_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_name_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_NAMES_CITY:
+		return
+	if _is_name_seal_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读消逝名字碑。", 2.5)
+	else:
+		var missing := NAME_SEAL_NODES.size() - name_completed_seals.size()
+		_show_hint("消逝名字碑还被传说覆盖。还需解开 %d 处命名封印。" % missing, 3.2)
+
+func _on_name_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_NAMES_CITY:
+		can_read_tower = false
+
+func _on_dead_echo_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_DEAD:
+		return
+	if _is_dead_echo_completed(node_index):
+		return
+	dead_active_echo_index = node_index
+	var data: Array = DEAD_ECHO_NODES[node_index]
+	_show_hint("按 E 安放回声：%s" % String(data[1]), 2.4)
+
+func _on_dead_echo_exited(body: Node3D, node_index: int) -> void:
+	if body == player and dead_active_echo_index == node_index:
+		dead_active_echo_index = -1
+
+func _activate_dead_echo_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= DEAD_ECHO_NODES.size():
+		return
+	if _is_dead_echo_completed(node_index):
+		return
+	dead_completed_echoes.append(node_index)
+	dead_active_echo_index = -1
+	_reset_city_guidance_timer()
+	_set_dead_echo_visual_state(node_index, true)
+	if node_index < dead_echo_areas.size() and dead_echo_areas[node_index] != null:
+		dead_echo_areas[node_index].set_deferred("monitoring", false)
+		dead_echo_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = DEAD_ECHO_NODES[node_index]
+	var count := dead_completed_echoes.size()
+	if _is_dead_echo_complete():
+		_show_hint("%s\n五处亡者回声已经归位。前往沙漏塔。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已安放 %d / %d。" % [String(data[2]), count, DEAD_ECHO_NODES.size()], 4.0)
+
+func _is_dead_echo_completed(node_index: int) -> bool:
+	return dead_completed_echoes.has(node_index)
+
+func _is_dead_echo_complete() -> bool:
+	return dead_completed_echoes.size() >= DEAD_ECHO_NODES.size()
+
+func _reset_dead_echo_nodes() -> void:
+	dead_completed_echoes.clear()
+	dead_active_echo_index = -1
+	for i in range(dead_echo_visuals.size()):
+		_set_dead_echo_visual_state(i, false)
+	for area in dead_echo_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_dead_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_DEAD:
+		return
+	if _is_dead_echo_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读沙漏塔。", 2.5)
+	else:
+		var missing := DEAD_ECHO_NODES.size() - dead_completed_echoes.size()
+		_show_hint("沙漏塔仍在等待。还需安放 %d 处亡者回声。" % missing, 3.2)
+
+func _on_dead_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_DEAD:
+		can_read_tower = false
+
+func _on_sky_anchor_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_SKY:
+		return
+	if _is_sky_anchor_completed(node_index):
+		return
+	sky_active_anchor_index = node_index
+	var data: Array = SKY_ANCHOR_NODES[node_index]
+	_show_hint("按 E 校准天体锚点：%s" % String(data[1]), 2.4)
+
+func _on_sky_anchor_exited(body: Node3D, node_index: int) -> void:
+	if body == player and sky_active_anchor_index == node_index:
+		sky_active_anchor_index = -1
+
+func _activate_sky_anchor_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= SKY_ANCHOR_NODES.size():
+		return
+	if _is_sky_anchor_completed(node_index):
+		return
+	sky_completed_anchors.append(node_index)
+	sky_active_anchor_index = -1
+	_reset_city_guidance_timer()
+	_set_sky_anchor_visual_state(node_index, true)
+	if node_index < sky_anchor_areas.size() and sky_anchor_areas[node_index] != null:
+		sky_anchor_areas[node_index].set_deferred("monitoring", false)
+		sky_anchor_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = SKY_ANCHOR_NODES[node_index]
+	var count := sky_completed_anchors.size()
+	if _is_sky_anchor_complete():
+		_show_hint("%s\n五处天体锚点已经校准。前往星空观测塔。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已校准 %d / %d。" % [String(data[2]), count, SKY_ANCHOR_NODES.size()], 4.0)
+
+func _is_sky_anchor_completed(node_index: int) -> bool:
+	return sky_completed_anchors.has(node_index)
+
+func _is_sky_anchor_complete() -> bool:
+	return sky_completed_anchors.size() >= SKY_ANCHOR_NODES.size()
+
+func _reset_sky_anchor_nodes() -> void:
+	sky_completed_anchors.clear()
+	sky_active_anchor_index = -1
+	for i in range(sky_anchor_visuals.size()):
+		_set_sky_anchor_visual_state(i, false)
+	for area in sky_anchor_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_sky_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_SKY:
+		return
+	if _is_sky_anchor_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读星空观测塔。", 2.5)
+	else:
+		var missing := SKY_ANCHOR_NODES.size() - sky_completed_anchors.size()
+		_show_hint("星空观测塔还没有对齐。还需校准 %d 处天体锚点。" % missing, 3.2)
+
+func _on_sky_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_SKY:
+		can_read_tower = false
+
 func _open_reading() -> void:
+	_reset_city_guidance_timer()
 	phase = GamePhase.READING
 	player.set_locked(true)
 	player.set_look_locked(true)
@@ -4227,6 +5864,14 @@ func _choose_stay() -> void:
 		_show_hint("你仍在轻盈之城。回到网心瞭望台可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_TRADE:
 		_show_hint("你仍在贸易之城。回到中心交易核可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_EYES:
+		_show_hint("你仍在眼睛之城。回到中心观景核可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_NAMES_CITY:
+		_show_hint("你仍在姓名之城。回到消逝名字碑可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_DEAD:
+		_show_hint("你仍在死者之城。回到沙漏塔可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_SKY:
+		_show_hint("你仍在天空之城。回到星空观测塔可再次阅读。", 3.0)
 	else:
 		_show_hint("你仍在记忆之城。回到塔底可再次阅读。", 3.0)
 
@@ -4262,10 +5907,15 @@ func _hide_pause_menu() -> void:
 func _reset_level_state() -> void:
 	manifest_started = false
 	can_read_tower = false
+	_reset_city_guidance_timer()
 	_reset_desire_relics()
 	_reset_sign_fracture_nodes()
 	_reset_thin_ascent_nodes()
 	_reset_trade_exchange_nodes()
+	_reset_eye_observation_nodes()
+	_reset_name_seal_nodes()
+	_reset_dead_echo_nodes()
+	_reset_sky_anchor_nodes()
 	manifested_city.visible = false
 	_set_city_collision_enabled(false)
 	grey_visual_root.visible = true
@@ -4485,6 +6135,81 @@ func _update_city_reverb(delta: float) -> void:
 	world_reverb.wet = lerp(world_reverb.wet, city_reverb_wet, weight)
 	world_reverb.room_size = lerp(world_reverb.room_size, city_reverb_room_size, weight)
 
+func _reset_city_guidance_timer() -> void:
+	city_guidance_timer = 0.0
+	city_guidance_has_shown = false
+
+func _update_city_guidance(delta: float) -> void:
+	if not is_instance_valid(player) or phase != GamePhase.CITY:
+		return
+	if can_read_tower or _is_player_near_reading_trigger():
+		_reset_city_guidance_timer()
+		return
+	city_guidance_timer += delta
+	var target_delay := city_guidance_repeat_delay if city_guidance_has_shown else city_guidance_delay
+	if city_guidance_timer >= maxf(target_delay, 1.0):
+		_show_hint(_city_guidance_text(), 5.0)
+		city_guidance_timer = 0.0
+		city_guidance_has_shown = true
+
+func _city_guidance_text() -> String:
+	match selected_theme_index:
+		THEME_DESIRE:
+			if _is_desire_collection_complete():
+				return "欲望物已经集齐。去月光迷宫最深处，寻找白色陷阱广场。"
+			return "寻找带彩色辉光的欲望物。靠近后按 E 拾取。"
+		THEME_SIGNS:
+			if _is_sign_fracture_complete():
+				return "五处符号断点已沉默。回到中心无名广场。"
+			return "寻找发光的符号断点。靠近后按 E 读取。"
+		THEME_THIN:
+			if _is_thin_ascent_complete():
+				return "五个悬空节点已绷紧。回到中心网心瞭望台。"
+			return "寻找轻盈城中的悬空发光节点。靠近后按 E 读取。"
+		THEME_TRADE:
+			if _is_trade_exchange_complete():
+				return "五次交换已经完成。回到中心交易核。"
+			return "寻找发光的交换节点。靠近后按 E 完成交换。"
+		THEME_EYES:
+			if _is_eye_observation_complete():
+				return "五处观察点已经校准。回到中心观景核。"
+			return "寻找冷白辉光的观察点。靠近后按 E 校准视线。"
+		THEME_NAMES_CITY:
+			if _is_name_seal_complete():
+				return "五处命名封印已经松动。回到中心消逝名字碑。"
+			return "寻找发光铭牌或石碑。靠近后按 E 解名。"
+		THEME_DEAD:
+			if _is_dead_echo_complete():
+				return "五处亡者回声已经归位。前往北侧沙漏塔。"
+			return "寻找冷蓝烛火或骨白回声标记。靠近后按 E 安放。"
+		THEME_SKY:
+			if _is_sky_anchor_complete():
+				return "五处天体锚点已经校准。前往北侧星空观测塔。"
+			return "寻找蓝白星尘和天体锚点。靠近后按 E 校准。"
+		_:
+			return "寻找城市最高处的回声塔。到塔底后按 E 阅读。"
+
+func _city_entry_objective_text() -> String:
+	match selected_theme_index:
+		THEME_DESIRE:
+			return "寻找 5 件带彩色辉光的欲望物，全部拾取后进入月光迷宫最深处阅读。"
+		THEME_SIGNS:
+			return "读取 5 处发光符号断点，然后回到中心无名广场阅读。"
+		THEME_THIN:
+			return "读取 5 个悬空节点，然后回到网心瞭望台阅读。"
+		THEME_TRADE:
+			return "完成 5 次交换节点，然后回到中心交易核阅读。"
+		THEME_EYES:
+			return "校准 5 处冷白观察点，然后回到中心观景核阅读。"
+		THEME_NAMES_CITY:
+			return "解开 5 处命名封印，然后回到消逝名字碑阅读。"
+		THEME_DEAD:
+			return "安放 5 处亡者回声，然后前往北侧沙漏塔阅读。"
+		THEME_SKY:
+			return "校准 5 处天体锚点，然后前往北侧星空观测塔阅读。"
+		_:
+			return "寻找最高处的回声塔，到塔底后按 E 阅读。"
+
 func _set_grey_post_process_visible(visible: bool) -> void:
 	if grey_post_process_rect != null:
 		grey_post_process_rect.visible = visible and grey_post_process_enabled
@@ -4501,33 +6226,45 @@ func _update_city_post_process() -> void:
 	var signs_flatten := 1.0 if selected_theme_index == THEME_SIGNS else 0.0
 	var thin_air := 1.0 if selected_theme_index == THEME_THIN else 0.0
 	var trade_wet := 1.0 if selected_theme_index == THEME_TRADE else 0.0
+	var eye_reflect := 1.0 if selected_theme_index == THEME_EYES else 0.0
+	var name_carve := 1.0 if selected_theme_index == THEME_NAMES_CITY else 0.0
+	var dead_cold := 1.0 if selected_theme_index == THEME_DEAD else 0.0
+	var sky_cosmic := 1.0 if selected_theme_index == THEME_SKY else 0.0
+	var residual := clampf(city_residual_grey_chaos_strength, 0.0, 1.0)
 	grey_post_process_material.set_shader_parameter("effect_strength", city_post_effect_strength)
-	grey_post_process_material.set_shader_parameter("grain_strength", 0.07 + 0.03 * signs_flatten + 0.02 * thin_air + 0.02 * trade_wet)
-	grey_post_process_material.set_shader_parameter("halftone_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("grain_strength", city_residual_grey_grain_strength * residual + 0.025 * signs_flatten + 0.015 * thin_air + 0.015 * trade_wet + 0.012 * eye_reflect + 0.018 * name_carve + 0.020 * dead_cold + 0.012 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("halftone_strength", minf(city_residual_halftone_strength * residual + 0.02 * signs_flatten + 0.01 * name_carve, 0.08))
 	grey_post_process_material.set_shader_parameter("pixel_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("posterize_strength", 0.10 + 0.04 * signs_flatten - 0.03 * thin_air + 0.02 * trade_wet)
-	grey_post_process_material.set_shader_parameter("flatten_strength", 0.10 + 0.12 * signs_flatten - 0.02 * thin_air)
+	grey_post_process_material.set_shader_parameter("posterize_strength", 0.10 + 0.04 * signs_flatten - 0.03 * thin_air + 0.02 * trade_wet - 0.015 * eye_reflect + 0.025 * name_carve + 0.015 * dead_cold - 0.010 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("flatten_strength", 0.10 + 0.12 * signs_flatten - 0.02 * thin_air - 0.01 * eye_reflect + 0.035 * name_carve + 0.025 * dead_cold - 0.015 * sky_cosmic)
 	grey_post_process_material.set_shader_parameter("scanline_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00045 + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet)
-	grey_post_process_material.set_shader_parameter("wave_strength", 0.0008 + 0.0012 * desire_heat + 0.00065 * thin_air + 0.0010 * trade_wet)
-	grey_post_process_material.set_shader_parameter("tear_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("edge_strength", 0.10 + 0.04 * thin_air)
-	grey_post_process_material.set_shader_parameter("contour_strength", 0.05 + 0.08 * signs_flatten + 0.06 * thin_air + 0.03 * trade_wet)
+	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00025 + 0.00020 * residual + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet + 0.00036 * eye_reflect + 0.00016 * name_carve + 0.00022 * dead_cold + 0.00024 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("wave_strength", city_residual_wave_strength * residual + 0.0008 * desire_heat + 0.00045 * thin_air + 0.0007 * trade_wet + 0.00075 * eye_reflect + 0.00032 * name_carve + 0.00042 * dead_cold + 0.00048 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("edge_strength", 0.04 + 0.03 * signs_flatten + 0.03 * thin_air + 0.025 * eye_reflect + 0.030 * name_carve + 0.020 * dead_cold + 0.020 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("contour_strength", 0.015 + 0.035 * signs_flatten + 0.025 * thin_air + 0.02 * trade_wet + 0.025 * eye_reflect + 0.030 * name_carve + 0.025 * dead_cold + 0.030 * sky_cosmic)
 	grey_post_process_material.set_shader_parameter("solarize_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("inversion_flicker_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air)
-	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.05 + 0.04 * desire_heat + 0.08 * thin_air + 0.07 * trade_wet)
+	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air + 0.02 * eye_reflect + 0.02 * name_carve + 0.050 * dead_cold - 0.020 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.05 + 0.04 * desire_heat + 0.08 * thin_air + 0.07 * trade_wet + 0.06 * eye_reflect + 0.05 * name_carve + 0.060 * dead_cold + 0.070 * sky_cosmic)
 	grey_post_process_material.set_shader_parameter("zone_tint", Vector3(theme_color.r, theme_color.g, theme_color.b))
 	grey_post_process_material.set_shader_parameter("ink_outline_strength", city_post_ink_outline_strength)
 	grey_post_process_material.set_shader_parameter("ink_outline_width", 1.15)
-	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", city_post_stylized_shadow_strength - 0.06 * thin_air)
-	grey_post_process_material.set_shader_parameter("color_variation_strength", city_post_color_variation_strength + 0.03 * thin_air + 0.06 * trade_wet)
-	grey_post_process_material.set_shader_parameter("soft_glow_strength", city_post_soft_glow_strength + 0.04 * desire_heat + 0.06 * thin_air + 0.07 * trade_wet)
+	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", city_post_stylized_shadow_strength - 0.06 * thin_air + 0.040 * dead_cold - 0.030 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("color_variation_strength", city_post_color_variation_strength + 0.025 * residual + 0.03 * thin_air + 0.06 * trade_wet + 0.04 * eye_reflect + 0.035 * name_carve + 0.030 * dead_cold + 0.050 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("soft_glow_strength", city_post_soft_glow_strength + 0.02 * residual + 0.04 * desire_heat + 0.06 * thin_air + 0.07 * trade_wet + 0.08 * eye_reflect + 0.04 * name_carve + 0.035 * dead_cold + 0.090 * sky_cosmic)
 	var ink_color := Vector3(0.035, 0.034, 0.030).lerp(Vector3(0.06, 0.08, 0.10), thin_air)
-	grey_post_process_material.set_shader_parameter("ink_color", ink_color.lerp(Vector3(0.04, 0.055, 0.045), trade_wet))
+	ink_color = ink_color.lerp(Vector3(0.04, 0.055, 0.045), trade_wet)
+	ink_color = ink_color.lerp(Vector3(0.035, 0.070, 0.095), eye_reflect)
+	ink_color = ink_color.lerp(Vector3(0.08, 0.07, 0.055), name_carve)
+	ink_color = ink_color.lerp(Vector3(0.025, 0.040, 0.090), sky_cosmic)
+	grey_post_process_material.set_shader_parameter("ink_color", ink_color.lerp(Vector3(0.030, 0.040, 0.060), dead_cold))
 	var shadow_color := Vector3(0.13, 0.12, 0.10).lerp(Vector3(0.18, 0.08, 0.045), desire_heat)
 	shadow_color = shadow_color.lerp(Vector3(0.10, 0.13, 0.16), thin_air)
-	grey_post_process_material.set_shader_parameter("shadow_color", shadow_color.lerp(Vector3(0.10, 0.16, 0.13), trade_wet))
+	shadow_color = shadow_color.lerp(Vector3(0.10, 0.16, 0.13), trade_wet)
+	shadow_color = shadow_color.lerp(Vector3(0.08, 0.15, 0.19), eye_reflect)
+	shadow_color = shadow_color.lerp(Vector3(0.18, 0.15, 0.10), name_carve)
+	shadow_color = shadow_color.lerp(Vector3(0.045, 0.055, 0.14), sky_cosmic)
+	grey_post_process_material.set_shader_parameter("shadow_color", shadow_color.lerp(Vector3(0.055, 0.070, 0.10), dead_cold))
 
 func _update_grey_post_process() -> void:
 	if grey_post_process_material == null:
@@ -4549,7 +6286,6 @@ func _update_grey_post_process() -> void:
 	grey_post_process_material.set_shader_parameter("scanline_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.0008 + 0.0014 * style.x)
 	grey_post_process_material.set_shader_parameter("wave_strength", 0.0015 + 0.0035 * (1.0 - closeness))
-	grey_post_process_material.set_shader_parameter("tear_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("edge_strength", grey_post_edge_strength * style.y)
 	grey_post_process_material.set_shader_parameter("contour_strength", grey_post_contour_strength * style.w)
 	grey_post_process_material.set_shader_parameter("solarize_strength", grey_post_solarize_strength * style.z)
@@ -5037,6 +6773,168 @@ func _trade_wet_material(color: Color, alpha: float, seed: float, wetness := 0.5
 	material.set_shader_parameter("material_mix", material_mix)
 	material.set_shader_parameter("seed", seed)
 	return material
+
+func _eye_mirror_water_material(color: Color, alpha: float, seed: float, wave := 0.10, mirror := 0.38) -> Material:
+	var shader := load("res://shaders/eye_mirror_water.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.25)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("water_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("gleam_color", Color(0.88, 0.96, 1.0, 0.42))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("wave_strength", wave)
+	material.set_shader_parameter("mirror_brightness", mirror)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _eye_glass_material(color: Color, alpha: float, energy := 0.34) -> StandardMaterial3D:
+	var material := _emissive_mat(color, alpha, energy)
+	material.roughness = 0.12
+	material.metallic = 0.0
+	return material
+
+func _eye_offset_veil_material(color: Color, alpha: float, seed: float, split := 0.35) -> Material:
+	var shader := load("res://shaders/eye_mirror_offset_veil.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.25)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("tint", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("intensity", eyes_city_style_intensity)
+	material.set_shader_parameter("offset_strength", 0.12 + split * 0.12)
+	material.set_shader_parameter("seed", seed)
+	material.set_shader_parameter("split", split)
+	return material
+
+func _add_eye_offset_veil(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color, seed: float, split := 0.35) -> void:
+	var veil := MeshInstance3D.new()
+	veil.name = name
+	var plane := PlaneMesh.new()
+	plane.size = size
+	veil.mesh = plane
+	veil.position = pos
+	veil.rotation_degrees = Vector3(90.0, yaw, 0.0)
+	veil.material_override = _eye_offset_veil_material(color, color.a, seed, split)
+	parent.add_child(veil)
+
+func _name_carved_stone_material(color: Color, alpha: float, seed: float, carving := 0.42) -> Material:
+	var shader := load("res://shaders/name_carved_stone.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("rune_color", Color(0.90, 0.84, 0.62, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("carving_strength", carving)
+	material.set_shader_parameter("inscription_glow", 0.10 + names_city_style_intensity * 0.08)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _name_misnamed_veil_material(color: Color, alpha: float, seed: float, drift := 0.42) -> Material:
+	var shader := load("res://shaders/name_misnamed_veil.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.22)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("tint", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("intensity", names_city_style_intensity)
+	material.set_shader_parameter("name_drift", drift)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _add_name_text_veil(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color, seed: float, drift := 0.42) -> void:
+	var veil := MeshInstance3D.new()
+	veil.name = name
+	var plane := PlaneMesh.new()
+	plane.size = size
+	veil.mesh = plane
+	veil.position = pos
+	veil.rotation_degrees = Vector3(90.0, yaw, 0.0)
+	veil.material_override = _name_misnamed_veil_material(color, color.a, seed, drift)
+	parent.add_child(veil)
+
+func _dead_bone_dissolve_material(color: Color, alpha: float, seed: float, dissolve := 0.22) -> Material:
+	var shader := load("res://shaders/dead_bone_dissolve.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("bone_color", Color(0.82, 0.80, 0.70, 1.0))
+	material.set_shader_parameter("cold_glow_color", Color(0.38, 0.58, 1.0, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("dissolve_strength", dissolve)
+	material.set_shader_parameter("cold_glow", 0.08 + dead_city_style_intensity * 0.06)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _dead_cold_mist_material(color: Color, alpha: float, seed: float, drift := 0.45) -> Material:
+	var shader := load("res://shaders/dead_cold_mist_veil.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.18)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("tint", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("intensity", dead_city_style_intensity)
+	material.set_shader_parameter("mist_drift", drift)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _add_dead_cold_mist_veil(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color, seed: float, drift := 0.45) -> void:
+	var veil := MeshInstance3D.new()
+	veil.name = name
+	var plane := PlaneMesh.new()
+	plane.size = size
+	veil.mesh = plane
+	veil.position = pos
+	veil.rotation_degrees = Vector3(90.0, yaw, 0.0)
+	veil.material_override = _dead_cold_mist_material(color, color.a, seed, drift)
+	parent.add_child(veil)
+
+func _sky_star_material(color: Color, alpha: float, seed: float, star_strength := 0.34, line_strength := 0.28) -> Material:
+	var shader := load("res://shaders/sky_star_surface.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.16)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("star_color", Color(0.72, 0.86, 1.0, 1.0))
+	material.set_shader_parameter("gold_color", Color(1.0, 0.76, 0.28, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("star_strength", star_strength * sky_city_style_intensity)
+	material.set_shader_parameter("line_strength", line_strength * sky_city_style_intensity)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _sky_stardust_veil_material(color: Color, alpha: float, seed: float, drift := 0.45) -> Material:
+	var shader := load("res://shaders/sky_stardust_veil.gdshader") as Shader
+	if shader == null:
+		return _emissive_mat(color, alpha, 0.24)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("tint", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("star_color", Color(0.74, 0.88, 1.0, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("intensity", sky_city_style_intensity)
+	material.set_shader_parameter("drift", drift)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _add_sky_stardust_veil(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float, color: Color, seed: float, drift := 0.45) -> void:
+	var veil := MeshInstance3D.new()
+	veil.name = name
+	var plane := PlaneMesh.new()
+	plane.size = size
+	veil.mesh = plane
+	veil.position = pos
+	veil.rotation_degrees = Vector3(90.0, yaw, 0.0)
+	veil.material_override = _sky_stardust_veil_material(color, color.a, seed, drift)
+	parent.add_child(veil)
 
 func _city_style_veil_material(color: Color, alpha: float, style_mode: float, seed: float, intensity: float) -> Material:
 	var shader := load("res://shaders/city_style_veil.gdshader") as Shader

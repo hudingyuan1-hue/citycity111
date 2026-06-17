@@ -11,7 +11,6 @@ uniform float flatten_strength = 0.14;
 uniform float scanline_strength = 0.0;
 uniform float chromatic_strength = 0.0012;
 uniform float wave_strength = 0.0025;
-uniform float tear_strength = 0.0;
 uniform float edge_strength = 0.0;
 uniform float contour_strength = 0.0;
 uniform float solarize_strength = 0.0;
@@ -60,9 +59,6 @@ void fragment() {
 	float t = TIME * time_scale;
 	float wave = sin((uv.y * 38.0) + t * 1.7) * cos((uv.x * 21.0) - t * 1.1);
 	uv += vec2(wave, -wave * 0.45) * wave_strength * effect_strength;
-	float row = floor(uv.y * 90.0);
-	float row_shift = (hash(vec2(row, floor(t * 5.0))) - 0.5) * tear_strength * effect_strength;
-	uv.x += row_shift;
 
 	vec2 pixel_grid = vec2(180.0, 105.0);
 	vec2 pixel_uv = (floor(uv * pixel_grid) + 0.5) / pixel_grid;
@@ -116,7 +112,8 @@ void fragment() {
 
 	vec3 solar = vec3(grey > 0.52 ? 1.0 - col.r : col.r, grey > 0.50 ? 1.0 - col.g : col.g, grey > 0.48 ? 1.0 - col.b : col.b);
 	col = mix(col, solar, clamp(solarize_strength * effect_strength, 0.0, 1.0));
-	float flicker = step(0.965, hash(vec2(floor(t * 12.0), row)));
+	float flicker_row = floor(uv.y * 90.0);
+	float flicker = step(0.965, hash(vec2(floor(t * 12.0), flicker_row)));
 	col = mix(col, 1.0 - col, clamp(inversion_flicker_strength * flicker * effect_strength, 0.0, 1.0));
 
 	float grain = hash(floor(FRAGCOORD.xy) + vec2(t * 41.0, -t * 23.0)) - 0.5;
@@ -127,7 +124,7 @@ void fragment() {
 	float dot_mask = smoothstep(0.33, 0.18, length(dot_cell));
 	float half_luma = smoothstep(0.15, 0.85, grey);
 	float halftone = mix(half_luma, dot_mask, 0.65);
-	col = mix(col, vec3(halftone), clamp(halftone_strength * effect_strength, 0.0, 1.0));
+	col = mix(col, vec3(halftone), clamp(halftone_strength * effect_strength, 0.0, 0.12));
 
 	float scanline = sin(FRAGCOORD.y * 3.14159);
 	col *= 1.0 - scanline_strength * effect_strength * (0.5 + 0.5 * scanline);
