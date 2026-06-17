@@ -13,6 +13,8 @@ const THEME_EYES := 5
 const THEME_NAMES_CITY := 6
 const THEME_DEAD := 7
 const THEME_SKY := 8
+const THEME_CONTINUOUS := 9
+const THEME_HIDDEN := 10
 const MEMORY_POS := Vector3(48.0, 0.0, -46.0)
 const PLAYER_SPAWN := Vector3(-56.0, 0.0, -54.0)
 const GREY_WRAP_DEFAULT_HALF_EXTENT := 60.0
@@ -58,7 +60,7 @@ const THEME_SFX_TEXTS := [
 	["隐藏之物先发出声音。", "雾后有门。", "不可见处正在靠近。"]
 ]
 const THEME_NAMES := [
-	"记忆", "欲望", "符号", "轻盈", "贸易", "眼睛", "姓名", "死的", "天空", "连续的", "隐"
+	"记忆", "欲望", "符号", "轻盈", "贸易", "眼睛", "姓名", "死的", "天空", "连续", "隐蔽"
 ]
 const ZONE_POSITIONS := [
 	Vector3(48, 0, -46),
@@ -116,7 +118,9 @@ const MEMORY_CITY_TITLES := [
 	"眼睛之城：双面镜湖",
 	"姓名之城：消逝名字碑",
 	"死者之城：三重劳多米亚",
-	"天空之城：星图工地城"
+	"天空之城：星图工地城",
+	"连续之城：无边郊区",
+	"隐蔽之城：层中暗城"
 ]
 const MEMORY_CITY_READING_PAGES := [
 	[
@@ -192,6 +196,24 @@ const MEMORY_CITY_READING_PAGES := [
 		["月蚀被框在城门里。", "畸形的影子也被算进天象。"],
 		["每一次街道改变。", "远处都有一颗星回应。"],
 		["天空不是答案。", "它也在模仿城市。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["莱奥尼亚每天醒来都像新城。", "昨日的一切却被塑料袋送到城外，堆成不能腐烂的堡垒。"],
+		["特鲁德没有真正的抵达。", "机场名牌在更换，郊区、宾馆、商品和酒杯却一模一样。"],
+		["普罗科比亚的窗景一年比一年拥挤。", "最后，整扇窗只剩一张张礼貌的圆脸。"],
+		["切奇利雅吞没牧场。", "牧羊人和羊群走进城市，很多年后仍然找不到出口。"],
+		["潘特熙莱雅没有城门，也没有中心。", "你从一个郊区走向另一个郊区，终于放弃分辨城内和城外。"],
+		["连续之城不是一座城在扩大。", "是所有边界都在被同一种城市填平。"],
+		["要把这座城留下吗？"]
+	],
+	[
+		["欧林达的中心不是中心。", "放大镜下，针头大的光点里已经长出下一座城市。"],
+		["莱萨的表面充满噩梦。", "但每时每刻都有一根快乐细线，把一个生命短暂地接到另一个生命。"],
+		["马洛奇亚的铅灰巷像老鼠的城。", "偶然的裂缝里，却会闪出水晶般透明的燕子城市。"],
+		["特奥朵拉把被驱逐的物种收藏进书里。", "地下书库醒来时，怪兽重新从名字里走出。"],
+		["贝莱尼切的不公正城里藏着公正机械。", "公正胚胎里又有毒种，准备长成下一座不公正的城。"],
+		["隐蔽之城不是被建造出来的。", "它已经在暗处存在，只等你发现。"],
 		["要把这座城留下吗？"]
 	]
 ]
@@ -306,6 +328,34 @@ const SKY_ANCHOR_COLORS := [
 	Color(0.38, 0.72, 1.0, 1.0),
 	Color(0.74, 0.64, 1.0, 1.0),
 	Color(0.96, 0.92, 1.0, 1.0)
+]
+const CONTINUOUS_SPRAWL_NODES := [
+	["LeoniaWastePressureNode", "莱奥尼亚：更新与丢弃", "新床单、新香皂和未开罐头让城市每天更新；城外的垃圾却把过去保存成堡垒。"],
+	["TrudeIdenticalRepeatNode", "特鲁德：同款城市", "你以为离开了机场，其实抵达另一座完全相同的特鲁德。"],
+	["ProcopiaCrowdWindowNode", "普罗科比亚：窗景增殖", "土坑、树木和天空被圆脸人群一年年挤掉，最后房间也被填满。"],
+	["CeciliaSwallowedPastureNode", "切奇利雅：牧场被吞没", "牧人认得草场，却认不出城市；多年后，到处都混成切奇利雅。"],
+	["PenthesileaCenterlessNode", "潘特熙莱雅：中心消散", "你走过工场、仓库、墓地、游艺场和荒草，却始终不能确定城市在哪里。"]
+]
+const CONTINUOUS_SPRAWL_COLORS := [
+	Color(0.86, 0.76, 0.50, 1.0),
+	Color(0.64, 0.72, 0.46, 1.0),
+	Color(0.82, 0.80, 0.70, 1.0),
+	Color(0.54, 0.64, 0.42, 1.0),
+	Color(0.78, 0.60, 0.46, 1.0)
+]
+const HIDDEN_REVEAL_NODES := [
+	["OlindaInnerCityRevealNode", "欧林达：针点内生城", "针头大的光点被放大后，屋顶、天线、花园、水池和下一座欧林达开始向外生长。"],
+	["RaissaJoyThreadRevealNode", "莱萨：悲伤中的快乐线", "不幸的街区并不知道，孩子、小狗、玉米饼、女招待、阳伞和飞鸟已经被快乐细线连成另一座城。"],
+	["MaroziaCrystalCrackRevealNode", "马洛奇亚：老鼠城与燕子城", "铅灰巷里挤满老鼠时代，厚墙偶然裂开时，水晶般透明的新城一闪而过。"],
+	["TheodoraSpeciesReturnRevealNode", "特奥朵拉：物种复苏书库", "被驱逐和消灭的动物藏在图书馆的名字里，从地下书库重新醒来。"],
+	["BereniceJustSeedRevealNode", "贝莱尼切：公正胚胎与毒种", "不公正的城里藏着正义机械，正义胚胎内部又有一颗准备扩大为新暴力的毒种。"]
+]
+const HIDDEN_REVEAL_COLORS := [
+	Color(0.42, 0.92, 0.60, 1.0),
+	Color(0.96, 0.84, 0.44, 1.0),
+	Color(0.72, 0.94, 1.0, 1.0),
+	Color(0.50, 0.78, 0.42, 1.0),
+	Color(0.84, 0.62, 0.34, 1.0)
 ]
 const STORY_PAGES := [
 	["有些城市并不消失。", "它们只是拒绝被看见。"],
@@ -476,6 +526,12 @@ const STORY_PAGES := [
 @export_range(0.0, 2.0, 0.01) var sky_city_style_intensity := 1.22
 @export_range(0.0, 2.5, 0.05) var sky_anchor_glow_energy := 1.26
 @export_range(0.0, 2.0, 0.05) var sky_anchor_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var continuous_city_style_intensity := 1.14
+@export_range(0.0, 2.5, 0.05) var continuous_node_glow_energy := 1.10
+@export_range(0.0, 2.0, 0.05) var continuous_node_particle_scale := 1.0
+@export_range(0.0, 2.0, 0.01) var hidden_city_style_intensity := 1.18
+@export_range(0.0, 2.5, 0.05) var hidden_node_glow_energy := 1.16
+@export_range(0.0, 2.0, 0.05) var hidden_node_particle_scale := 1.0
 @export var city_post_process_enabled := true
 @export_range(0.0, 1.0, 0.01) var city_post_effect_strength := 0.34
 @export_range(0.0, 1.0, 0.01) var city_residual_grey_chaos_strength := 0.18
@@ -585,6 +641,16 @@ var sky_anchor_areas: Array[Area3D] = []
 var sky_completed_anchors: Array[int] = []
 var sky_active_anchor_index := -1
 var sky_goal_trigger: Area3D
+var continuous_node_visuals: Array[Node3D] = []
+var continuous_node_areas: Array[Area3D] = []
+var continuous_completed_nodes: Array[int] = []
+var continuous_active_node_index := -1
+var continuous_goal_trigger: Area3D
+var hidden_node_visuals: Array[Node3D] = []
+var hidden_node_areas: Array[Area3D] = []
+var hidden_completed_nodes: Array[int] = []
+var hidden_active_node_index := -1
+var hidden_goal_trigger: Area3D
 var memory_zone_player: AudioStreamPlayer3D
 var theme_sfx_player: AudioStreamPlayer3D
 var global_music_player: AudioStreamPlayer
@@ -683,6 +749,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_activate_dead_echo_node(dead_active_echo_index)
 		elif selected_theme_index == THEME_SKY and sky_active_anchor_index >= 0:
 			_activate_sky_anchor_node(sky_active_anchor_index)
+		elif selected_theme_index == THEME_CONTINUOUS and continuous_active_node_index >= 0:
+			_activate_continuous_sprawl_node(continuous_active_node_index)
+		elif selected_theme_index == THEME_HIDDEN and hidden_active_node_index >= 0:
+			_activate_hidden_reveal_node(hidden_active_node_index)
 		elif can_read_tower or _is_player_near_reading_trigger():
 			_open_reading()
 
@@ -1208,6 +1278,8 @@ func _build_manifested_city() -> void:
 	_build_names_city()
 	_build_dead_city()
 	_build_sky_city()
+	_build_continuous_city()
+	_build_hidden_city()
 	_select_memory_city_variant(0)
 	_set_city_collision_enabled(false)
 
@@ -1327,6 +1399,32 @@ func _build_sky_city() -> void:
 	active_city_visual_parent = root
 
 	_build_sky_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_continuous_city() -> void:
+	active_memory_city_build_index = THEME_CONTINUOUS
+	var root := Node3D.new()
+	root.name = "ContinuousCity_InfiniteSprawlPlain"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_continuous_city_whitebox(root)
+	_build_city_boundary_walls()
+	active_city_visual_parent = null
+
+func _build_hidden_city() -> void:
+	active_memory_city_build_index = THEME_HIDDEN
+	var root := Node3D.new()
+	root.name = "HiddenCity_NestedDarkRevelation"
+	root.visible = false
+	city_visual_root.add_child(root)
+	memory_city_variant_roots.append(root)
+	active_city_visual_parent = root
+
+	_build_hidden_city_whitebox(root)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -4514,6 +4612,761 @@ func _set_sky_anchor_visual_state(node_index: int, calibrated: bool) -> void:
 		if child != null:
 			child.visible = not calibrated
 
+func _build_continuous_city_whitebox(parent: Node3D) -> void:
+	_build_continuous_city_terrain(parent)
+	_build_continuous_leonia_daily_zone(parent)
+	_build_continuous_trude_repeat_zone(parent)
+	_build_continuous_procopia_crowd_zone(parent)
+	_build_continuous_cecilia_pasture_zone(parent)
+	_build_continuous_penthesilea_centerless_zone(parent)
+	_build_continuous_center_core(parent)
+	_build_continuous_atmosphere(parent)
+
+func _build_continuous_city_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "ContinuousCity_InfinitePlainTerrain")
+	_add_continuous_block(terrain, "PollutionPlainGround", Vector3(0, -0.055, 0), Vector3(238, 0.11, 238), 0.0, Color(0.46, 0.43, 0.30), true, 0.72, 0.92)
+	_add_continuous_block(terrain, "LowAsphaltCitySkin", Vector3(0, 0.01, -2), Vector3(186, 0.04, 194), 0.0, Color(0.28, 0.28, 0.24), true, 0.68, 1.10)
+	_add_continuous_block(terrain, "MainContinuousRoad_SouthNorth", Vector3(0, 0.08, 0), Vector3(10, 0.08, 206), 0.0, Color(0.22, 0.22, 0.20), true, 0.82, 1.35)
+	_add_continuous_block(terrain, "CrossContinuousRoad_EastWest", Vector3(0, 0.09, -12), Vector3(178, 0.08, 9), 0.0, Color(0.22, 0.22, 0.20), true, 0.82, 1.35)
+	for i in range(12):
+		var z := -96.0 + float(i) * 17.0
+		_add_continuous_block(terrain, "RepeatedSideStreet_%02d" % i, Vector3(0, 0.095, z), Vector3(164, 0.06, 3.2), 0.0, Color(0.25, 0.25, 0.22), true, 0.76, 1.18)
+	for i in range(12):
+		var x := -90.0 + float(i) * 16.5
+		_add_continuous_block(terrain, "RepeatedLongBlockLane_%02d" % i, Vector3(x, 0.10, -6), Vector3(3.0, 0.06, 188), 0.0, Color(0.24, 0.24, 0.21), true, 0.74, 1.12)
+	for i in range(22):
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var z := -96.0 + float(i) * 8.8
+		_build_repeated_streetlight(terrain, "RepeatedStreetlight_%02d" % i, Vector3(side * 8.2, 0, z), 0.0)
+
+func _build_continuous_leonia_daily_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_LeoniaDailyRenewal")
+	_build_new_goods_apartment(zone, Vector3(-10, 0, -82), 0.0)
+	_build_sanitation_altar(zone, Vector3(-32, 0, -68), 8.0)
+	_build_waste_fortress(zone, Vector3(30, 0, -70), -12.0)
+	_build_garbage_ridge(zone, "GarbageRidge_South", Vector3(0, 0, -106), 0.0)
+	var daily_props := [
+		["NewSheet", Vector3(-20, 0, -84), Vector3(4.0, 0.10, 2.6), Color(0.86, 0.84, 0.74)],
+		["NewSoapBox", Vector3(-6, 0, -76), Vector3(1.6, 0.7, 1.0), Color(0.92, 0.90, 0.78)],
+		["UnopenedCan", Vector3(-2, 0, -88), Vector3(1.0, 1.1, 1.0), Color(0.70, 0.72, 0.64)],
+		["NewRadio", Vector3(-17, 0, -75), Vector3(2.3, 1.4, 1.1), Color(0.18, 0.18, 0.16)],
+		["PlasticGarbageBag", Vector3(8, 0, -66), Vector3(2.4, 1.3, 1.9), Color(0.74, 0.76, 0.70, 0.82)],
+		["ToothpasteTube", Vector3(24, 0, -60), Vector3(2.2, 0.4, 0.5), Color(0.78, 0.74, 0.60)],
+		["BurntBulb", Vector3(36, 0, -62), Vector3(0.9, 0.9, 0.9), Color(0.62, 0.60, 0.50)],
+		["OldEncyclopedia", Vector3(38, 0, -74), Vector3(2.8, 0.55, 2.0), Color(0.28, 0.22, 0.16)],
+		["DiscardedPiano", Vector3(42, 0, -82), Vector3(5.0, 2.2, 2.0), Color(0.10, 0.09, 0.08)],
+		["WasteTire", Vector3(22, 0, -78), Vector3(2.0, 0.7, 2.0), Color(0.05, 0.05, 0.045)],
+		["BelliedBottle", Vector3(50, 0, -68), Vector3(1.0, 1.8, 1.0), Color(0.26, 0.50, 0.34, 0.70)]
+	]
+	for prop in daily_props:
+		_build_continuous_simple_prop(zone, String(prop[0]), prop[1], 0.0, prop[2], prop[3], false)
+	_build_continuous_sprawl_node(zone, 0, Vector3(24, 0, -56), -10.0)
+
+func _build_continuous_trude_repeat_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_TrudeIdenticalAirport")
+	_build_airport_entrance_hall(zone, Vector3(64, 0, -58), -90.0)
+	_build_airport_name_sign(zone, Vector3(52, 0, -43), -90.0)
+	for i in range(10):
+		var x := 44.0 + float(i % 2) * 18.0
+		var z := -32.0 + float(i / 2) * 12.0
+		_build_identical_suburb_house(zone, "IdenticalSuburbHouse_%02d" % i, Vector3(x, 0, z), 0.0)
+	for i in range(8):
+		_build_continuous_simple_prop(zone, "IdenticalCommercialStreet_%02d" % i, Vector3(72, 0, -28.0 + float(i) * 9.0), -90.0, Vector3(8.5, 4.2, 6.0), Color(0.58, 0.56, 0.42), true)
+	_build_continuous_simple_prop(zone, "IdenticalHotel", Vector3(52, 0, 26), 0.0, Vector3(18, 13, 12), Color(0.52, 0.56, 0.46), true)
+	for i in range(6):
+		_build_continuous_simple_prop(zone, "IdenticalRoadSign_%02d" % i, Vector3(38.0 + float(i % 2) * 30.0, 0, -20.0 + float(i / 2) * 19.0), 0.0, Vector3(3.8, 2.8, 0.16), Color(0.72, 0.70, 0.52), false)
+	for i in range(4):
+		_build_continuous_simple_prop(zone, "IdenticalFlowerbed_%02d" % i, Vector3(52.0 + float(i) * 6.0, 0.08, -4), 0.0, Vector3(4.2, 0.18, 2.4), Color(0.34, 0.44, 0.24), false)
+	_build_continuous_simple_prop(zone, "IdenticalGlass", Vector3(61, 0, 30), 0.0, Vector3(0.8, 1.3, 0.8), Color(0.82, 0.90, 0.86, 0.36), false)
+	_build_continuous_sprawl_node(zone, 1, Vector3(58, 0, -8), -90.0)
+
+func _build_continuous_procopia_crowd_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_ProcopiaCrowdWindow")
+	_build_procopia_hotel_room(zone, Vector3(-66, 0, -18), 90.0)
+	_build_continuous_simple_prop(zone, "LowWallBridgeView", Vector3(-44, 0, -18), 90.0, Vector3(20, 1.2, 2.2), Color(0.52, 0.50, 0.42), true)
+	_build_continuous_simple_prop(zone, "CornfieldView", Vector3(-46, 0.08, -2), 0.0, Vector3(26, 0.16, 14), Color(0.62, 0.58, 0.22), false)
+	for i in range(12):
+		_build_continuous_simple_prop(zone, "CornCob_%02d" % i, Vector3(-56.0 + float(i % 4) * 5.2, 0.2, -7.0 + float(i / 4) * 5.4), 0.0, Vector3(0.42, 1.2, 0.42), Color(0.76, 0.62, 0.18), false)
+	_build_procopia_window_crowd(zone, Vector3(-55, 0, -20), 0.0)
+	_build_continuous_simple_prop(zone, "Ditch", Vector3(-32, 0.02, -26), 0.0, Vector3(14, 0.10, 3.0), Color(0.18, 0.16, 0.12), false)
+	_build_continuous_simple_prop(zone, "RowanTree", Vector3(-38, 0, -6), 0.0, Vector3(1.2, 6.0, 1.2), Color(0.36, 0.30, 0.18), false)
+	_build_continuous_simple_prop(zone, "BlackberryBramble", Vector3(-30, 0.4, -2), 0.0, Vector3(8.0, 0.8, 2.2), Color(0.12, 0.18, 0.08), false)
+	_build_continuous_simple_prop(zone, "ChickenCoop", Vector3(-36, 0, 8), 0.0, Vector3(5.0, 2.4, 4.0), Color(0.42, 0.30, 0.18), true)
+	_build_continuous_simple_prop(zone, "YellowHillock", Vector3(-18, 0.3, 12), 0.0, Vector3(14, 0.6, 8), Color(0.58, 0.48, 0.24), false)
+	_build_continuous_simple_prop(zone, "WhiteCloud", Vector3(-40, 12.0, 14), 0.0, Vector3(12, 1.2, 4.0), Color(0.84, 0.84, 0.78, 0.30), false)
+	_build_continuous_sprawl_node(zone, 2, Vector3(-58, 0, -4), 90.0)
+
+func _build_continuous_cecilia_pasture_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_CeciliaEndlessBlocks")
+	for i in range(24):
+		var x := -72.0 + float(i % 6) * 13.0
+		var z := 44.0 + float(i / 6) * 12.0
+		var height := 5.0 + float((i * 5) % 8)
+		_build_continuous_simple_prop(zone, "EndlessCityBlocks_%02d" % i, Vector3(x, 0, z), float(i % 5) * 2.0, Vector3(9.0, height, 8.0), Color(0.44, 0.44, 0.36), true)
+	_build_continuous_simple_prop(zone, "TrafficIsland", Vector3(-20, 0.10, 48), 0.0, Vector3(16, 0.2, 7), Color(0.36, 0.38, 0.30), true)
+	_build_continuous_simple_prop(zone, "SheepStreet", Vector3(-28, 0.10, 68), 0.0, Vector3(58, 0.18, 6), Color(0.26, 0.26, 0.23), true)
+	for i in range(14):
+		_build_bell_sheep(zone, "BellSheep_%02d" % i, Vector3(-52.0 + float(i) * 4.3, 0, 68.0 + sin(float(i)) * 2.0), 0.0)
+	_build_continuous_simple_prop(zone, "WanderingShepherd", Vector3(-15, 0, 60), 0.0, Vector3(1.2, 3.6, 1.0), Color(0.34, 0.26, 0.16), false)
+	_build_continuous_simple_prop(zone, "Sheepdog", Vector3(-10, 0, 66), 0.0, Vector3(2.4, 1.0, 0.8), Color(0.10, 0.10, 0.08), false)
+	_build_continuous_simple_prop(zone, "TrashBinCorner", Vector3(-4, 0, 42), 0.0, Vector3(5.0, 2.5, 4.0), Color(0.18, 0.20, 0.17), true)
+	_build_continuous_simple_prop(zone, "PaperTrashBin", Vector3(-1, 0, 45), 0.0, Vector3(2.2, 2.6, 2.2), Color(0.22, 0.23, 0.20), false)
+	_build_continuous_simple_prop(zone, "SageGrassPatch", Vector3(-26, 0.12, 52), 0.0, Vector3(10.0, 0.24, 4.0), Color(0.38, 0.46, 0.28), false)
+	_build_continuous_sprawl_node(zone, 3, Vector3(-20, 0, 54), 0.0)
+
+func _build_continuous_penthesilea_centerless_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_PenthesileaCenterlessSuburb")
+	_build_continuous_simple_prop(zone, "DilutedSuburbCity", Vector3(36, 0, 62), 0.0, Vector3(36, 4.4, 24), Color(0.48, 0.46, 0.36), true)
+	for i in range(9):
+		_build_continuous_simple_prop(zone, "BrokenCombStreet_%02d" % i, Vector3(20.0 + float(i) * 6.0, 0.10, 44.0 + float(i % 2) * 8.0), 0.0, Vector3(4.0, 0.16, 12.0), Color(0.25, 0.25, 0.22), true)
+	for i in range(8):
+		_build_continuous_simple_prop(zone, "PlankFenceDistrict_%02d" % i, Vector3(12.0 + float(i) * 7.0, 1.4, 76.0 + sin(float(i)) * 4.0), 6.0, Vector3(5.4, 2.8, 0.28), Color(0.34, 0.24, 0.12), true)
+	for i in range(7):
+		_build_continuous_simple_prop(zone, "TinShackCluster_%02d" % i, Vector3(58.0 + float(i % 3) * 9.0, 0, 58.0 + float(i / 3) * 10.0), -8.0 + float(i) * 3.0, Vector3(6.2, 3.2, 5.0), Color(0.46, 0.46, 0.42), true)
+	_build_continuous_simple_prop(zone, "WorkshopWarehouseZone", Vector3(30, 0, 90), 0.0, Vector3(36, 8.0, 18), Color(0.36, 0.34, 0.28), true)
+	_build_cemetery_fairground(zone, Vector3(70, 0, 90), 0.0)
+	_build_continuous_simple_prop(zone, "Slaughterhouse", Vector3(78, 0, 52), -10.0, Vector3(20, 6.0, 12), Color(0.36, 0.20, 0.16), true)
+	_build_continuous_simple_prop(zone, "CenterlessAlley", Vector3(38, 0.10, 78), 32.0, Vector3(64, 0.14, 3.4), Color(0.23, 0.23, 0.20), true)
+	for i in range(11):
+		_build_continuous_simple_prop(zone, "WastelandGrass_%02d" % i, Vector3(10.0 + float(i) * 8.5, 0.12, 102.0 + sin(float(i) * 1.7) * 8.0), 0.0, Vector3(5.0, 0.24, 2.8), Color(0.32, 0.40, 0.20), false)
+	_build_continuous_simple_prop(zone, "ShopAlley", Vector3(18, 0, 62), 18.0, Vector3(20, 3.6, 6), Color(0.46, 0.38, 0.28), true)
+	_build_continuous_simple_prop(zone, "HorizonShadow", Vector3(8, 2.6, 112), 0.0, Vector3(92, 5.2, 0.16), Color(0.06, 0.06, 0.05, 0.32), false)
+	_build_continuous_simple_prop(zone, "SparseLitWindow", Vector3(50, 4.0, 61), 0.0, Vector3(2.0, 1.1, 0.14), Color(0.92, 0.72, 0.34, 0.54), false)
+	_build_continuous_sprawl_node(zone, 4, Vector3(38, 0, 78), 32.0)
+
+func _build_continuous_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_ContinuousCenterCore")
+	_build_continuous_cylinder_prop(zone, "ContinuousCoreRoundabout", Vector3(0, 0.12, 0), 18.0, 0.12, Color(0.32, 0.32, 0.25), true)
+	for i in range(12):
+		var angle := TAU * float(i) / 12.0
+		_add_continuous_line_span(zone, "CenterlessRouteLine_%02d" % i, Vector3(0, 0.36, 0), Vector3(cos(angle) * 23.0, 0.36, sin(angle) * 23.0), Color(0.66, 0.62, 0.42, 0.42), 0.16)
+	_build_centerless_sign(zone, Vector3(0, 0, 0), 0.0)
+	continuous_goal_trigger = Area3D.new()
+	continuous_goal_trigger.name = "ContinuousGoalTrigger"
+	continuous_goal_trigger.position = Vector3(0, 1.1, 0)
+	continuous_goal_trigger.collision_layer = 0
+	continuous_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 9.0
+	shape.shape = sphere
+	continuous_goal_trigger.add_child(shape)
+	continuous_goal_trigger.body_entered.connect(_on_continuous_goal_entered)
+	continuous_goal_trigger.body_exited.connect(_on_continuous_goal_exited)
+	manifested_city.add_child(continuous_goal_trigger)
+
+func _build_continuous_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "ContinuousCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("PlasticBagParticles", 760, Vector2(0.18, 0.10), Vector3(112, 8, 112), Vector3(0.14, 0.05, -0.08), Color(0.82, 0.82, 0.74, 0.30), 0.04, 0.26, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("WastePaperParticles", 980, Vector2(0.13, 0.075), Vector3(118, 7, 118), Vector3(-0.08, 0.04, 0.16), Color(0.76, 0.72, 0.58, 0.32), 0.04, 0.32, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("SmokeDustParticles", 1400, Vector2(0.075, 0.075), Vector3(124, 9, 124), Vector3(0.05, 0.12, 0.02), Color(0.48, 0.45, 0.34, 0.22), 0.02, 0.18, 100.0, 17.0))
+	atmosphere.add_child(_make_city_particle_layer("IndustrialPowderParticles", 1200, Vector2(0.038, 0.038), Vector3(124, 5, 124), Vector3(-0.03, 0.04, 0.05), Color(0.58, 0.54, 0.40, 0.24), 0.02, 0.16, 100.0, 12.0))
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_add_city_style_veil(atmosphere, "PollutionFogVeil_%02d" % i, Vector3(cos(angle) * 48.0, 4.0 + float(i % 3) * 0.9, sin(angle) * 48.0), Vector2(78, 13), rad_to_deg(angle) + 90.0, Color(0.66, 0.62, 0.42, 0.18), 0.0, 720.0 + float(i) * 5.7, continuous_city_style_intensity * 0.82)
+	for i in range(8):
+		_add_continuous_block(atmosphere, "DirtyDecalStrip_%02d" % i, Vector3(-78.0 + float(i) * 22.0, 0.16, -28.0 + float(i % 2) * 62.0), Vector3(14.0, 0.035, 2.2), -8.0 + float(i) * 5.0, Color(0.08, 0.07, 0.05, 0.24), false, 0.95, 1.6)
+
+func _build_new_goods_apartment(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "NewGoodsApartment", pos, yaw)
+	_add_local_continuous_block(asset, "ApartmentBody", Vector3(0, 8.0, 0), Vector3(20, 16, 13), 0.0, Color(0.60, 0.58, 0.48), true, 0.48, 0.92)
+	for floor in range(4):
+		for col in range(4):
+			_add_local_continuous_block(asset, "WrappedWindow_%02d_%02d" % [floor, col], Vector3(-7.2 + float(col) * 4.8, 3.2 + float(floor) * 3.2, -6.62), Vector3(2.1, 1.2, 0.12), 0.0, Color(0.78, 0.78, 0.66, 0.58), false, 0.24, 0.70)
+	_add_local_continuous_block(asset, "FreshFacadePanel", Vector3(0, 16.6, -6.8), Vector3(16, 1.4, 0.16), 0.0, Color(0.82, 0.80, 0.64), false, 0.18, 0.80)
+
+func _build_sanitation_altar(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "SanitationAltar", pos, yaw)
+	_add_local_continuous_block(asset, "RitualPlatform", Vector3(0, 0.35, 0), Vector3(12, 0.7, 8), 0.0, Color(0.44, 0.42, 0.34), true, 0.54, 0.90)
+	_add_local_continuous_block(asset, "SilentCollectorPillar", Vector3(-3.5, 2.2, 0), Vector3(1.2, 4.4, 1.2), 0.0, Color(0.62, 0.60, 0.48), true, 0.46, 0.82)
+	_add_local_continuous_block(asset, "SilentCollectorPillar", Vector3(3.5, 2.2, 0), Vector3(1.2, 4.4, 1.2), 0.0, Color(0.62, 0.60, 0.48), true, 0.46, 0.82)
+	_add_local_continuous_block(asset, "OfferingWasteBundle", Vector3(0, 1.1, 0), Vector3(5.2, 1.4, 3.6), 0.0, Color(0.34, 0.32, 0.24), false, 0.88, 1.15)
+
+func _build_waste_fortress(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "WasteFortress", pos, yaw)
+	for i in range(18):
+		var x := -10.0 + float(i % 6) * 4.0
+		var z := -4.0 + float(i / 6) * 4.2
+		var h := 1.8 + float((i * 3) % 5) * 0.9
+		_add_local_continuous_block(asset, "CompressedWasteBlock_%02d" % i, Vector3(x, h * 0.5, z), Vector3(4.6, h, 3.6), float(i) * 5.0, Color(0.36, 0.34, 0.25), true, 0.96, 1.38)
+	_add_local_continuous_block(asset, "FortressCrest", Vector3(0, 7.0, 4.5), Vector3(23, 2.0, 4.0), 0.0, Color(0.28, 0.27, 0.20), false, 1.0, 1.5)
+
+func _build_garbage_ridge(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	for i in range(16):
+		var x := -70.0 + float(i) * 9.2
+		var h := 2.0 + float(i % 5) * 0.9
+		_add_local_continuous_block(asset, "GarbageRidgeChunk_%02d" % i, Vector3(x, h * 0.5, sin(float(i)) * 2.2), Vector3(10.5, h, 7.0), float(i % 3) * 4.0, Color(0.30, 0.29, 0.22), true, 0.98, 1.44)
+
+func _build_airport_entrance_hall(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "AirportEntranceHall", pos, yaw)
+	_add_local_continuous_block(asset, "TerminalSlab", Vector3(0, 5.0, 0), Vector3(28, 10, 14), 0.0, Color(0.56, 0.58, 0.48), true, 0.42, 0.92)
+	_add_local_continuous_block(asset, "SlidingDoorBand", Vector3(0, 2.1, -7.2), Vector3(18, 2.6, 0.18), 0.0, Color(0.22, 0.26, 0.24, 0.52), false, 0.22, 0.72)
+	_add_local_continuous_block(asset, "GiantLetterSign", Vector3(0, 10.8, -7.4), Vector3(22, 2.1, 0.18), 0.0, Color(0.72, 0.18, 0.12), false, 0.34, 0.90)
+
+func _build_airport_name_sign(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "AirportNameSign", pos, yaw)
+	_add_local_continuous_block(asset, "SignPoleA", Vector3(-5, 2.5, 0), Vector3(0.6, 5, 0.6), 0.0, Color(0.30, 0.30, 0.26), true, 0.62, 0.95)
+	_add_local_continuous_block(asset, "SignPoleB", Vector3(5, 2.5, 0), Vector3(0.6, 5, 0.6), 0.0, Color(0.30, 0.30, 0.26), true, 0.62, 0.95)
+	_add_local_continuous_block(asset, "ChangeableCityNamePanel", Vector3(0, 5.2, 0), Vector3(14, 3.0, 0.28), 0.0, Color(0.74, 0.72, 0.54), false, 0.48, 0.82)
+
+func _build_identical_suburb_house(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_continuous_block(asset, "YellowGreenHouseBody", Vector3(0, 2.3, 0), Vector3(7.6, 4.6, 6.4), 0.0, Color(0.60, 0.62, 0.38), true, 0.44, 0.86)
+	_add_local_continuous_block(asset, "RepeatedRoof", Vector3(0, 5.0, 0), Vector3(8.6, 1.2, 7.2), 0.0, Color(0.34, 0.38, 0.22), false, 0.46, 0.88)
+	_add_local_continuous_block(asset, "SameWindow", Vector3(-2.2, 2.8, -3.3), Vector3(1.4, 1.2, 0.12), 0.0, Color(0.78, 0.76, 0.58, 0.48), false, 0.24, 0.72)
+	_add_local_continuous_block(asset, "SameWindow", Vector3(2.2, 2.8, -3.3), Vector3(1.4, 1.2, 0.12), 0.0, Color(0.78, 0.76, 0.58, 0.48), false, 0.24, 0.72)
+
+func _build_procopia_hotel_room(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "HotelRoom", pos, yaw)
+	_add_local_continuous_block(asset, "RoomFloor", Vector3(0, 0.1, 0), Vector3(28, 0.2, 18), 0.0, Color(0.34, 0.32, 0.26), true, 0.64, 0.90)
+	_add_local_continuous_block(asset, "BackWall", Vector3(0, 4.0, 8.8), Vector3(28, 8, 0.4), 0.0, Color(0.52, 0.50, 0.42), true, 0.58, 0.92)
+	_add_local_continuous_block(asset, "LeftWall", Vector3(-14, 4.0, 0), Vector3(0.4, 8, 18), 0.0, Color(0.48, 0.46, 0.38), true, 0.58, 0.92)
+	_add_local_continuous_block(asset, "RightWall", Vector3(14, 4.0, 0), Vector3(0.4, 8, 18), 0.0, Color(0.48, 0.46, 0.38), true, 0.58, 0.92)
+	_add_local_continuous_block(asset, "WindowViewFrame", Vector3(0, 4.2, -9.0), Vector3(16, 7.0, 0.32), 0.0, Color(0.24, 0.22, 0.18), false, 0.42, 0.86)
+	_add_local_continuous_block(asset, "WindowOpening", Vector3(0, 4.2, -9.18), Vector3(12, 4.8, 0.12), 0.0, Color(0.74, 0.72, 0.58, 0.22), false, 0.28, 0.72)
+
+func _build_procopia_window_crowd(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CrowdFilledRoom", pos, yaw)
+	for i in range(30):
+		var x := -11.0 + float(i % 6) * 4.2
+		var z := -5.0 + float(i / 6) * 2.6
+		var y := 1.0 + float((i / 6) % 2) * 0.55
+		_add_local_continuous_block(asset, "RoundFacedCrowd_%02d" % i, Vector3(x, y, z), Vector3(2.0, 2.0, 0.42), 0.0, Color(0.76, 0.70, 0.58), false, 0.36, 0.78)
+		if i % 4 == 0:
+			_add_local_continuous_block(asset, "BlackberryStain_%02d" % i, Vector3(x + 0.3, y - 0.22, z - 0.24), Vector3(0.42, 0.18, 0.06), 0.0, Color(0.18, 0.05, 0.08), false, 0.20, 0.50)
+
+func _build_bell_sheep(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_continuous_block(asset, "SheepBody", Vector3(0, 0.85, 0), Vector3(2.2, 1.2, 1.1), 0.0, Color(0.74, 0.72, 0.62), false, 0.42, 0.76)
+	_add_local_continuous_block(asset, "SheepHead", Vector3(1.35, 0.95, 0), Vector3(0.7, 0.7, 0.7), 0.0, Color(0.58, 0.54, 0.44), false, 0.44, 0.76)
+	_add_local_continuous_block(asset, "CopperBell", Vector3(0.6, 0.36, 0), Vector3(0.36, 0.42, 0.24), 0.0, Color(0.76, 0.42, 0.16), false, 0.26, 0.68)
+
+func _build_cemetery_fairground(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CemeteryFairground", pos, yaw)
+	_add_local_continuous_block(asset, "FairgroundBase", Vector3(0, 0.12, 0), Vector3(24, 0.24, 16), 0.0, Color(0.28, 0.30, 0.22), true, 0.76, 1.05)
+	_add_local_continuous_block(asset, "FerrisWheelMast", Vector3(0, 5.5, 0), Vector3(0.5, 11.0, 0.5), 0.0, Color(0.36, 0.34, 0.30), false, 0.58, 0.90)
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		_add_local_continuous_block(asset, "FerrisWheelSpoke_%02d" % i, Vector3(cos(angle) * 3.2, 5.5 + sin(angle) * 3.2, 0), Vector3(0.18, 6.6, 0.18), -rad_to_deg(angle), Color(0.48, 0.46, 0.38), false, 0.54, 0.86)
+		_add_local_continuous_block(asset, "FerrisWheelCabin_%02d" % i, Vector3(cos(angle) * 6.0, 5.5 + sin(angle) * 6.0, 0), Vector3(1.2, 0.7, 1.0), 0.0, Color(0.60, 0.36, 0.24), false, 0.48, 0.82)
+	for i in range(7):
+		_add_local_continuous_block(asset, "CemeteryMarker_%02d" % i, Vector3(-10.0 + float(i) * 3.2, 0.7, 6.0), Vector3(0.8, 1.4, 0.24), 0.0, Color(0.42, 0.42, 0.36), false, 0.72, 0.92)
+
+func _build_centerless_sign(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CenterlessSign", pos, yaw)
+	_add_local_continuous_block(asset, "CenterlessSignPole", Vector3(0, 3.0, 0), Vector3(0.7, 6.0, 0.7), 0.0, Color(0.24, 0.24, 0.20), true, 0.68, 0.92)
+	for i in range(8):
+		var angle := float(i) * 45.0
+		_add_local_continuous_block(asset, "ContradictoryDirectionPanel_%02d" % i, Vector3(cos(deg_to_rad(angle)) * 1.4, 5.4 + float(i % 2) * 0.55, sin(deg_to_rad(angle)) * 1.4), Vector3(5.2, 1.0, 0.18), -angle, Color(0.72, 0.66, 0.42), false, 0.66, 1.00)
+	_build_continuous_simple_prop(parent, "CrowdNoiseSource", pos + Vector3(-7, 0, 4), 0.0, Vector3(2.8, 2.8, 2.8), Color(0.64, 0.60, 0.48, 0.42), false)
+
+func _build_repeated_streetlight(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_continuous_block(asset, "LampPost", Vector3(0, 2.6, 0), Vector3(0.28, 5.2, 0.28), 0.0, Color(0.24, 0.24, 0.20), false, 0.62, 0.86)
+	_add_local_continuous_block(asset, "WarmLampBox", Vector3(0, 5.4, 0), Vector3(1.0, 0.8, 1.0), 0.0, Color(0.82, 0.66, 0.36, 0.42), false, 0.28, 0.62)
+
+func _continuous_node_color(node_index: int) -> Color:
+	return CONTINUOUS_SPRAWL_COLORS[clampi(node_index, 0, CONTINUOUS_SPRAWL_COLORS.size() - 1)]
+
+func _build_continuous_sprawl_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = CONTINUOUS_SPRAWL_NODES[node_index]
+	var color := _continuous_node_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_continuous_block(asset, "NodeColumn", Vector3(0, 2.0, 0), Vector3(1.3, 4.0, 1.3), 0.0, Color(0.26, 0.25, 0.20), true, 0.78, 1.0)
+	_add_local_continuous_block(asset, "ActiveSprawlPanel", Vector3(0, 4.5, -0.48), Vector3(5.2, 2.0, 0.16), 0.0, color, false, 0.48, 0.92)
+	var settled := _add_local_continuous_block(asset, "SettledDustPanel", Vector3(0, 4.5, -0.66), Vector3(5.2, 2.0, 0.16), 0.0, Color(0.82, 0.78, 0.62, 0.28), false, 0.85, 1.20)
+	settled.visible = false
+	_add_continuous_node_glow(asset, color)
+	while continuous_node_visuals.size() <= node_index:
+		continuous_node_visuals.append(null)
+	continuous_node_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.2, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.8
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_continuous_node_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_continuous_node_exited(body, node_index))
+	manifested_city.add_child(area)
+	while continuous_node_areas.size() <= node_index:
+		continuous_node_areas.append(null)
+	continuous_node_areas[node_index] = area
+
+func _add_continuous_node_glow(asset: Node3D, color: Color) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "ContinuousNodeGlow"
+	halo.radius = 3.4
+	halo.height = 0.035
+	halo.sides = 48
+	halo.position = Vector3(0, 0.10, 0)
+	halo.material = _emissive_mat(color, 0.26, continuous_node_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "ContinuousNodeLight"
+	light.position = Vector3(0, 3.7, 0)
+	light.light_color = color
+	light.light_energy = continuous_node_glow_energy
+	light.omni_range = 8.5
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "ContinuousNodeDustParticles"
+	particles.amount = int(maxf(1.0, 88.0 * continuous_node_particle_scale))
+	particles.lifetime = 2.6
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.11, 0.07)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.8
+	process.gravity = Vector3(0, -0.02, 0)
+	process.initial_velocity_min = 0.03
+	process.initial_velocity_max = 0.24
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.70)
+	particles.process_material = process
+	particles.position = Vector3(0, 2.8, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_continuous_node_visual_state(node_index: int, recorded: bool) -> void:
+	if node_index < 0 or node_index >= continuous_node_visuals.size():
+		return
+	var asset := continuous_node_visuals[node_index]
+	if asset == null:
+		return
+	var active := asset.get_node_or_null("ActiveSprawlPanel")
+	if active != null:
+		active.visible = not recorded
+	var settled := asset.get_node_or_null("SettledDustPanel")
+	if settled != null:
+		settled.visible = recorded
+	for name in ["ContinuousNodeGlow", "ContinuousNodeLight", "ContinuousNodeDustParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not recorded
+
+func _build_continuous_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_continuous_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision, 0.56, 0.92)
+	return asset
+
+func _add_continuous_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := false, grime := 0.58, repetition := 0.92) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _continuous_pollution_material(color, color.a, pos.x * 0.17 + pos.z * 0.21, grime, repetition)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _add_local_continuous_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true, grime := 0.58, repetition := 0.92) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _continuous_pollution_material(color, color.a, global_pos.x * 0.17 + global_pos.z * 0.21, grime, repetition)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_continuous_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 56
+	cylinder.position = pos
+	cylinder.material = _continuous_pollution_material(color, color.a, pos.x * 0.13 + pos.z * 0.23, 0.54, 0.90)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _add_continuous_line_span(parent: Node3D, name: String, a: Vector3, b: Vector3, color: Color, thickness := 0.08) -> Node3D:
+	var delta := b - a
+	var flat_length := Vector2(delta.x, delta.z).length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	return _add_continuous_block(parent, name, mid, Vector3(thickness, thickness, maxf(flat_length, 0.1)), yaw, color, false, 0.62, 1.1)
+
+func _build_hidden_city_whitebox(parent: Node3D) -> void:
+	_build_hidden_city_terrain(parent)
+	_build_hidden_olinda_growth_zone(parent)
+	_build_hidden_raissa_joy_zone(parent)
+	_build_hidden_marozia_crack_zone(parent)
+	_build_hidden_theodora_species_zone(parent)
+	_build_hidden_berenice_justice_zone(parent)
+	_build_hidden_center_core(parent)
+	_build_hidden_atmosphere(parent)
+
+func _build_hidden_city_terrain(parent: Node3D) -> void:
+	var terrain := _make_city_zone(parent, "HiddenCity_RainforestRiftTerrain")
+	_add_hidden_block(terrain, "DarkJungleRuinGround", Vector3(0, -0.06, 0), Vector3(238, 0.12, 238), 0.0, Color(0.10, 0.18, 0.11), true, 0.66, 0.55)
+	_add_hidden_block(terrain, "UndergroundRiftShadow", Vector3(0, -1.25, 20), Vector3(38, 2.4, 180), 5.0, Color(0.02, 0.035, 0.03, 0.88), false, 0.42, 0.88)
+	_add_hidden_block(terrain, "HiddenMainPath_SouthNorth", Vector3(0, 0.04, 4), Vector3(7.5, 0.08, 206), 0.0, Color(0.12, 0.16, 0.11), true, 0.54, 0.62)
+	_add_hidden_block(terrain, "HiddenCrossPath_EastWest", Vector3(0, 0.05, -10), Vector3(178, 0.08, 7.0), 0.0, Color(0.12, 0.16, 0.11), true, 0.54, 0.62)
+	for i in range(18):
+		var x := -96.0 + float(i % 6) * 38.0
+		var z := -92.0 + float(i / 6) * 66.0
+		_build_hidden_tree_pillar(terrain, "RainforestRootPillar_%02d" % i, Vector3(x, 0, z), float(i) * 11.0)
+	for i in range(11):
+		var z := -92.0 + float(i) * 18.0
+		_add_hidden_line_span(terrain, "RootCoveredPathLine_%02d" % i, Vector3(-8, 0.20, z), Vector3(8, 0.20, z + 7.0), Color(0.22, 0.48, 0.24, 0.34), 0.18)
+
+func _build_hidden_olinda_growth_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneA_OlindaConcentricGrowth")
+	_build_concentric_city_wall(zone, Vector3(0, 0, -74), 0.0)
+	_build_needlepoint_mini_city(zone, Vector3(0, 0, -74), 0.0)
+	_build_inner_growing_city(zone, Vector3(0, 0, -56), 0.0)
+	_build_hidden_simple_prop(zone, "MagnifyingGlass", Vector3(-22, 0, -88), -16.0, Vector3(7.0, 0.35, 4.2), Color(0.74, 0.86, 0.78, 0.44), false)
+	_build_hidden_cylinder_prop(zone, "NeedlepointGlow", Vector3(0, 1.2, -74), 1.3, 0.08, Color(0.42, 1.0, 0.62, 0.70), false)
+	for i in range(5):
+		_build_hidden_simple_prop(zone, "TinyRoof_%02d" % i, Vector3(-4.0 + float(i) * 2.0, 0.55, -76.0 + float(i % 2) * 3.0), float(i) * 8.0, Vector3(1.2, 0.32, 0.8), Color(0.32, 0.48, 0.28), false)
+	for i in range(4):
+		_build_hidden_simple_prop(zone, "TinyAntenna_%02d" % i, Vector3(-3.0 + float(i) * 2.0, 1.35, -72.0), 0.0, Vector3(0.08, 1.0, 0.08), Color(0.70, 0.82, 0.72, 0.70), false)
+	_build_hidden_cylinder_prop(zone, "TinyPool", Vector3(3.5, 0.25, -70.5), 1.1, 0.06, Color(0.26, 0.74, 0.64, 0.56), false)
+	_build_hidden_simple_prop(zone, "StreetBanner", Vector3(0, 2.2, -71.5), 0.0, Vector3(5.6, 0.18, 0.08), Color(0.84, 0.70, 0.28, 0.74), false)
+	_build_hidden_simple_prop(zone, "Newsstand", Vector3(-2.8, 0, -69.5), 0.0, Vector3(1.4, 1.2, 1.0), Color(0.48, 0.36, 0.20), false)
+	_build_hidden_reveal_node(zone, 0, Vector3(0, 0, -50), 0.0)
+
+func _build_hidden_raissa_joy_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneB_RaissaSadnessJoy")
+	_build_hidden_simple_prop(zone, "SadnessDistrict", Vector3(64, 0, -12), 0.0, Vector3(42, 8.0, 28), Color(0.16, 0.17, 0.16), true)
+	_build_hidden_simple_prop(zone, "RiverRailing", Vector3(40, 1.3, -30), 0.0, Vector3(42, 2.6, 0.35), Color(0.20, 0.26, 0.22), false)
+	_build_hidden_simple_prop(zone, "LowTavern", Vector3(82, 0, -30), -8.0, Vector3(14, 3.6, 9), Color(0.22, 0.16, 0.12), true)
+	_build_scaffold_house(zone, Vector3(54, 0, 8), 5.0)
+	_build_hidden_simple_prop(zone, "HiddenHappyCity", Vector3(66, 0, 12), 0.0, Vector3(24, 5.0, 18), Color(0.28, 0.46, 0.26, 0.42), false)
+	_build_hidden_simple_prop(zone, "CryingChild", Vector3(48, 0, -20), 0.0, Vector3(1.2, 2.2, 0.7), Color(0.28, 0.30, 0.30, 0.62), false)
+	_build_hidden_simple_prop(zone, "BrokenDishes", Vector3(74, 0.12, -18), 0.0, Vector3(4.0, 0.24, 2.4), Color(0.74, 0.70, 0.62, 0.38), false)
+	_build_hidden_simple_prop(zone, "CornCake", Vector3(58, 5.2, 6), 0.0, Vector3(1.4, 0.22, 1.0), Color(0.84, 0.62, 0.24), false)
+	_build_hidden_simple_prop(zone, "RooftopDog", Vector3(62, 5.7, 6), 0.0, Vector3(2.0, 0.9, 0.7), Color(0.26, 0.18, 0.10), false)
+	_build_hidden_simple_prop(zone, "TomatoPastaPlate", Vector3(78, 1.2, -22), 0.0, Vector3(1.6, 0.22, 1.2), Color(0.82, 0.18, 0.08), false)
+	_build_hidden_simple_prop(zone, "WhiteLaceParasol", Vector3(86, 2.6, 8), 0.0, Vector3(4.0, 0.20, 4.0), Color(0.92, 0.90, 0.82, 0.46), false)
+	_build_hidden_simple_prop(zone, "Partridge", Vector3(72, 7.0, 22), 22.0, Vector3(1.6, 0.6, 0.9), Color(0.66, 0.42, 0.20, 0.64), false)
+	var joy_points := [Vector3(48, 2.2, -20), Vector3(62, 5.8, 6), Vector3(78, 1.4, -22), Vector3(86, 2.8, 8), Vector3(72, 7.2, 22)]
+	for i in range(joy_points.size() - 1):
+		_add_hidden_line_span(zone, "JoyThread_%02d" % i, joy_points[i], joy_points[i + 1], Color(0.96, 0.78, 0.28, 0.72), 0.08)
+	_build_hidden_reveal_node(zone, 1, Vector3(66, 0, 6), -90.0)
+
+func _build_hidden_marozia_crack_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneC_MaroziaRatSwallowCrack")
+	_build_hidden_simple_prop(zone, "LeadGreyAlley", Vector3(-60, 0.10, -8), 0.0, Vector3(54, 0.20, 7), Color(0.22, 0.23, 0.23), true)
+	_build_hidden_simple_prop(zone, "RatCity", Vector3(-72, 0, -20), 0.0, Vector3(24, 2.4, 16), Color(0.08, 0.08, 0.075), true)
+	_build_hidden_simple_prop(zone, "SwallowCity", Vector3(-58, 12.0, 10), 0.0, Vector3(32, 4.0, 16), Color(0.38, 0.56, 0.62, 0.30), false)
+	_build_wall_crack_gate(zone, Vector3(-36, 0, -8), 90.0)
+	_build_hidden_simple_prop(zone, "CrystalMomentCity", Vector3(-24, 2.4, -8), 0.0, Vector3(18, 4.8, 12), Color(0.74, 0.96, 1.0, 0.34), false)
+	for i in range(8):
+		_build_hidden_simple_prop(zone, "RatShadow_%02d" % i, Vector3(-80.0 + float(i) * 4.5, 0.18, -15.0 + sin(float(i)) * 3.0), 0.0, Vector3(2.2, 0.10, 0.7), Color(0.02, 0.02, 0.018, 0.58), false)
+	for i in range(7):
+		_build_hidden_simple_prop(zone, "SwallowShadow_%02d" % i, Vector3(-72.0 + float(i) * 6.0, 14.0 + sin(float(i)) * 1.4, 12.0), 18.0 + float(i) * 9.0, Vector3(2.4, 0.16, 0.7), Color(0.42, 0.76, 0.88, 0.50), false)
+	_build_hidden_simple_prop(zone, "BatCloak", Vector3(-48, 1.8, -20), 0.0, Vector3(2.8, 3.0, 0.24), Color(0.04, 0.04, 0.05, 0.68), false)
+	_build_hidden_simple_prop(zone, "DragonflyGleam", Vector3(-27, 4.8, -8), 0.0, Vector3(1.8, 0.12, 0.7), Color(0.72, 1.0, 0.92, 0.80), false)
+	_build_hidden_simple_prop(zone, "MoldyRoof", Vector3(-66, 3.0, -28), 0.0, Vector3(22, 0.5, 10), Color(0.18, 0.30, 0.16), false)
+	_build_hidden_reveal_node(zone, 2, Vector3(-36, 0, -8), 90.0)
+
+func _build_hidden_theodora_species_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneD_TheodoraSpeciesReturn")
+	_build_hidden_simple_prop(zone, "AnimalGraveCity", Vector3(0, 0, 70), 0.0, Vector3(48, 2.2, 26), Color(0.18, 0.19, 0.15), true)
+	_build_hidden_simple_prop(zone, "UndergroundArchive", Vector3(-18, -1.0, 44), 0.0, Vector3(34, 3.0, 20), Color(0.06, 0.08, 0.06, 0.72), false)
+	_build_hidden_simple_prop(zone, "SpeciesLibrary", Vector3(20, 0, 48), 0.0, Vector3(32, 8.0, 18), Color(0.22, 0.18, 0.12), true)
+	_build_hidden_simple_prop(zone, "MonsterRevivalAlley", Vector3(0, 0.10, 34), 0.0, Vector3(64, 0.20, 5), Color(0.08, 0.10, 0.08), true)
+	_build_hidden_simple_prop(zone, "SewerRatBurrow", Vector3(-34, -0.4, 54), 0.0, Vector3(10, 1.0, 6), Color(0.02, 0.025, 0.02, 0.82), false)
+	for i in range(10):
+		_build_hidden_simple_prop(zone, "AnimalGraveMarker_%02d" % i, Vector3(-20.0 + float(i) * 4.4, 0.9, 72.0 + sin(float(i)) * 5.0), 0.0, Vector3(0.8, 1.8, 0.24), Color(0.34, 0.34, 0.28), false)
+	_build_hidden_simple_prop(zone, "VultureFeather", Vector3(-18, 0.4, 60), 20.0, Vector3(2.6, 0.12, 0.4), Color(0.18, 0.18, 0.16), false)
+	_build_hidden_simple_prop(zone, "SnakeScale", Vector3(-6, 0.18, 62), 0.0, Vector3(1.0, 0.08, 0.8), Color(0.28, 0.46, 0.22, 0.58), false)
+	_build_hidden_simple_prop(zone, "SpiderWeb", Vector3(28, 3.2, 39), 0.0, Vector3(5.0, 0.08, 5.0), Color(0.70, 0.78, 0.70, 0.28), false)
+	_build_hidden_simple_prop(zone, "RatCorpse", Vector3(-32, 0.10, 50), 0.0, Vector3(2.2, 0.30, 0.9), Color(0.10, 0.08, 0.06), false)
+	_build_hidden_simple_prop(zone, "BuffonBook", Vector3(12, 2.0, 43), 0.0, Vector3(2.0, 0.35, 1.3), Color(0.42, 0.24, 0.12), false)
+	_build_hidden_simple_prop(zone, "LinnaeusBook", Vector3(16, 2.6, 43), 0.0, Vector3(2.0, 0.35, 1.3), Color(0.34, 0.22, 0.14), false)
+	_build_hidden_simple_prop(zone, "SphinxFigure", Vector3(2, 1.2, 35), 0.0, Vector3(2.8, 2.4, 1.4), Color(0.52, 0.44, 0.30), false)
+	_build_hidden_simple_prop(zone, "GriffinFigure", Vector3(10, 1.4, 35), 0.0, Vector3(2.8, 2.8, 1.4), Color(0.48, 0.40, 0.28), false)
+	_build_hidden_simple_prop(zone, "HydraShadow", Vector3(24, 3.0, 34), 0.0, Vector3(8.0, 3.0, 0.16), Color(0.02, 0.05, 0.025, 0.62), false)
+	_build_hidden_simple_prop(zone, "UnicornBone", Vector3(-20, -0.1, 46), 14.0, Vector3(4.0, 0.25, 0.45), Color(0.78, 0.74, 0.62), false)
+	_build_hidden_reveal_node(zone, 3, Vector3(0, 0, 44), 180.0)
+
+func _build_hidden_berenice_justice_zone(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneE_BereniceJusticeMachinery")
+	_build_hidden_simple_prop(zone, "UnjustHall", Vector3(36, 0, 74), 0.0, Vector3(34, 9.0, 18), Color(0.20, 0.16, 0.13), true)
+	_build_grinder_palace(zone, Vector3(62, 0, 74), -12.0)
+	_build_hidden_simple_prop(zone, "JustBackAlley", Vector3(22, 0.10, 88), 24.0, Vector3(44, 0.20, 4.0), Color(0.08, 0.12, 0.08), true)
+	_build_mechanical_vine_city(zone, Vector3(22, 0, 104), 0.0)
+	_build_hidden_simple_prop(zone, "HiddenStairShadow", Vector3(42, 1.2, 92), -24.0, Vector3(14, 2.4, 3.0), Color(0.03, 0.04, 0.03, 0.72), false)
+	_build_hidden_simple_prop(zone, "JustEmbryoCity", Vector3(20, 2.0, 104), 0.0, Vector3(10, 4.0, 8), Color(0.36, 0.62, 0.32, 0.42), false)
+	_build_hidden_simple_prop(zone, "PoisonSeedCity", Vector3(20, 4.8, 104), 0.0, Vector3(4.2, 3.0, 3.4), Color(0.16, 0.34, 0.10, 0.58), false)
+	for i in range(6):
+		_add_hidden_line_span(zone, "SteelWire_%02d" % i, Vector3(4.0 + float(i) * 6.0, 2.2, 92), Vector3(12.0 + float(i) * 5.0, 4.5, 108), Color(0.56, 0.66, 0.58, 0.56), 0.06)
+	for i in range(5):
+		_build_hidden_simple_prop(zone, "Pipe_%02d" % i, Vector3(8.0 + float(i) * 6.0, 1.4, 100.0 + sin(float(i)) * 4.0), 20.0, Vector3(5.0, 0.45, 0.45), Color(0.34, 0.30, 0.22), false)
+	_build_hidden_cylinder_prop(zone, "Pulley", Vector3(38, 4.2, 98), 1.4, 0.34, Color(0.46, 0.34, 0.18), false)
+	_build_hidden_simple_prop(zone, "Piston", Vector3(30, 2.2, 106), 0.0, Vector3(1.2, 4.4, 1.2), Color(0.42, 0.36, 0.26), false)
+	_build_hidden_cylinder_prop(zone, "Counterweight", Vector3(14, 1.8, 98), 1.8, 1.2, Color(0.38, 0.32, 0.24), false)
+	_build_hidden_cylinder_prop(zone, "GiantGear", Vector3(22, 3.4, 96), 4.0, 0.36, Color(0.54, 0.34, 0.16), false)
+	_build_hidden_simple_prop(zone, "SoupBowl", Vector3(10, 0.6, 90), 0.0, Vector3(1.5, 0.35, 1.5), Color(0.82, 0.58, 0.26), false)
+	_build_hidden_simple_prop(zone, "BeanPlate", Vector3(14, 0.6, 90), 0.0, Vector3(1.8, 0.22, 1.3), Color(0.48, 0.72, 0.32), false)
+	_build_hidden_reveal_node(zone, 4, Vector3(22, 0, 100), 0.0)
+
+func _build_hidden_center_core(parent: Node3D) -> void:
+	var zone := _make_city_zone(parent, "ZoneF_HiddenCore")
+	_build_hidden_cylinder_prop(zone, "HiddenCoreRootDisk", Vector3(0, 0.10, 0), 18.0, 0.10, Color(0.06, 0.14, 0.08, 0.74), true)
+	_build_hidden_simple_prop(zone, "HiddenCrackLight", Vector3(0, 3.0, 0), 0.0, Vector3(1.4, 6.0, 0.18), Color(0.42, 1.0, 0.58, 0.70), false)
+	for i in range(14):
+		var angle := TAU * float(i) / 14.0
+		_add_hidden_line_span(zone, "HiddenRootLine_%02d" % i, Vector3(0, 0.48, 0), Vector3(cos(angle) * 20.0, 0.48, sin(angle) * 20.0), Color(0.16, 0.54, 0.24, 0.42), 0.10)
+	_build_hidden_simple_prop(zone, "DarkGreenSporeCore", Vector3(0, 5.8, 0), 0.0, Vector3(6.0, 1.0, 6.0), Color(0.18, 0.80, 0.34, 0.24), false)
+	hidden_goal_trigger = Area3D.new()
+	hidden_goal_trigger.name = "HiddenGoalTrigger"
+	hidden_goal_trigger.position = Vector3(0, 1.1, 0)
+	hidden_goal_trigger.collision_layer = 0
+	hidden_goal_trigger.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 9.0
+	shape.shape = sphere
+	hidden_goal_trigger.add_child(shape)
+	hidden_goal_trigger.body_entered.connect(_on_hidden_goal_entered)
+	hidden_goal_trigger.body_exited.connect(_on_hidden_goal_exited)
+	manifested_city.add_child(hidden_goal_trigger)
+
+func _build_hidden_atmosphere(parent: Node3D) -> void:
+	var atmosphere := Node3D.new()
+	atmosphere.name = "HiddenCityAtmosphere_StyleDirection"
+	parent.add_child(atmosphere)
+	atmosphere.add_child(_make_city_particle_layer("FireflyParticles", 860, Vector2(0.055, 0.055), Vector3(116, 12, 116), Vector3(0.04, 0.08, -0.03), Color(0.72, 1.0, 0.42, 0.44), 0.02, 0.18, 100.0, 13.0))
+	atmosphere.add_child(_make_city_particle_layer("DarkGreenSporeParticles", 1500, Vector2(0.038, 0.038), Vector3(124, 8, 124), Vector3(-0.03, 0.06, 0.04), Color(0.22, 0.78, 0.32, 0.26), 0.02, 0.16, 100.0, 16.0))
+	atmosphere.add_child(_make_city_particle_layer("LeafDriftParticles", 900, Vector2(0.15, 0.075), Vector3(118, 10, 118), Vector3(0.12, -0.03, 0.08), Color(0.20, 0.42, 0.16, 0.34), 0.04, 0.26, 100.0, 15.0))
+	atmosphere.add_child(_make_city_particle_layer("HiddenGlimmerParticles", 720, Vector2(0.045, 0.045), Vector3(112, 9, 112), Vector3(0.02, 0.04, 0.02), Color(0.56, 1.0, 0.72, 0.30), 0.01, 0.12, 90.0, 12.0))
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		_add_city_style_veil(atmosphere, "MaskRevealMistVeil_%02d" % i, Vector3(cos(angle) * 46.0, 4.2 + float(i % 3) * 1.1, sin(angle) * 46.0), Vector2(70, 14), rad_to_deg(angle) + 90.0, Color(0.16, 0.62, 0.28, 0.16), 0.0, 820.0 + float(i) * 6.3, hidden_city_style_intensity * 0.78)
+
+func _build_concentric_city_wall(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "ConcentricCityWall", pos, yaw)
+	for i in range(4):
+		var radius := 23.0 - float(i) * 4.6
+		_add_local_hidden_cylinder(asset, "GrowingWallRing_%02d" % i, Vector3(0, 0.18 + float(i) * 0.03, 0), radius, 0.22, Color(0.18, 0.32, 0.18, 0.46), false, 0.58, 0.54)
+		for s in range(12):
+			var angle := TAU * float(s) / 12.0
+			_add_local_hidden_block(asset, "RingRuinBlock_%02d_%02d" % [i, s], Vector3(cos(angle) * radius, 0.8, sin(angle) * radius), Vector3(1.6, 1.6, 0.5), -rad_to_deg(angle), Color(0.22, 0.30, 0.20, 0.62), false, 0.62, 0.62)
+
+func _build_needlepoint_mini_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "NeedlepointMiniCity", pos, yaw)
+	_add_local_hidden_block(asset, "NeedlepointBase", Vector3(0, 0.08, 0), Vector3(8, 0.16, 8), 0.0, Color(0.16, 0.26, 0.14, 0.62), false, 0.42, 0.70)
+	_add_local_hidden_cylinder(asset, "MiniaturePlaza", Vector3(0, 0.22, 0), 2.5, 0.08, Color(0.26, 0.42, 0.22, 0.58), false, 0.38, 0.62)
+	_add_local_hidden_cylinder(asset, "MiniRacecourse", Vector3(4.0, 0.24, 0), 2.0, 0.06, Color(0.32, 0.26, 0.16, 0.54), false, 0.44, 0.60)
+	for i in range(9):
+		_add_local_hidden_block(asset, "NeedlepointTinyHouse_%02d" % i, Vector3(-3.2 + float(i % 3) * 3.2, 0.55, -3.2 + float(i / 3) * 3.2), Vector3(1.2, 1.1, 1.0), 0.0, Color(0.30, 0.42, 0.24), false, 0.42, 0.62)
+
+func _build_inner_growing_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "InnerGrowingCity", pos, yaw)
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_add_local_hidden_block(asset, "InnerGrowthBuilding_%02d" % i, Vector3(cos(angle) * 8.0, 2.0 + float(i % 3) * 0.6, sin(angle) * 8.0), Vector3(2.6, 4.0 + float(i % 3), 2.2), rad_to_deg(angle), Color(0.18, 0.38, 0.20, 0.52), true, 0.60, 0.74)
+		_add_hidden_line_span(asset, "InnerGrowthVine_%02d" % i, Vector3(0, 1.2, 0), Vector3(cos(angle) * 9.5, 4.0, sin(angle) * 9.5), Color(0.20, 0.74, 0.28, 0.42), 0.08)
+
+func _build_scaffold_house(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "ScaffoldHouse", pos, yaw)
+	_add_local_hidden_block(asset, "DarkHouseBody", Vector3(0, 3.0, 0), Vector3(12, 6.0, 9), 0.0, Color(0.16, 0.18, 0.15), true, 0.58, 0.72)
+	for x in [-6.8, 6.8]:
+		for z in [-4.8, 4.8]:
+			_add_local_hidden_block(asset, "ScaffoldPole_%s_%s" % [str(x), str(z)], Vector3(x, 3.8, z), Vector3(0.24, 7.6, 0.24), 0.0, Color(0.30, 0.24, 0.16), false, 0.48, 0.70)
+	for level in range(3):
+		_add_local_hidden_block(asset, "ScaffoldCross_%02d" % level, Vector3(0, 1.8 + float(level) * 2.2, -5.0), Vector3(14.0, 0.20, 0.20), 0.0, Color(0.32, 0.25, 0.16), false, 0.48, 0.70)
+
+func _build_wall_crack_gate(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "WallCrackGate", pos, yaw)
+	_add_local_hidden_block(asset, "ThickWallLeft", Vector3(-3.0, 4.0, 0), Vector3(3.0, 8.0, 2.0), 0.0, Color(0.24, 0.24, 0.22), true, 0.60, 0.70)
+	_add_local_hidden_block(asset, "ThickWallRight", Vector3(3.0, 4.0, 0), Vector3(3.0, 8.0, 2.0), 0.0, Color(0.24, 0.24, 0.22), true, 0.60, 0.70)
+	_add_local_hidden_block(asset, "HiddenCrackLightSliver", Vector3(0, 4.0, -0.8), Vector3(0.34, 7.0, 0.18), 0.0, Color(0.72, 1.0, 0.92, 0.72), false, 0.10, 0.42)
+
+func _build_grinder_palace(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "GrinderPalace", pos, yaw)
+	_add_local_hidden_block(asset, "PalaceBody", Vector3(0, 6.0, 0), Vector3(22, 12, 14), 0.0, Color(0.25, 0.20, 0.16), true, 0.64, 0.72)
+	for i in range(3):
+		_add_local_hidden_block(asset, "ThreeLinePattern_%02d" % i, Vector3(-4.0 + float(i) * 4.0, 6.5, -7.2), Vector3(0.32, 8.0, 0.18), 0.0, Color(0.52, 0.36, 0.18), false, 0.36, 0.68)
+	_add_local_hidden_cylinder(asset, "CylindricalCap", Vector3(0, 12.8, 0), 8.2, 1.2, Color(0.34, 0.26, 0.18), false, 0.52, 0.70)
+
+func _build_mechanical_vine_city(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "MechanicalVineCity", pos, yaw)
+	for i in range(12):
+		var angle := TAU * float(i) / 12.0
+		_add_local_hidden_block(asset, "MechanicalVineBuilding_%02d" % i, Vector3(cos(angle) * 10.0, 2.2, sin(angle) * 8.0), Vector3(2.2, 4.4, 2.2), rad_to_deg(angle), Color(0.18, 0.36, 0.18, 0.52), false, 0.52, 0.76)
+		_add_hidden_line_span(asset, "MechanicalVine_%02d" % i, Vector3(0, 2.0, 0), Vector3(cos(angle) * 12.0, 5.0, sin(angle) * 10.0), Color(0.22, 0.70, 0.25, 0.46), 0.12)
+
+func _build_hidden_tree_pillar(parent: Node3D, name: String, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_hidden_block(asset, "Trunk", Vector3(0, 4.0, 0), Vector3(1.4, 8.0, 1.4), 0.0, Color(0.16, 0.10, 0.06), false, 0.62, 0.50)
+	_add_local_hidden_block(asset, "LeafCanopy", Vector3(0, 8.6, 0), Vector3(7.0, 2.2, 6.0), 0.0, Color(0.08, 0.24, 0.10, 0.58), false, 0.50, 0.44)
+
+func _hidden_node_color(node_index: int) -> Color:
+	return HIDDEN_REVEAL_COLORS[clampi(node_index, 0, HIDDEN_REVEAL_COLORS.size() - 1)]
+
+func _build_hidden_reveal_node(parent: Node3D, node_index: int, pos: Vector3, yaw: float) -> void:
+	var data: Array = HIDDEN_REVEAL_NODES[node_index]
+	var color := _hidden_node_color(node_index)
+	var asset := _make_city_asset(parent, String(data[0]), pos, yaw)
+	_add_local_hidden_block(asset, "ConcealedMarkerColumn", Vector3(0, 2.0, 0), Vector3(1.2, 4.0, 1.2), 0.0, Color(0.04, 0.11, 0.06, 0.72), true, 0.68, 0.58)
+	_add_local_hidden_block(asset, "MaskedRevealPanel", Vector3(0, 4.5, -0.48), Vector3(5.2, 2.0, 0.16), 0.0, color, false, 0.24, 0.64)
+	var revealed := _add_local_hidden_block(asset, "RevealedInnerCityPanel", Vector3(0, 4.5, -0.66), Vector3(5.2, 2.0, 0.16), 0.0, Color(0.82, 1.0, 0.74, 0.34), false, 0.16, 0.42)
+	revealed.visible = false
+	_add_hidden_node_glow(asset, color)
+	while hidden_node_visuals.size() <= node_index:
+		hidden_node_visuals.append(null)
+	hidden_node_visuals[node_index] = asset
+
+	var area := Area3D.new()
+	area.name = "%sArea" % String(data[0])
+	area.position = pos + Vector3(0, 1.2, 0)
+	area.collision_layer = 0
+	area.collision_mask = 2
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 4.8
+	shape.shape = sphere
+	area.add_child(shape)
+	area.body_entered.connect(func(body: Node3D): _on_hidden_node_entered(body, node_index))
+	area.body_exited.connect(func(body: Node3D): _on_hidden_node_exited(body, node_index))
+	manifested_city.add_child(area)
+	while hidden_node_areas.size() <= node_index:
+		hidden_node_areas.append(null)
+	hidden_node_areas[node_index] = area
+
+func _add_hidden_node_glow(asset: Node3D, color: Color) -> void:
+	var halo := CSGCylinder3D.new()
+	halo.name = "HiddenNodeGlow"
+	halo.radius = 3.5
+	halo.height = 0.035
+	halo.sides = 48
+	halo.position = Vector3(0, 0.10, 0)
+	halo.material = _emissive_mat(color, 0.26, hidden_node_glow_energy)
+	asset.add_child(halo)
+	var light := OmniLight3D.new()
+	light.name = "HiddenNodeLight"
+	light.position = Vector3(0, 3.7, 0)
+	light.light_color = color
+	light.light_energy = hidden_node_glow_energy
+	light.omni_range = 9.0
+	asset.add_child(light)
+	var particles := GPUParticles3D.new()
+	particles.name = "HiddenNodeSporeParticles"
+	particles.amount = int(maxf(1.0, 90.0 * hidden_node_particle_scale))
+	particles.lifetime = 2.8
+	particles.visibility_aabb = AABB(Vector3(-5, -1, -5), Vector3(10, 8, 10))
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.08, 0.08)
+	particles.draw_pass_1 = mesh
+	var process := ParticleProcessMaterial.new()
+	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	process.emission_sphere_radius = 2.9
+	process.gravity = Vector3(0, -0.01, 0)
+	process.initial_velocity_min = 0.02
+	process.initial_velocity_max = 0.22
+	process.spread = 100.0
+	process.color = Color(color.r, color.g, color.b, 0.72)
+	particles.process_material = process
+	particles.position = Vector3(0, 2.8, 0)
+	particles.emitting = true
+	asset.add_child(particles)
+
+func _set_hidden_node_visual_state(node_index: int, revealed: bool) -> void:
+	if node_index < 0 or node_index >= hidden_node_visuals.size():
+		return
+	var asset := hidden_node_visuals[node_index]
+	if asset == null:
+		return
+	var masked := asset.get_node_or_null("MaskedRevealPanel")
+	if masked != null:
+		masked.visible = not revealed
+	var inner := asset.get_node_or_null("RevealedInnerCityPanel")
+	if inner != null:
+		inner.visible = revealed
+	for name in ["HiddenNodeGlow", "HiddenNodeLight", "HiddenNodeSporeParticles"]:
+		var child := asset.get_node_or_null(name)
+		if child != null:
+			child.visible = not revealed
+
+func _build_hidden_simple_prop(parent: Node3D, name: String, pos: Vector3, yaw: float, size: Vector3, color: Color, collision := false) -> Node3D:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	_add_local_hidden_block(asset, "WhiteboxReplaceRoot", Vector3(0, size.y * 0.5, 0), size, 0.0, color, collision, 0.56, 0.64)
+	return asset
+
+func _add_hidden_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color, collision := false, reveal := 0.50, growth := 0.62) -> Node3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _hidden_growth_material(color, color.a, pos.x * 0.17 + pos.z * 0.21, reveal, growth)
+	parent.add_child(box)
+	if collision:
+		_add_box_collision(name + "Collision", pos, size, yaw)
+	return box
+
+func _add_local_hidden_block(asset: Node3D, part_name: String, local_pos: Vector3, size: Vector3, local_yaw: float, color: Color, collision := true, reveal := 0.50, growth := 0.62) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var global_yaw := _asset_global_yaw(asset, local_yaw)
+	var box := CSGBox3D.new()
+	box.name = part_name
+	box.position = local_pos
+	box.size = size
+	box.rotation_degrees.y = local_yaw
+	box.material = _hidden_growth_material(color, color.a, global_pos.x * 0.17 + global_pos.z * 0.21, reveal, growth)
+	asset.add_child(box)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, size, global_yaw)
+	return box
+
+func _build_hidden_cylinder_prop(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, collision := false) -> Node3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 56
+	cylinder.position = pos
+	cylinder.material = _hidden_growth_material(color, color.a, pos.x * 0.13 + pos.z * 0.23, 0.46, 0.66)
+	parent.add_child(cylinder)
+	if collision:
+		_add_box_collision(name + "Collision", pos, Vector3(radius * 2.0, height, radius * 2.0), 0.0)
+	return cylinder
+
+func _add_local_hidden_cylinder(asset: Node3D, part_name: String, local_pos: Vector3, radius: float, height: float, color: Color, collision := false, reveal := 0.46, growth := 0.66) -> Node3D:
+	var global_pos := _asset_global_pos(asset, local_pos)
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = part_name
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = 56
+	cylinder.position = local_pos
+	cylinder.material = _hidden_growth_material(color, color.a, global_pos.x * 0.13 + global_pos.z * 0.23, reveal, growth)
+	asset.add_child(cylinder)
+	if collision:
+		_add_box_collision("%s_%sCollision" % [asset.name, part_name], global_pos, Vector3(radius * 2.0, height, radius * 2.0), _asset_global_yaw(asset, 0.0))
+	return cylinder
+
+func _add_hidden_line_span(parent: Node3D, name: String, a: Vector3, b: Vector3, color: Color, thickness := 0.08) -> Node3D:
+	var delta := b - a
+	var flat_length := delta.length()
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	var mid := (a + b) * 0.5
+	return _add_hidden_block(parent, name, mid, Vector3(thickness, thickness, maxf(flat_length, 0.1)), yaw, color, false, 0.32, 0.82)
+
 func _build_memory_city_diomira() -> void:
 	_build_memory_courtyard()
 	_build_repeated_doors()
@@ -4892,6 +5745,10 @@ func _build_ui() -> void:
 			callback = _on_dead_theme_pressed
 		elif i == THEME_SKY:
 			callback = _on_sky_theme_pressed
+		elif i == THEME_CONTINUOUS:
+			callback = _on_continuous_theme_pressed
+		elif i == THEME_HIDDEN:
+			callback = _on_hidden_theme_pressed
 		var b := _button(THEME_NAMES[i], callback)
 		theme_buttons.append(b)
 		theme_select.add_child(b)
@@ -5097,6 +5954,12 @@ func _on_dead_theme_pressed() -> void:
 func _on_sky_theme_pressed() -> void:
 	_on_theme_pressed(THEME_SKY)
 
+func _on_continuous_theme_pressed() -> void:
+	_on_theme_pressed(THEME_CONTINUOUS)
+
+func _on_hidden_theme_pressed() -> void:
+	_on_theme_pressed(THEME_HIDDEN)
+
 func _on_theme_pressed(theme_index: int) -> void:
 	if theme_index != THEME_MEMORY and not memory_completed:
 		_update_theme_unlocks()
@@ -5152,12 +6015,12 @@ func _disabled_theme_pressed() -> void:
 func _update_theme_unlocks() -> void:
 	if theme_select_status_label != null:
 		if memory_completed:
-			theme_select_status_label.text = "记忆已完成。当前可选择“记忆”“欲望”“符号”“轻盈”“贸易”“眼睛”“姓名”“死的”“天空”；其他主题仍等待白盒。"
+			theme_select_status_label.text = "记忆已完成。当前 11 座主题城市均可选择。"
 		else:
 			theme_select_status_label.text = "先完成“记忆”，再自由选择其他城市。"
 	for i in range(theme_buttons.size()):
 		var button := theme_buttons[i]
-		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE or i == THEME_EYES or i == THEME_NAMES_CITY or i == THEME_DEAD or i == THEME_SKY
+		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE or i == THEME_EYES or i == THEME_NAMES_CITY or i == THEME_DEAD or i == THEME_SKY or i == THEME_CONTINUOUS or i == THEME_HIDDEN
 		var unlocked := i == THEME_MEMORY or (memory_completed and playable_after_memory)
 		button.disabled = not unlocked
 		button.text = THEME_NAMES[i]
@@ -5309,6 +6172,10 @@ func _is_player_near_reading_trigger() -> bool:
 		return dead_goal_trigger != null and _is_dead_echo_complete() and player.global_position.distance_to(dead_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if selected_theme_index == THEME_SKY:
 		return sky_goal_trigger != null and _is_sky_anchor_complete() and player.global_position.distance_to(sky_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_CONTINUOUS:
+		return continuous_goal_trigger != null and _is_continuous_sprawl_complete() and player.global_position.distance_to(continuous_goal_trigger.global_position) <= reading_interact_radius + 3.0
+	if selected_theme_index == THEME_HIDDEN:
+		return hidden_goal_trigger != null and _is_hidden_reveal_complete() and player.global_position.distance_to(hidden_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if reading_trigger == null:
 		return false
 	return player.global_position.distance_to(reading_trigger.global_position) <= reading_interact_radius
@@ -5811,6 +6678,130 @@ func _on_sky_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_SKY:
 		can_read_tower = false
 
+func _on_continuous_node_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_CONTINUOUS:
+		return
+	if _is_continuous_node_completed(node_index):
+		return
+	continuous_active_node_index = node_index
+	var data: Array = CONTINUOUS_SPRAWL_NODES[node_index]
+	_show_hint("按 E 记录连续节点：%s" % String(data[1]), 2.4)
+
+func _on_continuous_node_exited(body: Node3D, node_index: int) -> void:
+	if body == player and continuous_active_node_index == node_index:
+		continuous_active_node_index = -1
+
+func _activate_continuous_sprawl_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= CONTINUOUS_SPRAWL_NODES.size():
+		return
+	if _is_continuous_node_completed(node_index):
+		return
+	continuous_completed_nodes.append(node_index)
+	continuous_active_node_index = -1
+	_reset_city_guidance_timer()
+	_set_continuous_node_visual_state(node_index, true)
+	if node_index < continuous_node_areas.size() and continuous_node_areas[node_index] != null:
+		continuous_node_areas[node_index].set_deferred("monitoring", false)
+		continuous_node_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = CONTINUOUS_SPRAWL_NODES[node_index]
+	var count := continuous_completed_nodes.size()
+	if _is_continuous_sprawl_complete():
+		_show_hint("%s\n五处连续压力已经被记录。回到中心无中心指示牌。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已记录 %d / %d。" % [String(data[2]), count, CONTINUOUS_SPRAWL_NODES.size()], 4.0)
+
+func _is_continuous_node_completed(node_index: int) -> bool:
+	return continuous_completed_nodes.has(node_index)
+
+func _is_continuous_sprawl_complete() -> bool:
+	return continuous_completed_nodes.size() >= CONTINUOUS_SPRAWL_NODES.size()
+
+func _reset_continuous_sprawl_nodes() -> void:
+	continuous_completed_nodes.clear()
+	continuous_active_node_index = -1
+	for i in range(continuous_node_visuals.size()):
+		_set_continuous_node_visual_state(i, false)
+	for area in continuous_node_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_continuous_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_CONTINUOUS:
+		return
+	if _is_continuous_sprawl_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读无中心指示牌。", 2.5)
+	else:
+		var missing := CONTINUOUS_SPRAWL_NODES.size() - continuous_completed_nodes.size()
+		_show_hint("无中心指示牌仍指向太多方向。还需记录 %d 处连续节点。" % missing, 3.2)
+
+func _on_continuous_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_CONTINUOUS:
+		can_read_tower = false
+
+func _on_hidden_node_entered(body: Node3D, node_index: int) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_HIDDEN:
+		return
+	if _is_hidden_node_completed(node_index):
+		return
+	hidden_active_node_index = node_index
+	var data: Array = HIDDEN_REVEAL_NODES[node_index]
+	_show_hint("按 E 发现隐蔽节点：%s" % String(data[1]), 2.4)
+
+func _on_hidden_node_exited(body: Node3D, node_index: int) -> void:
+	if body == player and hidden_active_node_index == node_index:
+		hidden_active_node_index = -1
+
+func _activate_hidden_reveal_node(node_index: int) -> void:
+	if node_index < 0 or node_index >= HIDDEN_REVEAL_NODES.size():
+		return
+	if _is_hidden_node_completed(node_index):
+		return
+	hidden_completed_nodes.append(node_index)
+	hidden_active_node_index = -1
+	_reset_city_guidance_timer()
+	_set_hidden_node_visual_state(node_index, true)
+	if node_index < hidden_node_areas.size() and hidden_node_areas[node_index] != null:
+		hidden_node_areas[node_index].set_deferred("monitoring", false)
+		hidden_node_areas[node_index].set_deferred("monitorable", false)
+	var data: Array = HIDDEN_REVEAL_NODES[node_index]
+	var count := hidden_completed_nodes.size()
+	if _is_hidden_reveal_complete():
+		_show_hint("%s\n五处隐蔽节点已经显形。回到中心隐蔽裂光。" % String(data[2]), 4.6)
+	else:
+		_show_hint("%s\n已发现 %d / %d。" % [String(data[2]), count, HIDDEN_REVEAL_NODES.size()], 4.0)
+
+func _is_hidden_node_completed(node_index: int) -> bool:
+	return hidden_completed_nodes.has(node_index)
+
+func _is_hidden_reveal_complete() -> bool:
+	return hidden_completed_nodes.size() >= HIDDEN_REVEAL_NODES.size()
+
+func _reset_hidden_reveal_nodes() -> void:
+	hidden_completed_nodes.clear()
+	hidden_active_node_index = -1
+	for i in range(hidden_node_visuals.size()):
+		_set_hidden_node_visual_state(i, false)
+	for area in hidden_node_areas:
+		if area != null:
+			area.monitoring = true
+			area.monitorable = true
+
+func _on_hidden_goal_entered(body: Node3D) -> void:
+	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_HIDDEN:
+		return
+	if _is_hidden_reveal_complete():
+		can_read_tower = true
+		_show_hint("按 E 阅读隐蔽裂光。", 2.5)
+	else:
+		var missing := HIDDEN_REVEAL_NODES.size() - hidden_completed_nodes.size()
+		_show_hint("裂光仍被暗处遮住。还需发现 %d 处隐蔽节点。" % missing, 3.2)
+
+func _on_hidden_goal_exited(body: Node3D) -> void:
+	if body == player and selected_theme_index == THEME_HIDDEN:
+		can_read_tower = false
+
 func _open_reading() -> void:
 	_reset_city_guidance_timer()
 	phase = GamePhase.READING
@@ -5872,6 +6863,10 @@ func _choose_stay() -> void:
 		_show_hint("你仍在死者之城。回到沙漏塔可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_SKY:
 		_show_hint("你仍在天空之城。回到星空观测塔可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_CONTINUOUS:
+		_show_hint("你仍在连续之城。回到无中心指示牌可再次阅读。", 3.0)
+	elif selected_theme_index == THEME_HIDDEN:
+		_show_hint("你仍在隐蔽之城。回到隐蔽裂光可再次阅读。", 3.0)
 	else:
 		_show_hint("你仍在记忆之城。回到塔底可再次阅读。", 3.0)
 
@@ -5916,6 +6911,8 @@ func _reset_level_state() -> void:
 	_reset_name_seal_nodes()
 	_reset_dead_echo_nodes()
 	_reset_sky_anchor_nodes()
+	_reset_continuous_sprawl_nodes()
+	_reset_hidden_reveal_nodes()
 	manifested_city.visible = false
 	_set_city_collision_enabled(false)
 	grey_visual_root.visible = true
@@ -6186,6 +7183,14 @@ func _city_guidance_text() -> String:
 			if _is_sky_anchor_complete():
 				return "五处天体锚点已经校准。前往北侧星空观测塔。"
 			return "寻找蓝白星尘和天体锚点。靠近后按 E 校准。"
+		THEME_CONTINUOUS:
+			if _is_continuous_sprawl_complete():
+				return "五处连续压力已经记录。回到中心无中心指示牌。"
+			return "寻找灰黄辉光的连续节点。靠近后按 E 记录扩张压力。"
+		THEME_HIDDEN:
+			if _is_hidden_reveal_complete():
+				return "五处隐蔽节点已经显形。回到中心隐蔽裂光。"
+			return "寻找暗绿微光与裂缝。靠近后按 E 发现隐藏城市。"
 		_:
 			return "寻找城市最高处的回声塔。到塔底后按 E 阅读。"
 
@@ -6207,6 +7212,10 @@ func _city_entry_objective_text() -> String:
 			return "安放 5 处亡者回声，然后前往北侧沙漏塔阅读。"
 		THEME_SKY:
 			return "校准 5 处天体锚点，然后前往北侧星空观测塔阅读。"
+		THEME_CONTINUOUS:
+			return "记录 5 处连续节点，然后回到中心无中心指示牌阅读。"
+		THEME_HIDDEN:
+			return "发现 5 处隐蔽节点，然后回到中心隐蔽裂光阅读。"
 		_:
 			return "寻找最高处的回声塔，到塔底后按 E 阅读。"
 
@@ -6230,33 +7239,37 @@ func _update_city_post_process() -> void:
 	var name_carve := 1.0 if selected_theme_index == THEME_NAMES_CITY else 0.0
 	var dead_cold := 1.0 if selected_theme_index == THEME_DEAD else 0.0
 	var sky_cosmic := 1.0 if selected_theme_index == THEME_SKY else 0.0
+	var continuous_dirty := 1.0 if selected_theme_index == THEME_CONTINUOUS else 0.0
+	var hidden_growth := 1.0 if selected_theme_index == THEME_HIDDEN else 0.0
 	var residual := clampf(city_residual_grey_chaos_strength, 0.0, 1.0)
 	grey_post_process_material.set_shader_parameter("effect_strength", city_post_effect_strength)
-	grey_post_process_material.set_shader_parameter("grain_strength", city_residual_grey_grain_strength * residual + 0.025 * signs_flatten + 0.015 * thin_air + 0.015 * trade_wet + 0.012 * eye_reflect + 0.018 * name_carve + 0.020 * dead_cold + 0.012 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("grain_strength", city_residual_grey_grain_strength * residual + 0.025 * signs_flatten + 0.015 * thin_air + 0.015 * trade_wet + 0.012 * eye_reflect + 0.018 * name_carve + 0.020 * dead_cold + 0.012 * sky_cosmic + 0.030 * continuous_dirty + 0.016 * hidden_growth)
 	grey_post_process_material.set_shader_parameter("halftone_strength", minf(city_residual_halftone_strength * residual + 0.02 * signs_flatten + 0.01 * name_carve, 0.08))
 	grey_post_process_material.set_shader_parameter("pixel_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("posterize_strength", 0.10 + 0.04 * signs_flatten - 0.03 * thin_air + 0.02 * trade_wet - 0.015 * eye_reflect + 0.025 * name_carve + 0.015 * dead_cold - 0.010 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("flatten_strength", 0.10 + 0.12 * signs_flatten - 0.02 * thin_air - 0.01 * eye_reflect + 0.035 * name_carve + 0.025 * dead_cold - 0.015 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("posterize_strength", 0.10 + 0.04 * signs_flatten - 0.03 * thin_air + 0.02 * trade_wet - 0.015 * eye_reflect + 0.025 * name_carve + 0.015 * dead_cold - 0.010 * sky_cosmic + 0.035 * continuous_dirty - 0.010 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("flatten_strength", 0.10 + 0.12 * signs_flatten - 0.02 * thin_air - 0.01 * eye_reflect + 0.035 * name_carve + 0.025 * dead_cold - 0.015 * sky_cosmic + 0.045 * continuous_dirty - 0.010 * hidden_growth)
 	grey_post_process_material.set_shader_parameter("scanline_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00025 + 0.00020 * residual + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet + 0.00036 * eye_reflect + 0.00016 * name_carve + 0.00022 * dead_cold + 0.00024 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("wave_strength", city_residual_wave_strength * residual + 0.0008 * desire_heat + 0.00045 * thin_air + 0.0007 * trade_wet + 0.00075 * eye_reflect + 0.00032 * name_carve + 0.00042 * dead_cold + 0.00048 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("edge_strength", 0.04 + 0.03 * signs_flatten + 0.03 * thin_air + 0.025 * eye_reflect + 0.030 * name_carve + 0.020 * dead_cold + 0.020 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("contour_strength", 0.015 + 0.035 * signs_flatten + 0.025 * thin_air + 0.02 * trade_wet + 0.025 * eye_reflect + 0.030 * name_carve + 0.025 * dead_cold + 0.030 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00025 + 0.00020 * residual + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet + 0.00036 * eye_reflect + 0.00016 * name_carve + 0.00022 * dead_cold + 0.00024 * sky_cosmic + 0.00010 * continuous_dirty + 0.00022 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("wave_strength", city_residual_wave_strength * residual + 0.0008 * desire_heat + 0.00045 * thin_air + 0.0007 * trade_wet + 0.00075 * eye_reflect + 0.00032 * name_carve + 0.00042 * dead_cold + 0.00048 * sky_cosmic + 0.00030 * continuous_dirty + 0.00055 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("edge_strength", 0.04 + 0.03 * signs_flatten + 0.03 * thin_air + 0.025 * eye_reflect + 0.030 * name_carve + 0.020 * dead_cold + 0.020 * sky_cosmic + 0.018 * continuous_dirty + 0.020 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("contour_strength", 0.015 + 0.035 * signs_flatten + 0.025 * thin_air + 0.02 * trade_wet + 0.025 * eye_reflect + 0.030 * name_carve + 0.025 * dead_cold + 0.030 * sky_cosmic + 0.020 * continuous_dirty + 0.018 * hidden_growth)
 	grey_post_process_material.set_shader_parameter("solarize_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("inversion_flicker_strength", 0.0)
-	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air + 0.02 * eye_reflect + 0.02 * name_carve + 0.050 * dead_cold - 0.020 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.05 + 0.04 * desire_heat + 0.08 * thin_air + 0.07 * trade_wet + 0.06 * eye_reflect + 0.05 * name_carve + 0.060 * dead_cold + 0.070 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air + 0.02 * eye_reflect + 0.02 * name_carve + 0.050 * dead_cold - 0.020 * sky_cosmic + 0.025 * continuous_dirty + 0.040 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("zone_tint_strength", 0.05 + 0.04 * desire_heat + 0.08 * thin_air + 0.07 * trade_wet + 0.06 * eye_reflect + 0.05 * name_carve + 0.060 * dead_cold + 0.070 * sky_cosmic + 0.055 * continuous_dirty + 0.065 * hidden_growth)
 	grey_post_process_material.set_shader_parameter("zone_tint", Vector3(theme_color.r, theme_color.g, theme_color.b))
 	grey_post_process_material.set_shader_parameter("ink_outline_strength", city_post_ink_outline_strength)
 	grey_post_process_material.set_shader_parameter("ink_outline_width", 1.15)
-	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", city_post_stylized_shadow_strength - 0.06 * thin_air + 0.040 * dead_cold - 0.030 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("color_variation_strength", city_post_color_variation_strength + 0.025 * residual + 0.03 * thin_air + 0.06 * trade_wet + 0.04 * eye_reflect + 0.035 * name_carve + 0.030 * dead_cold + 0.050 * sky_cosmic)
-	grey_post_process_material.set_shader_parameter("soft_glow_strength", city_post_soft_glow_strength + 0.02 * residual + 0.04 * desire_heat + 0.06 * thin_air + 0.07 * trade_wet + 0.08 * eye_reflect + 0.04 * name_carve + 0.035 * dead_cold + 0.090 * sky_cosmic)
+	grey_post_process_material.set_shader_parameter("stylized_shadow_strength", city_post_stylized_shadow_strength - 0.06 * thin_air + 0.040 * dead_cold - 0.030 * sky_cosmic + 0.035 * continuous_dirty + 0.020 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("color_variation_strength", city_post_color_variation_strength + 0.025 * residual + 0.03 * thin_air + 0.06 * trade_wet + 0.04 * eye_reflect + 0.035 * name_carve + 0.030 * dead_cold + 0.050 * sky_cosmic + 0.045 * continuous_dirty + 0.040 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("soft_glow_strength", city_post_soft_glow_strength + 0.02 * residual + 0.04 * desire_heat + 0.06 * thin_air + 0.07 * trade_wet + 0.08 * eye_reflect + 0.04 * name_carve + 0.035 * dead_cold + 0.090 * sky_cosmic + 0.010 * continuous_dirty + 0.070 * hidden_growth)
 	var ink_color := Vector3(0.035, 0.034, 0.030).lerp(Vector3(0.06, 0.08, 0.10), thin_air)
 	ink_color = ink_color.lerp(Vector3(0.04, 0.055, 0.045), trade_wet)
 	ink_color = ink_color.lerp(Vector3(0.035, 0.070, 0.095), eye_reflect)
 	ink_color = ink_color.lerp(Vector3(0.08, 0.07, 0.055), name_carve)
 	ink_color = ink_color.lerp(Vector3(0.025, 0.040, 0.090), sky_cosmic)
+	ink_color = ink_color.lerp(Vector3(0.070, 0.065, 0.045), continuous_dirty)
+	ink_color = ink_color.lerp(Vector3(0.025, 0.060, 0.040), hidden_growth)
 	grey_post_process_material.set_shader_parameter("ink_color", ink_color.lerp(Vector3(0.030, 0.040, 0.060), dead_cold))
 	var shadow_color := Vector3(0.13, 0.12, 0.10).lerp(Vector3(0.18, 0.08, 0.045), desire_heat)
 	shadow_color = shadow_color.lerp(Vector3(0.10, 0.13, 0.16), thin_air)
@@ -6264,6 +7277,8 @@ func _update_city_post_process() -> void:
 	shadow_color = shadow_color.lerp(Vector3(0.08, 0.15, 0.19), eye_reflect)
 	shadow_color = shadow_color.lerp(Vector3(0.18, 0.15, 0.10), name_carve)
 	shadow_color = shadow_color.lerp(Vector3(0.045, 0.055, 0.14), sky_cosmic)
+	shadow_color = shadow_color.lerp(Vector3(0.18, 0.16, 0.09), continuous_dirty)
+	shadow_color = shadow_color.lerp(Vector3(0.020, 0.095, 0.050), hidden_growth)
 	grey_post_process_material.set_shader_parameter("shadow_color", shadow_color.lerp(Vector3(0.055, 0.070, 0.10), dead_cold))
 
 func _update_grey_post_process() -> void:
@@ -6935,6 +7950,38 @@ func _add_sky_stardust_veil(parent: Node3D, name: String, pos: Vector3, size: Ve
 	veil.rotation_degrees = Vector3(90.0, yaw, 0.0)
 	veil.material_override = _sky_stardust_veil_material(color, color.a, seed, drift)
 	parent.add_child(veil)
+
+func _continuous_pollution_material(color: Color, alpha: float, seed: float, grime := 0.58, repetition := 0.92) -> Material:
+	var shader := load("res://shaders/continuous_pollution_surface.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("fog_color", Color(0.62, 0.58, 0.38, 1.0))
+	material.set_shader_parameter("dirt_color", Color(0.10, 0.09, 0.065, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("grime_strength", grime * continuous_city_style_intensity)
+	material.set_shader_parameter("repeat_strength", repetition)
+	material.set_shader_parameter("low_contrast", 0.36 + continuous_city_style_intensity * 0.10)
+	material.set_shader_parameter("seed", seed)
+	return material
+
+func _hidden_growth_material(color: Color, alpha: float, seed: float, reveal := 0.50, growth := 0.62) -> Material:
+	var shader := load("res://shaders/hidden_growth_reveal_surface.gdshader") as Shader
+	if shader == null:
+		return _mat(color, alpha)
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("base_color", Color(color.r, color.g, color.b, alpha))
+	material.set_shader_parameter("growth_color", Color(0.10, 0.54, 0.18, 1.0))
+	material.set_shader_parameter("glow_color", Color(0.50, 1.0, 0.62, 1.0))
+	material.set_shader_parameter("alpha", alpha)
+	material.set_shader_parameter("reveal_strength", reveal * hidden_city_style_intensity)
+	material.set_shader_parameter("growth_strength", growth * hidden_city_style_intensity)
+	material.set_shader_parameter("mask_softness", 0.28)
+	material.set_shader_parameter("seed", seed)
+	return material
 
 func _city_style_veil_material(color: Color, alpha: float, style_mode: float, seed: float, intensity: float) -> Material:
 	var shader := load("res://shaders/city_style_veil.gdshader") as Shader
