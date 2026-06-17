@@ -37,14 +37,14 @@ const THEME_SFX_AUDIO_PATHS := [
 	["res://assets/audio/theme_sfx/memory_rooster.wav", "res://assets/audio/theme_sfx/memory_horse.wav", "res://assets/audio/theme_sfx/memory_infant_cry.mp3", "res://assets/audio/theme_sfx/memory_wind.wav"],
 	["res://assets/audio/theme_sfx/desire_wind_chime.mp3", "res://assets/audio/theme_sfx/desire_water.wav"],
 	["res://assets/audio/theme_sfx/signs_sweeping.wav", "res://assets/audio/theme_sfx/signs_keyboard.mp3"],
-	["res://assets/audio/theme_sfx/thin_a.ogg", "res://assets/audio/theme_sfx/thin_b.ogg", "res://assets/audio/theme_sfx/thin_c.ogg"],
-	["res://assets/audio/theme_sfx/trading_a.ogg", "res://assets/audio/theme_sfx/trading_b.ogg", "res://assets/audio/theme_sfx/trading_c.ogg"],
-	["res://assets/audio/theme_sfx/eyes_a.ogg", "res://assets/audio/theme_sfx/eyes_b.ogg", "res://assets/audio/theme_sfx/eyes_c.ogg"],
-	["res://assets/audio/theme_sfx/names_a.ogg", "res://assets/audio/theme_sfx/names_b.ogg", "res://assets/audio/theme_sfx/names_c.ogg"],
-	["res://assets/audio/theme_sfx/dead_a.ogg", "res://assets/audio/theme_sfx/dead_b.ogg", "res://assets/audio/theme_sfx/dead_c.ogg"],
-	["res://assets/audio/theme_sfx/sky_a.ogg", "res://assets/audio/theme_sfx/sky_b.ogg", "res://assets/audio/theme_sfx/sky_c.ogg"],
-	["res://assets/audio/theme_sfx/continuous_a.ogg", "res://assets/audio/theme_sfx/continuous_b.ogg", "res://assets/audio/theme_sfx/continuous_c.ogg"],
-	["res://assets/audio/theme_sfx/hidden_a.ogg", "res://assets/audio/theme_sfx/hidden_b.ogg", "res://assets/audio/theme_sfx/hidden_c.ogg"]
+	["res://assets/audio/theme_sfx/thin_bird.wav", "res://assets/audio/theme_sfx/thin_bubble.wav", "res://assets/audio/theme_sfx/thin_waterdrop.wav"],
+	["res://assets/audio/theme_sfx/trade_drum_hit.wav", "res://assets/audio/theme_sfx/trade_laughter.wav"],
+	["res://assets/audio/theme_sfx/eyes_glass.wav", "res://assets/audio/theme_sfx/eyes_beep.wav"],
+	["res://assets/audio/theme_sfx/names_key.wav", "res://assets/audio/theme_sfx/names_war.wav"],
+	["res://assets/audio/theme_sfx/dead_shovel.mp3", "res://assets/audio/theme_sfx/dead_wood_door.wav"],
+	["res://assets/audio/theme_sfx/sky_magic.wav", "res://assets/audio/theme_sfx/sky_rotor.wav"],
+	["res://assets/audio/theme_sfx/continuous_page.wav", "res://assets/audio/theme_sfx/continuous_dog.wav"],
+	["res://assets/audio/theme_sfx/hidden_wolf.wav", "res://assets/audio/theme_sfx/hidden_rat.mp3"]
 ]
 const THEME_SFX_TEXTS := [
 	["远处有灯同时亮起。", "一声呼喊停在黄昏。", "街道把脚步吞回雾里。", "塔顶的金色报晓还没有发生。"],
@@ -72,6 +72,39 @@ const DESIRE_SEEK_SFX_TEXTS := [
 const SIGNS_SEEK_SFX_TEXTS := [
 	"扫帚掠过招牌，物品只剩下名称。",
 	"键声敲下符号，城市像写满字迹的纸页。"
+]
+const THIN_SEEK_SFX_TEXTS := [
+	"珍诺比亚把房屋支在高脚桩上，阳台、梯子和鸟声都悬在空气里。",
+	"伊萨乌拉的井口向下听见隐藏的湖水，气泡从看不见的深处升起。",
+	"阿尔米拉没有墙和屋顶，只剩水管、水龙头和水滴替城市留下轮廓。"
+]
+const TRADE_SEEK_SFX_TEXTS := [
+	"欧菲米亚入夜后围着篝火，交换狼、妹妹、宝藏、战斗和情人。",
+	"克洛艾的陌生人没有开口，目光和笑声已经交换了未发生的故事。"
+]
+const EYES_SEEK_SFX_TEXTS := [
+	"瓦尔德拉达的湖像镜子，岸上的城市和倒影互相加倍。",
+	"宝琪的望远镜不知疲倦地观察树叶、石子和蚂蚁。"
+]
+const NAMES_SEEK_SFX_TEXTS := [
+	"莱安德拉的宅神随着钥匙交给新住户，名字却留在门口低语。",
+	"伊莱那的远城传来鼓声、小号和战火；走近以后，它也许已经换了名字。"
+]
+const DEAD_SEEK_SFX_TEXTS := [
+	"阿尔嘉没有空气，只有尘土；城在地下，路和房间都被土填满。",
+	"夜里把耳朵贴近地面，有时能听见下面砰然关门。"
+]
+const SKY_SEEK_SFX_TEXTS := [
+	"埃乌多西亚的地毯把混乱小巷收进一幅对称的天空图案。",
+	"泰克拉的工地不能停下，起重机吊起起重机；夜里蓝图就是繁星。"
+]
+const CONTINUOUS_SEEK_SFX_TEXTS := [
+	"莱奥尼亚每天翻开新的一页，昨日的一切被丢到城外堆成堡垒。",
+	"切奇利雅吞没牧场，狗叫和车声混在一起，城外再也分不清。"
+]
+const HIDDEN_SEEK_SFX_TEXTS := [
+	"特奥朵拉把被驱逐的物种写进书里；怪兽和狼影仍在名字深处等待。",
+	"马洛奇亚的铅灰巷像老鼠的城，裂缝里才会闪出另一座透明城市。"
 ]
 const THEME_NAMES := [
 	"记忆", "欲望", "符号", "轻盈", "贸易", "眼睛", "姓名", "死的", "天空", "连续", "隐蔽"
@@ -395,6 +428,54 @@ const PRE_GREY_SIGNS_TEXT_PAGES := [
 	["佐艾让所有功能混在一起，王宫、旅馆、监狱和浴所失去界线，符号不再替空间分工。"],
 	["伊帕奇亚提醒你：符号是一种语言，却不是你以为已经懂得的语言；奥利维亚则证明，虚假不在词语里，而在事物自身。"]
 ]
+const PRE_GREY_THIN_TEXT_PAGES := [
+	["伊萨乌拉建在深湖之上，所有井口都向下听见隐藏的水。"],
+	["珍诺比亚的房屋立在高脚桩和竹梯之间，城市把重量交给空气。"],
+	["阿尔米拉没有墙也没有屋顶，只剩管道、喷泉和水滴，仿佛城市被水洗到透明。"],
+	["奥塔维亚悬在两座山崖之间，一张网承着道路、房屋和人的脚步。"]
+]
+const PRE_GREY_TRADE_TEXT_PAGES := [
+	["欧菲米亚白天交换生姜、棉花、开心果和罂粟籽；入夜后，人们交换的是记忆。"],
+	["克洛艾的街上没有人互相问候，陌生人的一瞥却已经换走许多可能发生的故事。"],
+	["埃乌特洛比亚不断迁入新的空城，职业、窗景、朋友和口音都可以重新分配。"],
+	["艾尔西里亚搬走以后，只留下绳索；斯麦拉尔迪那则把水路和陆路交织成可反复选择的路线。"]
+]
+const PRE_GREY_EYES_TEXT_PAGES := [
+	["瓦尔德拉达建在湖畔，游人会同时看见两座城市：一座在岸上，一座在水中。"],
+	["珍茹德的形状由观看者的心情决定。昂首而行看见窗帘和喷泉，低头行走只看见水沟与废纸。"],
+	["宝琪的城市离开地面，居民用望远镜观察每一片树叶、每一块石子和每一只蚂蚁。"],
+	["莫里亚纳有透明的正面，也有铁板、煤灰和废罐组成的背面；两面不能分开。"]
+]
+const PRE_GREY_NAMES_TEXT_PAGES := [
+	["阿格劳拉建立在自己的名字上，传说替它说话，亲眼所见反而难以命名。"],
+	["莱安德拉有两种细小神灵：一种在门口和钥匙旁迁徙，一种留在厨房与壁炉下争辩。"],
+	["皮拉曾是一座想象中的海湾城堡；抵达之后，名字夺走了幻象，只留下黄尘、直街和抽水泵。"],
+	["克拉莉切的旧物被反复搬走、重组和供奉；伊莱那则只有在远方被观看时，才叫伊莱那。"]
+]
+const PRE_GREY_DEAD_TEXT_PAGES := [
+	["梅拉尼亚的广场上，对话者一个个死去，角色却继续被后来的人接过。"],
+	["阿德尔玛的码头在黄昏里浮现熟悉面孔，每一张新脸都像已经死去的人。"],
+	["埃乌萨皮娅在地下建了一座一模一样的姊妹城，生者和死者互相模仿。"],
+	["阿尔嘉被尘土填满；劳多米亚则有三座城：生者、死者，以及尚未出生者。"]
+]
+const PRE_GREY_SKY_TEXT_PAGES := [
+	["埃乌多西亚向上下延伸，城里保存着一块地毯，据说它能显示城市真正的形态。"],
+	["贝尔萨贝阿相信自己有天上的黄金城，也有地下的机械城；真正的投影却不在他们想象的位置。"],
+	["泰克拉永远在建设中。工人说，工地不能停下，因为停下时毁灭就会开始。"],
+	["佩林奇亚把黄道和月蚀刻进城门；安德里亚则让每条街道循着行星轨道变化。"]
+]
+const PRE_GREY_CONTINUOUS_TEXT_PAGES := [
+	["莱奥尼亚每天醒来都像一座新城，昨日的床单、香皂和罐头被送到城外。"],
+	["特鲁德没有真正的抵达；机场名牌换了，郊区、旅馆、商品和酒杯却一模一样。"],
+	["普罗科比亚的窗景一年比一年拥挤，最后土坑、树木和天空都被圆脸人群挤掉。"],
+	["切奇利雅和潘特熙莱雅让城内城外失去边界，郊区接着郊区，中心再也无法确认。"]
+]
+const PRE_GREY_HIDDEN_TEXT_PAGES := [
+	["欧林达的中心不是中心，针头大的光点里已经长出下一座城市。"],
+	["莱萨的表面充满悲伤，但每一刻都有细小快乐把一个生命接到另一个生命。"],
+	["马洛奇亚有老鼠的时代，也有燕子的时代；透明城市只在裂缝里短暂闪现。"],
+	["特奥朵拉驱逐了物种，却把它们留在书里；贝莱尼切的不公正中也藏着公正的胚胎。"]
+]
 
 @export_group("Manifestation Polish")
 @export var manifestation_duration := 8.0
@@ -470,16 +551,17 @@ const PRE_GREY_SIGNS_TEXT_PAGES := [
 
 @export_group("Grey Audio SFX")
 @export var selected_theme_index := 0
-@export var zone_sfx_min_interval := 1.4
-@export var zone_sfx_max_interval := 3.8
-@export var zone_sfx_generated_duration := 1.05
-@export var zone_sfx_volume_db := -8.0
-@export var theme_sfx_min_interval := 3.0
-@export var theme_sfx_max_interval := 5.0
+@export var zone_sfx_min_interval := 0.85
+@export var zone_sfx_max_interval := 2.4
+@export var zone_sfx_generated_duration := 1.35
+@export var zone_sfx_volume_db := -5.0
+@export_range(1, 5, 1) var generated_zone_sfx_variant_count := 3
+@export var theme_sfx_min_interval := 2.4
+@export var theme_sfx_max_interval := 4.4
 @export var theme_sfx_generated_duration := 1.05
-@export var theme_sfx_hearing_distance := 220.0
-@export var theme_sfx_volume_far_db := -46.0
-@export var theme_sfx_volume_near_db := 1.5
+@export var theme_sfx_hearing_distance := 190.0
+@export var theme_sfx_volume_far_db := -58.0
+@export var theme_sfx_volume_near_db := 4.0
 @export var theme_sfx_text_trigger_distance := 58.0
 @export var theme_sfx_text_fade_in_duration := 0.55
 @export var theme_sfx_text_hold_duration := 1.7
@@ -523,7 +605,7 @@ const PRE_GREY_SIGNS_TEXT_PAGES := [
 @export_range(0.0, 1.0, 0.01) var grey_post_edge_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_contour_strength := 0.0
 @export_range(0.0, 1.0, 0.01) var grey_post_solarize_strength := 0.0
-@export_range(0.0, 1.0, 0.01) var grey_post_ink_outline_strength := 0.46
+@export_range(0.0, 1.0, 0.01) var grey_post_ink_outline_strength := 0.18
 @export_range(0.0, 1.0, 0.01) var grey_post_stylized_shadow_strength := 0.36
 @export_range(0.0, 1.0, 0.01) var grey_post_color_variation_strength := 0.22
 @export_range(0.0, 1.0, 0.01) var grey_post_soft_glow_strength := 0.10
@@ -538,8 +620,8 @@ const PRE_GREY_SIGNS_TEXT_PAGES := [
 @export_group("City Style Layers")
 @export_range(0.0, 2.0, 0.01) var memory_city_style_intensity := 1.0
 @export_range(0.0, 2.0, 0.01) var desire_city_style_intensity := 1.15
-@export_range(0.0, 2.5, 0.05) var desire_relic_glow_energy := 1.35
-@export_range(0.0, 2.0, 0.05) var desire_relic_particle_scale := 1.0
+@export_range(0.0, 2.5, 0.05) var desire_relic_glow_energy := 1.85
+@export_range(0.0, 2.0, 0.05) var desire_relic_particle_scale := 1.35
 @export_range(1, 5, 1) var desire_required_relic_count := 3
 @export_range(0.0, 2.0, 0.01) var signs_city_style_intensity := 1.25
 @export_range(0.0, 2.5, 0.05) var sign_fracture_glow_energy := 1.25
@@ -574,10 +656,13 @@ const PRE_GREY_SIGNS_TEXT_PAGES := [
 @export_range(0.0, 1.0, 0.01) var city_residual_grey_grain_strength := 0.09
 @export_range(0.0, 1.0, 0.01) var city_residual_halftone_strength := 0.025
 @export_range(0.0, 1.0, 0.01) var city_residual_wave_strength := 0.0012
-@export_range(0.0, 1.0, 0.01) var city_post_ink_outline_strength := 0.38
+@export_range(0.0, 1.0, 0.01) var city_post_ink_outline_strength := 0.16
 @export_range(0.0, 1.0, 0.01) var city_post_stylized_shadow_strength := 0.24
 @export_range(0.0, 1.0, 0.01) var city_post_color_variation_strength := 0.14
 @export_range(0.0, 1.0, 0.01) var city_post_soft_glow_strength := 0.08
+@export var procedural_theme_sky_enabled := true
+@export_range(0.0, 2.0, 0.01) var procedural_city_polish_intensity := 1.0
+@export_range(0.0, 2.0, 0.01) var procedural_city_light_intensity := 0.85
 @export var city_guidance_delay := 90.0
 @export var city_guidance_repeat_delay := 60.0
 
@@ -586,6 +671,9 @@ var previous_phase := GamePhase.MAIN_MENU
 var player
 var world_environment: WorldEnvironment
 var environment: Environment
+var procedural_sky: Sky
+var procedural_sky_material: ProceduralSkyMaterial
+var sun_light: DirectionalLight3D
 var ui_root: Control
 var main_menu: Control
 var story_panel: Control
@@ -881,14 +969,19 @@ func _build_world() -> void:
 	environment.adjustment_enabled = true
 	environment.adjustment_saturation = 0.16
 	environment.adjustment_contrast = 0.52
+	procedural_sky = Sky.new()
+	procedural_sky_material = ProceduralSkyMaterial.new()
+	procedural_sky.sky_material = procedural_sky_material
+	environment.sky = procedural_sky
 	world_environment.environment = environment
 	add_child(world_environment)
 
-	var sun := DirectionalLight3D.new()
-	sun.name = "MutedSun"
-	sun.rotation_degrees = Vector3(-45, -35, 0)
-	sun.light_energy = 1.2
-	add_child(sun)
+	sun_light = DirectionalLight3D.new()
+	sun_light.name = "ThemeDirectionalLight"
+	sun_light.rotation_degrees = Vector3(-45, -35, 0)
+	sun_light.light_energy = 1.2
+	add_child(sun_light)
+	_apply_grey_environment_style()
 
 	player = CharacterBody3D.new()
 	player.name = "Player"
@@ -1339,6 +1432,7 @@ func _build_merged_memory_city() -> void:
 	active_city_visual_parent = root
 
 	_build_memory_city_planned_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_MEMORY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1352,6 +1446,7 @@ func _build_desire_city() -> void:
 	active_city_visual_parent = root
 
 	_build_desire_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_DESIRE)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1365,6 +1460,7 @@ func _build_signs_city() -> void:
 	active_city_visual_parent = root
 
 	_build_signs_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_SIGNS)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1378,6 +1474,7 @@ func _build_thin_city() -> void:
 	active_city_visual_parent = root
 
 	_build_thin_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_THIN)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1391,6 +1488,7 @@ func _build_trade_city() -> void:
 	active_city_visual_parent = root
 
 	_build_trade_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_TRADE)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1404,6 +1502,7 @@ func _build_eyes_city() -> void:
 	active_city_visual_parent = root
 
 	_build_eyes_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_EYES)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1417,6 +1516,7 @@ func _build_names_city() -> void:
 	active_city_visual_parent = root
 
 	_build_names_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_NAMES_CITY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1430,6 +1530,7 @@ func _build_dead_city() -> void:
 	active_city_visual_parent = root
 
 	_build_dead_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_DEAD)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1443,6 +1544,7 @@ func _build_sky_city() -> void:
 	active_city_visual_parent = root
 
 	_build_sky_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_SKY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1456,6 +1558,7 @@ func _build_continuous_city() -> void:
 	active_city_visual_parent = root
 
 	_build_continuous_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_CONTINUOUS)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1469,6 +1572,7 @@ func _build_hidden_city() -> void:
 	active_city_visual_parent = root
 
 	_build_hidden_city_whitebox(root)
+	_add_theme_procedural_polish(root, THEME_HIDDEN)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1932,6 +2036,299 @@ func _make_city_particle_layer(layer_name: String, amount: int, quad_size: Vecto
 	var particles := _make_grey_particle_layer(layer_name, amount, quad_size, extents, direction, color, velocity_min, velocity_max, spread, lifetime)
 	particles.visibility_aabb = AABB(Vector3(-130, -8, -130), Vector3(260, 24, 260))
 	return particles
+
+func _add_theme_procedural_polish(root: Node3D, theme_index: int) -> void:
+	if procedural_city_polish_intensity <= 0.01:
+		return
+	var polish := Node3D.new()
+	polish.name = "ProceduralThemePolish_%s" % _ascii_zone_name("", theme_index)
+	root.add_child(polish)
+	var profile := _theme_visual_profile(theme_index)
+	_add_theme_ground_language(polish, theme_index, profile)
+	_add_theme_silhouette_language(polish, theme_index, profile)
+	_add_theme_accent_light_rig(polish, theme_index, profile)
+	_add_theme_air_detail(polish, theme_index, profile)
+
+func _theme_visual_profile(theme_index: int) -> Dictionary:
+	match theme_index:
+		THEME_MEMORY:
+			return {"base": Color(0.54, 0.50, 0.42, 0.38), "accent": Color(1.0, 0.72, 0.22, 0.48), "glow": Color(0.90, 0.76, 0.42), "shadow": Color(0.18, 0.16, 0.13)}
+		THEME_DESIRE:
+			return {"base": Color(0.78, 0.48, 0.16, 0.34), "accent": Color(1.0, 0.76, 0.18, 0.56), "glow": Color(1.0, 0.52, 0.10), "shadow": Color(0.30, 0.10, 0.08)}
+		THEME_SIGNS:
+			return {"base": Color(0.12, 0.12, 0.10, 0.34), "accent": Color(0.90, 0.88, 0.74, 0.58), "glow": Color(0.42, 0.62, 1.0), "shadow": Color(0.015, 0.015, 0.012)}
+		THEME_THIN:
+			return {"base": Color(0.50, 0.72, 0.92, 0.24), "accent": Color(0.86, 0.96, 1.0, 0.46), "glow": Color(0.62, 0.88, 1.0), "shadow": Color(0.06, 0.10, 0.14)}
+		THEME_TRADE:
+			return {"base": Color(0.18, 0.54, 0.42, 0.32), "accent": Color(1.0, 0.45, 0.14, 0.52), "glow": Color(0.12, 0.82, 0.62), "shadow": Color(0.08, 0.16, 0.12)}
+		THEME_EYES:
+			return {"base": Color(0.38, 0.78, 0.96, 0.28), "accent": Color(0.88, 0.98, 1.0, 0.56), "glow": Color(0.48, 0.86, 1.0), "shadow": Color(0.04, 0.09, 0.12)}
+		THEME_NAMES_CITY:
+			return {"base": Color(0.66, 0.62, 0.52, 0.32), "accent": Color(0.96, 0.84, 0.52, 0.48), "glow": Color(0.86, 0.76, 0.46), "shadow": Color(0.18, 0.16, 0.12)}
+		THEME_DEAD:
+			return {"base": Color(0.46, 0.50, 0.62, 0.28), "accent": Color(0.78, 0.84, 1.0, 0.42), "glow": Color(0.38, 0.58, 1.0), "shadow": Color(0.02, 0.03, 0.06)}
+		THEME_SKY:
+			return {"base": Color(0.22, 0.38, 0.78, 0.30), "accent": Color(0.86, 0.72, 1.0, 0.52), "glow": Color(0.58, 0.82, 1.0), "shadow": Color(0.04, 0.05, 0.15)}
+		THEME_CONTINUOUS:
+			return {"base": Color(0.56, 0.52, 0.34, 0.30), "accent": Color(0.92, 0.78, 0.34, 0.42), "glow": Color(0.86, 0.74, 0.38), "shadow": Color(0.14, 0.12, 0.08)}
+		THEME_HIDDEN:
+			return {"base": Color(0.10, 0.36, 0.18, 0.28), "accent": Color(0.54, 1.0, 0.58, 0.42), "glow": Color(0.42, 1.0, 0.54), "shadow": Color(0.015, 0.07, 0.035)}
+	return {"base": Color(0.6, 0.6, 0.6, 0.28), "accent": Color(0.9, 0.9, 0.8, 0.42), "glow": Color(0.9, 0.9, 0.8), "shadow": Color(0.1, 0.1, 0.1)}
+
+func _add_theme_ground_language(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	match theme_index:
+		THEME_MEMORY:
+			for i in range(7):
+				_add_polish_block(parent, "MemoryBuriedStreetLine_%02d" % i, Vector3(-72.0 + i * 24.0, 0.13, -52.0 + float(i % 3) * 34.0), Vector3(16.0, 0.035, 0.55), float(i) * 6.0, accent)
+			for i in range(5):
+				_add_polish_cylinder(parent, "MemoryFadedPostcardRing_%02d" % i, Vector3(-48.0 + i * 24.0, 0.16, 48.0), 4.0 + float(i % 2), 0.035, base, 48)
+		THEME_DESIRE:
+			for i in range(10):
+				_add_polish_line(parent, "DesireHeatPath_%02d" % i, Vector3(-84.0 + i * 18.0, 0.18, -70.0), Vector3(-66.0 + i * 18.0, 0.18, 88.0), accent, 0.18)
+			for i in range(5):
+				_add_polish_cylinder(parent, "DesireMiragePoolHalo_%02d" % i, Vector3(-56.0 + i * 28.0, 0.15, -18.0 + float(i % 2) * 64.0), 6.5, 0.035, Color(0.30, 0.72, 0.58, 0.28), 56)
+		THEME_SIGNS:
+			for i in range(14):
+				_add_polish_block(parent, "SignGroundGlyphPlate_%02d" % i, Vector3(-72.0 + float(i % 7) * 24.0, 0.16, -54.0 + float(i / 7) * 88.0), Vector3(7.0, 0.04, 2.2), float((i % 4) * 18), accent if i % 2 == 0 else base)
+		THEME_THIN:
+			for i in range(9):
+				_add_polish_line(parent, "ThinTensionTrace_%02d" % i, Vector3(-86.0 + i * 21.5, 0.20, -42.0), Vector3(-76.0 + i * 18.0, 0.20, 72.0), accent, 0.075)
+		THEME_TRADE:
+			for i in range(8):
+				_add_polish_block(parent, "TradeWetLedgerStrip_%02d" % i, Vector3(-70.0 + float(i) * 20.0, 0.15, -36.0 + float(i % 2) * 72.0), Vector3(13.0, 0.035, 0.9), float(i) * 9.0, base)
+		THEME_EYES:
+			for i in range(8):
+				_add_polish_cylinder(parent, "EyesPupilRipple_%02d" % i, Vector3(-70.0 + float(i % 4) * 44.0, 0.14, -34.0 + float(i / 4) * 80.0), 7.5, 0.03, accent, 64)
+		THEME_NAMES_CITY:
+			for i in range(12):
+				_add_polish_block(parent, "NamesErasedNameSlab_%02d" % i, Vector3(-84.0 + float(i % 6) * 32.0, 0.15, -58.0 + float(i / 6) * 92.0), Vector3(10.0, 0.04, 2.4), float(i) * 5.0, base)
+		THEME_DEAD:
+			for i in range(9):
+				_add_polish_cylinder(parent, "DeadSaltCircle_%02d" % i, Vector3(-76.0 + float(i % 3) * 76.0, 0.14, -62.0 + float(i / 3) * 54.0), 5.4, 0.035, base, 44)
+		THEME_SKY:
+			for i in range(12):
+				var angle := TAU * float(i) / 12.0
+				_add_polish_line(parent, "SkyConstellationTrack_%02d" % i, Vector3(cos(angle) * 18.0, 0.22, sin(angle) * 18.0), Vector3(cos(angle) * 108.0, 0.22, sin(angle) * 108.0), accent, 0.10)
+		THEME_CONTINUOUS:
+			for i in range(18):
+				_add_polish_block(parent, "ContinuousRepeatLot_%02d" % i, Vector3(-96.0 + float(i % 9) * 24.0, 0.13, -70.0 + float(i / 9) * 116.0), Vector3(8.0, 0.035, 5.0), 0.0, base)
+		THEME_HIDDEN:
+			for i in range(11):
+				_add_polish_cylinder(parent, "HiddenSubsurfaceGlow_%02d" % i, Vector3(-82.0 + float(i % 4) * 54.0, 0.12, -60.0 + float(i / 4) * 48.0), 3.6 + float(i % 3), 0.035, accent, 36)
+
+func _add_theme_silhouette_language(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	var shadow: Color = profile["shadow"]
+	var count := 12
+	for i in range(count):
+		var angle := TAU * float(i) / float(count)
+		var radius := 94.0 + float(i % 3) * 9.0
+		var pos := Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
+		var height := 4.0 + float((i * 7 + theme_index) % 9)
+		match theme_index:
+			THEME_MEMORY:
+				_add_polish_block(parent, "MemoryHalfBuriedWallSilhouette_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(5.0, height, 0.9), rad_to_deg(angle), base)
+			THEME_DESIRE:
+				_add_polish_cylinder(parent, "DesireDistantMirageSpire_%02d" % i, pos + Vector3(0, height * 0.5, 0), 1.0 + float(i % 3) * 0.35, height, accent, 18)
+			THEME_SIGNS:
+				_add_polish_block(parent, "SignsUnreadableSignpost_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(0.45, height, 0.45), rad_to_deg(angle), shadow)
+				_add_polish_block(parent, "SignsFloatingPlacard_%02d" % i, pos + Vector3(0, height + 1.0, 0), Vector3(5.0, 2.2, 0.18), rad_to_deg(angle), accent)
+			THEME_THIN:
+				_add_polish_block(parent, "ThinLongSupportNeedle_%02d" % i, pos + Vector3(0, height * 0.75, 0), Vector3(0.28, height * 1.5, 0.28), rad_to_deg(angle), accent)
+			THEME_TRADE:
+				_add_polish_block(parent, "TradeMarketLanternPole_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(0.35, height, 0.35), rad_to_deg(angle), shadow)
+				_add_polish_cylinder(parent, "TradeLanternGlow_%02d" % i, pos + Vector3(0, height + 0.4, 0), 0.75, 0.55, accent, 18)
+			THEME_EYES:
+				_add_polish_block(parent, "EyesMirrorShard_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(0.42, height, 4.5), rad_to_deg(angle) + 24.0, accent)
+			THEME_NAMES_CITY:
+				_add_polish_block(parent, "NamesStandingStele_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(2.2, height, 0.7), rad_to_deg(angle), base)
+			THEME_DEAD:
+				_add_polish_cylinder(parent, "DeadBoneWhiteColumn_%02d" % i, pos + Vector3(0, height * 0.5, 0), 0.65, height, base, 14)
+			THEME_SKY:
+				_add_polish_block(parent, "SkyAstralMarker_%02d" % i, pos + Vector3(0, height * 0.55, 0), Vector3(0.5, height * 1.1, 0.5), rad_to_deg(angle), accent)
+			THEME_CONTINUOUS:
+				_add_polish_block(parent, "ContinuousFarRepeatingBlock_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(6.0, height, 5.0), rad_to_deg(angle), base)
+			THEME_HIDDEN:
+				_add_polish_block(parent, "HiddenNestedDarkMarker_%02d" % i, pos + Vector3(0, height * 0.5, 0), Vector3(3.5, height, 3.5), rad_to_deg(angle), shadow)
+				_add_polish_cylinder(parent, "HiddenInnerGreenGlow_%02d" % i, pos + Vector3(0, height + 0.35, 0), 0.65, 0.40, accent, 18)
+
+func _add_theme_accent_light_rig(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	if procedural_city_light_intensity <= 0.01:
+		return
+	var glow: Color = profile["glow"]
+	var positions := [
+		Vector3(-42, 5.5, -34),
+		Vector3(44, 6.0, -18),
+		Vector3(-36, 5.2, 44),
+		Vector3(38, 6.4, 52)
+	]
+	for i in range(positions.size()):
+		var light := OmniLight3D.new()
+		light.name = "ThemeAccentLight_%s_%02d" % [_ascii_zone_name("", theme_index), i]
+		light.position = positions[i] + Vector3(0, float((theme_index + i) % 3) * 1.4, 0)
+		light.light_color = glow
+		light.light_energy = procedural_city_light_intensity * (0.45 + 0.12 * float(i % 2))
+		light.omni_range = 20.0 + float(theme_index % 4) * 3.0
+		parent.add_child(light)
+
+func _add_theme_air_detail(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	var air := _make_city_particle_layer(
+		"ThemeAirDetail_%s" % _ascii_zone_name("", theme_index),
+		int(260.0 * procedural_city_polish_intensity),
+		Vector2(0.055, 0.055),
+		Vector3(118, 7.0, 118),
+		_theme_air_direction(theme_index),
+		Color(glow.r, glow.g, glow.b, 0.18 + accent.a * 0.18),
+		0.025,
+		0.22,
+		100.0,
+		12.0 + float(theme_index % 4)
+	)
+	parent.add_child(air)
+
+func _theme_air_direction(theme_index: int) -> Vector3:
+	match theme_index:
+		THEME_MEMORY:
+			return Vector3(0.10, 0.04, -0.08)
+		THEME_DESIRE:
+			return Vector3(0.18, 0.05, 0.08)
+		THEME_SIGNS:
+			return Vector3(-0.08, 0.11, 0.06)
+		THEME_THIN:
+			return Vector3(0.04, 0.18, 0.10)
+		THEME_TRADE:
+			return Vector3(0.13, 0.04, 0.14)
+		THEME_EYES:
+			return Vector3(0.03, 0.06, 0.03)
+		THEME_NAMES_CITY:
+			return Vector3(-0.04, 0.05, 0.10)
+		THEME_DEAD:
+			return Vector3(0.02, -0.05, 0.02)
+		THEME_SKY:
+			return Vector3(0.02, 0.16, -0.03)
+		THEME_CONTINUOUS:
+			return Vector3(0.16, 0.02, -0.02)
+		THEME_HIDDEN:
+			return Vector3(-0.02, 0.06, 0.02)
+	return Vector3(0.08, 0.04, 0.04)
+
+func _add_polish_block(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, color: Color) -> void:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = _emissive_mat(color, color.a, 0.16 + color.a * 0.55) if color.a < 0.62 else _mat(color, color.a)
+	parent.add_child(box)
+
+func _add_polish_cylinder(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, color: Color, sides := 32) -> void:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.position = pos
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = sides
+	cylinder.material = _emissive_mat(color, color.a, 0.16 + color.a * 0.55) if color.a < 0.62 else _mat(color, color.a)
+	parent.add_child(cylinder)
+
+func _add_polish_line(parent: Node3D, name: String, start: Vector3, end: Vector3, color: Color, width: float) -> void:
+	var delta := end - start
+	var length := Vector2(delta.x, delta.z).length()
+	if length <= 0.01:
+		return
+	var mid := (start + end) * 0.5
+	var yaw := rad_to_deg(atan2(delta.x, delta.z))
+	_add_polish_block(parent, name, mid, Vector3(width, 0.035, length), yaw, color)
+
+func _apply_grey_environment_style() -> void:
+	if environment == null:
+		return
+	if procedural_theme_sky_enabled and procedural_sky_material != null:
+		environment.background_mode = Environment.BG_SKY
+		_set_procedural_sky_colors(Color(0.52, 0.54, 0.54), Color(0.68, 0.68, 0.64), Color(0.42, 0.43, 0.42), Color(0.58, 0.58, 0.55), 0.78)
+	else:
+		environment.background_mode = Environment.BG_COLOR
+		environment.background_color = Color(0.55, 0.56, 0.55)
+	environment.ambient_light_color = Color(0.64, 0.64, 0.62)
+	environment.ambient_light_energy = 0.9
+	environment.fog_light_color = Color(0.65, 0.66, 0.65)
+	environment.fog_density = fog_start_value
+	environment.fog_sky_affect = 0.75
+	environment.adjustment_saturation = 0.16
+	environment.adjustment_contrast = 0.52
+	if sun_light != null:
+		sun_light.rotation_degrees = Vector3(-45, -35, 0)
+		sun_light.light_color = Color(0.80, 0.80, 0.76)
+		sun_light.light_energy = 1.0
+
+func _apply_city_environment_style(theme_index: int) -> void:
+	if environment == null:
+		return
+	var style := _theme_environment_profile(theme_index)
+	if procedural_theme_sky_enabled and procedural_sky_material != null:
+		environment.background_mode = Environment.BG_SKY
+		_set_procedural_sky_colors(style["sky_top"], style["sky_horizon"], style["ground_bottom"], style["ground_horizon"], float(style["sky_energy"]))
+	else:
+		environment.background_mode = Environment.BG_COLOR
+		environment.background_color = style["sky_horizon"]
+	environment.ambient_light_color = style["ambient"]
+	environment.ambient_light_energy = float(style["ambient_energy"])
+	environment.fog_light_color = style["fog"]
+	environment.fog_sky_affect = float(style["fog_sky_affect"])
+	if sun_light != null:
+		sun_light.rotation_degrees = style["sun_rotation"]
+		sun_light.light_color = style["sun_color"]
+		sun_light.light_energy = float(style["sun_energy"])
+
+func _set_procedural_sky_colors(top: Color, horizon: Color, ground_bottom: Color, ground_horizon: Color, energy: float) -> void:
+	if procedural_sky_material == null:
+		return
+	procedural_sky_material.sky_top_color = top
+	procedural_sky_material.sky_horizon_color = horizon
+	procedural_sky_material.ground_bottom_color = ground_bottom
+	procedural_sky_material.ground_horizon_color = ground_horizon
+	_set_if_property_exists(procedural_sky_material, "sky_energy_multiplier", energy)
+	_set_if_property_exists(procedural_sky_material, "ground_energy_multiplier", maxf(energy * 0.62, 0.15))
+	_set_if_property_exists(procedural_sky_material, "sun_angle_max", 18.0)
+	_set_if_property_exists(procedural_sky_material, "sun_curve", 0.18)
+	_set_if_property_exists(procedural_sky_material, "sun_energy_multiplier", maxf(energy * 0.45, 0.12))
+
+func _set_if_property_exists(object: Object, property_name: String, value: Variant) -> void:
+	for property in object.get_property_list():
+		if String(property.get("name", "")) == property_name:
+			object.set(property_name, value)
+			return
+
+func _theme_environment_profile(theme_index: int) -> Dictionary:
+	match theme_index:
+		THEME_MEMORY:
+			return {"sky_top": Color(0.42, 0.40, 0.36), "sky_horizon": Color(0.78, 0.66, 0.46), "ground_bottom": Color(0.28, 0.25, 0.21), "ground_horizon": Color(0.62, 0.54, 0.42), "sky_energy": 0.86, "ambient": Color(0.72, 0.66, 0.54), "ambient_energy": 0.95, "fog": Color(0.72, 0.66, 0.56), "fog_sky_affect": 0.40, "sun_rotation": Vector3(-38, -28, 0), "sun_color": Color(1.0, 0.74, 0.42), "sun_energy": 1.20}
+		THEME_DESIRE:
+			return {"sky_top": Color(0.86, 0.42, 0.16), "sky_horizon": Color(1.0, 0.74, 0.32), "ground_bottom": Color(0.44, 0.18, 0.10), "ground_horizon": Color(0.84, 0.52, 0.20), "sky_energy": 1.05, "ambient": Color(0.92, 0.58, 0.30), "ambient_energy": 1.02, "fog": Color(0.96, 0.62, 0.28), "fog_sky_affect": 0.32, "sun_rotation": Vector3(-32, -46, 0), "sun_color": Color(1.0, 0.52, 0.18), "sun_energy": 1.45}
+		THEME_SIGNS:
+			return {"sky_top": Color(0.08, 0.08, 0.07), "sky_horizon": Color(0.88, 0.84, 0.68), "ground_bottom": Color(0.04, 0.04, 0.035), "ground_horizon": Color(0.46, 0.42, 0.32), "sky_energy": 0.78, "ambient": Color(0.70, 0.68, 0.58), "ambient_energy": 0.98, "fog": Color(0.70, 0.68, 0.58), "fog_sky_affect": 0.28, "sun_rotation": Vector3(-50, -20, 0), "sun_color": Color(0.94, 0.90, 0.70), "sun_energy": 1.15}
+		THEME_THIN:
+			return {"sky_top": Color(0.50, 0.72, 0.94), "sky_horizon": Color(0.84, 0.94, 1.0), "ground_bottom": Color(0.18, 0.30, 0.42), "ground_horizon": Color(0.62, 0.78, 0.88), "sky_energy": 1.02, "ambient": Color(0.70, 0.84, 0.96), "ambient_energy": 1.10, "fog": Color(0.70, 0.84, 0.94), "fog_sky_affect": 0.50, "sun_rotation": Vector3(-42, -12, 0), "sun_color": Color(0.82, 0.94, 1.0), "sun_energy": 1.08}
+		THEME_TRADE:
+			return {"sky_top": Color(0.08, 0.22, 0.18), "sky_horizon": Color(0.84, 0.44, 0.18), "ground_bottom": Color(0.05, 0.11, 0.09), "ground_horizon": Color(0.22, 0.46, 0.36), "sky_energy": 0.82, "ambient": Color(0.62, 0.46, 0.28), "ambient_energy": 0.94, "fog": Color(0.42, 0.58, 0.45), "fog_sky_affect": 0.35, "sun_rotation": Vector3(-34, -62, 0), "sun_color": Color(1.0, 0.44, 0.18), "sun_energy": 1.25}
+		THEME_EYES:
+			return {"sky_top": Color(0.16, 0.38, 0.52), "sky_horizon": Color(0.72, 0.92, 1.0), "ground_bottom": Color(0.04, 0.12, 0.18), "ground_horizon": Color(0.38, 0.64, 0.78), "sky_energy": 0.96, "ambient": Color(0.62, 0.86, 1.0), "ambient_energy": 1.05, "fog": Color(0.62, 0.86, 0.96), "fog_sky_affect": 0.45, "sun_rotation": Vector3(-46, -8, 0), "sun_color": Color(0.72, 0.94, 1.0), "sun_energy": 1.18}
+		THEME_NAMES_CITY:
+			return {"sky_top": Color(0.54, 0.52, 0.46), "sky_horizon": Color(0.84, 0.72, 0.52), "ground_bottom": Color(0.32, 0.28, 0.22), "ground_horizon": Color(0.60, 0.54, 0.42), "sky_energy": 0.82, "ambient": Color(0.70, 0.64, 0.52), "ambient_energy": 0.92, "fog": Color(0.70, 0.66, 0.56), "fog_sky_affect": 0.38, "sun_rotation": Vector3(-44, -34, 0), "sun_color": Color(0.90, 0.76, 0.46), "sun_energy": 1.05}
+		THEME_DEAD:
+			return {"sky_top": Color(0.02, 0.04, 0.10), "sky_horizon": Color(0.34, 0.42, 0.58), "ground_bottom": Color(0.02, 0.025, 0.035), "ground_horizon": Color(0.30, 0.34, 0.42), "sky_energy": 0.64, "ambient": Color(0.44, 0.52, 0.68), "ambient_energy": 0.78, "fog": Color(0.42, 0.50, 0.66), "fog_sky_affect": 0.34, "sun_rotation": Vector3(-60, -18, 0), "sun_color": Color(0.50, 0.66, 1.0), "sun_energy": 0.82}
+		THEME_SKY:
+			return {"sky_top": Color(0.02, 0.03, 0.16), "sky_horizon": Color(0.34, 0.46, 0.82), "ground_bottom": Color(0.03, 0.04, 0.12), "ground_horizon": Color(0.20, 0.32, 0.58), "sky_energy": 1.10, "ambient": Color(0.54, 0.68, 1.0), "ambient_energy": 1.02, "fog": Color(0.34, 0.48, 0.86), "fog_sky_affect": 0.42, "sun_rotation": Vector3(-62, -44, 0), "sun_color": Color(0.62, 0.78, 1.0), "sun_energy": 1.12}
+		THEME_CONTINUOUS:
+			return {"sky_top": Color(0.34, 0.34, 0.26), "sky_horizon": Color(0.74, 0.68, 0.42), "ground_bottom": Color(0.18, 0.16, 0.10), "ground_horizon": Color(0.52, 0.48, 0.30), "sky_energy": 0.78, "ambient": Color(0.62, 0.58, 0.42), "ambient_energy": 0.90, "fog": Color(0.66, 0.62, 0.42), "fog_sky_affect": 0.48, "sun_rotation": Vector3(-36, -52, 0), "sun_color": Color(0.86, 0.76, 0.42), "sun_energy": 1.08}
+		THEME_HIDDEN:
+			return {"sky_top": Color(0.01, 0.07, 0.035), "sky_horizon": Color(0.18, 0.34, 0.20), "ground_bottom": Color(0.005, 0.025, 0.015), "ground_horizon": Color(0.10, 0.22, 0.12), "sky_energy": 0.66, "ambient": Color(0.36, 0.58, 0.38), "ambient_energy": 0.76, "fog": Color(0.22, 0.42, 0.26), "fog_sky_affect": 0.36, "sun_rotation": Vector3(-54, -18, 0), "sun_color": Color(0.42, 1.0, 0.54), "sun_energy": 0.82}
+	return {"sky_top": Color(0.42, 0.42, 0.42), "sky_horizon": Color(0.68, 0.68, 0.62), "ground_bottom": Color(0.24, 0.24, 0.22), "ground_horizon": Color(0.54, 0.54, 0.48), "sky_energy": 0.8, "ambient": Color(0.62, 0.62, 0.58), "ambient_energy": 0.9, "fog": Color(0.62, 0.62, 0.58), "fog_sky_affect": 0.4, "sun_rotation": Vector3(-45, -35, 0), "sun_color": Color(0.9, 0.86, 0.78), "sun_energy": 1.0}
 
 func _build_thin_city_whitebox(parent: Node3D) -> void:
 	_build_thin_city_terrain(parent)
@@ -3074,20 +3471,20 @@ func _add_desire_relic_glow(asset: Node3D, color: Color, relic_index: int) -> vo
 	halo.position = Vector3(0, 2.0, 0)
 	halo.light_color = color
 	halo.light_energy = desire_relic_glow_energy
-	halo.omni_range = 7.0
+	halo.omni_range = 10.5
 	asset.add_child(halo)
 
 	var particles := GPUParticles3D.new()
 	particles.name = "PickupGlowParticles"
-	particles.amount = int(maxf(1.0, 72.0 * desire_relic_particle_scale))
+	particles.amount = int(maxf(1.0, 96.0 * desire_relic_particle_scale))
 	particles.lifetime = 2.4
-	particles.visibility_aabb = AABB(Vector3(-4, -1, -4), Vector3(8, 7, 8))
+	particles.visibility_aabb = AABB(Vector3(-6, -1, -6), Vector3(12, 9, 12))
 	var mesh := QuadMesh.new()
 	mesh.size = Vector2(0.10, 0.10)
 	particles.draw_pass_1 = mesh
 	var process := ParticleProcessMaterial.new()
 	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
-	process.emission_sphere_radius = 2.1
+	process.emission_sphere_radius = 3.0
 	process.gravity = Vector3(0, 0.08, 0)
 	process.initial_velocity_min = 0.08
 	process.initial_velocity_max = 0.32
@@ -3122,7 +3519,7 @@ func _add_desire_relic(parent: Node3D, relic_index: int, pos: Vector3, yaw: floa
 	area.collision_mask = 2
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = 4.2
+	sphere.radius = 6.4
 	shape.shape = sphere
 	area.add_child(shape)
 	area.body_entered.connect(func(body: Node3D): _on_desire_relic_entered(body, relic_index))
@@ -6098,6 +6495,22 @@ func _current_pre_grey_text_pages() -> Array:
 			return PRE_GREY_DESIRE_TEXT_PAGES
 		THEME_SIGNS:
 			return PRE_GREY_SIGNS_TEXT_PAGES
+		THEME_THIN:
+			return PRE_GREY_THIN_TEXT_PAGES
+		THEME_TRADE:
+			return PRE_GREY_TRADE_TEXT_PAGES
+		THEME_EYES:
+			return PRE_GREY_EYES_TEXT_PAGES
+		THEME_NAMES_CITY:
+			return PRE_GREY_NAMES_TEXT_PAGES
+		THEME_DEAD:
+			return PRE_GREY_DEAD_TEXT_PAGES
+		THEME_SKY:
+			return PRE_GREY_SKY_TEXT_PAGES
+		THEME_CONTINUOUS:
+			return PRE_GREY_CONTINUOUS_TEXT_PAGES
+		THEME_HIDDEN:
+			return PRE_GREY_HIDDEN_TEXT_PAGES
 	return []
 
 func _show_pre_grey_text_page() -> void:
@@ -6116,6 +6529,7 @@ func _advance_pre_grey_text() -> void:
 func _begin_memory_level() -> void:
 	phase = GamePhase.GREY_VOID
 	_hide_all_ui()
+	_apply_grey_environment_style()
 	memory_center_trigger.position = _selected_theme_position()
 	if memory_guide_light != null and memory_guide_light.get_parent() is Node3D:
 		var guide_parent := memory_guide_light.get_parent() as Node3D
@@ -6226,6 +6640,7 @@ func _start_manifest_sequence() -> void:
 	_stop_grey_sfx()
 	manifest_camera_applied_offset = 0.0
 	_select_memory_city_variant(selected_theme_index)
+	_apply_city_environment_style(selected_theme_index)
 	manifested_city.visible = true
 	_set_city_collision_enabled(false)
 	var tween := create_tween()
@@ -7045,6 +7460,7 @@ func _hide_pause_menu() -> void:
 func _reset_level_state() -> void:
 	manifest_started = false
 	can_read_tower = false
+	_apply_grey_environment_style()
 	_reset_city_guidance_timer()
 	_reset_desire_relics()
 	_reset_sign_fracture_nodes()
@@ -7100,11 +7516,11 @@ func _update_memory_audio() -> void:
 	var distance: float = player.global_position.distance_to(theme_pos)
 	var closeness := _selected_theme_audio_closeness(distance)
 	var seek_strength := _seek_audio_strength(closeness)
-	memory_lowpass.cutoff_hz = lerp(320.0, 9600.0, seek_strength)
+	memory_lowpass.cutoff_hz = lerp(160.0, 12500.0, seek_strength)
 	if theme_sfx_player != null:
 		theme_sfx_player.position = theme_pos
 		theme_sfx_player.volume_db = lerp(theme_sfx_volume_far_db, theme_sfx_volume_near_db, seek_strength)
-		theme_sfx_player.pitch_scale = lerp(0.88, 1.08, seek_strength)
+		theme_sfx_player.pitch_scale = lerp(0.76, 1.08, seek_strength)
 
 func _update_grey_audio_sfx(delta: float) -> void:
 	_update_theme_seeking_sfx(delta)
@@ -7127,15 +7543,17 @@ func _update_zone_random_sfx(delta: float) -> void:
 	var closeness := _zone_audio_closeness(zone_index, player.global_position)
 	if closeness <= 0.03:
 		return
-	zone_sfx_timers[zone_index] -= delta * lerpf(0.75, 2.15, closeness)
+	zone_sfx_timers[zone_index] -= delta * lerpf(1.0, 3.25, closeness)
 	if zone_sfx_timers[zone_index] <= 0.0:
 		_play_zone_sfx(zone_index, closeness)
-		zone_sfx_timers[zone_index] = rng.randf_range(lerpf(zone_sfx_max_interval, zone_sfx_min_interval, closeness), lerpf(zone_sfx_max_interval + 1.4, zone_sfx_min_interval + 1.2, closeness))
+		zone_sfx_timers[zone_index] = rng.randf_range(lerpf(zone_sfx_max_interval, zone_sfx_min_interval, closeness), lerpf(zone_sfx_max_interval + 0.85, zone_sfx_min_interval + 0.95, closeness))
 
 func _play_theme_sfx(sfx_index: int) -> float:
 	if theme_sfx_player == null:
 		return 0.0
 	var paths := _sfx_paths_for_theme(selected_theme_index)
+	if paths.is_empty():
+		return 0.0
 	var stream := _audio_stream_or_generator([paths[sfx_index]])
 	theme_sfx_player.stream = stream
 	_set_generated_frequency(theme_sfx_player, _generated_theme_sfx_frequency(selected_theme_index, sfx_index))
@@ -7151,11 +7569,10 @@ func _play_zone_sfx(zone_index: int, closeness := -1.0) -> void:
 		return
 	if closeness < 0.0:
 		closeness = _zone_audio_closeness(zone_index, player.global_position)
-	var paths := _sfx_paths_for_theme(zone_index)
-	var sfx_index := rng.randi_range(0, paths.size() - 1)
+	var sfx_index := rng.randi_range(0, maxi(1, generated_zone_sfx_variant_count) - 1)
 	var player_node := zone_audio_players[zone_index]
-	player_node.stream = _audio_stream_or_generator([paths[sfx_index]])
-	player_node.volume_db = zone_sfx_volume_db + _zone_sfx_volume_offset(zone_index) + lerpf(-7.5, 4.0, closeness)
+	player_node.stream = _audio_stream_or_generator([])
+	player_node.volume_db = zone_sfx_volume_db + _zone_sfx_volume_offset(zone_index) + lerpf(-5.5, 6.5, closeness)
 	player_node.pitch_scale = _zone_sfx_pitch(zone_index, sfx_index, closeness)
 	_set_generated_frequency(player_node, _generated_theme_sfx_frequency(zone_index, sfx_index))
 	_set_generated_sfx_profile(player_node, zone_index, sfx_index, "zone")
@@ -7177,7 +7594,9 @@ func _selected_theme_audio_closeness(distance := -1.0) -> float:
 	return clamp(1.0 - resolved_distance / max(theme_sfx_hearing_distance, 1.0), 0.0, 1.0)
 
 func _seek_audio_strength(closeness: float) -> float:
-	return clampf(pow(clampf(closeness, 0.0, 1.0), 0.56), 0.0, 1.0)
+	var c := clampf(closeness, 0.0, 1.0)
+	var smooth := c * c * (3.0 - 2.0 * c)
+	return clampf(pow(smooth, 1.18), 0.0, 1.0)
 
 func _zone_audio_closeness(zone_index: int, pos: Vector3) -> float:
 	if zone_index < 0 or zone_index >= ZONE_POSITIONS.size():
@@ -7284,6 +7703,22 @@ func _seek_sfx_texts_for_theme(theme_index: int) -> Array:
 			return DESIRE_SEEK_SFX_TEXTS
 		THEME_SIGNS:
 			return SIGNS_SEEK_SFX_TEXTS
+		THEME_THIN:
+			return THIN_SEEK_SFX_TEXTS
+		THEME_TRADE:
+			return TRADE_SEEK_SFX_TEXTS
+		THEME_EYES:
+			return EYES_SEEK_SFX_TEXTS
+		THEME_NAMES_CITY:
+			return NAMES_SEEK_SFX_TEXTS
+		THEME_DEAD:
+			return DEAD_SEEK_SFX_TEXTS
+		THEME_SKY:
+			return SKY_SEEK_SFX_TEXTS
+		THEME_CONTINUOUS:
+			return CONTINUOUS_SEEK_SFX_TEXTS
+		THEME_HIDDEN:
+			return HIDDEN_SEEK_SFX_TEXTS
 	return []
 
 func _show_theme_seek_sfx_text(theme_index: int, sfx_index: int) -> void:
@@ -7345,22 +7780,36 @@ func _theme_bgm_paths(theme_index: int) -> Array:
 		THEME_SIGNS:
 			return ["res://assets/audio/theme_bgm/signs_background.mp3"] + fallback
 		THEME_THIN:
-			return ["res://assets/audio/theme_bgm/thin_background.mp3"] + fallback
+			return _random_existing_theme_bgm_paths(fallback)
 		THEME_TRADE:
-			return ["res://assets/audio/theme_bgm/trade_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/trade_background.wav", "res://assets/audio/theme_bgm/trade_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_EYES:
-			return ["res://assets/audio/theme_bgm/eyes_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/eyes_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_NAMES_CITY:
-			return ["res://assets/audio/theme_bgm/names_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/names_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_DEAD:
-			return ["res://assets/audio/theme_bgm/dead_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/dead_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_SKY:
-			return ["res://assets/audio/theme_bgm/sky_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/sky_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_CONTINUOUS:
-			return ["res://assets/audio/theme_bgm/continuous_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/continuous_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 		THEME_HIDDEN:
-			return ["res://assets/audio/theme_bgm/hidden_background.mp3"] + fallback
+			return ["res://assets/audio/theme_bgm/hidden_background.mp3"] + _random_existing_theme_bgm_paths(fallback)
 	return fallback
+
+func _random_existing_theme_bgm_paths(fallback: Array) -> Array:
+	var existing := [
+		MEMORY_LONG_BGM_AUDIO_PATH,
+		"res://assets/audio/theme_bgm/desire_background.mp3",
+		"res://assets/audio/theme_bgm/signs_background.mp3",
+		"res://assets/audio/theme_bgm/trade_background.wav"
+	]
+	var first := String(existing[rng.randi_range(0, existing.size() - 1)])
+	var paths := [first]
+	for path in existing:
+		if String(path) != first:
+			paths.append(path)
+	return paths + fallback
 
 func _ensure_bgm_stream_for_theme(theme_index: int) -> void:
 	if global_music_player == null:
@@ -7438,10 +7887,10 @@ func _ensure_zone_sfx_timers() -> void:
 		zone_sfx_timers.append(rng.randf_range(zone_sfx_min_interval, zone_sfx_max_interval))
 
 func _reset_grey_sfx_timers() -> void:
-	theme_sfx_timer = rng.randf_range(0.35, 1.35)
+	theme_sfx_timer = rng.randf_range(0.25, 0.9)
 	zone_sfx_timers.clear()
 	for i in range(zone_audio_players.size()):
-		zone_sfx_timers.append(rng.randf_range(0.4, zone_sfx_max_interval))
+		zone_sfx_timers.append(rng.randf_range(0.15, zone_sfx_max_interval))
 
 func _stop_grey_sfx() -> void:
 	if theme_sfx_player != null:
@@ -7522,8 +7971,8 @@ func _city_guidance_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
 			if _is_desire_collection_complete():
-				return "欲望物已经集齐。去月光迷宫最深处，寻找白色陷阱广场。"
-			return "寻找带彩色辉光的欲望物。收集任意 %d 件后，去月光迷宫深处。" % _desire_required_relic_count()
+				return "欲望物已经集齐。沿主街向北，进入月光白色迷宫，寻找白色陷阱广场。"
+			return "寻找彩色光柱包围的欲望物。靠近即可拾取；收集任意 %d 件后再去北侧月光迷宫。" % _desire_required_relic_count()
 		THEME_SIGNS:
 			if _is_sign_fracture_complete():
 				return "五处符号断点已沉默。回到中心无名广场。"
@@ -7566,7 +8015,7 @@ func _city_guidance_text() -> String:
 func _city_entry_objective_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
-			return "寻找任意 %d 件带彩色辉光的欲望物，然后进入月光迷宫最深处阅读。" % _desire_required_relic_count()
+			return "寻找任意 %d 件彩色光柱包围的欲望物，然后去北侧月光迷宫最深处阅读。" % _desire_required_relic_count()
 		THEME_SIGNS:
 			return "读取 5 处发光符号断点，然后回到中心无名广场阅读。"
 		THEME_THIN:
@@ -7620,8 +8069,8 @@ func _update_city_post_process() -> void:
 	grey_post_process_material.set_shader_parameter("scanline_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("chromatic_strength", 0.00025 + 0.00020 * residual + 0.00050 * desire_heat + 0.00018 * thin_air + 0.00032 * trade_wet + 0.00036 * eye_reflect + 0.00016 * name_carve + 0.00022 * dead_cold + 0.00024 * sky_cosmic + 0.00010 * continuous_dirty + 0.00022 * hidden_growth)
 	grey_post_process_material.set_shader_parameter("wave_strength", city_residual_wave_strength * residual + 0.0008 * desire_heat + 0.00045 * thin_air + 0.0007 * trade_wet + 0.00075 * eye_reflect + 0.00032 * name_carve + 0.00042 * dead_cold + 0.00048 * sky_cosmic + 0.00030 * continuous_dirty + 0.00055 * hidden_growth)
-	grey_post_process_material.set_shader_parameter("edge_strength", 0.04 + 0.03 * signs_flatten + 0.03 * thin_air + 0.025 * eye_reflect + 0.030 * name_carve + 0.020 * dead_cold + 0.020 * sky_cosmic + 0.018 * continuous_dirty + 0.020 * hidden_growth)
-	grey_post_process_material.set_shader_parameter("contour_strength", 0.015 + 0.035 * signs_flatten + 0.025 * thin_air + 0.02 * trade_wet + 0.025 * eye_reflect + 0.030 * name_carve + 0.025 * dead_cold + 0.030 * sky_cosmic + 0.020 * continuous_dirty + 0.018 * hidden_growth)
+	grey_post_process_material.set_shader_parameter("edge_strength", 0.0)
+	grey_post_process_material.set_shader_parameter("contour_strength", 0.006 + 0.012 * signs_flatten + 0.008 * eye_reflect + 0.010 * name_carve + 0.008 * sky_cosmic)
 	grey_post_process_material.set_shader_parameter("solarize_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("inversion_flicker_strength", 0.0)
 	grey_post_process_material.set_shader_parameter("vignette_strength", 0.10 - 0.03 * thin_air + 0.02 * eye_reflect + 0.02 * name_carve + 0.050 * dead_cold - 0.020 * sky_cosmic + 0.025 * continuous_dirty + 0.040 * hidden_growth)
@@ -8456,6 +8905,11 @@ func _grey_chaos_material(color: Color, alpha: float, noise_scale: float, flow_s
 func _audio_stream_or_generator(paths: Array, loop_stream := false) -> AudioStream:
 	for path in paths:
 		var audio_path := String(path)
+		var direct_stream := _load_audio_stream_file_direct(audio_path)
+		if direct_stream != null:
+			if loop_stream:
+				_set_audio_stream_loop(direct_stream, true)
+			return direct_stream
 		if ResourceLoader.exists(audio_path):
 			var loaded := load(audio_path)
 			if loaded is AudioStream:
@@ -8467,6 +8921,21 @@ func _audio_stream_or_generator(paths: Array, loop_stream := false) -> AudioStre
 	generator.mix_rate = 22050
 	generator.buffer_length = 0.5
 	return generator
+
+func _load_audio_stream_file_direct(audio_path: String) -> AudioStream:
+	if not FileAccess.file_exists(audio_path):
+		return null
+	var extension := audio_path.get_extension().to_lower()
+	var file_path := ProjectSettings.globalize_path(audio_path)
+	match extension:
+		"mp3":
+			return AudioStreamMP3.load_from_file(file_path)
+		"wav":
+			return AudioStreamWAV.load_from_file(file_path)
+		"ogg":
+			return AudioStreamOggVorbis.load_from_file(file_path)
+		_:
+			return null
 
 func _set_audio_stream_loop(stream: AudioStream, enabled: bool) -> void:
 	for property in stream.get_property_list():
