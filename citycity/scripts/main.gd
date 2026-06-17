@@ -2,7 +2,7 @@ extends Node3D
 
 const PlayerController := preload("res://scripts/player_controller.gd")
 
-enum GamePhase { MAIN_MENU, STORY, THEME_SELECT, MECHANIC_PROMPT, GREY_VOID, MANIFESTING, CITY, READING, CHOICE, PAUSED, OPTIONS }
+enum GamePhase { MAIN_MENU, STORY, THEME_SELECT, MECHANIC_PROMPT, PRE_GREY_TEXT, GREY_VOID, MANIFESTING, CITY, READING, CHOICE, PAUSED, OPTIONS }
 
 const THEME_MEMORY := 0
 const THEME_DESIRE := 1
@@ -32,11 +32,11 @@ const PLAYER_SPAWN_POINTS := [
 ]
 const LEGACY_MEMORY_AUDIO_PATH := "res://assets/audio/memory_theme_loop.ogg"
 const CITY_MEMORY_AUDIO_PATH := "res://assets/audio/city_memory_loop.ogg"
-const MEMORY_LONG_BGM_AUDIO_PATH := "res://assets/audio/memory_long_bgm.ogg"
+const MEMORY_LONG_BGM_AUDIO_PATH := "res://assets/audio/memory_background.mp3"
 const THEME_SFX_AUDIO_PATHS := [
-	["res://assets/audio/theme_sfx/memory_a.ogg", "res://assets/audio/theme_sfx/memory_b.ogg", "res://assets/audio/theme_sfx/memory_c.ogg", "res://assets/audio/theme_sfx/memory_d.ogg"],
-	["res://assets/audio/theme_sfx/desire_a.ogg", "res://assets/audio/theme_sfx/desire_b.ogg", "res://assets/audio/theme_sfx/desire_c.ogg"],
-	["res://assets/audio/theme_sfx/signs_a.ogg", "res://assets/audio/theme_sfx/signs_b.ogg", "res://assets/audio/theme_sfx/signs_c.ogg"],
+	["res://assets/audio/theme_sfx/memory_rooster.wav", "res://assets/audio/theme_sfx/memory_horse.wav", "res://assets/audio/theme_sfx/memory_infant_cry.mp3", "res://assets/audio/theme_sfx/memory_wind.wav"],
+	["res://assets/audio/theme_sfx/desire_wind_chime.mp3", "res://assets/audio/theme_sfx/desire_water.wav"],
+	["res://assets/audio/theme_sfx/signs_sweeping.wav", "res://assets/audio/theme_sfx/signs_keyboard.mp3"],
 	["res://assets/audio/theme_sfx/thin_a.ogg", "res://assets/audio/theme_sfx/thin_b.ogg", "res://assets/audio/theme_sfx/thin_c.ogg"],
 	["res://assets/audio/theme_sfx/trading_a.ogg", "res://assets/audio/theme_sfx/trading_b.ogg", "res://assets/audio/theme_sfx/trading_c.ogg"],
 	["res://assets/audio/theme_sfx/eyes_a.ogg", "res://assets/audio/theme_sfx/eyes_b.ogg", "res://assets/audio/theme_sfx/eyes_c.ogg"],
@@ -58,6 +58,20 @@ const THEME_SFX_TEXTS := [
 	["天空在低处流动。", "云层贴近耳边。", "高处传来潮声。"],
 	["道路连续到无法分辨。", "一段声音接上另一段。", "没有停顿的街。"],
 	["隐藏之物先发出声音。", "雾后有门。", "不可见处正在靠近。"]
+]
+const MEMORY_SEEK_SFX_TEXTS := [
+	"从那里出发，向东方走三天，你会到达迪奥米拉，这座城市有一只金鸡在塔楼顶上每天报晓。",
+	"一个人长时间骑马行走在丛莽地区，自然会渴望抵达城市。他终于来到伊西多拉！",
+	"三个老人一边补网，一边重复着已经讲了上百次篡位者的故事，有人说她是女王的私生子，在襁褓时就被遗弃在码头上。",
+	"为了让人更容易记住，左拉被迫永远静止不变，于是萧条了，崩溃了，消失了。大地已经把他忘却了。"
+]
+const DESIRE_SEEK_SFX_TEXTS := [
+	"风铃轻响，玻璃球里的蓝色城市开始转动。",
+	"水池与运河在暗处召唤，欲望正醒来。"
+]
+const SIGNS_SEEK_SFX_TEXTS := [
+	"扫帚掠过招牌，物品只剩下名称。",
+	"键声敲下符号，城市像写满字迹的纸页。"
 ]
 const THEME_NAMES := [
 	"记忆", "欲望", "符号", "轻盈", "贸易", "眼睛", "姓名", "死的", "天空", "连续", "隐蔽"
@@ -362,6 +376,25 @@ const STORY_PAGES := [
 	["灰域是一座主城。", "十一种声音在里面互相遮蔽。"],
 	["你要先听见。", "再走向属于那个主题的城市。"]
 ]
+const PRE_GREY_MEMORY_TEXT_PAGES := [
+	["从那里出发，向东方走三天，你会到达迪奥米拉，这座城市有一只金鸡在塔楼顶上每天报晓。"],
+	["一个人长时间骑马行走在丛莽地区，自然会渴望抵达城市。他终于来到伊西多拉！"],
+	["难以描述高大碉堡林立的扎伊拉城，构成这个城市的是它的空间度量与历史事件之间的关系，渔网的破口，三个老人一边补网，一边重复着已经讲了上百次篡位者的故事，有人说她是女王的私生子，在襁褓时就被遗弃在码头上。"],
+	["在六条河流与三座山脉的那边就是左拉，为了让人更容易记住，左拉被迫永远静止不变，于是萧条了，崩溃了，消失了。大地已经把他忘却了。"],
+	["在莫利里亚，旅行者应邀进城游览，并且欣赏一些反映城市旧貌的彩色明信片：无论如何，今日的都市更具魅力，因为只有通过它变化了的今日风貌，才能唤起人们对它过去的怀念。而抒发这番思古怀旧之情。"]
+]
+const PRE_GREY_DESIRE_TEXT_PAGES := [
+	["多罗泰亚有两种入口：塔楼、吊桥、运河是一种；清晨的集市、小号、彩旗和直视的眼睛又是一种。"],
+	["阿纳斯塔西亚把玛瑙、绿玉髓、香桃木烤熟的野味和水池里的笑声排成清单，让欲望逐个醒来。"],
+	["苔斯皮那站在沙与水之间。赶骆驼的人看见船，水手看见骆驼，城市被各自的渴望塑形。"],
+	["菲朵拉把可能的未来收进玻璃圆球；佐贝伊德把追逐的梦筑成街巷。欲望留下形状，也留下陷阱。"]
+]
+const PRE_GREY_SIGNS_TEXT_PAGES := [
+	["塔马拉的街巷像写满字迹的纸页：牙钳、陶罐、戟、天平，所有物品都在指向别的事物。"],
+	["吉尔玛不断重复自己的图像，好让旅人记住；可记忆也会夸张，把一艘飞艇说成满城飞艇。"],
+	["佐艾让所有功能混在一起，王宫、旅馆、监狱和浴所失去界线，符号不再替空间分工。"],
+	["伊帕奇亚提醒你：符号是一种语言，却不是你以为已经懂得的语言；奥利维亚则证明，虚假不在词语里，而在事物自身。"]
+]
 
 @export_group("Manifestation Polish")
 @export var manifestation_duration := 8.0
@@ -437,27 +470,29 @@ const STORY_PAGES := [
 
 @export_group("Grey Audio SFX")
 @export var selected_theme_index := 0
-@export var zone_sfx_min_interval := 2.6
-@export var zone_sfx_max_interval := 6.4
-@export var zone_sfx_generated_duration := 0.75
-@export var zone_sfx_volume_db := -13.0
-@export var theme_sfx_min_interval := 2.0
-@export var theme_sfx_max_interval := 4.8
+@export var zone_sfx_min_interval := 1.4
+@export var zone_sfx_max_interval := 3.8
+@export var zone_sfx_generated_duration := 1.05
+@export var zone_sfx_volume_db := -8.0
+@export var theme_sfx_min_interval := 3.0
+@export var theme_sfx_max_interval := 5.0
 @export var theme_sfx_generated_duration := 1.05
-@export var theme_sfx_hearing_distance := 180.0
-@export var theme_sfx_volume_far_db := -33.0
-@export var theme_sfx_volume_near_db := -3.0
+@export var theme_sfx_hearing_distance := 220.0
+@export var theme_sfx_volume_far_db := -46.0
+@export var theme_sfx_volume_near_db := 1.5
 @export var theme_sfx_text_trigger_distance := 58.0
 @export var theme_sfx_text_fade_in_duration := 0.55
 @export var theme_sfx_text_hold_duration := 1.7
 @export var theme_sfx_text_fade_out_duration := 1.15
 @export var intro_bgm_volume_db := -13.0
+@export var grey_bgm_volume_db := -21.0
 @export var city_bgm_volume_db := -9.0
+@export_range(0.0, 1.0, 0.01) var bgm_volume_scale := 0.85
 @export var grey_bgm_fade_out_duration := 1.0
 @export var city_bgm_fade_in_duration := 6.0
 
 @export_group("Grey Domain Debug")
-@export var show_grey_zone_debug := true
+@export var show_grey_zone_debug := false
 @export_range(0.0, 1.0, 0.01) var grey_zone_debug_alpha := 0.28
 @export var grey_zone_area_height := 5.0
 @export var chaos_shader_enabled := true
@@ -505,6 +540,7 @@ const STORY_PAGES := [
 @export_range(0.0, 2.0, 0.01) var desire_city_style_intensity := 1.15
 @export_range(0.0, 2.5, 0.05) var desire_relic_glow_energy := 1.35
 @export_range(0.0, 2.0, 0.05) var desire_relic_particle_scale := 1.0
+@export_range(1, 5, 1) var desire_required_relic_count := 3
 @export_range(0.0, 2.0, 0.01) var signs_city_style_intensity := 1.25
 @export_range(0.0, 2.5, 0.05) var sign_fracture_glow_energy := 1.25
 @export_range(0.0, 2.0, 0.05) var sign_fracture_particle_scale := 1.0
@@ -542,8 +578,8 @@ const STORY_PAGES := [
 @export_range(0.0, 1.0, 0.01) var city_post_stylized_shadow_strength := 0.24
 @export_range(0.0, 1.0, 0.01) var city_post_color_variation_strength := 0.14
 @export_range(0.0, 1.0, 0.01) var city_post_soft_glow_strength := 0.08
-@export var city_guidance_delay := 60.0
-@export var city_guidance_repeat_delay := 45.0
+@export var city_guidance_delay := 90.0
+@export var city_guidance_repeat_delay := 60.0
 
 var phase := GamePhase.MAIN_MENU
 var previous_phase := GamePhase.MAIN_MENU
@@ -557,10 +593,15 @@ var story_text: Label
 var story_next_button: Button
 var mechanic_prompt: Control
 var options_panel: Control
+var bgm_volume_slider: HSlider
+var bgm_volume_value_label: Label
 var theme_select: Control
 var theme_select_status_label: Label
 var theme_buttons: Array[Button] = []
 var hint_label: Label
+var pre_grey_panel: Control
+var pre_grey_text: Label
+var pre_grey_next_button: Button
 var reading_panel: Control
 var reading_text: Label
 var reading_next_button: Button
@@ -570,6 +611,7 @@ var operation_hint_panel: Control
 var operation_hint_label: Label
 var quick_hint_label: Label
 var grey_countdown_label: Label
+var city_guidance_countdown_label: Label
 var grey_guidance_root: Control
 var grey_guidance_lines: Array[ColorRect] = []
 var grey_post_process_rect: ColorRect
@@ -654,6 +696,7 @@ var hidden_goal_trigger: Area3D
 var memory_zone_player: AudioStreamPlayer3D
 var theme_sfx_player: AudioStreamPlayer3D
 var global_music_player: AudioStreamPlayer
+var current_bgm_theme_index := -1
 var zone_audio_players: Array[AudioStreamPlayer3D] = []
 var generated_audio_players: Array[Node] = []
 var generator_playbacks: Array = []
@@ -662,6 +705,7 @@ var zone_sfx_timers: Array[float] = []
 var theme_sfx_timer := 0.0
 var hint_cache := ""
 var story_page := 0
+var pre_grey_page := 0
 var reading_page := 0
 var can_read_tower := false
 var manifest_started := false
@@ -2753,7 +2797,7 @@ func _build_desire_model_museum(parent: Node3D) -> void:
 	_build_metal_museum(zone, Vector3(0, 0, 64), 0.0)
 	_build_glass_sphere_hall(zone, Vector3(0, 0, 76), 0.0)
 	_build_blue_city_model_table(zone, Vector3(0, 0, 77), 0.0)
-	_add_desire_relic(zone, 3, Vector3(6, 0, 76), 0.0)
+	_add_desire_relic(zone, 3, Vector3(14, 0, 76), 0.0)
 	_build_simple_desire_prop(zone, "BlueMiniCity", Vector3(0, 1.9, 77), 0.0, Vector3(2.2, 0.7, 2.2), Color(0.12, 0.34, 0.88), false)
 	_build_simple_desire_prop(zone, "JellyfishPoolModel", Vector3(-4, 1.5, 76), 0.0, Vector3(1.8, 0.35, 1.8), Color(0.26, 0.62, 0.82), false)
 	_build_simple_desire_prop(zone, "ElephantRoadModel", Vector3(4, 1.5, 80), 0.0, Vector3(3.4, 0.25, 0.8), Color(0.46, 0.46, 0.42), false)
@@ -2996,7 +3040,7 @@ func _build_moon_trap_plaza(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	desire_goal_trigger.collision_mask = 2
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = 7.5
+	sphere.radius = 13.5
 	shape.shape = sphere
 	desire_goal_trigger.add_child(shape)
 	desire_goal_trigger.body_entered.connect(_on_desire_goal_entered)
@@ -3078,7 +3122,7 @@ func _add_desire_relic(parent: Node3D, relic_index: int, pos: Vector3, yaw: floa
 	area.collision_mask = 2
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = 2.4
+	sphere.radius = 4.2
 	shape.shape = sphere
 	area.add_child(shape)
 	area.body_entered.connect(func(body: Node3D): _on_desire_relic_entered(body, relic_index))
@@ -3388,7 +3432,7 @@ func _build_sign_fracture_node(parent: Node3D, node_index: int, pos: Vector3, ya
 	area.collision_mask = 2
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = 4.2
+	sphere.radius = 2.4
 	shape.shape = sphere
 	area.add_child(shape)
 	area.body_entered.connect(func(body: Node3D): _on_sign_node_entered(body, node_index))
@@ -5644,9 +5688,10 @@ func _build_echo_tower() -> void:
 func _build_audio_players() -> void:
 	global_music_player = AudioStreamPlayer.new()
 	global_music_player.name = "GlobalThemeMusic"
-	global_music_player.volume_db = intro_bgm_volume_db
+	global_music_player.volume_db = _effective_bgm_volume(intro_bgm_volume_db)
 	global_music_player.bus = "WorldReverb"
 	global_music_player.stream = _audio_stream_or_generator([MEMORY_LONG_BGM_AUDIO_PATH, CITY_MEMORY_AUDIO_PATH, LEGACY_MEMORY_AUDIO_PATH], true)
+	current_bgm_theme_index = THEME_MEMORY
 	add_child(global_music_player)
 	_register_generator(global_music_player, 146.0)
 
@@ -5654,7 +5699,7 @@ func _build_audio_players() -> void:
 	theme_sfx_player.name = "ThemeSeekingSFX"
 	theme_sfx_player.position = MEMORY_POS
 	theme_sfx_player.max_distance = theme_sfx_hearing_distance
-	theme_sfx_player.unit_size = 22.0
+	theme_sfx_player.unit_size = 34.0
 	theme_sfx_player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 	theme_sfx_player.volume_db = theme_sfx_volume_far_db
 	theme_sfx_player.bus = "MemoryZone"
@@ -5666,8 +5711,8 @@ func _build_audio_players() -> void:
 		var p := AudioStreamPlayer3D.new()
 		p.name = "ZoneSFX_%s" % _ascii_zone_name(THEME_NAMES[i], i)
 		p.position = ZONE_POSITIONS[i]
-		p.max_distance = max(ZONE_SHAPES[i].x, ZONE_SHAPES[i].y) * 0.62
-		p.unit_size = 14.0
+		p.max_distance = max(ZONE_SHAPES[i].x, ZONE_SHAPES[i].y) * 1.08
+		p.unit_size = 30.0
 		p.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 		p.volume_db = zone_sfx_volume_db
 		p.bus = "WorldReverb"
@@ -5716,7 +5761,18 @@ func _build_ui() -> void:
 
 	options_panel = _center_panel("OptionsPanel")
 	options_panel.add_child(_label("选项", 30))
-	options_panel.add_child(_label("第一版保留基础参数：鼠标灵敏度、视角平滑、音量可在 Main 节点 Inspector 中调整。", 18))
+	options_panel.add_child(_label("背景音乐", 18))
+	bgm_volume_slider = HSlider.new()
+	bgm_volume_slider.min_value = 0.0
+	bgm_volume_slider.max_value = 1.0
+	bgm_volume_slider.step = 0.01
+	bgm_volume_slider.value = bgm_volume_scale
+	bgm_volume_slider.custom_minimum_size = Vector2(300, 32)
+	bgm_volume_slider.value_changed.connect(_on_bgm_volume_changed)
+	options_panel.add_child(bgm_volume_slider)
+	bgm_volume_value_label = _label(_format_bgm_volume_percent(), 16)
+	options_panel.add_child(bgm_volume_value_label)
+	options_panel.add_child(_label("鼠标灵敏度与视角平滑仍可在 Main 节点 Inspector 调整。", 16))
 	options_panel.add_child(_button("返回", _enter_main_menu))
 	ui_root.add_child(options_panel)
 
@@ -5758,8 +5814,18 @@ func _build_ui() -> void:
 	mechanic_prompt = _center_panel("MechanicPrompt")
 	mechanic_prompt.add_child(_label("跟随声的指引，寻找你所往的城市。", 26))
 	mechanic_prompt.add_child(_label("主城被划分为十一片灰域。每片区域都有自己的声音；越靠近正确主题的中心，声音越清晰、越强。", 18))
-	mechanic_prompt.add_child(_button("进入主城", _begin_memory_level))
+	mechanic_prompt.add_child(_button("进入主城", _start_pre_grey_text))
 	ui_root.add_child(mechanic_prompt)
+
+	pre_grey_panel = _center_panel("PreGreyMemoryText")
+	pre_grey_panel.offset_left = -360
+	pre_grey_panel.offset_right = 360
+	pre_grey_text = _label("", 24)
+	pre_grey_text.custom_minimum_size = Vector2(680, 170)
+	pre_grey_panel.add_child(pre_grey_text)
+	pre_grey_next_button = _button("继续", _advance_pre_grey_text)
+	pre_grey_panel.add_child(pre_grey_next_button)
+	ui_root.add_child(pre_grey_panel)
 
 	hint_label = Label.new()
 	hint_label.name = "HintText"
@@ -5809,6 +5875,25 @@ func _build_ui() -> void:
 	grey_countdown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	grey_countdown_label.visible = false
 	ui_root.add_child(grey_countdown_label)
+
+	city_guidance_countdown_label = Label.new()
+	city_guidance_countdown_label.name = "CityGuidanceCountdown"
+	city_guidance_countdown_label.text = "寻声 01:30"
+	city_guidance_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	city_guidance_countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	city_guidance_countdown_label.add_theme_font_size_override("font_size", 17)
+	city_guidance_countdown_label.add_theme_color_override("font_color", Color(0.92, 0.88, 0.70, 0.84))
+	city_guidance_countdown_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.48))
+	city_guidance_countdown_label.add_theme_constant_override("shadow_offset_x", 1)
+	city_guidance_countdown_label.add_theme_constant_override("shadow_offset_y", 1)
+	city_guidance_countdown_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	city_guidance_countdown_label.offset_left = 24
+	city_guidance_countdown_label.offset_right = 240
+	city_guidance_countdown_label.offset_top = 22
+	city_guidance_countdown_label.offset_bottom = 52
+	city_guidance_countdown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	city_guidance_countdown_label.visible = false
+	ui_root.add_child(city_guidance_countdown_label)
 
 	grey_guidance_root = Control.new()
 	grey_guidance_root.name = "GreyTimedLineGuidance"
@@ -5881,6 +5966,7 @@ func _enter_main_menu() -> void:
 	player.set_look_locked(true)
 	_hide_operation_hint()
 	_hide_all_ui()
+	_play_intro_bgm(THEME_MEMORY)
 	main_menu.visible = true
 
 func _on_start_pressed() -> void:
@@ -5901,7 +5987,20 @@ func _open_options() -> void:
 	player.set_look_locked(true)
 	_hide_operation_hint()
 	_hide_all_ui()
+	_update_bgm_volume_label()
 	_show_panel_fade(options_panel, choice_fade_in_duration)
+
+func _on_bgm_volume_changed(value: float) -> void:
+	bgm_volume_scale = clampf(value, 0.0, 1.0)
+	_update_bgm_volume_label()
+	_refresh_bgm_volume()
+
+func _format_bgm_volume_percent() -> String:
+	return "音量：%d%%" % int(round(bgm_volume_scale * 100.0))
+
+func _update_bgm_volume_label() -> void:
+	if bgm_volume_value_label != null:
+		bgm_volume_value_label.text = _format_bgm_volume_percent()
 
 func _show_story_page() -> void:
 	story_text.text = "\n".join(STORY_PAGES[story_page])
@@ -5925,6 +6024,7 @@ func _enter_theme_select() -> void:
 	_reset_level_state()
 	_hide_all_ui()
 	_update_theme_unlocks()
+	_play_intro_bgm(THEME_MEMORY)
 	theme_select.visible = true
 
 func _on_memory_theme_pressed() -> void:
@@ -5972,8 +6072,46 @@ func _on_theme_pressed(theme_index: int) -> void:
 	player.set_look_locked(true)
 	_hide_operation_hint()
 	_hide_all_ui()
-	_play_intro_bgm()
+	_play_intro_bgm(theme_index)
 	_show_panel_fade(mechanic_prompt, choice_fade_in_duration)
+
+func _start_pre_grey_text() -> void:
+	var pages := _current_pre_grey_text_pages()
+	if pages.is_empty():
+		_begin_memory_level()
+		return
+	phase = GamePhase.PRE_GREY_TEXT
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	player.set_locked(true)
+	player.set_look_locked(true)
+	_hide_operation_hint()
+	_hide_all_ui()
+	pre_grey_page = 0
+	_show_pre_grey_text_page()
+	_show_panel_fade(pre_grey_panel, choice_fade_in_duration)
+
+func _current_pre_grey_text_pages() -> Array:
+	match selected_theme_index:
+		THEME_MEMORY:
+			return PRE_GREY_MEMORY_TEXT_PAGES
+		THEME_DESIRE:
+			return PRE_GREY_DESIRE_TEXT_PAGES
+		THEME_SIGNS:
+			return PRE_GREY_SIGNS_TEXT_PAGES
+	return []
+
+func _show_pre_grey_text_page() -> void:
+	var pages := _current_pre_grey_text_pages()
+	pre_grey_text.text = "\n".join(pages[pre_grey_page])
+	pre_grey_next_button.text = "进入灰域" if pre_grey_page == pages.size() - 1 else "继续"
+
+func _advance_pre_grey_text() -> void:
+	var pages := _current_pre_grey_text_pages()
+	if pre_grey_page < pages.size() - 1:
+		pre_grey_page += 1
+		_show_pre_grey_text_page()
+	else:
+		_begin_memory_level()
 
 func _begin_memory_level() -> void:
 	phase = GamePhase.GREY_VOID
@@ -6004,7 +6142,7 @@ func _begin_memory_level() -> void:
 	if grey_turbulence_particles != null:
 		grey_turbulence_particles.emitting = true
 	_set_extra_grey_environment_active(true)
-	_stop_intro_bgm_for_grey()
+	_blend_bgm_for_grey()
 	_reset_grey_sfx_timers()
 	_reset_grey_guidance()
 	_show_quick_start_hint()
@@ -6209,15 +6347,18 @@ func _collect_desire_relic(relic_index: int) -> void:
 		desire_relic_areas[relic_index].set_deferred("monitorable", false)
 	var count := desire_collected_relics.size()
 	if _is_desire_collection_complete():
-		_show_hint("%s\n欲望物已集齐。前往月光迷宫最深处。" % String(data[2]), 4.5)
+		_show_hint("%s\n欲望已经成形。前往月光迷宫最深处。" % String(data[2]), 4.5)
 	else:
-		_show_hint("%s\n已收集 %d / %d。" % [String(data[2]), count, DESIRE_RELICS.size()], 4.0)
+		_show_hint("%s\n已收集 %d / %d。" % [String(data[2]), count, _desire_required_relic_count()], 4.0)
 
 func _is_desire_relic_collected(relic_index: int) -> bool:
 	return desire_collected_relics.has(relic_index)
 
 func _is_desire_collection_complete() -> bool:
-	return desire_collected_relics.size() >= DESIRE_RELICS.size()
+	return desire_collected_relics.size() >= _desire_required_relic_count()
+
+func _desire_required_relic_count() -> int:
+	return clampi(desire_required_relic_count, 1, DESIRE_RELICS.size())
 
 func _reset_desire_relics() -> void:
 	desire_collected_relics.clear()
@@ -6237,7 +6378,7 @@ func _on_desire_goal_entered(body: Node3D) -> void:
 		can_read_tower = true
 		_show_hint("按 E 阅读月光陷阱广场。", 2.5)
 	else:
-		var missing := DESIRE_RELICS.size() - desire_collected_relics.size()
+		var missing := _desire_required_relic_count() - desire_collected_relics.size()
 		_show_hint("这里还没有回应。还需收集 %d 件欲望物。" % missing, 3.0)
 
 func _on_desire_goal_exited(body: Node3D) -> void:
@@ -6804,6 +6945,7 @@ func _on_hidden_goal_exited(body: Node3D) -> void:
 
 func _open_reading() -> void:
 	_reset_city_guidance_timer()
+	_hide_city_guidance_countdown()
 	phase = GamePhase.READING
 	player.set_locked(true)
 	player.set_look_locked(true)
@@ -6885,6 +7027,7 @@ func _show_pause_menu() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_hide_operation_hint()
 	_hide_quick_start_hint()
+	_hide_city_guidance_countdown()
 	pause_menu.visible = true
 
 func _hide_pause_menu() -> void:
@@ -6949,21 +7092,19 @@ func _reset_level_state() -> void:
 	player.set_footstep_set("grey")
 	direction_tint.color.a = 0.0
 	_hide_grey_guidance()
-	if global_music_tween != null:
-		global_music_tween.kill()
-	global_music_player.stop()
-	global_music_player.volume_db = intro_bgm_volume_db
 	_stop_grey_sfx()
 	_reset_grey_sfx_timers()
 
 func _update_memory_audio() -> void:
 	var theme_pos := _selected_theme_position()
 	var distance: float = player.global_position.distance_to(theme_pos)
-	var closeness: float = clamp(1.0 - distance / max(theme_sfx_hearing_distance, 1.0), 0.0, 1.0)
-	memory_lowpass.cutoff_hz = lerp(520.0, 7400.0, closeness)
+	var closeness := _selected_theme_audio_closeness(distance)
+	var seek_strength := _seek_audio_strength(closeness)
+	memory_lowpass.cutoff_hz = lerp(320.0, 9600.0, seek_strength)
 	if theme_sfx_player != null:
 		theme_sfx_player.position = theme_pos
-		theme_sfx_player.volume_db = lerp(theme_sfx_volume_far_db, theme_sfx_volume_near_db, closeness)
+		theme_sfx_player.volume_db = lerp(theme_sfx_volume_far_db, theme_sfx_volume_near_db, seek_strength)
+		theme_sfx_player.pitch_scale = lerp(0.88, 1.08, seek_strength)
 
 func _update_grey_audio_sfx(delta: float) -> void:
 	_update_theme_seeking_sfx(delta)
@@ -6974,44 +7115,52 @@ func _update_theme_seeking_sfx(delta: float) -> void:
 	if theme_sfx_timer > 0.0:
 		return
 	var sfx_index := _random_sfx_index(selected_theme_index)
-	_play_theme_sfx(sfx_index)
-	theme_sfx_timer = rng.randf_range(theme_sfx_min_interval, theme_sfx_max_interval)
+	var played_duration := _play_theme_sfx(sfx_index)
+	var seek_strength := _seek_audio_strength(_selected_theme_audio_closeness())
+	theme_sfx_timer = played_duration + rng.randf_range(lerpf(theme_sfx_min_interval, 1.15, seek_strength), lerpf(theme_sfx_max_interval, 2.65, seek_strength))
 
 func _update_zone_random_sfx(delta: float) -> void:
 	_ensure_zone_sfx_timers()
 	var zone_index := _nearest_zone_index(player.global_position)
-	if zone_index == selected_theme_index:
-		return
 	if zone_index < 0 or zone_index >= zone_audio_players.size():
 		return
-	zone_sfx_timers[zone_index] -= delta
-	if zone_sfx_timers[zone_index] <= 0.0:
-		_play_zone_sfx(zone_index)
-		zone_sfx_timers[zone_index] = rng.randf_range(zone_sfx_min_interval, zone_sfx_max_interval)
-
-func _play_theme_sfx(sfx_index: int) -> void:
-	if theme_sfx_player == null:
+	var closeness := _zone_audio_closeness(zone_index, player.global_position)
+	if closeness <= 0.03:
 		return
+	zone_sfx_timers[zone_index] -= delta * lerpf(0.75, 2.15, closeness)
+	if zone_sfx_timers[zone_index] <= 0.0:
+		_play_zone_sfx(zone_index, closeness)
+		zone_sfx_timers[zone_index] = rng.randf_range(lerpf(zone_sfx_max_interval, zone_sfx_min_interval, closeness), lerpf(zone_sfx_max_interval + 1.4, zone_sfx_min_interval + 1.2, closeness))
+
+func _play_theme_sfx(sfx_index: int) -> float:
+	if theme_sfx_player == null:
+		return 0.0
 	var paths := _sfx_paths_for_theme(selected_theme_index)
 	var stream := _audio_stream_or_generator([paths[sfx_index]])
 	theme_sfx_player.stream = stream
 	_set_generated_frequency(theme_sfx_player, _generated_theme_sfx_frequency(selected_theme_index, sfx_index))
+	_set_generated_sfx_profile(theme_sfx_player, selected_theme_index, sfx_index, "seek")
 	theme_sfx_player.play()
-	_mark_generated_sfx_stop(theme_sfx_player, theme_sfx_generated_duration)
-	if _should_show_theme_sfx_text():
-		_show_theme_sfx_text(selected_theme_index, sfx_index)
+	var played_duration := _sfx_stream_duration(stream, _generated_theme_sfx_duration(selected_theme_index, sfx_index, "seek"))
+	_mark_generated_sfx_stop(theme_sfx_player, played_duration)
+	_show_seek_sfx_text(selected_theme_index, sfx_index)
+	return played_duration
 
-func _play_zone_sfx(zone_index: int) -> void:
+func _play_zone_sfx(zone_index: int, closeness := -1.0) -> void:
 	if zone_index < 0 or zone_index >= zone_audio_players.size():
 		return
+	if closeness < 0.0:
+		closeness = _zone_audio_closeness(zone_index, player.global_position)
 	var paths := _sfx_paths_for_theme(zone_index)
 	var sfx_index := rng.randi_range(0, paths.size() - 1)
 	var player_node := zone_audio_players[zone_index]
 	player_node.stream = _audio_stream_or_generator([paths[sfx_index]])
-	player_node.volume_db = zone_sfx_volume_db
+	player_node.volume_db = zone_sfx_volume_db + _zone_sfx_volume_offset(zone_index) + lerpf(-7.5, 4.0, closeness)
+	player_node.pitch_scale = _zone_sfx_pitch(zone_index, sfx_index, closeness)
 	_set_generated_frequency(player_node, _generated_theme_sfx_frequency(zone_index, sfx_index))
+	_set_generated_sfx_profile(player_node, zone_index, sfx_index, "zone")
 	player_node.play()
-	_mark_generated_sfx_stop(player_node, zone_sfx_generated_duration)
+	_mark_generated_sfx_stop(player_node, _sfx_stream_duration(player_node.stream, _generated_theme_sfx_duration(zone_index, sfx_index, "zone")))
 
 func _sfx_paths_for_theme(theme_index: int) -> Array:
 	var index := clampi(theme_index, 0, THEME_SFX_AUDIO_PATHS.size() - 1)
@@ -7021,8 +7170,139 @@ func _random_sfx_index(theme_index: int) -> int:
 	var paths := _sfx_paths_for_theme(theme_index)
 	return rng.randi_range(0, paths.size() - 1)
 
+func _selected_theme_audio_closeness(distance := -1.0) -> float:
+	var resolved_distance := distance
+	if resolved_distance < 0.0:
+		resolved_distance = player.global_position.distance_to(_selected_theme_position())
+	return clamp(1.0 - resolved_distance / max(theme_sfx_hearing_distance, 1.0), 0.0, 1.0)
+
+func _seek_audio_strength(closeness: float) -> float:
+	return clampf(pow(clampf(closeness, 0.0, 1.0), 0.56), 0.0, 1.0)
+
+func _zone_audio_closeness(zone_index: int, pos: Vector3) -> float:
+	if zone_index < 0 or zone_index >= ZONE_POSITIONS.size():
+		return 0.0
+	var shape: Vector2 = ZONE_SHAPES[zone_index]
+	var local: Vector3 = (pos - ZONE_POSITIONS[zone_index]).rotated(Vector3.UP, -deg_to_rad(ZONE_ROTATIONS[zone_index]))
+	var nx: float = abs(local.x) / max(shape.x * 0.72, 0.01)
+	var nz: float = abs(local.z) / max(shape.y * 0.72, 0.01)
+	return clamp(1.0 - max(nx, nz), 0.0, 1.0)
+
+func _zone_sfx_pitch(theme_index: int, sfx_index: int, closeness: float) -> float:
+	var base := 1.0 + float((theme_index + sfx_index) % 5 - 2) * 0.025
+	match theme_index:
+		THEME_DESIRE:
+			base += 0.07
+		THEME_SIGNS:
+			base += 0.12
+		THEME_THIN, THEME_SKY:
+			base += 0.05 * sin(float(Time.get_ticks_msec()) * 0.001)
+		THEME_DEAD:
+			base -= 0.10
+		THEME_CONTINUOUS:
+			base -= 0.045
+		THEME_HIDDEN:
+			base += 0.035
+	return clampf(base + closeness * 0.08, 0.72, 1.28)
+
 func _generated_theme_sfx_frequency(theme_index: int, sfx_index: int) -> float:
 	return 170.0 + float(theme_index) * 31.0 + float(sfx_index) * 43.0
+
+func _generated_theme_sfx_duration(theme_index: int, sfx_index: int, role: String) -> float:
+	if role == "seek":
+		return theme_sfx_generated_duration + float(sfx_index % 2) * 0.24
+	match theme_index:
+		THEME_MEMORY:
+			return 1.1 + float(sfx_index) * 0.22
+		THEME_DESIRE:
+			return 0.65 + float(sfx_index % 2) * 0.22
+		THEME_SIGNS:
+			return 0.75 + float(sfx_index) * 0.12
+		THEME_THIN:
+			return 1.8 + float(sfx_index) * 0.25
+		THEME_TRADE:
+			return 0.9 + float(sfx_index % 3) * 0.18
+		THEME_EYES:
+			return 0.82 + float(sfx_index) * 0.16
+		THEME_NAMES_CITY:
+			return 1.35 + float(sfx_index % 2) * 0.28
+		THEME_DEAD:
+			return 2.2 + float(sfx_index) * 0.35
+		THEME_SKY:
+			return 2.0 + float(sfx_index) * 0.28
+		THEME_CONTINUOUS:
+			return 2.8 + float(sfx_index) * 0.34
+		THEME_HIDDEN:
+			return 1.55 + float(sfx_index) * 0.22
+	return zone_sfx_generated_duration
+
+func _zone_sfx_volume_offset(theme_index: int) -> float:
+	match theme_index:
+		THEME_THIN, THEME_SKY:
+			return -2.0
+		THEME_DEAD:
+			return 1.6
+		THEME_CONTINUOUS:
+			return 1.2
+		THEME_HIDDEN:
+			return -0.6
+	return 0.0
+
+func _set_generated_sfx_profile(player_node: Node, theme_index: int, sfx_index: int, role: String) -> void:
+	player_node.set_meta("generated_theme_index", theme_index)
+	player_node.set_meta("generated_sfx_index", sfx_index)
+	player_node.set_meta("generated_sfx_role", role)
+	player_node.set_meta("generated_sfx_duration", _generated_theme_sfx_duration(theme_index, sfx_index, role))
+	player_node.set_meta("generated_sfx_started_msec", Time.get_ticks_msec())
+
+func _sfx_stream_duration(stream: AudioStream, fallback_duration: float) -> float:
+	if stream == null or stream is AudioStreamGenerator:
+		return maxf(fallback_duration, 0.1)
+	if stream.has_method("get_length"):
+		var length := float(stream.call("get_length"))
+		if length > 0.05:
+			return length
+	return maxf(fallback_duration, 0.1)
+
+func _show_seek_sfx_text(theme_index: int, sfx_index: int) -> void:
+	var near_theme_text := _is_near_selected_theme_text_zone()
+	if quick_start_hint_locked:
+		if not _seek_sfx_texts_for_theme(theme_index).is_empty() or near_theme_text:
+			_hide_quick_start_hint()
+		else:
+			return
+	if near_theme_text:
+		_show_theme_sfx_text(theme_index, sfx_index)
+	else:
+		_show_theme_seek_sfx_text(theme_index, sfx_index)
+
+func _seek_sfx_texts_for_theme(theme_index: int) -> Array:
+	match theme_index:
+		THEME_MEMORY:
+			return MEMORY_SEEK_SFX_TEXTS
+		THEME_DESIRE:
+			return DESIRE_SEEK_SFX_TEXTS
+		THEME_SIGNS:
+			return SIGNS_SEEK_SFX_TEXTS
+	return []
+
+func _show_theme_seek_sfx_text(theme_index: int, sfx_index: int) -> void:
+	if quick_hint_label == null:
+		return
+	var texts := _seek_sfx_texts_for_theme(theme_index)
+	if texts.is_empty():
+		return
+	var text := String(texts[clampi(sfx_index, 0, texts.size() - 1)])
+	if theme_sfx_text_tween != null:
+		theme_sfx_text_tween.kill()
+	quick_hint_label.text = text
+	quick_hint_label.visible = true
+	quick_hint_label.modulate.a = 0.0
+	theme_sfx_text_tween = create_tween()
+	theme_sfx_text_tween.tween_property(quick_hint_label, "modulate:a", quick_start_hint_alpha, theme_sfx_text_fade_in_duration)
+	theme_sfx_text_tween.tween_interval(maxf(theme_sfx_text_hold_duration + 1.2, 2.6))
+	theme_sfx_text_tween.tween_property(quick_hint_label, "modulate:a", 0.0, theme_sfx_text_fade_out_duration)
+	theme_sfx_text_tween.tween_callback(func(): quick_hint_label.visible = false)
 
 func _selected_theme_position() -> Vector3:
 	var index := clampi(selected_theme_index, 0, ZONE_POSITIONS.size() - 1)
@@ -7031,6 +7311,9 @@ func _selected_theme_position() -> Vector3:
 func _should_show_theme_sfx_text() -> bool:
 	if quick_start_hint_locked:
 		return false
+	return _is_near_selected_theme_text_zone()
+
+func _is_near_selected_theme_text_zone() -> bool:
 	var distance: float = player.global_position.distance_to(_selected_theme_position())
 	return distance <= theme_sfx_text_trigger_distance or _is_inside_zone(selected_theme_index, player.global_position)
 
@@ -7052,34 +7335,103 @@ func _show_theme_sfx_text(theme_index: int, sfx_index: int) -> void:
 	theme_sfx_text_tween.tween_property(quick_hint_label, "modulate:a", 0.0, theme_sfx_text_fade_out_duration)
 	theme_sfx_text_tween.tween_callback(func(): quick_hint_label.visible = false)
 
-func _play_intro_bgm() -> void:
+func _theme_bgm_paths(theme_index: int) -> Array:
+	var fallback := [MEMORY_LONG_BGM_AUDIO_PATH, CITY_MEMORY_AUDIO_PATH, LEGACY_MEMORY_AUDIO_PATH]
+	match theme_index:
+		THEME_MEMORY:
+			return fallback
+		THEME_DESIRE:
+			return ["res://assets/audio/theme_bgm/desire_background.mp3"] + fallback
+		THEME_SIGNS:
+			return ["res://assets/audio/theme_bgm/signs_background.mp3"] + fallback
+		THEME_THIN:
+			return ["res://assets/audio/theme_bgm/thin_background.mp3"] + fallback
+		THEME_TRADE:
+			return ["res://assets/audio/theme_bgm/trade_background.mp3"] + fallback
+		THEME_EYES:
+			return ["res://assets/audio/theme_bgm/eyes_background.mp3"] + fallback
+		THEME_NAMES_CITY:
+			return ["res://assets/audio/theme_bgm/names_background.mp3"] + fallback
+		THEME_DEAD:
+			return ["res://assets/audio/theme_bgm/dead_background.mp3"] + fallback
+		THEME_SKY:
+			return ["res://assets/audio/theme_bgm/sky_background.mp3"] + fallback
+		THEME_CONTINUOUS:
+			return ["res://assets/audio/theme_bgm/continuous_background.mp3"] + fallback
+		THEME_HIDDEN:
+			return ["res://assets/audio/theme_bgm/hidden_background.mp3"] + fallback
+	return fallback
+
+func _ensure_bgm_stream_for_theme(theme_index: int) -> void:
+	if global_music_player == null:
+		return
+	if current_bgm_theme_index == theme_index and global_music_player.stream != null:
+		return
+	var was_playing := global_music_player.playing
+	global_music_player.stream = _audio_stream_or_generator(_theme_bgm_paths(theme_index), true)
+	current_bgm_theme_index = theme_index
+	if was_playing:
+		global_music_player.play()
+
+func _effective_bgm_volume(base_db: float) -> float:
+	var scale := clampf(bgm_volume_scale, 0.0, 1.0)
+	if scale <= 0.001:
+		return -80.0
+	return base_db + linear_to_db(scale)
+
+func _current_bgm_base_volume() -> float:
+	var active_phase := previous_phase if phase == GamePhase.PAUSED else phase
+	if active_phase in [GamePhase.GREY_VOID, GamePhase.MANIFESTING]:
+		return grey_bgm_volume_db
+	if active_phase in [GamePhase.CITY, GamePhase.READING, GamePhase.CHOICE]:
+		return city_bgm_volume_db
+	return intro_bgm_volume_db
+
+func _refresh_bgm_volume() -> void:
 	if global_music_player == null:
 		return
 	if global_music_tween != null:
 		global_music_tween.kill()
-	global_music_player.volume_db = intro_bgm_volume_db
+		global_music_tween = null
+	global_music_player.volume_db = _effective_bgm_volume(_current_bgm_base_volume())
+
+func _play_intro_bgm(theme_index: int = THEME_MEMORY) -> void:
+	if global_music_player == null:
+		return
+	_ensure_bgm_stream_for_theme(theme_index)
+	if global_music_tween != null:
+		global_music_tween.kill()
+		global_music_tween = null
+	global_music_player.bus = "WorldReverb"
+	global_music_player.volume_db = _effective_bgm_volume(intro_bgm_volume_db)
 	if not global_music_player.playing:
 		global_music_player.play()
 
-func _stop_intro_bgm_for_grey() -> void:
-	if global_music_player == null or not global_music_player.playing:
+func _blend_bgm_for_grey() -> void:
+	if global_music_player == null:
 		return
+	_ensure_bgm_stream_for_theme(selected_theme_index)
 	if global_music_tween != null:
 		global_music_tween.kill()
+	global_music_player.bus = "MemoryZone"
+	if not global_music_player.playing:
+		global_music_player.volume_db = _effective_bgm_volume(intro_bgm_volume_db)
+		global_music_player.play()
 	global_music_tween = create_tween()
-	global_music_tween.tween_property(global_music_player, "volume_db", -42.0, grey_bgm_fade_out_duration)
-	global_music_tween.tween_callback(func(): global_music_player.stop())
+	global_music_tween.tween_property(global_music_player, "volume_db", _effective_bgm_volume(grey_bgm_volume_db), grey_bgm_fade_out_duration)
 
 func _play_city_bgm() -> void:
 	if global_music_player == null:
 		return
+	_ensure_bgm_stream_for_theme(selected_theme_index)
 	if global_music_tween != null:
 		global_music_tween.kill()
-	global_music_player.volume_db = -42.0
+	global_music_player.bus = "WorldReverb"
 	if not global_music_player.playing:
+		global_music_player.volume_db = -42.0
 		global_music_player.play()
 	global_music_tween = create_tween()
-	global_music_tween.tween_property(global_music_player, "volume_db", city_bgm_volume_db, city_bgm_fade_in_duration)
+	global_music_tween.tween_property(global_music_player, "volume_db", _effective_bgm_volume(city_bgm_volume_db), city_bgm_fade_in_duration)
 
 func _ensure_zone_sfx_timers() -> void:
 	while zone_sfx_timers.size() < zone_audio_players.size():
@@ -7138,23 +7490,40 @@ func _reset_city_guidance_timer() -> void:
 
 func _update_city_guidance(delta: float) -> void:
 	if not is_instance_valid(player) or phase != GamePhase.CITY:
+		_hide_city_guidance_countdown()
 		return
 	if can_read_tower or _is_player_near_reading_trigger():
 		_reset_city_guidance_timer()
+		_hide_city_guidance_countdown()
 		return
 	city_guidance_timer += delta
 	var target_delay := city_guidance_repeat_delay if city_guidance_has_shown else city_guidance_delay
+	_update_city_guidance_countdown(target_delay)
 	if city_guidance_timer >= maxf(target_delay, 1.0):
 		_show_hint(_city_guidance_text(), 5.0)
 		city_guidance_timer = 0.0
 		city_guidance_has_shown = true
+		_update_city_guidance_countdown(city_guidance_repeat_delay)
+
+func _update_city_guidance_countdown(target_delay: float) -> void:
+	if city_guidance_countdown_label == null:
+		return
+	var remaining := maxf(target_delay - city_guidance_timer, 0.0)
+	var seconds := int(ceil(remaining))
+	city_guidance_countdown_label.visible = true
+	city_guidance_countdown_label.text = "寻声 %02d:%02d" % [seconds / 60, seconds % 60]
+	city_guidance_countdown_label.modulate.a = 0.84 if remaining > 0.0 else 0.50
+
+func _hide_city_guidance_countdown() -> void:
+	if city_guidance_countdown_label != null:
+		city_guidance_countdown_label.visible = false
 
 func _city_guidance_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
 			if _is_desire_collection_complete():
 				return "欲望物已经集齐。去月光迷宫最深处，寻找白色陷阱广场。"
-			return "寻找带彩色辉光的欲望物。靠近后按 E 拾取。"
+			return "寻找带彩色辉光的欲望物。收集任意 %d 件后，去月光迷宫深处。" % _desire_required_relic_count()
 		THEME_SIGNS:
 			if _is_sign_fracture_complete():
 				return "五处符号断点已沉默。回到中心无名广场。"
@@ -7197,7 +7566,7 @@ func _city_guidance_text() -> String:
 func _city_entry_objective_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
-			return "寻找 5 件带彩色辉光的欲望物，全部拾取后进入月光迷宫最深处阅读。"
+			return "寻找任意 %d 件带彩色辉光的欲望物，然后进入月光迷宫最深处阅读。" % _desire_required_relic_count()
 		THEME_SIGNS:
 			return "读取 5 处发光符号断点，然后回到中心无名广场阅读。"
 		THEME_THIN:
@@ -7465,7 +7834,7 @@ func _show_quick_start_hint() -> void:
 	if theme_sfx_text_tween != null:
 		theme_sfx_text_tween.kill()
 	quick_start_hint_locked = true
-	quick_hint_label.text = "听声找城 | WASD 移动 | Space 跳跃 | Shift 轻跑 | 按住左键看向 | E 交互 | Esc 暂停"
+	quick_hint_label.text = "寻声 | WASD 移动 | Space 跳跃 | Shift 轻跑 | 按住左键看向 | E 交互 | Esc 暂停"
 	quick_hint_label.visible = true
 	quick_hint_label.modulate.a = 0.0
 	var total: float = maxf(quick_start_hint_duration, 0.1)
@@ -7566,7 +7935,8 @@ func _toggle_grey_debug_visibility() -> void:
 func _hide_all_ui() -> void:
 	_hide_quick_start_hint()
 	_hide_grey_guidance()
-	for c in [main_menu, story_panel, options_panel, theme_select, mechanic_prompt, reading_panel, choice_panel, pause_menu]:
+	_hide_city_guidance_countdown()
+	for c in [main_menu, story_panel, options_panel, theme_select, mechanic_prompt, pre_grey_panel, reading_panel, choice_panel, pause_menu]:
 		if c != null:
 			c.visible = false
 			c.modulate.a = 1.0
@@ -8112,6 +8482,11 @@ func _register_generator(player_node: Node, frequency: float) -> void:
 	generated_audio_players.append(player_node)
 	generator_phases.append(frequency)
 	generator_playbacks.append(null)
+	player_node.set_meta("generated_theme_index", -1)
+	player_node.set_meta("generated_sfx_index", 0)
+	player_node.set_meta("generated_sfx_role", "fallback")
+	player_node.set_meta("generated_sfx_duration", 1.0)
+	player_node.set_meta("generated_sfx_started_msec", Time.get_ticks_msec())
 
 func _set_generated_frequency(player_node: Node, frequency: float) -> void:
 	var index := generated_audio_players.find(player_node)
@@ -8132,10 +8507,85 @@ func _fill_generated_audio() -> void:
 			continue
 		var frames := playback.get_frames_available()
 		var phase_hz := generator_phases[i]
+		var theme_index := int(p.get_meta("generated_theme_index", -1))
+		var sfx_index := int(p.get_meta("generated_sfx_index", 0))
+		var duration := float(p.get_meta("generated_sfx_duration", 1.0))
+		var started_msec := int(p.get_meta("generated_sfx_started_msec", Time.get_ticks_msec()))
+		var now_msec := int(Time.get_ticks_msec())
+		var now_sec := float(now_msec % 100000) / 1000.0
+		var local_base_sec := maxf(float(now_msec - started_msec) / 1000.0, 0.0)
 		for f in range(frames):
-			var t := float(Time.get_ticks_msec() % 100000) / 1000.0 + float(f) / 22050.0
-			var sample := sin(t * TAU * phase_hz) * 0.05 + sin(t * TAU * phase_hz * 1.5) * 0.025
+			var t := now_sec + float(f) / 22050.0
+			var local_t := local_base_sec + float(f) / 22050.0
+			var sample := _generated_sfx_sample(theme_index, sfx_index, local_t, t, phase_hz, duration)
 			playback.push_frame(Vector2(sample, sample))
+
+func _generated_sfx_sample(theme_index: int, sfx_index: int, local_t: float, t: float, base_hz: float, duration: float) -> float:
+	if theme_index < 0:
+		return sin(t * TAU * base_hz) * 0.05 + sin(t * TAU * base_hz * 1.5) * 0.025
+	var env := _one_shot_envelope(local_t, duration)
+	var pulse_fast := _decay_pulse(local_t, 4.0 + float(sfx_index), 0.18)
+	var pulse_slow := _decay_pulse(local_t, 1.2 + float(sfx_index) * 0.2, 0.24)
+	var noise := _hash_noise(t * (220.0 + float(theme_index) * 17.0) + float(sfx_index) * 19.0)
+	match theme_index:
+		THEME_MEMORY:
+			var bell := sin(t * TAU * (520.0 + float(sfx_index) * 96.0)) * pulse_slow
+			return (bell * 0.075 + noise * 0.012) * env
+		THEME_DESIRE:
+			var coin := sin(t * TAU * (1120.0 + float(sfx_index) * 210.0)) * pulse_fast
+			var velvet := sin(t * TAU * (180.0 + float(sfx_index) * 35.0)) * 0.018
+			return (coin * 0.10 + velvet + noise * 0.018 * pulse_fast) * env
+		THEME_SIGNS:
+			var square := 1.0 if sin(t * TAU * (310.0 + float(sfx_index) * 81.0)) >= 0.0 else -1.0
+			var glitch_gate := 1.0 if fposmod(local_t * (10.0 + float(sfx_index) * 3.0), 1.0) < 0.42 else 0.0
+			return (square * 0.055 * glitch_gate + noise * 0.035 * glitch_gate) * env
+		THEME_THIN:
+			var drift := 0.5 + 0.5 * sin(t * TAU * 0.23 + float(sfx_index))
+			var air := sin(t * TAU * (640.0 + drift * 90.0)) * 0.032
+			return (air + noise * 0.018) * env * 0.82
+		THEME_TRADE:
+			var clink := sin(t * TAU * (880.0 + float(sfx_index) * 170.0)) * pulse_fast
+			var crowd := noise * (0.018 + pulse_slow * 0.018)
+			var water := sin(t * TAU * (92.0 + 12.0 * sin(t * TAU * 0.7))) * 0.018
+			return (clink * 0.075 + crowd + water) * env
+		THEME_EYES:
+			var scan := sin(t * TAU * (760.0 + float(sfx_index) * 120.0)) * pulse_slow
+			var blink := _decay_pulse(local_t + 0.08, 2.8, 0.09)
+			return (scan * 0.070 + blink * 0.045 + noise * 0.008) * env
+		THEME_NAMES_CITY:
+			var mouth := sin(t * TAU * 160.0) * sin(t * TAU * (430.0 + float(sfx_index) * 65.0))
+			return (mouth * 0.048 + noise * 0.030) * env
+		THEME_DEAD:
+			var drone := sin(t * TAU * (72.0 + float(sfx_index) * 9.0)) * 0.045
+			var heart := _decay_pulse(local_t, 1.05, 0.12) * 0.060
+			return (drone + heart + noise * 0.010) * env
+		THEME_SKY:
+			var wind := noise * (0.028 + 0.016 * sin(t * TAU * 0.18))
+			var high := sin(t * TAU * (980.0 + 120.0 * sin(t * TAU * 0.12))) * 0.018
+			return (wind + high) * env * 0.85
+		THEME_CONTINUOUS:
+			var machine := sin(t * TAU * (118.0 + float(sfx_index) * 22.0)) * 0.040
+			var repeat_gate := 0.45 + 0.55 * (1.0 if fposmod(local_t * 6.0, 1.0) < 0.5 else 0.0)
+			return (machine * repeat_gate + noise * 0.044) * env
+		THEME_HIDDEN:
+			var sparkle := sin(t * TAU * (1260.0 + float(sfx_index) * 180.0)) * _decay_pulse(local_t, 5.4, 0.08)
+			var under := sin(t * TAU * 96.0) * 0.020 + noise * 0.018
+			return (sparkle * 0.060 + under) * env * 0.9
+	return (sin(t * TAU * base_hz) * 0.045 + noise * 0.018) * env
+
+func _one_shot_envelope(local_t: float, duration: float) -> float:
+	var attack := clampf(local_t / 0.055, 0.0, 1.0)
+	var release := clampf((duration - local_t) / 0.22, 0.0, 1.0)
+	return attack * release
+
+func _decay_pulse(local_t: float, rate: float, width: float) -> float:
+	var p := fposmod(local_t * rate, 1.0)
+	if p > width:
+		return 0.0
+	return 1.0 - p / maxf(width, 0.001)
+
+func _hash_noise(seed: float) -> float:
+	return fposmod(sin(seed * 12.9898) * 43758.5453, 1.0) * 2.0 - 1.0
 
 func _ascii_zone_name(_label_text: String, index: int) -> String:
 	var names := ["Memory", "Desire", "Signs", "Thin", "Trading", "Eyes", "Names", "Dead", "Sky", "Continuous", "Hidden"]
