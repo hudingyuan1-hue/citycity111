@@ -33,6 +33,79 @@ const PLAYER_SPAWN_POINTS := [
 const LEGACY_MEMORY_AUDIO_PATH := "res://assets/audio/memory_theme_loop.ogg"
 const CITY_MEMORY_AUDIO_PATH := "res://assets/audio/city_memory_loop.ogg"
 const MEMORY_LONG_BGM_AUDIO_PATH := "res://assets/audio/memory_background.mp3"
+const MEMORY_MODEL_ROOT := "res://assets/models/memory/"
+const MEMORY_MODEL_PATHS := {
+	"BalconyHouse": MEMORY_MODEL_ROOT + "BalconyHouse.glb",
+	"BronzeShrine": MEMORY_MODEL_ROOT + "BronzeShrine.glb",
+	"BusStation": MEMORY_MODEL_ROOT + "BusStation.glb",
+	"CockfightRing": MEMORY_MODEL_ROOT + "CockfightRing.glb",
+	"CornerCafe": MEMORY_MODEL_ROOT + "CornerCafe.glb",
+	"CrystalTheater": MEMORY_MODEL_ROOT + "CrystalTheater.glb",
+	"CurvedArcade": MEMORY_MODEL_ROOT + "CurvedArcade.glb",
+	"DryDock": MEMORY_MODEL_ROOT + "DryDock.glb",
+	"EchoTower": MEMORY_MODEL_ROOT + "EchoTower.glb",
+	"GallowsLampPlaza": MEMORY_MODEL_ROOT + "GallowsLampPlaza.glb",
+	"GlassObservatory": MEMORY_MODEL_ROOT + "GlassObservatory.glb",
+	"GreatBellTower": MEMORY_MODEL_ROOT + "GreatBellTower.glb",
+	"HoneycombMemoryWall": MEMORY_MODEL_ROOT + "HoneycombMemoryWall.glb",
+	"LeadPavedAvenue": MEMORY_MODEL_ROOT + "LeadPavedAvenue.glb",
+	"LoverAlley": MEMORY_MODEL_ROOT + "LoverAlley.glb",
+	"MemoryRingPlaza": MEMORY_MODEL_ROOT + "MemoryRingPlaza.glb",
+	"NetMendingShed": MEMORY_MODEL_ROOT + "NetMendingShed.glb",
+	"NewArchBridge": MEMORY_MODEL_ROOT + "NewArchBridge.glb",
+	"NineSpoutFountain": MEMORY_MODEL_ROOT + "NineSpoutFountain.glb",
+	"OldBandstand": MEMORY_MODEL_ROOT + "OldBandstand.glb",
+	"OldMenWall": MEMORY_MODEL_ROOT + "OldMenWall.glb",
+	"OldNewOverlayWall": MEMORY_MODEL_ROOT + "OldNewOverlayWall.glb",
+	"PostcardPavilion": MEMORY_MODEL_ROOT + "PostcardPavilion.glb",
+	"PowderFactory": MEMORY_MODEL_ROOT + "PowderFactory.glb",
+	"ShellSpiralTower": MEMORY_MODEL_ROOT + "ShellSpiralTower.glb",
+	"StripedBarberShop": MEMORY_MODEL_ROOT + "StripedBarberShop.glb",
+	"TallBastion": MEMORY_MODEL_ROOT + "TallBastion.glb",
+	"TelescopeWorkshop": MEMORY_MODEL_ROOT + "TelescopeWorkshop.glb",
+	"ThirdWomanArcade": MEMORY_MODEL_ROOT + "ThirdWomanArcade.glb",
+	"TurkishBath": MEMORY_MODEL_ROOT + "TurkishBath.glb",
+	"TwilightFryShop": MEMORY_MODEL_ROOT + "TwilightFryShop.glb",
+	"UnevenStepStreet": MEMORY_MODEL_ROOT + "UnevenStepStreet.glb",
+	"ViolinWorkshop": MEMORY_MODEL_ROOT + "ViolinWorkshop.glb",
+	"ZincRoofHouse": MEMORY_MODEL_ROOT + "ZincRoofHouse.glb"
+}
+const MEMORY_MODEL_FIRST_PASS_KEYS := [
+	"BalconyHouse",
+	"BronzeShrine",
+	"BusStation",
+	"CockfightRing",
+	"CornerCafe",
+	"CrystalTheater",
+	"CurvedArcade",
+	"DryDock",
+	"EchoTower",
+	"GallowsLampPlaza",
+	"GlassObservatory",
+	"GreatBellTower",
+	"HoneycombMemoryWall",
+	"LeadPavedAvenue",
+	"LoverAlley",
+	"MemoryRingPlaza",
+	"NetMendingShed",
+	"NewArchBridge",
+	"NineSpoutFountain",
+	"OldBandstand",
+	"OldMenWall",
+	"OldNewOverlayWall",
+	"PostcardPavilion",
+	"PowderFactory",
+	"ShellSpiralTower",
+	"StripedBarberShop",
+	"TallBastion",
+	"TelescopeWorkshop",
+	"ThirdWomanArcade",
+	"TurkishBath",
+	"TwilightFryShop",
+	"UnevenStepStreet",
+	"ViolinWorkshop",
+	"ZincRoofHouse"
+]
 const THEME_SFX_AUDIO_PATHS := [
 	["res://assets/audio/theme_sfx/memory_rooster.wav", "res://assets/audio/theme_sfx/memory_horse.wav", "res://assets/audio/theme_sfx/memory_infant_cry.mp3", "res://assets/audio/theme_sfx/memory_wind.wav"],
 	["res://assets/audio/theme_sfx/desire_wind_chime.mp3", "res://assets/audio/theme_sfx/desire_water.wav"],
@@ -47,17 +120,17 @@ const THEME_SFX_AUDIO_PATHS := [
 	["res://assets/audio/theme_sfx/hidden_wolf.wav", "res://assets/audio/theme_sfx/hidden_rat.mp3"]
 ]
 const THEME_SFX_TEXTS := [
-	["远处有灯同时亮起。", "一声呼喊停在黄昏。", "街道把脚步吞回雾里。", "塔顶的金色报晓还没有发生。"],
-	["欲望在雾里绕行。", "第二个选择尚未结束。", "第三个身影从旁边经过。"],
-	["标志先于道路出现。", "名字贴在不可见的墙上。", "符号互相遮蔽。"],
-	["空桥在雾里轻轻晃动。", "细柱把脚步传到很远。", "云丝穿过未完成的房间。"],
-	["交换还没有发生。", "摊位在雾后响动。", "空手与空手相遇。"],
-	["有目光从白雾里回看。", "窗后没有脸。", "视线比道路更早抵达。"],
+	["旧回声叠在一起。", "钟声靠近记忆区。", "脚步从旧街角返回。", "金鸡声在塔顶亮起。"],
+	["风铃和水声把你拉向欲望区。", "欲望物的光更近了。", "月光迷宫在北侧。"],
+	["招牌比道路更早出现。", "键声把城市写成符号。", "符号遮住了物体。"],
+	["空桥在雾里轻轻晃动。", "细柱把脚步传到远处。", "悬空房间露出线框。"],
+	["摊位声从雾后传来。", "交易核正在响动。", "人流把路线推向码头。"],
+	["目光从白雾里回看。", "窗后只剩倒影。", "视线比道路更早抵达。"],
 	["名字被反复念错。", "称呼落在地面。", "陌生人带走一半声音。"],
-	["旧声沉入地面。", "没有脚步回答。", "冷的回响停在身后。"],
-	["天空在低处流动。", "云层贴近耳边。", "高处传来潮声。"],
-	["道路连续到无法分辨。", "一段声音接上另一段。", "没有停顿的街。"],
-	["隐藏之物先发出声音。", "雾后有门。", "不可见处正在靠近。"]
+	["旧声沉入地面。", "没有脚步回答。", "冷回响停在身后。"],
+	["天空在低处流动。", "云层贴近耳边。", "高处传来机械风。"],
+	["道路接上道路。", "声音没有停顿。", "街区重复到边界之外。"],
+	["隐藏之物先发出声音。", "雾后有门。", "暗处正在显形。"]
 ]
 const MEMORY_SEEK_SFX_TEXTS := [
 	"从那里出发，向东方走三天，你会到达迪奥米拉，这座城市有一只金鸡在塔楼顶上每天报晓。",
@@ -405,9 +478,9 @@ const HIDDEN_REVEAL_COLORS := [
 	Color(0.84, 0.62, 0.34, 1.0)
 ]
 const STORY_PAGES := [
-	["有些城市并不消失。", "它们只是拒绝被看见。"],
-	["灰域是一座主城。", "十一种声音在里面互相遮蔽。"],
-	["你要先听见。", "再走向属于那个主题的城市。"]
+	["灰域里保存着十一座主题城市的入口。"],
+	["选择主题后，先听声音，再判断方向。"],
+	["声音越清晰，说明你越接近那座城市。"]
 ]
 const PRE_GREY_MEMORY_TEXT_PAGES := [
 	["从那里出发，向东方走三天，你会到达迪奥米拉，这座城市有一只金鸡在塔楼顶上每天报晓。"],
@@ -516,17 +589,17 @@ const PRE_GREY_HIDDEN_TEXT_PAGES := [
 @export var ui_hold_duration := 3.0
 @export var ui_fade_out_duration := 2.0
 @export var choice_fade_in_duration := 1.0
-@export var operation_hint_display_duration := 8.0
-@export var quick_start_hint_duration := 5.0
+@export var operation_hint_display_duration := 16.0
+@export var quick_start_hint_duration := 14.0
 @export_range(0.0, 1.0, 0.01) var quick_start_hint_alpha := 0.72
 @export var grey_guidance_delay := 60.0
 @export var grey_guidance_fade_in_duration := 4.0
-@export var grey_guidance_line_count := 7
+@export var grey_guidance_line_count := 10
 @export var grey_guidance_line_spacing := 42.0
-@export_range(0.0, 1.0, 0.01) var grey_guidance_line_alpha := 0.42
+@export_range(0.0, 1.0, 0.01) var grey_guidance_line_alpha := 0.90
 
 @export_group("Interaction")
-@export var reading_interact_radius := 5.0
+@export var reading_interact_radius := 9.0
 @export var min_spawn_distance_from_echo_tower := 58.0
 @export var min_spawn_distance_from_memory_center := 42.0
 @export var echo_tower_clear_radius := 30.0
@@ -554,20 +627,21 @@ const PRE_GREY_HIDDEN_TEXT_PAGES := [
 @export var zone_sfx_min_interval := 0.85
 @export var zone_sfx_max_interval := 2.4
 @export var zone_sfx_generated_duration := 1.35
-@export var zone_sfx_volume_db := -5.0
+@export var zone_sfx_volume_db := -13.5
+@export var non_selected_zone_sfx_duck_db := 12.0
 @export_range(1, 5, 1) var generated_zone_sfx_variant_count := 3
-@export var theme_sfx_min_interval := 2.4
-@export var theme_sfx_max_interval := 4.4
+@export var theme_sfx_min_interval := 2.2
+@export var theme_sfx_max_interval := 4.0
 @export var theme_sfx_generated_duration := 1.05
-@export var theme_sfx_hearing_distance := 190.0
-@export var theme_sfx_volume_far_db := -58.0
-@export var theme_sfx_volume_near_db := 4.0
+@export var theme_sfx_hearing_distance := 420.0
+@export var theme_sfx_volume_far_db := -17.5
+@export var theme_sfx_volume_near_db := 8.0
 @export var theme_sfx_text_trigger_distance := 58.0
 @export var theme_sfx_text_fade_in_duration := 0.55
 @export var theme_sfx_text_hold_duration := 1.7
 @export var theme_sfx_text_fade_out_duration := 1.15
 @export var intro_bgm_volume_db := -13.0
-@export var grey_bgm_volume_db := -21.0
+@export var grey_bgm_volume_db := -80.0
 @export var city_bgm_volume_db := -9.0
 @export_range(0.0, 1.0, 0.01) var bgm_volume_scale := 0.85
 @export var grey_bgm_fade_out_duration := 1.0
@@ -702,6 +776,7 @@ var grey_countdown_label: Label
 var city_guidance_countdown_label: Label
 var grey_guidance_root: Control
 var grey_guidance_lines: Array[ColorRect] = []
+var grey_guidance_arrow_label: Label
 var grey_post_process_rect: ColorRect
 var grey_post_process_material: ShaderMaterial
 var direction_tint: ColorRect
@@ -784,6 +859,7 @@ var hidden_goal_trigger: Area3D
 var memory_zone_player: AudioStreamPlayer3D
 var theme_sfx_player: AudioStreamPlayer3D
 var global_music_player: AudioStreamPlayer
+var ui_click_player: AudioStreamPlayer
 var current_bgm_theme_index := -1
 var zone_audio_players: Array[AudioStreamPlayer3D] = []
 var generated_audio_players: Array[Node] = []
@@ -814,6 +890,7 @@ var grey_search_elapsed := 0.0
 var city_guidance_timer := 0.0
 var city_guidance_has_shown := false
 var rng := RandomNumberGenerator.new()
+var memory_model_scene_cache: Dictionary = {}
 
 func _ready() -> void:
 	rng.randomize()
@@ -859,11 +936,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			_hide_pause_menu()
 	if event.is_action_pressed("toggle_zone_debug"):
 		_toggle_grey_debug_visibility()
-	if event.is_action_pressed("repeat_hint") and hint_cache != "":
+	if event.is_action_pressed("repeat_hint"):
 		if phase in [GamePhase.GREY_VOID, GamePhase.CITY]:
 			_show_operation_hint()
+			if phase == GamePhase.GREY_VOID:
+				_show_quick_start_hint()
 		else:
-			_show_hint(hint_cache, 3.0)
+			if hint_cache != "":
+				_show_hint(hint_cache, 3.0)
 	if event.is_action_pressed("interact") and phase == GamePhase.CITY:
 		if selected_theme_index == THEME_DESIRE and desire_active_relic_index >= 0:
 			_collect_desire_relic(desire_active_relic_index)
@@ -1433,6 +1513,7 @@ func _build_merged_memory_city() -> void:
 
 	_build_memory_city_planned_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_MEMORY)
+	_upgrade_theme_whitebox_art_direction(root, THEME_MEMORY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1447,6 +1528,7 @@ func _build_desire_city() -> void:
 
 	_build_desire_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_DESIRE)
+	_upgrade_theme_whitebox_art_direction(root, THEME_DESIRE)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1461,6 +1543,7 @@ func _build_signs_city() -> void:
 
 	_build_signs_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_SIGNS)
+	_upgrade_theme_whitebox_art_direction(root, THEME_SIGNS)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1475,6 +1558,7 @@ func _build_thin_city() -> void:
 
 	_build_thin_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_THIN)
+	_upgrade_theme_whitebox_art_direction(root, THEME_THIN)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1489,6 +1573,7 @@ func _build_trade_city() -> void:
 
 	_build_trade_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_TRADE)
+	_upgrade_theme_whitebox_art_direction(root, THEME_TRADE)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1503,6 +1588,7 @@ func _build_eyes_city() -> void:
 
 	_build_eyes_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_EYES)
+	_upgrade_theme_whitebox_art_direction(root, THEME_EYES)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1517,6 +1603,7 @@ func _build_names_city() -> void:
 
 	_build_names_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_NAMES_CITY)
+	_upgrade_theme_whitebox_art_direction(root, THEME_NAMES_CITY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1531,6 +1618,7 @@ func _build_dead_city() -> void:
 
 	_build_dead_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_DEAD)
+	_upgrade_theme_whitebox_art_direction(root, THEME_DEAD)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1545,6 +1633,7 @@ func _build_sky_city() -> void:
 
 	_build_sky_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_SKY)
+	_upgrade_theme_whitebox_art_direction(root, THEME_SKY)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1559,6 +1648,7 @@ func _build_continuous_city() -> void:
 
 	_build_continuous_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_CONTINUOUS)
+	_upgrade_theme_whitebox_art_direction(root, THEME_CONTINUOUS)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1573,6 +1663,7 @@ func _build_hidden_city() -> void:
 
 	_build_hidden_city_whitebox(root)
 	_add_theme_procedural_polish(root, THEME_HIDDEN)
+	_upgrade_theme_whitebox_art_direction(root, THEME_HIDDEN)
 	_build_city_boundary_walls()
 	active_city_visual_parent = null
 
@@ -1618,6 +1709,7 @@ func _build_memory_city_planned_whitebox(parent: Node3D) -> void:
 	_build_memory_city_dry_harbor(parent)
 	_build_memory_city_center(parent)
 	_build_memory_city_atmosphere(parent)
+	_build_memory_concept_art_packaging(parent)
 
 func _build_memory_city_terrain(parent: Node3D) -> void:
 	var terrain := Node3D.new()
@@ -1629,13 +1721,31 @@ func _build_memory_city_terrain(parent: Node3D) -> void:
 	_add_city_block(terrain, "MemoryMainStreet_SouthNorth", Vector3(0, 0.07, -40), Vector3(8, 0.08, 150), 0.0, Color(0.50, 0.49, 0.45))
 	_add_city_block(terrain, "MemoryCrossStreet_WestEast", Vector3(0, 0.075, 6), Vector3(150, 0.08, 7), 0.0, Color(0.50, 0.49, 0.45))
 	_add_city_block(terrain, "DryHarborRoad", Vector3(0, 0.08, 63), Vector3(74, 0.08, 6), 0.0, Color(0.47, 0.46, 0.42))
+	_build_memory_lead_avenue_modules(terrain)
 	for i in range(9):
 		var wall := _make_city_asset(terrain, "SemiBuriedOldWall_%02d" % i, Vector3(-70.0 + float(i) * 17.5, 0.0, -74.0 + sin(float(i)) * 8.0), -12.0 + float(i % 5) * 6.0)
 		_add_local_city_block(wall, "WallMass", Vector3(0, 1.05, 0), Vector3(9.0, 2.1, 1.1), 0.0, Color(0.42, 0.42, 0.38))
+		_add_memory_model_overlay(wall, "UnevenStepStreet", Vector3(0, 0, 0), 90.0, Vector3(14.5, 2.4, 2.2))
 	for i in range(6):
 		var door := _make_city_asset(terrain, "BrokenDoor_%02d" % i, Vector3(-48.0 + float(i) * 18.0, 0.0, -50.0 + float(i % 2) * 8.0), 0.0)
 		_add_local_city_block(door, "LeftPost", Vector3(-1.25, 1.7, 0), Vector3(0.5, 3.4, 0.6), 0.0, Color(0.47, 0.45, 0.40))
 		_add_local_city_block(door, "RightPost", Vector3(1.25, 1.7, 0), Vector3(0.5, 3.4, 0.6), 0.0, Color(0.47, 0.45, 0.40))
+		_add_memory_model_overlay(door, "ThirdWomanArcade", Vector3(0, 0, 0), 0.0, Vector3(5.4, 5.2, 2.4))
+
+func _build_memory_lead_avenue_modules(parent: Node3D) -> void:
+	for i in range(5):
+		_add_memory_lead_avenue_module(parent, "LeadPavedMain_%02d" % i, Vector3(0, 0.10, -104.0 + float(i) * 34.0), 0.0, 34.0, 8.2)
+	for i in range(5):
+		_add_memory_lead_avenue_module(parent, "LeadPavedCross_%02d" % i, Vector3(-68.0 + float(i) * 34.0, 0.105, 6.0), 90.0, 34.0, 7.2)
+	for i in range(3):
+		_add_memory_lead_avenue_module(parent, "LeadPavedHarbor_%02d" % i, Vector3(-25.0 + float(i) * 25.0, 0.108, 63.0), 90.0, 25.0, 6.2)
+
+func _add_memory_lead_avenue_module(parent: Node3D, name: String, pos: Vector3, yaw: float, length: float, width: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, 0.0)
+	var scale := Vector3(width / 0.244, length / 1.177, 0.12 / 0.037)
+	var model := _add_memory_model_overlay(asset, "LeadPavedAvenue", Vector3.ZERO, yaw, scale, false)
+	if model != null:
+		model.rotation_degrees.x = 90.0
 
 func _build_memory_city_twilight_entrance(parent: Node3D) -> void:
 	var zone := _make_city_zone(parent, "ZoneA_TwilightEntrance")
@@ -1648,6 +1758,7 @@ func _build_memory_city_twilight_entrance(parent: Node3D) -> void:
 	_build_golden_rooster_tower(zone, Vector3(28, 0, -31), -10.0)
 	_build_bronze_god_statue(zone, "BronzeGodStatue_Left", Vector3(-10, 0, -39), 0.0)
 	_build_bronze_god_statue(zone, "BronzeGodStatue_Right", Vector3(12, 0, -39), 0.0)
+	_build_cockfight_ring(zone, Vector3(14, 0, -58), -8.0)
 	_build_postcard_rack(zone, Vector3(46, 0, -72), 22.0)
 
 func _build_memory_city_late_desire(parent: Node3D) -> void:
@@ -1703,6 +1814,9 @@ func _build_memory_city_dry_harbor(parent: Node3D) -> void:
 	for i in range(5):
 		var post := _make_city_asset(zone, "HarborMemoryPost_%02d" % i, Vector3(-44.0 + float(i) * 21.0, 0, 103.0), 0.0)
 		_add_local_city_block(post, "Post", Vector3(0, 1.5, 0), Vector3(0.55, 3.0, 0.55), 0.0, Color(0.34, 0.32, 0.28))
+		_add_memory_model_overlay(post, "BronzeShrine", Vector3(0, 0, 0), 18.0 + float(i) * 31.0, Vector3(1.20, 3.20, 1.20), true, false, false)
+		_add_local_city_block(post, "HarborPostMemorySlit", Vector3(0, 1.95, -0.38), Vector3(0.10, 0.72, 0.06), 0.0, Color(1.00, 0.62, 0.28), false)
+		_set_child_material(post, "HarborPostMemorySlit", _emissive_mat(Color(1.00, 0.62, 0.28, 0.82), 0.82, 0.22))
 
 func _build_memory_city_center(parent: Node3D) -> void:
 	var zone := _make_city_zone(parent, "ZoneF_EchoTowerCentralPlaza")
@@ -1714,11 +1828,17 @@ func _build_memory_city_center(parent: Node3D) -> void:
 	disk.position.y = 0.065
 	disk.material = _mat(Color(0.55, 0.54, 0.49), 1.0)
 	zone.add_child(disk)
+	var plaza_model := _make_city_asset(zone, "MemoryRingPlazaModel", Vector3.ZERO, 0.0)
+	_add_memory_model_overlay(plaza_model, "MemoryRingPlaza", Vector3(0, 0, 0), 0.0, Vector3(47.5, 0.55, 47.5), false)
+	disk.visible = false
 	_add_box_collision("EchoTowerRingPlazaCollision", Vector3(0, 0.055, 0), Vector3(51, 0.11, 51), 0.0)
 	for i in range(16):
 		var angle := TAU * float(i) / 16.0
 		var marker := _make_city_asset(zone, "CentralPlazaMemoryMarker_%02d" % i, Vector3(cos(angle) * 23.0, 0, sin(angle) * 23.0), rad_to_deg(-angle))
 		_add_local_city_block(marker, "Stone", Vector3(0, 0.25, 0), Vector3(1.0, 0.5, 2.8), 0.0, Color(0.46, 0.45, 0.41), false)
+		_add_memory_model_overlay(marker, "BronzeShrine", Vector3(0, 0, 0), 0.0, Vector3(1.45, 3.60, 1.45), true, false, false)
+		_add_local_city_block(marker, "MemoryMarkerAmberSlit", Vector3(0, 1.18, -0.46), Vector3(0.09, 1.10, 0.05), 0.0, Color(1.00, 0.68, 0.34), false)
+		_set_child_material(marker, "MemoryMarkerAmberSlit", _emissive_mat(Color(1.00, 0.68, 0.34, 0.76), 0.76, 0.18))
 	_build_echo_tower()
 
 func _make_city_zone(parent: Node3D, zone_name: String) -> Node3D:
@@ -1734,6 +1854,296 @@ func _make_city_asset(parent: Node3D, asset_name: String, pos: Vector3, yaw_degr
 	asset.rotation_degrees.y = yaw_degrees
 	parent.add_child(asset)
 	return asset
+
+func _add_memory_model_overlay(asset: Node3D, model_key: String, local_pos := Vector3.ZERO, local_yaw_degrees := 0.0, local_scale := Vector3.ONE, hide_whitebox := true, add_stage_anchor := true, add_fill_light := true) -> Node3D:
+	if asset == null or not MEMORY_MODEL_PATHS.has(model_key):
+		return null
+	if not MEMORY_MODEL_FIRST_PASS_KEYS.has(model_key):
+		return null
+	var path: String = MEMORY_MODEL_PATHS[model_key]
+	if not ResourceLoader.exists(path):
+		return null
+	var scene: PackedScene = memory_model_scene_cache.get(model_key, null)
+	if scene == null:
+		var loaded := load(path)
+		if not loaded is PackedScene:
+			return null
+		scene = loaded
+		memory_model_scene_cache[model_key] = scene
+	var instance := scene.instantiate() as Node3D
+	if instance == null:
+		return null
+	instance.name = "Imported_%s" % model_key
+	instance.position = local_pos
+	instance.rotation_degrees.y = local_yaw_degrees
+	instance.scale = local_scale
+	asset.add_child(instance)
+	_tune_imported_memory_model(instance, model_key)
+	if add_fill_light:
+		_add_memory_model_fill_light(asset, model_key)
+	if hide_whitebox:
+		_hide_memory_whitebox_geometry(asset)
+	if add_stage_anchor:
+		_add_memory_model_stage_anchor(asset, model_key)
+	return instance
+
+func _hide_memory_whitebox_geometry(root: Node) -> void:
+	if root == null:
+		return
+	for child in root.get_children():
+		if String(child.name).begins_with("Imported_"):
+			continue
+		if child is CSGBox3D or child is CSGCylinder3D or child is CSGCombiner3D or child is CSGPolygon3D:
+			child.visible = false
+
+func _add_memory_model_stage_anchor(asset: Node3D, model_key: String) -> void:
+	if asset == null:
+		return
+	var color := Color(0.34, 0.32, 0.28, 1.0)
+	match model_key:
+		"EchoTower":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 7.2, 0.16, color.lightened(0.10), 48)
+		"MemoryRingPlaza", "LeadPavedAvenue":
+			return
+		"CrystalTheater":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(23.0, 0.14, 18.0), 0.0, color.lightened(0.06))
+		"TallBastion":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(14.5, 0.16, 14.5), 0.0, color.darkened(0.02))
+		"CurvedArcade":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(8.0, 0.12, 25.0), 0.0, color.lightened(0.04))
+		"DryDock":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(30.0, 0.13, 9.5), 0.0, color.darkened(0.10))
+		"GreatBellTower":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 4.6, 0.14, color.lightened(0.06), 32)
+		"ShellSpiralTower":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 4.2, 0.14, Color(0.43, 0.38, 0.34, 1.0), 32)
+		"TurkishBath":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 5.1, 0.12, Color(0.42, 0.40, 0.36, 1.0), 32)
+		"BronzeShrine":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(6.2, 0.13, 5.2), 0.0, Color(0.38, 0.35, 0.30, 1.0))
+		"CornerCafe", "TelescopeWorkshop", "ViolinWorkshop", "StripedBarberShop", "ZincRoofHouse":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(8.6, 0.12, 7.4), 0.0, color.lightened(0.06))
+		"GallowsLampPlaza", "NineSpoutFountain", "OldBandstand", "CockfightRing":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 4.8, 0.12, color.lightened(0.04), 40)
+		"GlassObservatory":
+			_add_memory_stage_cylinder(asset, "ImportedModelStageBase", 4.6, 0.12, Color(0.32, 0.38, 0.40, 1.0), 36)
+		"LoverAlley":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(4.5, 0.12, 9.4), 0.0, Color(0.28, 0.27, 0.25, 1.0))
+		"NetMendingShed", "PostcardPavilion", "ThirdWomanArcade":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(8.2, 0.12, 6.4), 0.0, color.lightened(0.05))
+		"UnevenStepStreet":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(9.2, 0.10, 2.0), 0.0, color.darkened(0.05))
+		"HoneycombMemoryWall":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(2.4, 0.12, 16.5), 0.0, Color(0.30, 0.34, 0.34, 1.0))
+		"NewArchBridge":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(21.0, 0.13, 5.4), 0.0, color.lightened(0.04))
+		"PowderFactory":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(18.5, 0.16, 13.0), 0.0, Color(0.38, 0.34, 0.30, 1.0))
+		"OldNewOverlayWall":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(3.0, 0.14, 13.5), 0.0, Color(0.36, 0.35, 0.32, 1.0))
+		"BusStation", "TwilightFryShop", "BalconyHouse", "OldMenWall":
+			_add_memory_stage_box(asset, "ImportedModelStageBase", Vector3(9.5, 0.12, 8.0), 0.0, color.lightened(0.08))
+
+func _add_memory_stage_box(parent: Node3D, name: String, size: Vector3, yaw: float, color: Color) -> void:
+	var base := CSGBox3D.new()
+	base.name = name
+	base.position = Vector3(0, maxf(size.y * 0.5, 0.035), 0)
+	base.size = size
+	base.rotation_degrees.y = yaw
+	base.material = _memory_chalk_stone_material(color)
+	parent.add_child(base)
+
+func _add_memory_stage_cylinder(parent: Node3D, name: String, radius: float, height: float, color: Color, sides := 32) -> void:
+	var base := CSGCylinder3D.new()
+	base.name = name
+	base.radius = radius
+	base.height = height
+	base.sides = sides
+	base.position.y = maxf(height * 0.5, 0.035)
+	base.material = _memory_chalk_stone_material(color)
+	parent.add_child(base)
+
+func _tune_imported_memory_model(root: Node, model_key: String) -> void:
+	if root == null:
+		return
+	if root is CollisionObject3D:
+		var collision_object := root as CollisionObject3D
+		collision_object.collision_layer = 0
+		collision_object.collision_mask = 0
+	if root is MeshInstance3D:
+		var mesh_instance := root as MeshInstance3D
+		mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		_set_if_property_exists(mesh_instance, "gi_mode", GeometryInstance3D.GI_MODE_STATIC)
+		_apply_memory_import_surface_polish(mesh_instance, model_key)
+	for child in root.get_children():
+		_tune_imported_memory_model(child, model_key)
+
+func _apply_memory_import_surface_polish(mesh_instance: MeshInstance3D, model_key: String) -> void:
+	if mesh_instance == null or mesh_instance.mesh == null:
+		return
+	for surface_index in range(mesh_instance.mesh.get_surface_count()):
+		var active: Material = mesh_instance.get_surface_override_material(surface_index)
+		if active == null:
+			active = mesh_instance.mesh.surface_get_material(surface_index)
+		if active == null:
+			mesh_instance.set_surface_override_material(surface_index, _memory_import_base_material(model_key))
+		elif active is StandardMaterial3D:
+			var material := (active as StandardMaterial3D).duplicate() as StandardMaterial3D
+			material.roughness = maxf(material.roughness, 0.72)
+			material.metallic = minf(material.metallic, 0.18)
+			material.albedo_color = material.albedo_color.lerp(_memory_model_tint(model_key), 0.18)
+			if model_key == "EchoTower":
+				material.emission_enabled = false
+				material.emission_energy_multiplier = 0.0
+				material.albedo_color = material.albedo_color.lerp(Color(0.58, 0.56, 0.50, 1.0), 0.40)
+			if model_key in ["CrystalTheater", "GreatBellTower", "HoneycombMemoryWall"]:
+				material.emission_enabled = true
+				material.emission = _memory_model_accent(model_key)
+				material.emission_energy_multiplier = maxf(material.emission_energy_multiplier, 0.035)
+			mesh_instance.set_surface_override_material(surface_index, material)
+		else:
+			mesh_instance.set_surface_override_material(surface_index, _memory_import_base_material(model_key))
+
+func _memory_import_base_material(model_key: String) -> StandardMaterial3D:
+	var material := _mat(_memory_model_tint(model_key), 1.0)
+	material.roughness = 0.86
+	material.metallic = 0.02
+	if model_key != "EchoTower":
+		material.emission_enabled = true
+		material.emission = _memory_model_accent(model_key)
+		material.emission_energy_multiplier = 0.018
+	return material
+
+func _memory_import_overlay_material(model_key: String) -> StandardMaterial3D:
+	var tint := _memory_model_tint(model_key)
+	var overlay := StandardMaterial3D.new()
+	overlay.albedo_color = Color(tint.r, tint.g, tint.b, 0.20)
+	overlay.roughness = 0.92
+	overlay.metallic = 0.0
+	overlay.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	overlay.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	overlay.emission_enabled = true
+	overlay.emission = _memory_model_accent(model_key)
+	overlay.emission_energy_multiplier = 0.018
+	_set_if_property_exists(overlay, "rim_enabled", true)
+	_set_if_property_exists(overlay, "rim", 0.28)
+	_set_if_property_exists(overlay, "rim_tint", 0.42)
+	return overlay
+
+func _memory_model_tint(model_key: String) -> Color:
+	match model_key:
+		"EchoTower", "MemoryRingPlaza", "LeadPavedAvenue":
+			return Color(0.62, 0.60, 0.54, 1.0)
+		"CrystalTheater", "GlassObservatory":
+			return Color(0.66, 0.74, 0.76, 1.0)
+		"ShellSpiralTower", "BalconyHouse", "TwilightFryShop":
+			return Color(0.66, 0.58, 0.50, 1.0)
+		"TurkishBath":
+			return Color(0.68, 0.66, 0.60, 1.0)
+		"BronzeShrine", "GallowsLampPlaza":
+			return Color(0.50, 0.42, 0.32, 1.0)
+		"TelescopeWorkshop", "ViolinWorkshop", "StripedBarberShop", "CornerCafe", "ZincRoofHouse":
+			return Color(0.62, 0.56, 0.48, 1.0)
+		"NineSpoutFountain", "OldBandstand", "CockfightRing":
+			return Color(0.58, 0.56, 0.50, 1.0)
+		"PostcardPavilion", "ThirdWomanArcade", "NetMendingShed":
+			return Color(0.60, 0.53, 0.44, 1.0)
+		"LoverAlley", "UnevenStepStreet":
+			return Color(0.44, 0.42, 0.38, 1.0)
+		"TallBastion", "CurvedArcade", "DryDock":
+			return Color(0.46, 0.47, 0.45, 1.0)
+		"PowderFactory", "OldNewOverlayWall":
+			return Color(0.52, 0.46, 0.40, 1.0)
+		"BusStation", "NewArchBridge", "OldBandstand":
+			return Color(0.56, 0.55, 0.50, 1.0)
+		"HoneycombMemoryWall", "GreatBellTower":
+			return Color(0.54, 0.56, 0.54, 1.0)
+	return Color(0.58, 0.55, 0.49, 1.0)
+
+func _memory_model_accent(model_key: String) -> Color:
+	match model_key:
+		"EchoTower", "HoneycombMemoryWall":
+			return Color(0.46, 0.78, 1.0)
+		"CrystalTheater", "GlassObservatory":
+			return Color(0.58, 0.86, 1.0)
+		"GreatBellTower", "TwilightFryShop", "BusStation", "OldBandstand", "TurkishBath", "CornerCafe", "PostcardPavilion":
+			return Color(1.0, 0.64, 0.32)
+		"ShellSpiralTower":
+			return Color(1.0, 0.70, 0.86)
+		"GlassObservatory", "NineSpoutFountain":
+			return Color(0.58, 0.86, 1.0)
+		"BronzeShrine", "GallowsLampPlaza", "PowderFactory", "OldNewOverlayWall":
+			return Color(0.94, 0.58, 0.30)
+	return Color(0.82, 0.72, 0.52)
+
+func _add_memory_model_fill_light(asset: Node3D, model_key: String) -> void:
+	if asset == null:
+		return
+	var color := _memory_model_accent(model_key)
+	var pos := Vector3(0, 3.0, 0)
+	var energy := 0.0
+	var range := 0.0
+	match model_key:
+		"EchoTower":
+			pos = Vector3(0, 23.0, 0)
+			energy = 0.12
+			range = 16.0
+		"MemoryRingPlaza":
+			pos = Vector3(0, 2.0, 0)
+			energy = 0.26
+			range = 34.0
+		"CrystalTheater":
+			pos = Vector3(0, 5.2, -1.5)
+			energy = 0.52
+			range = 22.0
+		"GreatBellTower":
+			pos = Vector3(0, 10.5, 0)
+			energy = 0.36
+			range = 18.0
+		"ShellSpiralTower":
+			pos = Vector3(0, 8.0, 0)
+			energy = 0.22
+			range = 14.0
+		"TurkishBath":
+			pos = Vector3(0, 3.8, 0)
+			energy = 0.14
+			range = 11.0
+		"DryDock":
+			pos = Vector3(0, 2.2, 0)
+			energy = 0.18
+			range = 18.0
+		"NewArchBridge":
+			pos = Vector3(0, 2.2, 0)
+			energy = 0.16
+			range = 16.0
+		"PowderFactory":
+			pos = Vector3(0, 6.5, 0)
+			energy = 0.18
+			range = 20.0
+		"BronzeShrine", "GallowsLampPlaza", "CornerCafe", "PostcardPavilion":
+			pos = Vector3(0, 3.0, 0)
+			energy = 0.11
+			range = 10.0
+		"GlassObservatory", "NineSpoutFountain":
+			pos = Vector3(0, 4.2, 0)
+			energy = 0.13
+			range = 13.0
+		"TelescopeWorkshop", "ViolinWorkshop", "StripedBarberShop", "ZincRoofHouse":
+			pos = Vector3(0, 3.6, 0)
+			energy = 0.08
+			range = 9.0
+		_:
+			return
+	var light := OmniLight3D.new()
+	light.name = "Imported%sFillLight" % model_key
+	light.position = pos
+	light.light_color = color
+	light.light_energy = energy
+	light.omni_range = range
+	_set_if_property_exists(light, "light_volumetric_fog_energy", 0.48)
+	asset.add_child(light)
+	if model_key in ["MemoryRingPlaza", "CrystalTheater", "GreatBellTower", "TurkishBath"]:
+		_add_looping_light_energy_animation(asset, light, energy * 0.72, energy * 1.18, 4.2 + float(model_key.length() % 5) * 0.55)
 
 func _asset_global_pos(asset: Node3D, local_pos: Vector3) -> Vector3:
 	return asset.position + local_pos.rotated(Vector3.UP, deg_to_rad(asset.rotation_degrees.y))
@@ -1778,23 +2188,35 @@ func _build_silver_dome_house(parent: Node3D, asset_name: String, pos: Vector3, 
 	var asset := _make_city_asset(parent, asset_name, pos, yaw)
 	_add_local_city_block(asset, "WhiteboxReplaceRoot", Vector3(0, 2.0, 0), Vector3(8.0, 4.0, 7.0), 0.0, Color(0.54, 0.54, 0.50))
 	_add_local_cylinder(asset, "SilverDomeRoof", Vector3(0, 4.5, 0), 4.1, 1.1, Color(0.78, 0.79, 0.75), 32)
+	_set_child_material(asset, "WhiteboxReplaceRoot", _memory_chalk_stone_material(Color(0.72, 0.66, 0.64, 1.0)))
+	_set_child_material(asset, "SilverDomeRoof", _memory_silver_dome_material())
+	_add_memory_model_overlay(asset, "TurkishBath", Vector3(0, 0, 0), 0.0, Vector3(9.5, 6.0, 9.5))
+	_add_local_cylinder(asset, "SilverDomeCrest", Vector3(0, 5.2, 0), 2.4, 0.42, Color(0.82, 0.84, 0.82), 32, false)
+	_set_child_material(asset, "SilverDomeCrest", _memory_silver_dome_material())
 
 func _build_bronze_god_statue(parent: Node3D, asset_name: String, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, asset_name, pos, yaw)
 	_add_local_cylinder(asset, "Pedestal", Vector3(0, 0.45, 0), 1.25, 0.9, Color(0.35, 0.34, 0.30), 18, true)
 	_add_local_city_block(asset, "BronzeBody", Vector3(0, 2.0, 0), Vector3(0.9, 2.5, 0.7), 0.0, Color(0.33, 0.47, 0.39))
 	_add_local_city_block(asset, "RaisedArm", Vector3(0.65, 2.6, 0), Vector3(0.35, 1.5, 0.35), -18.0, Color(0.32, 0.45, 0.36), false)
+	_add_memory_model_overlay(asset, "BronzeShrine", Vector3(0, 0, 0), 0.0, Vector3(10.0, 7.6, 10.0))
 
 func _build_crystal_theater(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "CrystalTheater", pos, yaw)
 	_add_local_city_block(asset, "TranslucentStageHall", Vector3(0, 3.5, 0), Vector3(18, 7, 12), 0.0, Color(0.62, 0.76, 0.80, 0.46))
 	_add_local_city_block(asset, "OpenStageBlock", Vector3(0, 1.0, -5.0), Vector3(14, 2, 2), 0.0, Color(0.50, 0.58, 0.60))
+	_set_child_material(asset, "TranslucentStageHall", _memory_crystal_material(Color(0.66, 0.82, 0.92, 0.42), Color(1.0, 0.58, 0.28), 0.42))
+	_set_child_material(asset, "OpenStageBlock", _memory_wet_stone_material(Color(0.42, 0.48, 0.48, 1.0)))
+	_add_memory_pulsing_light(asset, "CrystalTheaterBreathingLight", Vector3(0, 4.2, -2.0), Color(1.0, 0.50, 0.22), 0.75, 2.4, 18.0, 3.6)
+	_add_memory_model_overlay(asset, "CrystalTheater", Vector3(0, 0, 0), 0.0, Vector3(30.0, 15.8, 37.8))
 
 func _build_golden_rooster_tower(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "GoldenRoosterTower", pos, yaw)
 	_add_local_city_block(asset, "NarrowTower", Vector3(0, 5.0, 0), Vector3(3.4, 10.0, 3.4), 0.0, Color(0.48, 0.47, 0.42))
 	_add_local_cylinder(asset, "ClockCap", Vector3(0, 10.6, 0), 2.1, 1.2, Color(0.43, 0.42, 0.37), 20)
 	_add_local_city_block(asset, "GoldenRoosterPlaceholder", Vector3(0, 12.0, 0), Vector3(1.8, 0.8, 0.45), 0.0, Color(0.94, 0.72, 0.22), false)
+	_add_memory_model_overlay(asset, "GreatBellTower", Vector3(0, 0, 0), 0.0, Vector3(10.0, 13.2, 10.0))
+	_add_local_city_block(asset, "GoldenRoosterAccent", Vector3(0, 14.6, -0.4), Vector3(1.8, 0.7, 0.42), 0.0, Color(0.95, 0.72, 0.22), false)
 
 func _build_twilight_fry_shop(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "TwilightFryShop", pos, yaw)
@@ -1807,12 +2229,14 @@ func _build_twilight_fry_shop(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	light.light_energy = 0.65
 	light.omni_range = 9.0
 	asset.add_child(light)
+	_add_memory_model_overlay(asset, "TwilightFryShop", Vector3(0, 0, 0), 0.0, Vector3(9.5, 6.7, 9.2))
 
 func _build_voice_balcony(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "VoiceBalcony", pos, yaw)
 	_add_local_city_block(asset, "TwoStoryHouse", Vector3(0, 3.2, 0), Vector3(7, 6.4, 6), 0.0, Color(0.49, 0.47, 0.42))
 	_add_local_city_block(asset, "BalconySlab", Vector3(0, 4.1, -3.9), Vector3(5.2, 0.35, 2.0), 0.0, Color(0.42, 0.40, 0.36))
 	_add_local_city_block(asset, "BalconyRail", Vector3(0, 4.75, -4.8), Vector3(5.4, 0.7, 0.25), 0.0, Color(0.35, 0.34, 0.31), false)
+	_add_memory_model_overlay(asset, "BalconyHouse", Vector3(0, 0, 0), 0.0, Vector3(10.0, 10.1, 13.2))
 
 func _build_shell_spiral_stair(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "ShellSpiralStair", pos, yaw)
@@ -1821,6 +2245,12 @@ func _build_shell_spiral_stair(parent: Node3D, pos: Vector3, yaw: float) -> void
 		var angle := float(step) * 0.72
 		var local := Vector3(cos(angle) * 2.4, 0.35 + float(step) * 0.32, sin(angle) * 2.4 - 1.0)
 		_add_local_city_block(asset, "ShellStep_%02d" % step, local, Vector3(2.2, 0.28, 0.75), rad_to_deg(angle), Color(0.69, 0.66, 0.58))
+	_set_child_material(asset, "OldWallAnchor", _memory_chalk_stone_material(Color(0.58, 0.52, 0.46, 1.0)))
+	for child in asset.get_children():
+		if child is CSGBox3D and String(child.name).begins_with("ShellStep_"):
+			child.material = _memory_shell_rim_material(Color(0.86, 0.76, 0.68, 0.72))
+	_add_memory_pulsing_light(asset, "PearlShellEdgeLight", Vector3(0.0, 3.0, -1.0), Color(1.0, 0.66, 0.82), 0.22, 0.80, 9.5, 4.8)
+	_add_memory_model_overlay(asset, "ShellSpiralTower", Vector3(0, 0, 0), 0.0, Vector3(7.5, 22.5, 7.5))
 
 func _build_telescope_workshop(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "TelescopeWorkshop", pos, yaw)
@@ -1829,18 +2259,21 @@ func _build_telescope_workshop(parent: Node3D, pos: Vector3, yaw: float) -> void
 	var tube := asset.get_node_or_null("TelescopeTube") as CSGCylinder3D
 	if tube != null:
 		tube.rotation_degrees.x = 90.0
+	_add_memory_model_overlay(asset, "TelescopeWorkshop", Vector3(0, 0, 0), 0.0, Vector3(7.4, 6.6, 8.6))
 
 func _build_violin_workshop(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "ViolinWorkshop", pos, yaw)
 	_add_local_city_block(asset, "WorkshopBody", Vector3(0, 2.1, 0), Vector3(8, 4.2, 7), 0.0, Color(0.48, 0.42, 0.34))
 	_add_local_city_block(asset, "ViolinSignBoard", Vector3(0, 3.6, -3.65), Vector3(3.8, 0.85, 0.18), 0.0, Color(0.68, 0.42, 0.24), false)
 	_add_local_city_block(asset, "ViolinNeckLine", Vector3(0, 3.6, -3.8), Vector3(0.25, 1.45, 0.10), 0.0, Color(0.28, 0.20, 0.14), false)
+	_add_memory_model_overlay(asset, "ViolinWorkshop", Vector3(0, 0, 0), 0.0, Vector3(7.1, 6.4, 9.2))
 
 func _build_old_men_wall_planned(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "OldMenWall", pos, yaw)
 	_add_local_city_block(asset, "LongLowWall", Vector3(0, 0.9, 0), Vector3(28, 1.8, 1.4), 0.0, Color(0.42, 0.39, 0.34))
 	for i in range(5):
 		_add_local_city_block(asset, "Seat_%02d" % i, Vector3(-10.0 + float(i) * 5.0, 0.45, -1.35), Vector3(2.2, 0.45, 1.2), 0.0, Color(0.34, 0.32, 0.29))
+	_add_memory_model_overlay(asset, "OldMenWall", Vector3(0, 0, 0), 0.0, Vector3(7.5, 2.4, 28.0))
 
 func _build_repeated_courtyard(parent: Node3D, asset_name: String, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, asset_name, pos, yaw)
@@ -1848,11 +2281,15 @@ func _build_repeated_courtyard(parent: Node3D, asset_name: String, pos: Vector3,
 	_add_local_city_block(asset, "BackWall", Vector3(0, 2.0, 3.8), Vector3(10, 4, 0.6), 0.0, Color(0.43, 0.42, 0.38))
 	_add_local_city_block(asset, "LeftWall", Vector3(-4.8, 1.5, 0), Vector3(0.6, 3, 8), 0.0, Color(0.43, 0.42, 0.38))
 	_add_local_city_block(asset, "RightWall", Vector3(4.8, 1.5, 0), Vector3(0.6, 3, 8), 0.0, Color(0.43, 0.42, 0.38))
+	_add_memory_model_overlay(asset, "ThirdWomanArcade", Vector3(0, 0, 0), 0.0, Vector3(12.8, 5.8, 14.2))
 
 func _build_tall_bastion(parent: Node3D, asset_name: String, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, asset_name, pos, yaw)
 	_add_local_city_block(asset, "ThickBase", Vector3(0, 4.0, 0), Vector3(9, 8, 9), 0.0, Color(0.40, 0.40, 0.37))
 	_add_local_city_block(asset, "UpperBlock", Vector3(0, 10.0, 0), Vector3(7, 4, 7), 0.0, Color(0.36, 0.37, 0.34))
+	_set_child_material(asset, "ThickBase", _memory_wet_stone_material(Color(0.30, 0.32, 0.34, 1.0)))
+	_set_child_material(asset, "UpperBlock", _memory_wet_stone_material(Color(0.24, 0.26, 0.28, 1.0)))
+	_add_memory_model_overlay(asset, "TallBastion", Vector3(0, 0, 0), 0.0, Vector3(19.4, 31.0, 17.6))
 
 func _build_curved_arcade(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "CurvedArcade_%s" % ("Left" if pos.x < 0.0 else "Right"), pos, yaw)
@@ -1861,12 +2298,17 @@ func _build_curved_arcade(parent: Node3D, pos: Vector3, yaw: float) -> void:
 		_add_local_city_block(asset, "PillarA_%02d" % i, Vector3(-1.8, 1.8, z), Vector3(0.55, 3.6, 0.75), 0.0, Color(0.45, 0.44, 0.40))
 		_add_local_city_block(asset, "PillarB_%02d" % i, Vector3(1.8, 1.8, z), Vector3(0.55, 3.6, 0.75), 0.0, Color(0.45, 0.44, 0.40))
 		_add_local_city_block(asset, "Lintel_%02d" % i, Vector3(0, 3.65, z), Vector3(4.2, 0.45, 0.75), 0.0, Color(0.45, 0.44, 0.40))
+	for child in asset.get_children():
+		if child is CSGBox3D:
+			child.material = _memory_wet_stone_material(Color(0.31, 0.32, 0.32, 1.0))
+	_add_memory_model_overlay(asset, "CurvedArcade", Vector3(0, 0, 0), 0.0, Vector3(22.5, 17.3, 20.7))
 
 func _build_gallows_lamp_post(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "GallowsLampPost", pos, yaw)
 	_add_local_city_block(asset, "Post", Vector3(0, 3.0, 0), Vector3(0.45, 6, 0.45), 0.0, Color(0.24, 0.23, 0.20))
 	_add_local_city_block(asset, "CrossBeam", Vector3(1.6, 5.5, 0), Vector3(3.2, 0.35, 0.35), 0.0, Color(0.24, 0.23, 0.20))
 	_add_local_city_block(asset, "SmallLamp", Vector3(3.0, 4.8, 0), Vector3(0.55, 0.8, 0.55), 0.0, Color(0.85, 0.62, 0.28), false)
+	_add_memory_model_overlay(asset, "GallowsLampPlaza", Vector3(0, 0, 0), 0.0, Vector3(14.0, 8.0, 14.0))
 
 func _build_red_memory_rope(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "RedMemoryRope", pos, yaw)
@@ -1877,22 +2319,26 @@ func _build_lover_fence(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	for i in range(9):
 		_add_local_city_block(asset, "FencePost_%02d" % i, Vector3(-8.0 + float(i) * 2.0, 1.8, 0), Vector3(0.25, 3.6, 0.25), 0.0, Color(0.29, 0.28, 0.25))
 	_add_local_city_block(asset, "FenceRail", Vector3(0, 2.5, 0), Vector3(18, 0.25, 0.2), 0.0, Color(0.29, 0.28, 0.25))
+	_add_memory_model_overlay(asset, "LoverAlley", Vector3(0, 0, 0), 0.0, Vector3(12.0, 8.0, 12.0))
 
 func _build_slanted_gutter_house(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "SlantedGutterHouse", pos, yaw)
 	_add_local_city_block(asset, "OldHouseBody", Vector3(0, 3.0, 0), Vector3(9, 6, 7), 0.0, Color(0.45, 0.43, 0.38))
 	_add_local_city_block(asset, "SlantedGutter", Vector3(0.5, 6.3, -3.7), Vector3(8.5, 0.3, 0.35), -10.0, Color(0.25, 0.27, 0.27), false)
+	_add_memory_model_overlay(asset, "ZincRoofHouse", Vector3(0, 0, 0), 0.0, Vector3(10.0, 10.0, 13.0))
 
 func _build_great_bronze_bell_tower(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "GreatBronzeBellTower", pos, yaw)
 	_add_local_city_block(asset, "BellTowerFrame", Vector3(0, 4.0, 0), Vector3(5, 8, 5), 0.0, Color(0.43, 0.42, 0.38))
 	_add_local_cylinder(asset, "GreatBronzeBell", Vector3(0, 7.2, -0.2), 1.3, 1.4, Color(0.55, 0.39, 0.18), 24)
+	_add_memory_model_overlay(asset, "GreatBellTower", Vector3(0, 0, 0), 0.0, Vector3(12.5, 15.1, 12.5))
 
 func _build_striped_barber_shop(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "StripedBarberShop", pos, yaw)
 	_add_local_city_block(asset, "ShopBody", Vector3(0, 2.2, 0), Vector3(8, 4.4, 7), 0.0, Color(0.54, 0.52, 0.48))
 	for i in range(5):
 		_add_local_city_block(asset, "StripedFront_%02d" % i, Vector3(-3.2 + float(i) * 1.6, 2.4, -3.6), Vector3(0.8, 2.0, 0.12), 0.0, Color(0.68, 0.20, 0.18) if i % 2 == 0 else Color(0.86, 0.84, 0.74), false)
+	_add_memory_model_overlay(asset, "StripedBarberShop", Vector3(0, 0, 0), 0.0, Vector3(8.4, 7.3, 9.0))
 
 func _build_nine_spout_fountain(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "NineSpoutFountain", pos, yaw)
@@ -1901,32 +2347,40 @@ func _build_nine_spout_fountain(parent: Node3D, pos: Vector3, yaw: float) -> voi
 	for i in range(9):
 		var angle := TAU * float(i) / 9.0
 		_add_local_city_block(asset, "Spout_%02d" % i, Vector3(cos(angle) * 2.25, 1.35, sin(angle) * 2.25), Vector3(0.8, 0.18, 0.18), rad_to_deg(-angle), Color(0.32, 0.34, 0.34), false)
+	_add_memory_model_overlay(asset, "NineSpoutFountain", Vector3(0, 0, 0), 0.0, Vector3(5.8, 4.8, 5.8))
 
 func _build_glass_observatory(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "GlassObservatory", pos, yaw)
 	_add_local_cylinder(asset, "GlassTower", Vector3(0, 6.5, 0), 3.4, 13.0, Color(0.56, 0.70, 0.74, 0.42), 28, true)
 	_add_local_cylinder(asset, "ObservationCap", Vector3(0, 13.6, 0), 4.2, 1.4, Color(0.62, 0.74, 0.76, 0.50), 28)
+	_add_memory_model_overlay(asset, "GlassObservatory", Vector3(0, 0, 0), 0.0, Vector3(12.0, 14.0, 12.0))
 
 func _build_watermelon_kiosk(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "WatermelonKiosk", pos, yaw)
 	_add_local_city_block(asset, "KioskBody", Vector3(0, 1.3, 0), Vector3(4.4, 2.6, 3.6), 0.0, Color(0.42, 0.48, 0.32))
 	_add_local_city_block(asset, "MelonCounter", Vector3(0, 1.2, -2.0), Vector3(4.0, 0.6, 0.8), 0.0, Color(0.28, 0.52, 0.24), false)
+	_add_memory_model_overlay(asset, "CornerCafe", Vector3(0, 0, 0), 0.0, Vector3(5.2, 4.6, 5.8))
+	_add_local_city_block(asset, "GreenCounterAccent", Vector3(0, 1.05, -2.25), Vector3(3.0, 0.45, 0.65), 0.0, Color(0.28, 0.46, 0.24), false)
 
 func _build_hermit_lion_statue(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "HermitLionStatue", pos, yaw)
 	_add_local_city_block(asset, "Pedestal", Vector3(0, 0.35, 0), Vector3(4.5, 0.7, 2.4), 0.0, Color(0.35, 0.34, 0.31), true)
 	_add_local_city_block(asset, "HermitFigure", Vector3(-1.0, 1.5, 0), Vector3(0.7, 1.8, 0.5), 0.0, Color(0.46, 0.44, 0.39), false)
 	_add_local_city_block(asset, "LionFigure", Vector3(1.0, 1.0, 0), Vector3(1.5, 0.9, 0.65), 0.0, Color(0.50, 0.45, 0.33), false)
+	_add_memory_model_overlay(asset, "BronzeShrine", Vector3(0, 0, 0), 0.0, Vector3(5.6, 4.4, 4.6))
+	_add_local_city_block(asset, "LionAccent", Vector3(1.2, 0.9, -0.35), Vector3(1.2, 0.55, 0.55), 0.0, Color(0.50, 0.45, 0.33), false)
 
 func _build_turkish_bath(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "TurkishBath", pos, yaw)
 	_add_local_city_block(asset, "LowBathHouse", Vector3(0, 1.7, 0), Vector3(12, 3.4, 8), 0.0, Color(0.50, 0.48, 0.43))
 	_add_local_cylinder(asset, "BathDome", Vector3(0, 3.8, 0), 4.8, 1.2, Color(0.58, 0.56, 0.50), 32)
+	_add_memory_model_overlay(asset, "TurkishBath", Vector3(0, 0, 0), 0.0, Vector3(11.5, 7.2, 11.5))
 
 func _build_corner_cafe(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "CornerCafe", pos, yaw)
 	_add_local_city_block(asset, "CornerBuilding", Vector3(0, 2.2, 0), Vector3(9, 4.4, 8), 0.0, Color(0.48, 0.42, 0.36))
 	_add_local_city_block(asset, "CafeSign", Vector3(0, 3.5, -4.1), Vector3(5, 0.65, 0.16), 0.0, Color(0.64, 0.44, 0.25), false)
+	_add_memory_model_overlay(asset, "CornerCafe", Vector3(0, 0, 0), 0.0, Vector3(8.7, 7.5, 10.5))
 
 func _build_honeycomb_memory_wall(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "HoneycombMemoryWall_%s" % ("Left" if pos.x < 0.0 else "Right"), pos, yaw)
@@ -1934,18 +2388,34 @@ func _build_honeycomb_memory_wall(parent: Node3D, pos: Vector3, yaw: float) -> v
 	for row in range(3):
 		for col in range(5):
 			_add_local_city_block(asset, "MemoryCell_%d_%d" % [row, col], Vector3(-0.58, 1.1 + float(row) * 1.3, -5.0 + float(col) * 2.5), Vector3(0.22, 0.65, 1.1), 0.0, Color(0.62, 0.58, 0.45), false)
+	_set_child_material(asset, "WallBack", _memory_blue_grid_material(Color(0.36, 0.48, 0.58, 0.74)))
+	for child in asset.get_children():
+		if child is CSGBox3D and String(child.name).begins_with("MemoryCell_"):
+			child.material = _memory_blue_grid_material(Color(0.56, 0.72, 0.82, 0.62))
+	_add_memory_model_overlay(asset, "HoneycombMemoryWall", Vector3(0, 0, 0), 0.0, Vector3(9.1, 20.8, 12.8))
 
 func _build_postcard_rack(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "PostcardRack", pos, yaw)
 	_add_local_city_block(asset, "RackFrame", Vector3(0, 1.9, 0), Vector3(5.5, 3.8, 0.5), 0.0, Color(0.30, 0.28, 0.24), true)
 	for i in range(6):
 		_add_local_city_block(asset, "Postcard_%02d" % i, Vector3(-2.0 + float(i % 3) * 2.0, 2.0 + float(i / 3) * 0.9, -0.35), Vector3(1.4, 0.7, 0.08), 0.0, Color(0.55 + float(i % 2) * 0.15, 0.38 + float(i % 3) * 0.08, 0.34 + float(i % 4) * 0.07), false)
+	_add_memory_model_overlay(asset, "PostcardPavilion", Vector3(0, 0, 0), 0.0, Vector3(6.0, 5.8, 7.5))
+
+func _build_cockfight_ring(parent: Node3D, pos: Vector3, yaw: float) -> void:
+	var asset := _make_city_asset(parent, "CockfightRing", pos, yaw)
+	_add_local_cylinder(asset, "LowStoneRingCollisionProxy", Vector3(0, 0.18, 0), 3.5, 0.36, Color(0.43, 0.40, 0.34), 32, true)
+	var model := _add_memory_model_overlay(asset, "CockfightRing", Vector3(0, 0, 0), 0.0, Vector3(6.2, 6.2, 2.2), true, false, false)
+	if model != null:
+		model.rotation_degrees.x = 90.0
+	_add_local_cylinder(asset, "CockfightAmberDust", Vector3(0, 0.38, 0), 2.4, 0.035, Color(1.00, 0.62, 0.24, 0.42), 32, false)
+	_set_child_material(asset, "CockfightAmberDust", _emissive_mat(Color(1.00, 0.62, 0.24, 0.42), 0.42, 0.12))
 
 func _build_bus_station(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "BusStation", pos, yaw)
 	_add_local_city_block(asset, "ShelterBack", Vector3(0, 2.0, 1.5), Vector3(8, 4, 0.5), 0.0, Color(0.39, 0.40, 0.39))
 	_add_local_city_block(asset, "ShelterRoof", Vector3(0, 4.1, 0), Vector3(8.5, 0.35, 4.2), 0.0, Color(0.32, 0.33, 0.32))
 	_add_local_city_block(asset, "Bench", Vector3(0, 0.65, -0.6), Vector3(5.2, 0.45, 1.0), 0.0, Color(0.32, 0.28, 0.22))
+	_add_memory_model_overlay(asset, "BusStation", Vector3(0, 0, 0), 0.0, Vector3(8.3, 6.7, 9.8))
 
 func _build_old_bandstand(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "OldBandstand", pos, yaw)
@@ -1954,17 +2424,20 @@ func _build_old_bandstand(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	for i in range(6):
 		var angle := TAU * float(i) / 6.0
 		_add_local_city_block(asset, "Post_%02d" % i, Vector3(cos(angle) * 3.7, 2.4, sin(angle) * 3.7), Vector3(0.25, 3.8, 0.25), 0.0, Color(0.36, 0.33, 0.29), false)
+	_add_memory_model_overlay(asset, "OldBandstand", Vector3(0, 0, 0), 0.0, Vector3(7.0, 7.0, 7.0))
 
 func _build_new_arch_bridge(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "NewArchBridge", pos, yaw)
 	_add_local_city_block(asset, "BridgeDeck", Vector3(0, 1.1, 0), Vector3(20, 1.0, 4.6), 0.0, Color(0.50, 0.50, 0.47), true)
 	_add_local_city_block(asset, "LeftArchMass", Vector3(-6, 0.8, 0), Vector3(3, 1.6, 4.8), 0.0, Color(0.44, 0.44, 0.41))
 	_add_local_city_block(asset, "RightArchMass", Vector3(6, 0.8, 0), Vector3(3, 1.6, 4.8), 0.0, Color(0.44, 0.44, 0.41))
+	_add_memory_model_overlay(asset, "NewArchBridge", Vector3(0, 0, 0), 0.0, Vector3(18.5, 5.7, 15.1))
 
 func _build_powder_factory(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "PowderFactory", pos, yaw)
 	_add_local_city_block(asset, "FactoryBody", Vector3(0, 2.5, 0), Vector3(16, 5, 10), 0.0, Color(0.38, 0.39, 0.38))
 	_add_local_city_block(asset, "Chimney", Vector3(5.5, 5.8, 2.6), Vector3(1.4, 6.0, 1.4), 0.0, Color(0.28, 0.28, 0.26))
+	_add_memory_model_overlay(asset, "PowderFactory", Vector3(0, 0, 0), 0.0, Vector3(18.3, 10.0, 22.2))
 
 func _build_white_parasol_ladies(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "WhiteParasolLadies", pos, yaw)
@@ -1972,39 +2445,49 @@ func _build_white_parasol_ladies(parent: Node3D, pos: Vector3, yaw: float) -> vo
 		var x := -1.2 + float(i) * 2.4
 		_add_local_city_block(asset, "Lady_%02d" % i, Vector3(x, 1.45, 0), Vector3(0.55, 1.9, 0.45), 0.0, Color(0.68, 0.62, 0.56), false)
 		_add_local_cylinder(asset, "Parasol_%02d" % i, Vector3(x, 2.7, 0), 1.1, 0.18, Color(0.86, 0.84, 0.76), 20)
+	_add_memory_model_overlay(asset, "ThirdWomanArcade", Vector3(0, 0, 0), 0.0, Vector3(5.2, 3.4, 4.8))
+	for i in range(2):
+		var x := -1.2 + float(i) * 2.4
+		_add_local_cylinder(asset, "ParasolAccent_%02d" % i, Vector3(x, 2.6, -0.2), 0.85, 0.14, Color(0.86, 0.84, 0.76), 20, false)
 
 func _build_old_new_overlay_wall(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "OldNewOverlayWall", pos, yaw)
 	_add_local_city_block(asset, "OldHalf", Vector3(0, 2.4, -4.1), Vector3(1.0, 4.8, 8.2), 0.0, Color(0.42, 0.36, 0.30))
 	_add_local_city_block(asset, "NewHalf", Vector3(0, 2.7, 4.1), Vector3(1.0, 5.4, 8.2), 0.0, Color(0.54, 0.56, 0.56))
+	_add_memory_model_overlay(asset, "OldNewOverlayWall", Vector3(0, 0, 0), 0.0, Vector3(8.8, 14.6, 10.7))
 
 func _build_empty_shrine(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "EmptyShrine", pos, yaw)
 	_add_local_city_block(asset, "ShrineFrame", Vector3(0, 2.0, 0), Vector3(5.0, 4.0, 3.6), 0.0, Color(0.44, 0.42, 0.38))
 	_add_local_city_block(asset, "EmptyNiche", Vector3(0, 2.2, -1.9), Vector3(2.4, 2.4, 0.12), 0.0, Color(0.08, 0.08, 0.07), false)
+	_add_memory_model_overlay(asset, "BronzeShrine", Vector3(0, 0, 0), 0.0, Vector3(5.8, 5.8, 5.0))
 
 func _build_foreign_shrine(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "ForeignShrine", pos, yaw)
 	_add_local_city_block(asset, "ForeignBase", Vector3(0, 1.5, 0), Vector3(5.4, 3.0, 4.0), 0.0, Color(0.36, 0.39, 0.44))
 	_add_local_city_block(asset, "StrangeCap", Vector3(0, 3.35, 0), Vector3(6.2, 0.8, 4.8), 0.0, Color(0.26, 0.28, 0.34))
+	_add_memory_model_overlay(asset, "BronzeShrine", Vector3(0, 0, 0), 0.0, Vector3(6.2, 5.2, 5.5))
 
 func _build_dry_dock(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "DryDock", pos, yaw)
 	_add_local_city_block(asset, "DockDeck", Vector3(0, 0.55, 0), Vector3(28, 0.7, 8), 0.0, Color(0.32, 0.29, 0.24), true)
 	for i in range(5):
 		_add_local_city_block(asset, "DockPlank_%02d" % i, Vector3(-11.0 + float(i) * 5.5, 1.0, 0), Vector3(0.35, 0.25, 8.8), 0.0, Color(0.26, 0.24, 0.20), false)
+	_add_memory_model_overlay(asset, "DryDock", Vector3(0, 0, 0), 90.0, Vector3(14.8, 8.8, 25.9))
 
 func _build_torn_net_frame(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "TornNetFrame", pos, yaw)
 	_add_local_city_block(asset, "LeftPost", Vector3(-3.5, 2.2, 0), Vector3(0.35, 4.4, 0.35), 0.0, Color(0.28, 0.25, 0.21))
 	_add_local_city_block(asset, "RightPost", Vector3(3.5, 2.2, 0), Vector3(0.35, 4.4, 0.35), 0.0, Color(0.28, 0.25, 0.21))
 	_add_local_city_block(asset, "TornNetSheet", Vector3(0, 2.5, 0), Vector3(6.2, 2.4, 0.08), 0.0, Color(0.62, 0.61, 0.52, 0.42), false)
+	_add_memory_model_overlay(asset, "NetMendingShed", Vector3(0, 0, 0), 0.0, Vector3(7.0, 6.0, 7.0))
 
 func _build_three_elders_dock_seat(parent: Node3D, pos: Vector3, yaw: float) -> void:
 	var asset := _make_city_asset(parent, "ThreeEldersDockSeat", pos, yaw)
 	for i in range(3):
 		_add_local_city_block(asset, "Seat_%02d" % i, Vector3(-2.8 + float(i) * 2.8, 0.55, 0), Vector3(1.8, 0.55, 1.4), 0.0, Color(0.30, 0.27, 0.23), true)
 		_add_local_city_block(asset, "Back_%02d" % i, Vector3(-2.8 + float(i) * 2.8, 1.25, 0.55), Vector3(1.8, 1.0, 0.25), 0.0, Color(0.27, 0.24, 0.20), false)
+	_add_memory_model_overlay(asset, "NetMendingShed", Vector3(0, 0, 0), 0.0, Vector3(8.2, 4.0, 5.4))
 
 func _build_memory_city_atmosphere(parent: Node3D) -> void:
 	var atmosphere := Node3D.new()
@@ -2032,6 +2515,111 @@ func _build_memory_city_atmosphere(parent: Node3D) -> void:
 		var ghost := _make_city_asset(afterimage, "ResidualFrame_%02d" % i, Vector3(-44.0 + float(i) * 22.0, 0, -28.0 + float(i % 2) * 54.0), float(i) * 7.0)
 		_add_local_city_block(ghost, "LowSaturationGhostBlock", Vector3(0, 2.5, 0), Vector3(9, 5, 0.22), 0.0, Color(0.74, 0.74, 0.68, 0.12), false)
 
+func _build_memory_concept_art_packaging(parent: Node3D) -> void:
+	var pack := Node3D.new()
+	pack.name = "MemoryConceptArtStylePack_NativeGodot"
+	parent.add_child(pack)
+	_memory_pack_diomira(pack)
+	_memory_pack_isidora(pack)
+	_memory_pack_zaira(pack)
+	_memory_pack_zora(pack)
+	_memory_pack_maurilia(pack)
+	_style_echo_tower_memory_server(parent)
+
+func _memory_pack_diomira(parent: Node3D) -> void:
+	var root := _make_city_zone(parent, "Diomira_DuskSilverDomePackaging")
+	for i in range(7):
+		_add_polish_block(root, "LongDuskShadow_%02d" % i, Vector3(18.0 + float(i) * 7.5, 0.19, -84.0 + float(i % 3) * 14.0), Vector3(26.0, 0.035, 1.1), -24.0, Color(0.14, 0.08, 0.13, 0.26))
+	for i in range(5):
+		_add_polish_cylinder(root, "SilverDomeReflectionPool_%02d" % i, Vector3(22.0 + float(i) * 11.0, 0.18, -82.0 + float(i % 2) * 17.0), 4.8, 0.04, Color(0.80, 0.84, 0.88, 0.20), 48)
+	var colors := [Color(1.0, 0.40, 0.22), Color(0.96, 0.70, 0.28), Color(0.62, 0.76, 1.0)]
+	for i in range(colors.size()):
+		_add_memory_pulsing_light(root, "DiomiraTheaterColorPulse_%02d" % i, Vector3(58.0 + float(i) * 4.6, 5.0 + float(i) * 0.6, 66.0 + float(i % 2) * 6.0), colors[i], 0.45, 1.8 + float(i) * 0.45, 22.0, 3.2 + float(i) * 0.7)
+	var gold := _make_city_particle_layer("DiomiraGoldDustAtDusk", 520, Vector2(0.055, 0.055), Vector3(40, 5.4, 32), Vector3(-0.12, 0.08, 0.04), Color(1.0, 0.68, 0.22, 0.28), 0.02, 0.18, 74.0, 10.0)
+	gold.position = Vector3(38, 2.4, -66)
+	root.add_child(gold)
+
+func _memory_pack_isidora(parent: Node3D) -> void:
+	var root := _make_city_zone(parent, "Isidora_PearlDesireDustPackaging")
+	for i in range(4):
+		_add_polish_cylinder(root, "PearlDesireHalo_%02d" % i, Vector3(-69.5, 0.24 + float(i) * 0.55, -21.0), 3.4 + float(i) * 1.1, 0.035, Color(1.0, 0.70, 0.84, 0.16), 64)
+	for i in range(6):
+		_add_polish_block(root, "OldWallWarmScrape_%02d" % i, Vector3(-86.0 + float(i) * 8.5, 1.65, 7.4 + sin(float(i)) * 1.8), Vector3(4.8, 0.06, 1.2), 90.0, Color(0.92, 0.64, 0.48, 0.32))
+	var dust := _make_city_particle_layer("IsidoraSlowPinkDesireDust", 760, Vector2(0.040, 0.040), Vector3(42, 7.2, 42), Vector3(0.03, 0.18, -0.02), Color(1.0, 0.56, 0.76, 0.24), 0.015, 0.13, 58.0, 15.0)
+	dust.position = Vector3(-62, 1.8, -12)
+	root.add_child(dust)
+	_add_memory_pulsing_light(root, "IsidoraPearlBreath", Vector3(-68.0, 4.2, -22.0), Color(1.0, 0.64, 0.86), 0.18, 0.92, 14.0, 5.4)
+
+func _memory_pack_zaira(parent: Node3D) -> void:
+	var root := _make_city_zone(parent, "Zaira_WetFortressRainPackaging")
+	for i in range(9):
+		_add_polish_block(root, "WetStoneMirrorStep_%02d" % i, Vector3(-58.0 + float(i) * 14.5, 0.21, 20.0 + sin(float(i)) * 7.5), Vector3(10.5, 0.05, 3.4), 7.0, Color(0.42, 0.50, 0.56, 0.22))
+	var rain := _make_city_particle_layer("ZairaVerticalRainMemoryLines", 900, Vector2(0.012, 0.22), Vector3(56, 13.0, 54), Vector3(0.0, -0.66, 0.02), Color(0.72, 0.82, 0.92, 0.25), 0.22, 0.86, 12.0, 5.8)
+	rain.position = Vector3(0, 8.0, 50)
+	root.add_child(rain)
+	var spot := SpotLight3D.new()
+	spot.name = "ZairaWhiteRainShaftSpot"
+	spot.position = Vector3(0, 22, 35)
+	spot.rotation_degrees = Vector3(-82, 0, 0)
+	spot.light_color = Color(0.82, 0.90, 1.0)
+	spot.light_energy = 2.2
+	_set_if_property_exists(spot, "spot_range", 44.0)
+	_set_if_property_exists(spot, "spot_angle", 18.0)
+	_set_if_property_exists(spot, "light_volumetric_fog_energy", 1.25)
+	root.add_child(spot)
+	_add_memory_pulsing_light(root, "ZairaWetArchColdBounce", Vector3(0, 4.8, 30), Color(0.62, 0.78, 1.0), 0.18, 0.75, 26.0, 6.6)
+
+func _memory_pack_zora(parent: Node3D) -> void:
+	var root := _make_city_zone(parent, "Zora_StaticGridServerPackaging")
+	for i in range(9):
+		var coord := -52.0 + float(i) * 13.0
+		_add_polish_line(root, "ZoraColdGridX_%02d" % i, Vector3(-58.0, 0.24, coord), Vector3(58.0, 0.24, coord), Color(0.62, 0.92, 1.0, 0.28), 0.08)
+		_add_polish_line(root, "ZoraColdGridZ_%02d" % i, Vector3(coord, 0.25, -58.0), Vector3(coord, 0.25, 58.0), Color(0.62, 0.92, 1.0, 0.24), 0.08)
+	for i in range(5):
+		_add_polish_cylinder(root, "ZoraServerPulseDisc_%02d" % i, Vector3(0, 0.28 + float(i) * 0.22, 0), 18.0 + float(i) * 7.0, 0.025, Color(0.30, 0.82, 1.0, 0.12), 96)
+	_add_memory_pulsing_light(root, "ZoraServerCorePulse", Vector3(0, 9.5, 0), Color(0.28, 0.82, 1.0), 0.35, 2.2, 24.0, 2.4)
+
+func _memory_pack_maurilia(parent: Node3D) -> void:
+	var root := _make_city_zone(parent, "Maurilia_SepiaPostcardPackaging")
+	for i in range(10):
+		var h := 7.0 + float(i % 4) * 4.0
+		_add_polish_block(root, "MauriliaPresentDayBlackSilhouette_%02d" % i, Vector3(86.0 + float(i % 3) * 9.0, h * 0.5, -48.0 + float(i / 3) * 24.0), Vector3(6.0, h, 6.6), float(i) * 9.0, Color(0.025, 0.022, 0.020, 0.86))
+	for i in range(6):
+		var z := -40.0 + float(i) * 17.0
+		_add_postcard_frame(root, "MauriliaFloatingPostcardFrame_%02d" % i, Vector3(62.0, 4.4 + float(i % 2) * 1.1, z), Vector2(6.8, 4.2), 0.0)
+	var cards := _make_city_particle_layer("MauriliaFallingPostcardFragments", 520, Vector2(0.22, 0.12), Vector3(52, 9.0, 72), Vector3(-0.03, -0.18, 0.04), Color(0.92, 0.74, 0.46, 0.30), 0.02, 0.17, 36.0, 18.0)
+	cards.position = Vector3(76, 7.5, 0)
+	root.add_child(cards)
+
+func _add_postcard_frame(parent: Node3D, name: String, pos: Vector3, size: Vector2, yaw: float) -> void:
+	var asset := _make_city_asset(parent, name, pos, yaw)
+	var mat := _memory_postcard_material(Color(0.92, 0.70, 0.42, 0.82))
+	_add_local_city_block(asset, "TopFrame", Vector3(0, size.y * 0.5, 0), Vector3(size.x, 0.18, 0.18), 0.0, Color(0.90, 0.70, 0.42, 0.82), false)
+	_add_local_city_block(asset, "BottomFrame", Vector3(0, -size.y * 0.5, 0), Vector3(size.x, 0.18, 0.18), 0.0, Color(0.90, 0.70, 0.42, 0.82), false)
+	_add_local_city_block(asset, "LeftFrame", Vector3(-size.x * 0.5, 0, 0), Vector3(0.18, size.y, 0.18), 0.0, Color(0.90, 0.70, 0.42, 0.82), false)
+	_add_local_city_block(asset, "RightFrame", Vector3(size.x * 0.5, 0, 0), Vector3(0.18, size.y, 0.18), 0.0, Color(0.90, 0.70, 0.42, 0.82), false)
+	for child in asset.get_children():
+		if child is CSGBox3D:
+			child.material = mat
+
+func _style_echo_tower_memory_server(parent: Node3D) -> void:
+	var tower := parent.get_node_or_null("EchoTower") as Node3D
+	if tower == null:
+		return
+	_set_child_material(tower, "CylinderMainTower", _memory_server_core_material())
+	_set_child_material(tower, "SimpleBellTop", _memory_blue_grid_material(Color(0.44, 0.74, 0.90, 0.58)))
+	_set_child_material(tower, "FlatCap", _memory_silver_dome_material())
+	for i in range(3):
+		var ring := CSGCylinder3D.new()
+		ring.name = "EchoTowerCyanMemoryPulseDisc_%02d" % i
+		ring.radius = 3.0 + float(i) * 0.75
+		ring.height = 0.025
+		ring.sides = 72
+		ring.position.y = 8.5 + float(i) * 6.2
+		ring.material = _memory_blue_grid_material(Color(0.38, 0.82, 1.0, 0.045))
+		tower.add_child(ring)
+	_add_memory_pulsing_light(tower, "EchoTowerCyanServerPulse", Vector3(0, 18.5, 0), Color(0.28, 0.82, 1.0), 0.08, 0.42, 14.0, 3.6)
+
 func _make_city_particle_layer(layer_name: String, amount: int, quad_size: Vector2, extents: Vector3, direction: Vector3, color: Color, velocity_min: float, velocity_max: float, spread: float, lifetime: float) -> GPUParticles3D:
 	var particles := _make_grey_particle_layer(layer_name, amount, quad_size, extents, direction, color, velocity_min, velocity_max, spread, lifetime)
 	particles.visibility_aabb = AABB(Vector3(-130, -8, -130), Vector3(260, 24, 260))
@@ -2048,6 +2636,8 @@ func _add_theme_procedural_polish(root: Node3D, theme_index: int) -> void:
 	_add_theme_silhouette_language(polish, theme_index, profile)
 	_add_theme_accent_light_rig(polish, theme_index, profile)
 	_add_theme_air_detail(polish, theme_index, profile)
+	_add_theme_profile_signature_pack(polish, theme_index, profile)
+	_style_theme_procedural_polish_nodes(polish, theme_index, profile)
 
 func _theme_visual_profile(theme_index: int) -> Dictionary:
 	match theme_index:
@@ -2191,6 +2781,667 @@ func _add_theme_air_detail(parent: Node3D, theme_index: int, profile: Dictionary
 	)
 	parent.add_child(air)
 
+func _add_theme_profile_signature_pack(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var pack := Node3D.new()
+	pack.name = "ThemeProfileSignaturePack_%s" % _ascii_zone_name("", theme_index)
+	parent.add_child(pack)
+	match theme_index:
+		THEME_MEMORY:
+			_theme_pack_memory(pack, profile)
+		THEME_DESIRE:
+			_theme_pack_desire(pack, profile)
+		THEME_SIGNS:
+			_theme_pack_signs(pack, profile)
+		THEME_THIN:
+			_theme_pack_thin(pack, profile)
+		THEME_TRADE:
+			_theme_pack_trade(pack, profile)
+		THEME_EYES:
+			_theme_pack_eyes(pack, profile)
+		THEME_NAMES_CITY:
+			_theme_pack_names(pack, profile)
+		THEME_DEAD:
+			_theme_pack_dead(pack, profile)
+		THEME_SKY:
+			_theme_pack_sky(pack, profile)
+		THEME_CONTINUOUS:
+			_theme_pack_continuous(pack, profile)
+		THEME_HIDDEN:
+			_theme_pack_hidden(pack, profile)
+	_add_theme_shader_veil_pass(pack, theme_index, profile)
+
+func _style_theme_procedural_polish_nodes(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var state := {"index": 0, "animated": 0, "solidify_masses": false}
+	_style_theme_polish_branch(parent, theme_index, profile, state)
+
+func _upgrade_theme_whitebox_art_direction(root: Node3D, theme_index: int) -> void:
+	if root == null or procedural_city_polish_intensity <= 0.01:
+		return
+	var profile := _theme_visual_profile(theme_index)
+	var state := {"index": 0, "animated": 0, "solidify_masses": true}
+	_style_theme_polish_branch(root, theme_index, profile, state)
+	_add_whitebox_mass_detail_pass(root, theme_index, profile)
+	_add_theme_concept_grade_whitebox(root, theme_index, profile)
+
+func _add_whitebox_mass_detail_pass(root: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var shapes: Array[Node3D] = []
+	_collect_theme_csg_shapes(root, shapes)
+	var state := {"details": 0}
+	for shape in shapes:
+		if int(state["details"]) >= 260:
+			return
+		if String(shape.name).contains("ArtDetail") or String(shape.name).contains("ConceptGrade"):
+			continue
+		if shape is CSGBox3D:
+			_add_box_mass_details(shape as CSGBox3D, theme_index, profile, state)
+		elif shape is CSGCylinder3D:
+			_add_cylinder_mass_details(shape as CSGCylinder3D, theme_index, profile, state)
+
+func _collect_theme_csg_shapes(node: Node, out_shapes: Array[Node3D]) -> void:
+	for child in node.get_children():
+		if child is CSGBox3D or child is CSGCylinder3D:
+			out_shapes.append(child as Node3D)
+		_collect_theme_csg_shapes(child, out_shapes)
+
+func _add_box_mass_details(box: CSGBox3D, theme_index: int, profile: Dictionary, state: Dictionary) -> void:
+	var parent := box.get_parent() as Node3D
+	if parent == null:
+		return
+	var size := box.size
+	if size.y < 1.15 or maxf(size.x, size.z) < 1.2:
+		return
+	var yaw := box.rotation_degrees.y
+	var seed := float(int(state["details"]) * 13 + theme_index * 31)
+	var edge_mat := _theme_detail_material(theme_index, profile, "%s_ArtEdge" % box.name, seed, "edge")
+	var glow_mat := _theme_detail_material(theme_index, profile, "%s_ArtGlow" % box.name, seed + 3.0, "glow")
+	var shadow_mat := _theme_detail_material(theme_index, profile, "%s_ArtShadow" % box.name, seed + 7.0, "shadow")
+	var band_height := clampf(size.y * 0.045, 0.055, 0.32)
+	var band_depth := clampf(minf(size.x, size.z) * 0.028, 0.045, 0.20)
+	var front_offset := Vector3(0, size.y * 0.34, -size.z * 0.515).rotated(Vector3.UP, deg_to_rad(yaw))
+	var back_offset := Vector3(0, size.y * 0.08, size.z * 0.515).rotated(Vector3.UP, deg_to_rad(yaw))
+	_add_art_box(parent, "%s_ArtDetailUpperLedge" % box.name, box.position + front_offset, Vector3(size.x * 0.92, band_height, band_depth), yaw, edge_mat)
+	_add_art_box(parent, "%s_ArtDetailLowerTrace" % box.name, box.position + back_offset, Vector3(size.x * 0.62, band_height * 0.72, band_depth), yaw, shadow_mat)
+	state["details"] = int(state["details"]) + 2
+	if size.y > 3.2 and size.x > 2.0 and int(state["details"]) < 260:
+		var side_a := Vector3(-size.x * 0.505, size.y * 0.02, 0).rotated(Vector3.UP, deg_to_rad(yaw))
+		var side_b := Vector3(size.x * 0.505, -size.y * 0.08, 0).rotated(Vector3.UP, deg_to_rad(yaw))
+		_add_art_box(parent, "%s_ArtDetailLeftEdge" % box.name, box.position + side_a, Vector3(band_depth, size.y * 0.76, band_depth), yaw, edge_mat)
+		_add_art_box(parent, "%s_ArtDetailRightEdge" % box.name, box.position + side_b, Vector3(band_depth, size.y * 0.58, band_depth), yaw, glow_mat)
+		state["details"] = int(state["details"]) + 2
+	if size.y > 5.5 and int(state["details"]) < 260:
+		var roof_offset := Vector3(0, size.y * 0.505, 0).rotated(Vector3.UP, deg_to_rad(yaw))
+		_add_art_box(parent, "%s_ArtDetailRoofCap" % box.name, box.position + roof_offset, Vector3(size.x * 1.08, band_height * 1.2, size.z * 1.08), yaw, edge_mat)
+		state["details"] = int(state["details"]) + 1
+
+func _add_cylinder_mass_details(cylinder: CSGCylinder3D, theme_index: int, profile: Dictionary, state: Dictionary) -> void:
+	var parent := cylinder.get_parent() as Node3D
+	if parent == null:
+		return
+	if absf(cylinder.rotation_degrees.x) > 1.0 or absf(cylinder.rotation_degrees.z) > 1.0:
+		return
+	if cylinder.height < 0.6 or cylinder.radius < 0.45:
+		return
+	var seed := float(int(state["details"]) * 17 + theme_index * 37)
+	var ring_mat := _theme_detail_material(theme_index, profile, "%s_ArtRing" % cylinder.name, seed, "edge")
+	var glow_mat := _theme_detail_material(theme_index, profile, "%s_ArtGlowRing" % cylinder.name, seed + 5.0, "glow")
+	var levels := 2 if cylinder.height < 4.0 else 3
+	for i in range(levels):
+		if int(state["details"]) >= 260:
+			return
+		var y := -cylinder.height * 0.36 + cylinder.height * 0.72 * (float(i) / maxf(float(levels - 1), 1.0))
+		_add_art_cylinder(parent, "%s_ArtDetailRing_%02d" % [cylinder.name, i], cylinder.position + Vector3(0, y, 0), cylinder.radius * (1.02 + float(i % 2) * 0.025), 0.035, ring_mat if i % 2 == 0 else glow_mat, max(18, cylinder.sides))
+		state["details"] = int(state["details"]) + 1
+
+func _theme_detail_material(theme_index: int, profile: Dictionary, node_name: String, seed: float, role: String) -> Material:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	var shadow: Color = profile["shadow"]
+	var color := accent
+	match role:
+		"glow":
+			color = Color(glow.r, glow.g, glow.b, 0.48)
+		"shadow":
+			color = Color(shadow.r, shadow.g, shadow.b, 0.62)
+		"base":
+			color = Color(base.r, base.g, base.b, 0.68)
+		_:
+			color = Color(accent.r, accent.g, accent.b, 0.58)
+	return _theme_surface_material_for_node(theme_index, node_name, color, seed)
+
+func _add_art_box(parent: Node3D, name: String, pos: Vector3, size: Vector3, yaw: float, material: Material) -> CSGBox3D:
+	var box := CSGBox3D.new()
+	box.name = name
+	box.position = pos
+	box.size = size
+	box.rotation_degrees.y = yaw
+	box.material = material
+	parent.add_child(box)
+	return box
+
+func _add_art_cylinder(parent: Node3D, name: String, pos: Vector3, radius: float, height: float, material: Material, sides := 48) -> CSGCylinder3D:
+	var cylinder := CSGCylinder3D.new()
+	cylinder.name = name
+	cylinder.position = pos
+	cylinder.radius = radius
+	cylinder.height = height
+	cylinder.sides = sides
+	cylinder.material = material
+	parent.add_child(cylinder)
+	return cylinder
+
+func _style_theme_polish_branch(node: Node, theme_index: int, profile: Dictionary, state: Dictionary) -> void:
+	for child in node.get_children():
+		if child is CSGBox3D or child is CSGCylinder3D:
+			var shape := child as Node3D
+			var color := _theme_surface_color_for_node(theme_index, profile, shape.name, int(state["index"]))
+			if bool(state.get("solidify_masses", false)) and not _is_theme_translucent_effect_shape(shape.name):
+				color = _theme_solid_mass_color(theme_index, profile, shape.name, int(state["index"]))
+			var material := _theme_surface_material_for_node(theme_index, shape.name, color, float(state["index"]) + 83.0)
+			if child is CSGBox3D:
+				(child as CSGBox3D).material = material
+			elif child is CSGCylinder3D:
+				(child as CSGCylinder3D).material = material
+			if int(state["animated"]) < 18 and _should_animate_theme_node(theme_index, shape.name, int(state["index"])):
+				_add_looping_node_motion(shape.get_parent(), shape, _theme_motion_height(theme_index), _theme_motion_yaw(theme_index, shape.name), 3.2 + float(int(state["index"]) % 6) * 0.42)
+				state["animated"] = int(state["animated"]) + 1
+			state["index"] = int(state["index"]) + 1
+		_style_theme_polish_branch(child, theme_index, profile, state)
+
+func _is_theme_translucent_effect_shape(node_name: String) -> bool:
+	for token in [
+		"ArtDetail", "ConceptGrade", "Profile", "Veil", "Mist", "Haze", "Dust", "Particle",
+		"Water", "Canal", "Lake", "Pool", "Cloud", "Glass", "Transparent", "Mirror",
+		"Reflection", "Mirage", "Halo", "Ring", "Disc", "Line", "Thread", "Cable", "Ray",
+		"Crack", "Glow", "Subsurface", "Iris", "Star", "Orbit", "Gaze", "Lens"
+	]:
+		if node_name.contains(token):
+			return true
+	return false
+
+func _theme_solid_mass_color(theme_index: int, profile: Dictionary, node_name: String, index: int) -> Color:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	var shadow: Color = profile["shadow"]
+	var blend := 0.10 + float(index % 5) * 0.035
+	if node_name.contains("Wall") or node_name.contains("Fortress") or node_name.contains("Warehouse"):
+		blend += 0.08
+	elif node_name.contains("Tower") or node_name.contains("Column") or node_name.contains("Pillar"):
+		blend += 0.16
+	elif node_name.contains("Ground") or node_name.contains("Floor") or node_name.contains("Road") or node_name.contains("Street") or node_name.contains("Plaza"):
+		blend = 0.06
+	var color := Color(
+		lerpf(base.r, accent.r, clampf(blend, 0.0, 0.42)),
+		lerpf(base.g, accent.g, clampf(blend, 0.0, 0.42)),
+		lerpf(base.b, accent.b, clampf(blend, 0.0, 0.42)),
+		_theme_solid_mass_alpha(theme_index, node_name)
+	)
+	if node_name.contains("Black") or node_name.contains("Shadow") or node_name.contains("Dark") or node_name.contains("Buried"):
+		color = Color(lerpf(color.r, shadow.r, 0.45), lerpf(color.g, shadow.g, 0.45), lerpf(color.b, shadow.b, 0.45), color.a)
+	return color
+
+func _theme_solid_mass_alpha(theme_index: int, node_name: String) -> float:
+	if node_name.contains("Ground") or node_name.contains("Floor") or node_name.contains("Road") or node_name.contains("Street") or node_name.contains("Plaza"):
+		return 1.0
+	match theme_index:
+		THEME_THIN:
+			return 0.86
+		THEME_EYES:
+			return 0.90
+		THEME_SKY:
+			return 0.88
+		THEME_HIDDEN:
+			return 0.92
+		THEME_DEAD:
+			return 0.94
+		_:
+			return 0.98
+
+func _theme_surface_color_for_node(theme_index: int, profile: Dictionary, node_name: String, index: int) -> Color:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	var shadow: Color = profile["shadow"]
+	var color := base
+	if node_name.contains("Glow") or node_name.contains("Pulse") or node_name.contains("Light") or node_name.contains("Star") or node_name.contains("Spore"):
+		color = Color(glow.r, glow.g, glow.b, maxf(base.a, 0.34))
+	elif node_name.contains("Line") or node_name.contains("Thread") or node_name.contains("Cable") or node_name.contains("Ray") or node_name.contains("Crack"):
+		color = accent
+	elif node_name.contains("Shadow") or node_name.contains("Dirty") or node_name.contains("Black") or node_name.contains("Ink"):
+		color = Color(shadow.r, shadow.g, shadow.b, 0.62)
+	elif index % 3 == 0:
+		color = accent
+	match theme_index:
+		THEME_CONTINUOUS:
+			color = Color(color.r * 0.86 + 0.08, color.g * 0.82 + 0.07, color.b * 0.68 + 0.05, clampf(color.a, 0.26, 0.62))
+		THEME_HIDDEN:
+			color = Color(color.r * 0.72, color.g, color.b * 0.78, clampf(color.a, 0.24, 0.66))
+		THEME_DEAD:
+			color = Color(color.r * 0.82, color.g * 0.88, minf(color.b * 1.18, 1.0), clampf(color.a, 0.24, 0.56))
+	return color
+
+func _theme_surface_material_for_node(theme_index: int, node_name: String, color: Color, seed: float) -> Material:
+	match theme_index:
+		THEME_MEMORY:
+			if node_name.contains("Postcard") or node_name.contains("BuriedStreet"):
+				return _memory_postcard_material(color)
+			if node_name.contains("Wet") or node_name.contains("Zaira"):
+				return _memory_wet_stone_material(color)
+			if node_name.contains("Glow") or node_name.contains("Crystal"):
+				return _memory_crystal_material(color, Color(0.86, 0.72, 0.42), color.a)
+			return _memory_chalk_stone_material(color)
+		THEME_DESIRE:
+			return _desire_polished_heat_material(color, seed, node_name.contains("Pool") or node_name.contains("Lens"))
+		THEME_SIGNS:
+			return _sign_toon_material(color, seed, 0.82)
+		THEME_THIN:
+			return _thin_net_material(color, color.a, seed, 0.055, 0.92)
+		THEME_TRADE:
+			return _trade_wet_material(color, color.a, seed, 0.76, 0.18, 0.62)
+		THEME_EYES:
+			if node_name.contains("Disc") or node_name.contains("Ripple") or node_name.contains("Iris"):
+				return _eye_mirror_water_material(color, color.a, seed, 0.16, 0.58)
+			return _eye_glass_material(color, color.a, 0.42)
+		THEME_NAMES_CITY:
+			return _name_carved_stone_material(color, color.a, seed, 0.64)
+		THEME_DEAD:
+			return _dead_bone_dissolve_material(color, color.a, seed, 0.32)
+		THEME_SKY:
+			return _sky_star_material(color, color.a, seed, 0.58, 0.44)
+		THEME_CONTINUOUS:
+			return _continuous_pollution_material(color, color.a, seed, 0.78, 1.0)
+		THEME_HIDDEN:
+			return _hidden_growth_material(color, color.a, seed, 0.64, 0.82)
+	return _mat(color, color.a)
+
+func _should_animate_theme_node(theme_index: int, node_name: String, index: int) -> bool:
+	match theme_index:
+		THEME_MEMORY:
+			return node_name.contains("Postcard") or node_name.contains("Glow")
+		THEME_DESIRE:
+			return node_name.contains("Mirage") or node_name.contains("Thread") or node_name.contains("Lens")
+		THEME_SIGNS:
+			return node_name.contains("Placard") or node_name.contains("Billboard")
+		THEME_THIN:
+			return node_name.contains("Cable") or node_name.contains("Hanging") or node_name.contains("Needle")
+		THEME_TRADE:
+			return node_name.contains("Banner") or node_name.contains("Lantern") or node_name.contains("Coin")
+		THEME_EYES:
+			return node_name.contains("Disc") or node_name.contains("Shard") or node_name.contains("Ray")
+		THEME_NAMES_CITY:
+			return node_name.contains("Stele") or node_name.contains("Scrape")
+		THEME_DEAD:
+			return node_name.contains("Mist") or node_name.contains("Candle") or node_name.contains("Ring")
+		THEME_SKY:
+			return node_name.contains("Orbital") or node_name.contains("Star")
+		THEME_CONTINUOUS:
+			return index % 9 == 0
+		THEME_HIDDEN:
+			return node_name.contains("Crack") or node_name.contains("Spore") or node_name.contains("Glow")
+	return false
+
+func _theme_motion_height(theme_index: int) -> float:
+	match theme_index:
+		THEME_THIN:
+			return 0.42
+		THEME_SKY:
+			return 0.36
+		THEME_HIDDEN:
+			return 0.20
+		THEME_CONTINUOUS:
+			return 0.04
+		THEME_DEAD:
+			return 0.10
+	return 0.16
+
+func _theme_motion_yaw(theme_index: int, node_name: String) -> float:
+	match theme_index:
+		THEME_SKY:
+			return 7.0
+		THEME_EYES:
+			return 5.5
+		THEME_DESIRE:
+			return 3.0
+		THEME_TRADE:
+			return 2.0 if node_name.contains("Banner") else 0.5
+		THEME_CONTINUOUS:
+			return 0.0
+		THEME_HIDDEN:
+			return 2.8
+	return 1.5
+
+func _add_looping_node_motion(parent: Node, target: Node3D, vertical_offset: float, yaw_offset: float, duration: float) -> void:
+	var host := parent as Node3D
+	if host == null or target == null:
+		return
+	if host.get_node_or_null("%sMotionPlayer" % target.name) != null:
+		return
+	var player_node := AnimationPlayer.new()
+	player_node.name = "%sMotionPlayer" % target.name
+	player_node.root_node = NodePath("..")
+	host.add_child(player_node)
+	var animation := Animation.new()
+	animation.length = maxf(duration, 0.25)
+	animation.loop_mode = Animation.LOOP_LINEAR
+	var base_position := target.position
+	var pos_track := animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(pos_track, NodePath("%s:position" % target.name))
+	animation.track_insert_key(pos_track, 0.0, base_position)
+	animation.track_insert_key(pos_track, animation.length * 0.5, base_position + Vector3(0, vertical_offset, 0))
+	animation.track_insert_key(pos_track, animation.length, base_position)
+	if absf(yaw_offset) > 0.01:
+		var base_rotation := target.rotation_degrees
+		var rot_track := animation.add_track(Animation.TYPE_VALUE)
+		animation.track_set_path(rot_track, NodePath("%s:rotation_degrees" % target.name))
+		animation.track_insert_key(rot_track, 0.0, base_rotation)
+		animation.track_insert_key(rot_track, animation.length * 0.5, base_rotation + Vector3(0, yaw_offset, 0))
+		animation.track_insert_key(rot_track, animation.length, base_rotation)
+	var library := AnimationLibrary.new()
+	library.add_animation("theme_motion", animation)
+	if player_node.has_method("add_animation_library"):
+		player_node.call("add_animation_library", "", library)
+		player_node.play("theme_motion")
+
+func _add_theme_shader_veil_pass(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	match theme_index:
+		THEME_SIGNS:
+			_add_sign_projection_veil(parent, "SignsProfileProjectionScrim_A", Vector3(-38, 3.0, 10), Vector2(34, 46), -8.0, Color(0.40, 0.62, 1.0, 0.14), 131.0, 0.24)
+			_add_sign_projection_veil(parent, "SignsProfileProjectionScrim_B", Vector3(42, 3.2, -6), Vector2(30, 42), 10.0, Color(0.92, 0.88, 0.66, 0.12), 137.0, 0.36)
+		THEME_EYES:
+			_add_eye_offset_veil(parent, "EyesProfileOffsetGlass_A", Vector3(-28, 3.6, 8), Vector2(38, 42), -12.0, Color(0.68, 0.96, 1.0, 0.16), 141.0, 0.52)
+			_add_eye_offset_veil(parent, "EyesProfileOffsetGlass_B", Vector3(36, 3.2, -10), Vector2(32, 38), 14.0, Color(0.86, 1.0, 1.0, 0.12), 148.0, 0.34)
+		THEME_NAMES_CITY:
+			_add_name_text_veil(parent, "NamesProfileMisnamedScrim_A", Vector3(-30, 2.8, -8), Vector2(42, 34), -4.0, Color(0.92, 0.76, 0.44, 0.13), 151.0, 0.58)
+			_add_name_text_veil(parent, "NamesProfileMisnamedScrim_B", Vector3(36, 3.0, 12), Vector2(36, 30), 8.0, Color(0.72, 0.68, 0.54, 0.12), 158.0, 0.46)
+		THEME_DEAD:
+			_add_dead_cold_mist_veil(parent, "DeadProfileColdMistScrim_A", Vector3(-26, 1.8, 8), Vector2(56, 38), -8.0, Color(0.36, 0.48, 0.82, 0.16), 161.0, 0.62)
+			_add_dead_cold_mist_veil(parent, "DeadProfileColdMistScrim_B", Vector3(34, 1.5, -14), Vector2(48, 34), 9.0, Color(0.52, 0.60, 0.82, 0.12), 168.0, 0.44)
+		THEME_SKY:
+			_add_sky_stardust_veil(parent, "SkyProfileStardustScrim_A", Vector3(-24, 6.0, 10), Vector2(68, 42), -12.0, Color(0.52, 0.76, 1.0, 0.16), 171.0, 0.70)
+			_add_sky_stardust_veil(parent, "SkyProfileStardustScrim_B", Vector3(38, 7.2, -8), Vector2(54, 38), 16.0, Color(0.76, 0.72, 1.0, 0.13), 178.0, 0.52)
+
+func _add_theme_concept_grade_whitebox(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var pack := Node3D.new()
+	pack.name = "ConceptGradeWhiteboxArtDirection_%s" % _ascii_zone_name("", theme_index)
+	parent.add_child(pack)
+	_add_concept_foreground_frame(pack, theme_index, profile)
+	match theme_index:
+		THEME_MEMORY:
+			_add_memory_concept_grade(pack, profile)
+		THEME_DESIRE:
+			_add_desire_concept_grade(pack, profile)
+		THEME_SIGNS:
+			_add_signs_concept_grade(pack, profile)
+		THEME_THIN:
+			_add_thin_concept_grade(pack, profile)
+		THEME_TRADE:
+			_add_trade_concept_grade(pack, profile)
+		THEME_EYES:
+			_add_eyes_concept_grade(pack, profile)
+		THEME_NAMES_CITY:
+			_add_names_concept_grade(pack, profile)
+		THEME_DEAD:
+			_add_dead_concept_grade(pack, profile)
+		THEME_SKY:
+			_add_sky_concept_grade(pack, profile)
+		THEME_CONTINUOUS:
+			_add_continuous_concept_grade(pack, profile)
+		THEME_HIDDEN:
+			_add_hidden_concept_grade(pack, profile)
+
+func _add_concept_foreground_frame(parent: Node3D, theme_index: int, profile: Dictionary) -> void:
+	var shadow_mat := _theme_detail_material(theme_index, profile, "ConceptGradeForegroundShadow", 211.0 + float(theme_index), "shadow")
+	var edge_mat := _theme_detail_material(theme_index, profile, "ConceptGradeForegroundEdge", 217.0 + float(theme_index), "edge")
+	var left := _add_art_box(parent, "ConceptGradeForegroundLeftGate", Vector3(-108, 9.0, -22), Vector3(4.0, 18.0, 64.0), -8.0, shadow_mat)
+	var right := _add_art_box(parent, "ConceptGradeForegroundRightGate", Vector3(108, 8.2, 16), Vector3(4.0, 16.4, 58.0), 7.0, shadow_mat)
+	var top := _add_art_box(parent, "ConceptGradeHighHorizonBlade", Vector3(0, 18.5, -100), Vector3(168.0, 1.1, 2.6), 0.0, edge_mat)
+	_add_looping_node_motion(parent, left, 0.08, 0.35, 7.0)
+	_add_looping_node_motion(parent, right, 0.06, -0.30, 6.6)
+	_add_looping_node_motion(parent, top, 0.10, 0.0, 8.2)
+
+func _add_memory_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var mat := _theme_detail_material(THEME_MEMORY, profile, "MemoryConceptGradeArchiveRib", 230.0, "edge")
+	for i in range(8):
+		_add_art_box(parent, "MemoryConceptGradeArchiveRib_%02d" % i, Vector3(-82.0 + float(i) * 23.5, 5.2 + float(i % 3), -86.0 + float(i % 2) * 12.0), Vector3(1.2, 10.0 + float(i % 4) * 2.6, 1.2), float(i) * 8.0, mat)
+	for i in range(7):
+		_add_art_box(parent, "MemoryConceptGradeFloatingNegative_%02d" % i, Vector3(-58.0 + float(i) * 19.0, 6.0 + float(i % 2) * 1.4, 24.0 + sin(float(i)) * 18.0), Vector3(12.0, 0.08, 7.2), -12.0 + float(i) * 5.0, _theme_detail_material(THEME_MEMORY, profile, "MemoryConceptGradePostcard", 240.0 + float(i), "base"))
+
+func _add_desire_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var gold := _theme_detail_material(THEME_DESIRE, profile, "DesireConceptGradeGold", 260.0, "edge")
+	var glass := _theme_detail_material(THEME_DESIRE, profile, "DesireConceptGradeGlass", 261.0, "glow")
+	for i in range(6):
+		var z := -74.0 + float(i) * 29.0
+		_add_art_box(parent, "DesireConceptGradeCanalMirror_%02d" % i, Vector3(-38.0 + float(i % 2) * 76.0, 0.36, z), Vector3(34.0, 0.045, 4.2), float(i) * 7.0, glass)
+	for i in range(10):
+		var angle := TAU * float(i) / 10.0
+		_add_art_box(parent, "DesireConceptGradeTrapMazeBlade_%02d" % i, Vector3(cos(angle) * 42.0, 2.4, sin(angle) * 42.0), Vector3(1.0, 4.8, 18.0), rad_to_deg(angle) + 18.0, gold)
+	_add_memory_pulsing_light(parent, "DesireConceptGradeMirageCore", Vector3(0, 8.5, 0), Color(1.0, 0.44, 0.16), 0.25, 2.2, 42.0, 4.4)
+
+func _add_signs_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	for i in range(13):
+		var x := -90.0 + float(i) * 15.0
+		var h := 5.0 + float(i % 5) * 2.6
+		_add_art_box(parent, "SignsConceptGradeUnreadableTotem_%02d" % i, Vector3(x, h * 0.5, -78.0 + float(i % 3) * 10.0), Vector3(8.0, h, 0.36), -10.0 + float(i % 4) * 6.0, _theme_detail_material(THEME_SIGNS, profile, "SignsConceptGradeTotem", 280.0 + float(i), "edge" if i % 2 == 0 else "shadow"))
+	for i in range(8):
+		_add_sign_projection_veil(parent, "SignsConceptGradeSymbolCloud_%02d" % i, Vector3(-70.0 + float(i) * 20.0, 7.5 + float(i % 3), -24.0 + float(i % 2) * 46.0), Vector2(18, 30), float(i) * 14.0, Color(0.72, 0.86, 1.0, 0.10), 300.0 + float(i), 0.50)
+
+func _add_thin_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var cable := _theme_detail_material(THEME_THIN, profile, "ThinConceptGradeCable", 320.0, "edge")
+	var glass := _theme_detail_material(THEME_THIN, profile, "ThinConceptGradeSkyRoom", 321.0, "glow")
+	for i in range(15):
+		var x := -92.0 + float(i) * 13.2
+		_add_art_box(parent, "ThinConceptGradeNeedle_%02d" % i, Vector3(x, 12.0 + float(i % 5) * 2.4, -62.0 + float(i % 4) * 34.0), Vector3(0.36, 24.0 + float(i % 4) * 5.0, 0.36), float(i) * 5.0, cable)
+		_add_polish_line(parent, "ThinConceptGradeHighCable_%02d" % i, Vector3(x, 13.4 + float(i % 3), -94.0), Vector3(x + 26.0, 13.0 + float(i % 4), 92.0), Color(0.84, 0.96, 1.0, 0.28), 0.045)
+	for i in range(7):
+		var room := _add_art_box(parent, "ThinConceptGradeSuspendedGlassRoom_%02d" % i, Vector3(-58.0 + float(i) * 19.0, 9.0 + float(i % 3), -8.0 + sin(float(i)) * 30.0), Vector3(4.6, 3.0, 4.6), float(i) * 11.0, glass)
+		_add_looping_node_motion(parent, room, 0.46, 1.8, 5.8 + float(i) * 0.2)
+
+func _add_trade_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var lantern := _theme_detail_material(THEME_TRADE, profile, "TradeConceptGradeLantern", 340.0, "glow")
+	var wet := _theme_detail_material(THEME_TRADE, profile, "TradeConceptGradeWetDock", 341.0, "edge")
+	for i in range(9):
+		var z := -72.0 + float(i) * 18.0
+		_add_art_box(parent, "TradeConceptGradeWetDockPlank_%02d" % i, Vector3(-78.0 + float(i % 3) * 78.0, 0.34, z), Vector3(38.0, 0.05, 1.1), float(i % 3) * 8.0, wet)
+	for i in range(16):
+		var x := -84.0 + float(i % 8) * 24.0
+		var z := -34.0 + float(i / 8) * 58.0
+		var orb := _add_art_cylinder(parent, "TradeConceptGradeLanternOrb_%02d" % i, Vector3(x, 5.4 + float(i % 2), z), 1.0, 0.65, lantern, 24)
+		_add_looping_node_motion(parent, orb, 0.20, 0.0, 3.4 + float(i % 4) * 0.3)
+	_add_memory_pulsing_light(parent, "TradeConceptGradeNightMarketGlow", Vector3(0, 7.0, 12), Color(1.0, 0.38, 0.16), 0.35, 2.0, 50.0, 3.6)
+
+func _add_eyes_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var mirror := _theme_detail_material(THEME_EYES, profile, "EyesConceptGradeMirror", 360.0, "glow")
+	for i in range(5):
+		_add_art_cylinder(parent, "EyesConceptGradeHugeIris_%02d" % i, Vector3(0, 0.28 + float(i) * 0.10, -40.0 + float(i) * 20.0), 18.0 + float(i) * 5.0, 0.035, mirror, 96)
+	for i in range(16):
+		var angle := TAU * float(i) / 16.0
+		_add_polish_line(parent, "EyesConceptGradeLongGaze_%02d" % i, Vector3(0, 1.2, 0), Vector3(cos(angle) * 108.0, 1.2 + float(i % 3) * 0.3, sin(angle) * 108.0), Color(0.72, 0.96, 1.0, 0.20), 0.06)
+	_add_eye_offset_veil(parent, "EyesConceptGradeScreenwideDoubleVision", Vector3(0, 5.5, 0), Vector2(132, 72), 0.0, Color(0.70, 0.96, 1.0, 0.10), 380.0, 0.66)
+
+func _add_names_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	for i in range(20):
+		var x := -92.0 + float(i % 10) * 20.5
+		var z := -76.0 + float(i / 10) * 126.0
+		var stele := _add_art_box(parent, "NamesConceptGradeNameMonolith_%02d" % i, Vector3(x, 3.2 + float(i % 3), z), Vector3(2.2, 6.4 + float(i % 4) * 1.8, 0.72), float(i) * 6.0, _theme_detail_material(THEME_NAMES_CITY, profile, "NamesConceptGradeMonolith", 400.0 + float(i), "base"))
+		_add_looping_node_motion(parent, stele, 0.04, 0.18, 8.0 + float(i % 5) * 0.4)
+	for i in range(6):
+		_add_name_text_veil(parent, "NamesConceptGradeErasedSentence_%02d" % i, Vector3(-62.0 + float(i) * 25.0, 5.6, -12.0 + float(i % 2) * 48.0), Vector2(42, 12), float(i) * 5.0, Color(0.92, 0.76, 0.42, 0.12), 420.0 + float(i), 0.72)
+
+func _add_dead_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var bone := _theme_detail_material(THEME_DEAD, profile, "DeadConceptGradeBone", 440.0, "base")
+	for i in range(12):
+		var angle := TAU * float(i) / 12.0
+		_add_art_box(parent, "DeadConceptGradeRibVault_%02d" % i, Vector3(cos(angle) * 58.0, 4.8 + float(i % 3), sin(angle) * 58.0), Vector3(0.8, 9.6 + float(i % 4) * 2.0, 5.8), rad_to_deg(angle), bone)
+	for i in range(5):
+		_add_dead_cold_mist_veil(parent, "DeadConceptGradeGroundMist_%02d" % i, Vector3(-52.0 + float(i) * 26.0, 1.4, -16.0 + float(i % 2) * 50.0), Vector2(58, 24), float(i) * 9.0, Color(0.42, 0.54, 0.86, 0.14), 460.0 + float(i), 0.74)
+	_add_memory_pulsing_light(parent, "DeadConceptGradeUnderworldBreath", Vector3(0, 5.0, -6), Color(0.38, 0.58, 1.0), 0.12, 1.25, 48.0, 7.4)
+
+func _add_sky_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var star := _theme_detail_material(THEME_SKY, profile, "SkyConceptGradeStar", 480.0, "glow")
+	for ring in range(4):
+		var radius := 32.0 + float(ring) * 18.0
+		for i in range(18):
+			var a := TAU * float(i) / 18.0
+			var b := TAU * float(i + 1) / 18.0
+			_add_polish_line(parent, "SkyConceptGradeOrbit_%02d_%02d" % [ring, i], Vector3(cos(a) * radius, 9.0 + float(ring), sin(a) * radius), Vector3(cos(b) * radius, 9.0 + float(ring), sin(b) * radius), Color(0.62, 0.82, 1.0, 0.24), 0.055)
+	for i in range(18):
+		var angle := TAU * float(i) / 18.0
+		_add_art_cylinder(parent, "SkyConceptGradeStarPin_%02d" % i, Vector3(cos(angle) * 88.0, 10.0 + float(i % 5), sin(angle) * 88.0), 0.42, 0.16, star, 18)
+	_add_sky_stardust_veil(parent, "SkyConceptGradeCelestialBackcloth", Vector3(0, 12.0, -36), Vector2(160, 92), 0.0, Color(0.50, 0.72, 1.0, 0.14), 500.0, 0.80)
+
+func _add_continuous_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var dirty := _theme_detail_material(THEME_CONTINUOUS, profile, "ContinuousConceptGradeDirty", 520.0, "base")
+	var shadow := _theme_detail_material(THEME_CONTINUOUS, profile, "ContinuousConceptGradeShadow", 521.0, "shadow")
+	for z_i in range(6):
+		for x_i in range(9):
+			var x := -104.0 + float(x_i) * 26.0
+			var z := -104.0 + float(z_i) * 31.0
+			var h := 3.0 + float((x_i + z_i) % 5) * 1.3
+			_add_art_box(parent, "ContinuousConceptGradeInfiniteBlock_%02d_%02d" % [z_i, x_i], Vector3(x, h * 0.5, z), Vector3(8.0, h, 8.0), 0.0, dirty if (x_i + z_i) % 2 == 0 else shadow)
+	for i in range(8):
+		_add_city_style_veil(parent, "ContinuousConceptGradePollutionWall_%02d" % i, Vector3(-84.0 + float(i) * 24.0, 4.0 + float(i % 2), -72.0 + float(i % 3) * 44.0), Vector2(30, 34), float(i) * 8.0, Color(0.68, 0.62, 0.38, 0.14), 6.0, 540.0 + float(i), 0.86)
+
+func _add_hidden_concept_grade(parent: Node3D, profile: Dictionary) -> void:
+	var growth := _theme_detail_material(THEME_HIDDEN, profile, "HiddenConceptGradeGrowth", 560.0, "glow")
+	var dark := _theme_detail_material(THEME_HIDDEN, profile, "HiddenConceptGradeDark", 561.0, "shadow")
+	for ring in range(5):
+		_add_art_cylinder(parent, "HiddenConceptGradeNestedRevealRing_%02d" % ring, Vector3(0, 0.32 + float(ring) * 0.16, -48.0 + float(ring) * 20.0), 10.0 + float(ring) * 5.5, 0.04, growth if ring % 2 == 0 else dark, 72)
+	for i in range(14):
+		var angle := TAU * float(i) / 14.0
+		_add_art_box(parent, "HiddenConceptGradeRootCurtain_%02d" % i, Vector3(cos(angle) * 82.0, 7.0 + float(i % 4), sin(angle) * 82.0), Vector3(1.2, 14.0 + float(i % 3) * 3.0, 1.2), rad_to_deg(angle), dark)
+	for i in range(6):
+		_add_city_style_veil(parent, "HiddenConceptGradeRevealMask_%02d" % i, Vector3(-70.0 + float(i) * 28.0, 5.4, -16.0 + float(i % 2) * 44.0), Vector2(24, 48), -12.0 + float(i) * 6.0, Color(0.28, 1.0, 0.42, 0.13), 5.0, 580.0 + float(i), 1.0)
+
+func _theme_pack_memory(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for i in range(5):
+		_add_polish_block(parent, "MemorySecondPassPostcardEdge_%02d" % i, Vector3(-56.0 + float(i) * 28.0, 1.1 + float(i % 2) * 0.5, 66.0), Vector3(13.0, 0.06, 5.0), -8.0 + float(i) * 5.0, Color(0.90, 0.72, 0.42, 0.30))
+	_add_city_style_veil(parent, "MemorySecondPassSepiaHaze", Vector3(0, 2.0, 8), Vector2(150, 150), 0.0, Color(0.92, 0.66, 0.34, 0.12), 1.0, 17.0, 0.45)
+	_add_memory_pulsing_light(parent, "MemorySecondPassArchiveGlow", Vector3(0, 6.0, 18), glow, 0.22, 1.10, 30.0, 4.6)
+
+func _theme_pack_desire(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	for i in range(8):
+		var x := -72.0 + float(i) * 20.0
+		_add_polish_cylinder(parent, "DesireGlassPoolLens_%02d" % i, Vector3(x, 0.31, -20.0 + float(i % 2) * 54.0), 5.2, 0.035, Color(0.26, 0.92, 0.68, 0.18), 56)
+		_add_polish_line(parent, "DesireGoldThread_%02d" % i, Vector3(x - 6.0, 0.42, -78.0), Vector3(x + 10.0, 0.42, 72.0), Color(1.0, 0.56, 0.14, 0.32), 0.12)
+	for i in range(6):
+		_add_city_style_veil(parent, "DesireHeatMirageVeil_%02d" % i, Vector3(-60.0 + float(i) * 24.0, 1.8, -34.0 + float(i % 2) * 70.0), Vector2(16, 20), 12.0 + float(i) * 9.0, Color(1.0, 0.36, 0.18, 0.15), 2.0, 40.0 + float(i), 0.72)
+	var haze := _make_city_particle_layer("DesireProfileGoldRedHaze", int(620.0 * procedural_city_polish_intensity), Vector2(0.08, 0.035), Vector3(112, 7.0, 112), Vector3(0.16, 0.08, -0.06), Color(1.0, 0.42, 0.18, 0.24), 0.03, 0.22, 96.0, 14.0)
+	parent.add_child(haze)
+	_add_memory_pulsing_light(parent, "DesireProfileAmberPulse", Vector3(0, 7.0, -12), accent, 0.30, 1.60, 34.0, 3.8)
+
+func _theme_pack_signs(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for i in range(10):
+		var pos := Vector3(-80.0 + float(i % 5) * 40.0, 2.2 + float(i / 5) * 2.1, -58.0 + float(i / 5) * 104.0)
+		_add_polish_block(parent, "SignsHalftoneBillboard_%02d" % i, pos, Vector3(10.0, 3.0, 0.16), float((i % 5) * 11), accent if i % 2 == 0 else Color(0.05, 0.05, 0.045, 0.70))
+	for i in range(9):
+		_add_polish_cylinder(parent, "SignsInkDot_%02d" % i, Vector3(-64.0 + float(i % 3) * 64.0, 0.25, -46.0 + float(i / 3) * 46.0), 1.1 + float(i % 3) * 0.5, 0.035, Color(0.0, 0.0, 0.0, 0.42), 24)
+	_add_city_style_veil(parent, "SignsElectronicOutlineField", Vector3(0, 2.6, 0), Vector2(154, 154), 0.0, Color(0.40, 0.62, 1.0, 0.13), 4.0, 52.0, 0.86)
+	_add_memory_pulsing_light(parent, "SignsProfileBlueScanPulse", Vector3(0, 5.8, 6), glow, 0.18, 1.25, 30.0, 2.4)
+
+func _theme_pack_thin(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for i in range(12):
+		var x := -90.0 + float(i) * 16.5
+		_add_polish_line(parent, "ThinSuspendedAirCable_%02d" % i, Vector3(x, 3.2 + float(i % 3) * 0.8, -82.0), Vector3(x + 18.0, 3.2 + float(i % 3) * 0.8, 84.0), Color(0.82, 0.96, 1.0, 0.34), 0.055)
+		_add_polish_block(parent, "ThinTinyHangingRoom_%02d" % i, Vector3(x + 7.0, 2.0 + float(i % 4) * 0.65, -34.0 + float(i % 5) * 15.5), Vector3(2.8, 1.8, 2.8), float(i) * 13.0, Color(0.72, 0.90, 1.0, 0.22))
+	for i in range(4):
+		_add_city_style_veil(parent, "ThinCloudThreadVeil_%02d" % i, Vector3(-54.0 + float(i) * 36.0, 4.0, 0), Vector2(20, 132), 4.0 + float(i) * 7.0, Color(0.70, 0.90, 1.0, 0.11), 3.0, 61.0 + float(i), 0.62)
+	_add_memory_pulsing_light(parent, "ThinProfilePaleBreath", Vector3(0, 8.8, 0), glow, 0.12, 0.90, 38.0, 5.6)
+
+func _theme_pack_trade(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	for i in range(7):
+		_add_polish_block(parent, "TradeCopperWetReflection_%02d" % i, Vector3(-72.0 + float(i) * 24.0, 0.28, -44.0 + float(i % 2) * 84.0), Vector3(15.0, 0.035, 1.1), float(i) * 8.0, Color(0.94, 0.42, 0.16, 0.28))
+		_add_polish_cylinder(parent, "TradeCoinGlimmer_%02d" % i, Vector3(-64.0 + float(i) * 20.5, 0.46, -10.0 + float(i % 3) * 18.0), 1.0, 0.035, Color(1.0, 0.70, 0.22, 0.40), 32)
+	for i in range(6):
+		_add_city_style_veil(parent, "TradeDampClothBanner_%02d" % i, Vector3(-70.0 + float(i) * 28.0, 3.2 + float(i % 2), -30.0 + float(i % 3) * 28.0), Vector2(9, 18), float(i) * 16.0, Color(1.0, 0.36, 0.16, 0.18), 2.0, 70.0 + float(i), 0.65)
+	var mist := _make_city_particle_layer("TradeProfileHarborVapor", int(540.0 * procedural_city_polish_intensity), Vector2(0.075, 0.045), Vector3(118, 4.5, 118), Vector3(0.08, 0.04, 0.14), Color(0.40, 0.86, 0.62, 0.18), 0.02, 0.18, 110.0, 16.0)
+	parent.add_child(mist)
+	_add_memory_pulsing_light(parent, "TradeProfileLanternPulse", Vector3(0, 5.4, -20), accent, 0.25, 1.45, 34.0, 3.2)
+
+func _theme_pack_eyes(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for i in range(9):
+		var angle := TAU * float(i) / 9.0
+		var pos := Vector3(cos(angle) * (34.0 + float(i % 3) * 18.0), 0.36, sin(angle) * (34.0 + float(i % 3) * 18.0))
+		_add_polish_cylinder(parent, "EyesMirrorIrisDisc_%02d" % i, pos, 3.2 + float(i % 2), 0.035, Color(0.70, 0.96, 1.0, 0.24), 64)
+		_add_polish_line(parent, "EyesSightRay_%02d" % i, Vector3(0, 0.58, 0), Vector3(pos.x, 0.58, pos.z), accent, 0.065)
+	var shards := _make_city_particle_layer("EyesProfileLensDust", int(420.0 * procedural_city_polish_intensity), Vector2(0.05, 0.09), Vector3(100, 8.0, 100), Vector3(0.02, 0.04, 0.02), Color(0.82, 0.98, 1.0, 0.22), 0.01, 0.12, 80.0, 11.0)
+	parent.add_child(shards)
+	_add_memory_pulsing_light(parent, "EyesProfileColdGlint", Vector3(0, 6.4, 0), glow, 0.20, 1.35, 32.0, 2.8)
+
+func _theme_pack_names(parent: Node3D, profile: Dictionary) -> void:
+	var base: Color = profile["base"]
+	var glow: Color = profile["glow"]
+	for i in range(10):
+		var x := -80.0 + float(i % 5) * 40.0
+		var z := -58.0 + float(i / 5) * 106.0
+		_add_polish_block(parent, "NamesCarvedSteleFace_%02d" % i, Vector3(x, 2.0, z), Vector3(7.0, 4.0, 0.30), float(i) * 6.0, base)
+		_add_polish_line(parent, "NamesBlackScrape_%02d" % i, Vector3(x - 3.0, 4.0, z + 0.28), Vector3(x + 3.4, 4.0, z + 0.28), Color(0.02, 0.018, 0.012, 0.62), 0.05)
+	var dust := _make_city_particle_layer("NamesProfileGoldDust", int(360.0 * procedural_city_polish_intensity), Vector2(0.045, 0.045), Vector3(104, 5.0, 104), Vector3(-0.03, 0.05, 0.06), Color(0.96, 0.76, 0.40, 0.20), 0.01, 0.13, 90.0, 13.0)
+	parent.add_child(dust)
+	_add_memory_pulsing_light(parent, "NamesProfileArchiveLamp", Vector3(0, 4.8, 0), glow, 0.14, 0.90, 28.0, 4.8)
+
+func _theme_pack_dead(parent: Node3D, profile: Dictionary) -> void:
+	var base: Color = profile["base"]
+	var glow: Color = profile["glow"]
+	for i in range(8):
+		var angle := TAU * float(i) / 8.0
+		var radius := 28.0 + float(i % 4) * 12.0
+		_add_polish_cylinder(parent, "DeadSaltMemoryRing_%02d" % i, Vector3(cos(angle) * radius, 0.20, sin(angle) * radius), 4.6, 0.035, base, 48)
+		_add_polish_block(parent, "DeadLowCandleMarker_%02d" % i, Vector3(cos(angle) * radius, 0.82, sin(angle) * radius), Vector3(0.45, 1.2, 0.45), rad_to_deg(angle), Color(0.72, 0.82, 1.0, 0.34))
+	_add_city_style_veil(parent, "DeadColdMourningMist", Vector3(0, 1.45, 0), Vector2(170, 170), 0.0, Color(0.38, 0.52, 0.86, 0.12), 3.0, 88.0, 0.70)
+	_add_memory_pulsing_light(parent, "DeadProfileBlueCandlePulse", Vector3(0, 4.2, 8), glow, 0.10, 0.82, 32.0, 6.2)
+
+func _theme_pack_sky(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for ring in range(3):
+		var radius := 24.0 + float(ring) * 24.0
+		for i in range(12):
+			var a := TAU * float(i) / 12.0
+			var b := TAU * float(i + 1) / 12.0
+			_add_polish_line(parent, "SkyOrbitalArc_%02d_%02d" % [ring, i], Vector3(cos(a) * radius, 3.4 + float(ring) * 0.7, sin(a) * radius), Vector3(cos(b) * radius, 3.4 + float(ring) * 0.7, sin(b) * radius), accent, 0.06)
+	for i in range(11):
+		var angle := TAU * float(i) / 11.0
+		_add_polish_cylinder(parent, "SkyStarWell_%02d" % i, Vector3(cos(angle) * 78.0, 0.42, sin(angle) * 78.0), 0.75, 0.035, Color(0.88, 0.92, 1.0, 0.52), 18)
+	var stardust := _make_city_particle_layer("SkyProfileStardust", int(520.0 * procedural_city_polish_intensity), Vector2(0.045, 0.045), Vector3(120, 18.0, 120), Vector3(0.0, 0.13, -0.03), Color(0.70, 0.84, 1.0, 0.26), 0.01, 0.10, 70.0, 18.0)
+	parent.add_child(stardust)
+	_add_memory_pulsing_light(parent, "SkyProfileZenithPulse", Vector3(0, 14.0, 0), glow, 0.18, 1.35, 46.0, 5.0)
+
+func _theme_pack_continuous(parent: Node3D, profile: Dictionary) -> void:
+	var base: Color = profile["base"]
+	var accent: Color = profile["accent"]
+	for row in range(4):
+		for col in range(7):
+			var pos := Vector3(-84.0 + float(col) * 28.0, 0.62, -72.0 + float(row) * 36.0)
+			_add_polish_block(parent, "ContinuousSubdivisionRepeat_%02d_%02d" % [row, col], pos, Vector3(12.0, 0.18, 8.0), 0.0, base)
+	for i in range(8):
+		_add_polish_block(parent, "ContinuousDirtyBillboard_%02d" % i, Vector3(-78.0 + float(i) * 22.5, 3.6, 66.0), Vector3(8.8, 3.2, 0.20), 0.0, Color(0.80, 0.66, 0.32, 0.28))
+	var smoke := _make_city_particle_layer("ContinuousProfileIndustrialDust", int(720.0 * procedural_city_polish_intensity), Vector2(0.09, 0.06), Vector3(128, 8.0, 128), Vector3(0.14, 0.03, -0.02), Color(0.70, 0.64, 0.42, 0.22), 0.025, 0.20, 105.0, 17.0)
+	parent.add_child(smoke)
+	_add_memory_pulsing_light(parent, "ContinuousProfilePollutionLamp", Vector3(0, 5.4, 10), accent, 0.14, 0.86, 38.0, 7.0)
+
+func _theme_pack_hidden(parent: Node3D, profile: Dictionary) -> void:
+	var accent: Color = profile["accent"]
+	var glow: Color = profile["glow"]
+	for i in range(12):
+		var x := -86.0 + float(i) * 15.5
+		_add_polish_line(parent, "HiddenCrackLightRoot_%02d" % i, Vector3(x, 0.44, -72.0 + float(i % 3) * 12.0), Vector3(x + 9.0, 0.44, 68.0 - float(i % 4) * 11.0), Color(0.36, 1.0, 0.44, 0.28), 0.08)
+		_add_polish_cylinder(parent, "HiddenSporeNode_%02d" % i, Vector3(x + 3.0, 0.62, -20.0 + float(i % 6) * 9.0), 0.85, 0.035, accent, 24)
+	for i in range(5):
+		_add_city_style_veil(parent, "HiddenMaskRevealVeil_%02d" % i, Vector3(-64.0 + float(i) * 32.0, 2.6, -8.0 + float(i % 2) * 36.0), Vector2(16, 34), -12.0 + float(i) * 8.0, Color(0.28, 0.92, 0.40, 0.14), 5.0, 112.0 + float(i), 0.90)
+	var spores := _make_city_particle_layer("HiddenProfileDarkGreenSpores", int(580.0 * procedural_city_polish_intensity), Vector2(0.05, 0.05), Vector3(112, 9.0, 112), Vector3(-0.02, 0.06, 0.02), Color(0.40, 1.0, 0.42, 0.23), 0.01, 0.12, 75.0, 16.0)
+	parent.add_child(spores)
+	_add_memory_pulsing_light(parent, "HiddenProfileInnerSeedPulse", Vector3(0, 5.8, 0), glow, 0.12, 1.18, 34.0, 4.2)
+
 func _theme_air_direction(theme_index: int) -> Vector3:
 	match theme_index:
 		THEME_MEMORY:
@@ -2261,6 +3512,11 @@ func _apply_grey_environment_style() -> void:
 	environment.fog_sky_affect = 0.75
 	environment.adjustment_saturation = 0.16
 	environment.adjustment_contrast = 0.52
+	_set_if_property_exists(environment, "adjustment_brightness", 1.0)
+	_set_if_property_exists(environment, "glow_enabled", false)
+	_set_if_property_exists(environment, "volumetric_fog_enabled", false)
+	_set_if_property_exists(environment, "ssao_enabled", false)
+	_set_if_property_exists(environment, "ssil_enabled", false)
 	if sun_light != null:
 		sun_light.rotation_degrees = Vector3(-45, -35, 0)
 		sun_light.light_color = Color(0.80, 0.80, 0.76)
@@ -2284,6 +3540,56 @@ func _apply_city_environment_style(theme_index: int) -> void:
 		sun_light.rotation_degrees = style["sun_rotation"]
 		sun_light.light_color = style["sun_color"]
 		sun_light.light_energy = float(style["sun_energy"])
+	_apply_theme_environment_posture(theme_index, style)
+
+func _apply_theme_environment_posture(theme_index: int, style: Dictionary) -> void:
+	var posture := _theme_posture_profile(theme_index)
+	environment.adjustment_saturation = float(posture.get("saturation", style.get("saturation", 0.78)))
+	environment.adjustment_contrast = float(posture.get("contrast", style.get("contrast", 1.05)))
+	_set_if_property_exists(environment, "glow_enabled", bool(posture.get("glow_enabled", style.get("glow_enabled", false))))
+	_set_if_property_exists(environment, "glow_intensity", float(posture.get("glow_intensity", style.get("glow_intensity", 0.32))))
+	_set_if_property_exists(environment, "glow_bloom", float(posture.get("glow_bloom", style.get("glow_bloom", 0.14))))
+	_set_if_property_exists(environment, "glow_blend_mode", int(posture.get("glow_blend_mode", 1)))
+	_set_if_property_exists(environment, "adjustment_brightness", float(posture.get("brightness", 1.0)))
+	_set_if_property_exists(environment, "ssao_enabled", bool(posture.get("ssao_enabled", true)))
+	_set_if_property_exists(environment, "ssao_radius", float(posture.get("ssao_radius", 1.4)))
+	_set_if_property_exists(environment, "ssao_intensity", float(posture.get("ssao_intensity", 1.2)))
+	_set_if_property_exists(environment, "ssil_enabled", bool(posture.get("ssil_enabled", false)))
+	_set_if_property_exists(environment, "ssil_intensity", float(posture.get("ssil_intensity", 0.55)))
+	_set_if_property_exists(environment, "fog_depth_begin", float(posture.get("fog_depth_begin", 12.0)))
+	_set_if_property_exists(environment, "fog_depth_end", float(posture.get("fog_depth_end", 78.0)))
+	_set_if_property_exists(environment, "volumetric_fog_enabled", bool(posture.get("volumetric", false)))
+	_set_if_property_exists(environment, "volumetric_fog_density", float(posture.get("volumetric_density", 0.0)))
+	_set_if_property_exists(environment, "volumetric_fog_albedo", posture.get("volumetric_color", style.get("fog", Color(0.62, 0.62, 0.58))))
+
+func _city_fog_end_density(theme_index: int) -> float:
+	return float(_theme_posture_profile(theme_index).get("fog_density_end", fog_end_value))
+
+func _theme_posture_profile(theme_index: int) -> Dictionary:
+	match theme_index:
+		THEME_MEMORY:
+			return {"saturation": 0.72, "contrast": 1.18, "glow_enabled": true, "glow_intensity": 0.36, "glow_bloom": 0.15, "fog_density_end": 0.009, "volumetric": true, "volumetric_density": 0.004, "volumetric_color": Color(0.72, 0.64, 0.52), "fog_depth_begin": 24.0, "fog_depth_end": 124.0}
+		THEME_DESIRE:
+			return {"saturation": 0.82, "contrast": 1.14, "glow_enabled": true, "glow_intensity": 0.34, "glow_bloom": 0.14, "fog_density_end": 0.010, "volumetric": false, "fog_depth_begin": 18.0, "fog_depth_end": 104.0}
+		THEME_SIGNS:
+			return {"saturation": 0.62, "contrast": 1.22, "glow_enabled": true, "glow_intensity": 0.34, "glow_bloom": 0.12, "fog_density_end": 0.012, "volumetric": false, "fog_depth_begin": 16.0, "fog_depth_end": 96.0}
+		THEME_THIN:
+			return {"saturation": 0.68, "contrast": 0.94, "glow_enabled": true, "glow_intensity": 0.30, "glow_bloom": 0.16, "fog_density_end": 0.010, "volumetric": true, "volumetric_density": 0.006, "volumetric_color": Color(0.66, 0.84, 0.96), "fog_depth_begin": 8.0, "fog_depth_end": 104.0}
+		THEME_TRADE:
+			return {"saturation": 0.78, "contrast": 1.10, "glow_enabled": true, "glow_intensity": 0.34, "glow_bloom": 0.14, "fog_density_end": 0.014, "volumetric": true, "volumetric_density": 0.008, "volumetric_color": Color(0.38, 0.58, 0.45), "fog_depth_begin": 16.0, "fog_depth_end": 96.0}
+		THEME_EYES:
+			return {"saturation": 0.70, "contrast": 1.16, "glow_enabled": true, "glow_intensity": 0.34, "glow_bloom": 0.12, "fog_density_end": 0.012, "volumetric": false, "fog_depth_begin": 14.0, "fog_depth_end": 92.0}
+		THEME_NAMES_CITY:
+			return {"saturation": 0.54, "contrast": 1.10, "glow_enabled": true, "glow_intensity": 0.24, "glow_bloom": 0.10, "fog_density_end": 0.014, "volumetric": false, "fog_depth_begin": 12.0, "fog_depth_end": 88.0}
+		THEME_DEAD:
+			return {"saturation": 0.46, "contrast": 1.08, "glow_enabled": true, "glow_intensity": 0.32, "glow_bloom": 0.14, "fog_density_end": 0.016, "volumetric": true, "volumetric_density": 0.010, "volumetric_color": Color(0.36, 0.46, 0.64), "fog_depth_begin": 12.0, "fog_depth_end": 84.0}
+		THEME_SKY:
+			return {"saturation": 0.78, "contrast": 1.10, "glow_enabled": true, "glow_intensity": 0.42, "glow_bloom": 0.20, "fog_density_end": 0.008, "volumetric": true, "volumetric_density": 0.004, "volumetric_color": Color(0.30, 0.44, 0.82), "fog_depth_begin": 18.0, "fog_depth_end": 118.0}
+		THEME_CONTINUOUS:
+			return {"saturation": 0.42, "contrast": 0.98, "glow_enabled": false, "glow_intensity": 0.18, "glow_bloom": 0.08, "fog_density_end": 0.020, "volumetric": true, "volumetric_density": 0.012, "volumetric_color": Color(0.58, 0.54, 0.36), "fog_depth_begin": 12.0, "fog_depth_end": 82.0}
+		THEME_HIDDEN:
+			return {"saturation": 0.64, "contrast": 1.20, "glow_enabled": true, "glow_intensity": 0.36, "glow_bloom": 0.16, "fog_density_end": 0.016, "volumetric": true, "volumetric_density": 0.010, "volumetric_color": Color(0.18, 0.38, 0.22), "fog_depth_begin": 14.0, "fog_depth_end": 92.0}
+	return {"saturation": 0.78, "contrast": 1.05, "glow_enabled": false, "fog_density_end": fog_end_value, "volumetric": false}
 
 func _set_procedural_sky_colors(top: Color, horizon: Color, ground_bottom: Color, ground_horizon: Color, energy: float) -> void:
 	if procedural_sky_material == null:
@@ -2307,7 +3613,7 @@ func _set_if_property_exists(object: Object, property_name: String, value: Varia
 func _theme_environment_profile(theme_index: int) -> Dictionary:
 	match theme_index:
 		THEME_MEMORY:
-			return {"sky_top": Color(0.42, 0.40, 0.36), "sky_horizon": Color(0.78, 0.66, 0.46), "ground_bottom": Color(0.28, 0.25, 0.21), "ground_horizon": Color(0.62, 0.54, 0.42), "sky_energy": 0.86, "ambient": Color(0.72, 0.66, 0.54), "ambient_energy": 0.95, "fog": Color(0.72, 0.66, 0.56), "fog_sky_affect": 0.40, "sun_rotation": Vector3(-38, -28, 0), "sun_color": Color(1.0, 0.74, 0.42), "sun_energy": 1.20}
+			return {"sky_top": Color(0.18, 0.11, 0.30), "sky_horizon": Color(0.94, 0.50, 0.24), "ground_bottom": Color(0.24, 0.18, 0.18), "ground_horizon": Color(0.62, 0.44, 0.30), "sky_energy": 0.98, "ambient": Color(0.76, 0.62, 0.50), "ambient_energy": 0.92, "fog": Color(0.74, 0.62, 0.50), "fog_sky_affect": 0.44, "sun_rotation": Vector3(-12, -34, 0), "sun_color": Color(1.0, 0.56, 0.24), "sun_energy": 1.42, "saturation": 0.76, "contrast": 1.13, "glow_enabled": true, "glow_intensity": 0.48, "glow_bloom": 0.22}
 		THEME_DESIRE:
 			return {"sky_top": Color(0.86, 0.42, 0.16), "sky_horizon": Color(1.0, 0.74, 0.32), "ground_bottom": Color(0.44, 0.18, 0.10), "ground_horizon": Color(0.84, 0.52, 0.20), "sky_energy": 1.05, "ambient": Color(0.92, 0.58, 0.30), "ambient_energy": 1.02, "fog": Color(0.96, 0.62, 0.28), "fog_sky_affect": 0.32, "sun_rotation": Vector3(-32, -46, 0), "sun_color": Color(1.0, 0.52, 0.18), "sun_energy": 1.45}
 		THEME_SIGNS:
@@ -6027,7 +7333,7 @@ func _build_echo_tower() -> void:
 	base.position.y = 0.55
 	base.material = _mat(Color(0.50, 0.50, 0.47), 1.0)
 	root.add_child(base)
-	_add_box_collision("EchoTowerBaseCollision", Vector3(0, 0.55, 0), Vector3(9, 1.1, 9))
+	_add_box_collision("EchoTowerBaseCollision", Vector3(0, 0.45, 0), Vector3(5.8, 0.9, 5.8))
 
 	var shaft := CSGCylinder3D.new()
 	shaft.name = "CylinderMainTower"
@@ -6037,7 +7343,7 @@ func _build_echo_tower() -> void:
 	shaft.position.y = 15.4
 	shaft.material = _mat(Color(0.58, 0.58, 0.53), 1.0)
 	root.add_child(shaft)
-	_add_box_collision("EchoTowerShaftCollision", Vector3(0, 15.4, 0), Vector3(5.6, 28, 5.6))
+	_add_box_collision("EchoTowerShaftCollision", Vector3(0, 15.4, 0), Vector3(2.6, 28, 2.6))
 
 	for i in range(6):
 		var angle := TAU * float(i) / 6.0
@@ -6066,16 +7372,19 @@ func _build_echo_tower() -> void:
 	cap.position.y = 32.0
 	cap.material = _mat(Color(0.36, 0.36, 0.34), 1.0)
 	root.add_child(cap)
+	var imported_tower := _add_memory_model_overlay(root, "EchoTower", Vector3.ZERO, 0.0, Vector3(10.2, 10.2, 43.0))
+	if imported_tower != null:
+		imported_tower.rotation_degrees.x = 90.0
 
 	if reading_trigger == null:
 		reading_trigger = Area3D.new()
 		reading_trigger.name = "ReadingTrigger"
-		reading_trigger.position = Vector3(0, 0.8, 6.2)
+		reading_trigger.position = Vector3(0, 0.8, 8.4)
 		reading_trigger.collision_layer = 0
 		reading_trigger.collision_mask = 2
 		var shape := CollisionShape3D.new()
 		var sphere := SphereShape3D.new()
-		sphere.radius = 4.0
+		sphere.radius = 7.0
 		shape.shape = sphere
 		reading_trigger.add_child(shape)
 		reading_trigger.body_entered.connect(_on_reading_trigger_entered)
@@ -6092,11 +7401,24 @@ func _build_audio_players() -> void:
 	add_child(global_music_player)
 	_register_generator(global_music_player, 146.0)
 
+	ui_click_player = AudioStreamPlayer.new()
+	ui_click_player.name = "UITextButtonClick"
+	ui_click_player.volume_db = -15.0
+	ui_click_player.bus = "Master"
+	var click_generator := AudioStreamGenerator.new()
+	click_generator.mix_rate = 22050
+	click_generator.buffer_length = 0.08
+	ui_click_player.stream = click_generator
+	add_child(ui_click_player)
+	_register_generator(ui_click_player, 1320.0)
+	ui_click_player.set_meta("generated_theme_index", -2)
+	ui_click_player.set_meta("generated_sfx_duration", 0.12)
+
 	theme_sfx_player = AudioStreamPlayer3D.new()
 	theme_sfx_player.name = "ThemeSeekingSFX"
 	theme_sfx_player.position = MEMORY_POS
 	theme_sfx_player.max_distance = theme_sfx_hearing_distance
-	theme_sfx_player.unit_size = 34.0
+	theme_sfx_player.unit_size = 96.0
 	theme_sfx_player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 	theme_sfx_player.volume_db = theme_sfx_volume_far_db
 	theme_sfx_player.bus = "MemoryZone"
@@ -6108,8 +7430,8 @@ func _build_audio_players() -> void:
 		var p := AudioStreamPlayer3D.new()
 		p.name = "ZoneSFX_%s" % _ascii_zone_name(THEME_NAMES[i], i)
 		p.position = ZONE_POSITIONS[i]
-		p.max_distance = max(ZONE_SHAPES[i].x, ZONE_SHAPES[i].y) * 1.08
-		p.unit_size = 30.0
+		p.max_distance = max(ZONE_SHAPES[i].x, ZONE_SHAPES[i].y) * 0.92
+		p.unit_size = 24.0
 		p.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 		p.volume_db = zone_sfx_volume_db
 		p.bus = "WorldReverb"
@@ -6141,43 +7463,52 @@ func _build_ui() -> void:
 	direction_tint.color = Color(0.72, 0.62, 0.45, 0.0)
 	ui_root.add_child(direction_tint)
 
-	main_menu = _center_panel("MainMenu")
-	var title := _label("看不见的城市\nInvisible Cities", 38)
+	main_menu = _center_panel("MainMenu", "main")
+	var title := _label("看不见的城市", 34, "main_title")
 	main_menu.add_child(title)
-	main_menu.add_child(_button("开始", _on_start_pressed))
-	main_menu.add_child(_button("选项", _open_options))
-	main_menu.add_child(_button("退出", func(): get_tree().quit()))
+	main_menu.add_child(_label("Invisible Cities", 13, "main_subtitle"))
+	main_menu.add_child(_thin_rule("MainMenuRule", Color(0.92, 0.88, 0.74, 0.46), 260.0))
+	main_menu.add_child(_label("十一座主题城市，先从声音进入。", 15, "menu_note"))
+	main_menu.add_child(_button("开始游戏", _on_start_pressed, "main"))
+	main_menu.add_child(_button("声音设置", _open_options, "main"))
+	main_menu.add_child(_button("退出", func(): get_tree().quit(), "quiet"))
 	ui_root.add_child(main_menu)
 
-	story_panel = _center_panel("StoryIntro")
-	story_text = _label("", 28)
+	story_panel = _center_panel("StoryIntro", "text")
+	story_text = _label("", 22, "story")
+	story_text.custom_minimum_size = Vector2(560, 130)
 	story_panel.add_child(story_text)
-	story_next_button = _button("继续", _advance_story)
+	story_next_button = _button("继续", _advance_story, "text")
 	story_panel.add_child(story_next_button)
 	ui_root.add_child(story_panel)
 
-	options_panel = _center_panel("OptionsPanel")
-	options_panel.add_child(_label("选项", 30))
-	options_panel.add_child(_label("背景音乐", 18))
+	options_panel = _center_panel("OptionsPanel", "compact")
+	options_panel.add_child(_label("声音设置", 24, "panel_title"))
+	options_panel.add_child(_label("背景音乐", 15, "menu_note"))
 	bgm_volume_slider = HSlider.new()
 	bgm_volume_slider.min_value = 0.0
 	bgm_volume_slider.max_value = 1.0
 	bgm_volume_slider.step = 0.01
 	bgm_volume_slider.value = bgm_volume_scale
-	bgm_volume_slider.custom_minimum_size = Vector2(300, 32)
+	bgm_volume_slider.custom_minimum_size = Vector2(280, 28)
 	bgm_volume_slider.value_changed.connect(_on_bgm_volume_changed)
 	options_panel.add_child(bgm_volume_slider)
-	bgm_volume_value_label = _label(_format_bgm_volume_percent(), 16)
+	bgm_volume_value_label = _label(_format_bgm_volume_percent(), 14, "hud")
 	options_panel.add_child(bgm_volume_value_label)
-	options_panel.add_child(_label("鼠标灵敏度与视角平滑仍可在 Main 节点 Inspector 调整。", 16))
-	options_panel.add_child(_button("返回", _enter_main_menu))
+	options_panel.add_child(_label("其他手感参数仍保留在 Main 节点 Inspector。", 13, "caption"))
+	options_panel.add_child(_button("返回", _enter_main_menu, "quiet"))
 	ui_root.add_child(options_panel)
 
-	theme_select = _center_panel("ThemeSelect")
-	theme_select.add_child(_label("选择城市的描述", 30))
-	theme_select_status_label = _label("", 17)
+	theme_select = _center_panel("ThemeSelect", "select")
+	theme_select.add_child(_label("选择主题城市", 24, "panel_title"))
+	theme_select_status_label = _label("", 14, "caption")
 	theme_select.add_child(theme_select_status_label)
 	theme_buttons.clear()
+	var theme_grid := GridContainer.new()
+	theme_grid.name = "ThemeButtonGrid"
+	theme_grid.columns = 2
+	theme_grid.add_theme_constant_override("h_separation", 8)
+	theme_grid.add_theme_constant_override("v_separation", 8)
 	for i in range(THEME_NAMES.size()):
 		var callback: Callable = _disabled_theme_pressed
 		if i == THEME_MEMORY:
@@ -6202,25 +7533,26 @@ func _build_ui() -> void:
 			callback = _on_continuous_theme_pressed
 		elif i == THEME_HIDDEN:
 			callback = _on_hidden_theme_pressed
-		var b := _button(THEME_NAMES[i], callback)
+		var b := _button(THEME_NAMES[i], callback, "theme")
 		theme_buttons.append(b)
-		theme_select.add_child(b)
+		theme_grid.add_child(b)
+	theme_select.add_child(theme_grid)
 	ui_root.add_child(theme_select)
 	_update_theme_unlocks()
 
-	mechanic_prompt = _center_panel("MechanicPrompt")
-	mechanic_prompt.add_child(_label("跟随声的指引，寻找你所往的城市。", 26))
-	mechanic_prompt.add_child(_label("主城被划分为十一片灰域。每片区域都有自己的声音；越靠近正确主题的中心，声音越清晰、越强。", 18))
-	mechanic_prompt.add_child(_button("进入主城", _start_pre_grey_text))
+	mechanic_prompt = _center_panel("MechanicPrompt", "text")
+	mechanic_prompt.add_child(_label("先听，再进入。", 23, "panel_title"))
+	mechanic_prompt.add_child(_label("灰域里有十一组声源。靠近选定主题时，声音会变清晰；迷路时看左上角倒计时。", 16, "story"))
+	mechanic_prompt.add_child(_button("进入灰域", _start_pre_grey_text, "text"))
 	ui_root.add_child(mechanic_prompt)
 
-	pre_grey_panel = _center_panel("PreGreyMemoryText")
-	pre_grey_panel.offset_left = -360
-	pre_grey_panel.offset_right = 360
-	pre_grey_text = _label("", 24)
-	pre_grey_text.custom_minimum_size = Vector2(680, 170)
+	pre_grey_panel = _center_panel("PreGreyMemoryText", "reading")
+	pre_grey_panel.offset_left = -340
+	pre_grey_panel.offset_right = 340
+	pre_grey_text = _label("", 20, "reading")
+	pre_grey_text.custom_minimum_size = Vector2(640, 150)
 	pre_grey_panel.add_child(pre_grey_text)
-	pre_grey_next_button = _button("继续", _advance_pre_grey_text)
+	pre_grey_next_button = _button("继续", _advance_pre_grey_text, "text")
 	pre_grey_panel.add_child(pre_grey_next_button)
 	ui_root.add_child(pre_grey_panel)
 
@@ -6229,10 +7561,10 @@ func _build_ui() -> void:
 	hint_label.text = ""
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	hint_label.add_theme_font_size_override("font_size", 24)
+	_apply_label_style(hint_label, "hint")
 	hint_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	hint_label.offset_top = -120
-	hint_label.offset_bottom = -48
+	hint_label.offset_top = -108
+	hint_label.offset_bottom = -44
 	hint_label.modulate.a = 0.0
 	ui_root.add_child(hint_label)
 
@@ -6241,14 +7573,10 @@ func _build_ui() -> void:
 	quick_hint_label.text = ""
 	quick_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	quick_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	quick_hint_label.add_theme_font_size_override("font_size", 17)
-	quick_hint_label.add_theme_color_override("font_color", Color(0.90, 0.88, 0.78, 0.88))
-	quick_hint_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.38))
-	quick_hint_label.add_theme_constant_override("shadow_offset_x", 1)
-	quick_hint_label.add_theme_constant_override("shadow_offset_y", 1)
+	_apply_label_style(quick_hint_label, "hud")
 	quick_hint_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	quick_hint_label.offset_top = 24
-	quick_hint_label.offset_bottom = 58
+	quick_hint_label.offset_top = 18
+	quick_hint_label.offset_bottom = 48
 	quick_hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	quick_hint_label.modulate.a = 0.0
 	quick_hint_label.visible = false
@@ -6259,16 +7587,12 @@ func _build_ui() -> void:
 	grey_countdown_label.text = "寻声 01:00"
 	grey_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	grey_countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	grey_countdown_label.add_theme_font_size_override("font_size", 17)
-	grey_countdown_label.add_theme_color_override("font_color", Color(0.92, 0.90, 0.78, 0.82))
-	grey_countdown_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.42))
-	grey_countdown_label.add_theme_constant_override("shadow_offset_x", 1)
-	grey_countdown_label.add_theme_constant_override("shadow_offset_y", 1)
+	_apply_label_style(grey_countdown_label, "hud_counter")
 	grey_countdown_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	grey_countdown_label.offset_left = 24
 	grey_countdown_label.offset_right = 210
-	grey_countdown_label.offset_top = 22
-	grey_countdown_label.offset_bottom = 52
+	grey_countdown_label.offset_top = 18
+	grey_countdown_label.offset_bottom = 46
 	grey_countdown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	grey_countdown_label.visible = false
 	ui_root.add_child(grey_countdown_label)
@@ -6278,16 +7602,12 @@ func _build_ui() -> void:
 	city_guidance_countdown_label.text = "寻声 01:30"
 	city_guidance_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	city_guidance_countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	city_guidance_countdown_label.add_theme_font_size_override("font_size", 17)
-	city_guidance_countdown_label.add_theme_color_override("font_color", Color(0.92, 0.88, 0.70, 0.84))
-	city_guidance_countdown_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.48))
-	city_guidance_countdown_label.add_theme_constant_override("shadow_offset_x", 1)
-	city_guidance_countdown_label.add_theme_constant_override("shadow_offset_y", 1)
+	_apply_label_style(city_guidance_countdown_label, "hud_counter")
 	city_guidance_countdown_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	city_guidance_countdown_label.offset_left = 24
 	city_guidance_countdown_label.offset_right = 240
-	city_guidance_countdown_label.offset_top = 22
-	city_guidance_countdown_label.offset_bottom = 52
+	city_guidance_countdown_label.offset_top = 18
+	city_guidance_countdown_label.offset_bottom = 46
 	city_guidance_countdown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	city_guidance_countdown_label.visible = false
 	ui_root.add_child(city_guidance_countdown_label)
@@ -6308,24 +7628,36 @@ func _build_ui() -> void:
 		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		grey_guidance_root.add_child(line)
 		grey_guidance_lines.append(line)
+	grey_guidance_arrow_label = Label.new()
+	grey_guidance_arrow_label.name = "GreyGuidanceDirectionLabel"
+	grey_guidance_arrow_label.text = "目标声音"
+	grey_guidance_arrow_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	grey_guidance_arrow_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	grey_guidance_arrow_label.size = Vector2(110, 24)
+	grey_guidance_arrow_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_apply_label_style(grey_guidance_arrow_label, "hud_counter")
+	grey_guidance_arrow_label.visible = false
+	grey_guidance_arrow_label.modulate.a = 0.0
+	grey_guidance_root.add_child(grey_guidance_arrow_label)
 
-	reading_panel = _center_panel("ReadingPanel")
-	reading_text = _label("", 28)
+	reading_panel = _center_panel("ReadingPanel", "reading")
+	reading_text = _label("", 21, "reading")
+	reading_text.custom_minimum_size = Vector2(620, 150)
 	reading_panel.add_child(reading_text)
-	reading_next_button = _button("继续", _advance_reading)
+	reading_next_button = _button("继续", _advance_reading, "text")
 	reading_panel.add_child(reading_next_button)
 	ui_root.add_child(reading_panel)
 
-	choice_panel = _center_panel("ChoicePanel")
-	choice_panel.add_child(_label("要把这座城留下吗？", 28))
-	choice_panel.add_child(_button("留：让它成为我的城市", _choose_stay))
-	choice_panel.add_child(_button("去：前往下一座看不见的城市", _choose_leave))
+	choice_panel = _center_panel("ChoicePanel", "compact")
+	choice_panel.add_child(_label("留在这里，还是离开？", 23, "panel_title"))
+	choice_panel.add_child(_button("留在这座城", _choose_stay, "choice"))
+	choice_panel.add_child(_button("回到主题选择", _choose_leave, "quiet"))
 	ui_root.add_child(choice_panel)
 
-	pause_menu = _center_panel("PauseMenu")
-	pause_menu.add_child(_label("暂停", 30))
-	pause_menu.add_child(_button("继续", _hide_pause_menu))
-	pause_menu.add_child(_button("返回主题选择", _return_to_theme_select))
+	pause_menu = _center_panel("PauseMenu", "compact")
+	pause_menu.add_child(_label("暂停", 24, "panel_title"))
+	pause_menu.add_child(_button("继续", _hide_pause_menu, "choice"))
+	pause_menu.add_child(_button("返回主题选择", _return_to_theme_select, "quiet"))
 	ui_root.add_child(pause_menu)
 
 	operation_hint_panel = PanelContainer.new()
@@ -6345,12 +7677,11 @@ func _build_ui() -> void:
 	hint_style.corner_radius_bottom_right = 6
 	operation_hint_panel.add_theme_stylebox_override("panel", hint_style)
 	operation_hint_label = Label.new()
-	operation_hint_label.text = "前进：W\n后退：S\n左移：A\n右移：D\n跳跃：Space\n轻微加速：Shift\n转动视角：按住鼠标左键拖动\n交互：E\n暂停：Esc\n帮助：H\n调试区域：F2"
+	operation_hint_label.text = "移动  W/A/S/D\n跳跃  Space\n轻跑  Shift\n视角  按住左键拖动\n交互  E\n暂停  Esc\n恢复提示  H\n调试区域  F2"
 	operation_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	operation_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	operation_hint_label.add_theme_font_size_override("font_size", 16)
-	operation_hint_label.add_theme_color_override("font_color", Color(0.88, 0.88, 0.82, 0.88))
-	operation_hint_label.set("theme_override_constants/line_spacing", 4)
+	_apply_label_style(operation_hint_label, "caption")
+	operation_hint_label.set("theme_override_constants/line_spacing", 3)
 	operation_hint_panel.add_child(operation_hint_label)
 	ui_root.add_child(operation_hint_panel)
 
@@ -6393,7 +7724,7 @@ func _on_bgm_volume_changed(value: float) -> void:
 	_refresh_bgm_volume()
 
 func _format_bgm_volume_percent() -> String:
-	return "音量：%d%%" % int(round(bgm_volume_scale * 100.0))
+	return "音量 %d%%" % int(round(bgm_volume_scale * 100.0))
 
 func _update_bgm_volume_label() -> void:
 	if bgm_volume_value_label != null:
@@ -6401,7 +7732,7 @@ func _update_bgm_volume_label() -> void:
 
 func _show_story_page() -> void:
 	story_text.text = "\n".join(STORY_PAGES[story_page])
-	story_next_button.text = "选择城市" if story_page == STORY_PAGES.size() - 1 else "继续"
+	story_next_button.text = "选择主题" if story_page == STORY_PAGES.size() - 1 else "继续"
 
 func _advance_story() -> void:
 	if story_page < STORY_PAGES.size() - 1:
@@ -6460,7 +7791,7 @@ func _on_hidden_theme_pressed() -> void:
 func _on_theme_pressed(theme_index: int) -> void:
 	if theme_index != THEME_MEMORY and not memory_completed:
 		_update_theme_unlocks()
-		_show_hint("先完成记忆之城，再选择其他城市。", 2.4)
+		_show_hint("先完成记忆之城，再解锁其他主题。", 2.4)
 		return
 	selected_theme_index = theme_index
 	phase = GamePhase.MECHANIC_PROMPT
@@ -6560,16 +7891,17 @@ func _begin_memory_level() -> void:
 	_reset_grey_sfx_timers()
 	_reset_grey_guidance()
 	_show_quick_start_hint()
+	_show_operation_hint()
 
 func _disabled_theme_pressed() -> void:
-	_show_hint("先完成记忆之城，再选择其他城市。", 2.4)
+	_show_hint("先完成记忆之城，再解锁其他主题。", 2.4)
 
 func _update_theme_unlocks() -> void:
 	if theme_select_status_label != null:
 		if memory_completed:
-			theme_select_status_label.text = "记忆已完成。当前 11 座主题城市均可选择。"
+			theme_select_status_label.text = "记忆之城已完成。11 座主题城市均可进入。"
 		else:
-			theme_select_status_label.text = "先完成“记忆”，再自由选择其他城市。"
+			theme_select_status_label.text = "先进入记忆之城；完成后开放其他主题。"
 	for i in range(theme_buttons.size()):
 		var button := theme_buttons[i]
 		var playable_after_memory := i == THEME_DESIRE or i == THEME_SIGNS or i == THEME_THIN or i == THEME_TRADE or i == THEME_EYES or i == THEME_NAMES_CITY or i == THEME_DEAD or i == THEME_SKY or i == THEME_CONTINUOUS or i == THEME_HIDDEN
@@ -6577,9 +7909,9 @@ func _update_theme_unlocks() -> void:
 		button.disabled = not unlocked
 		button.text = THEME_NAMES[i]
 		if playable_after_memory and not memory_completed:
-			button.text = "%s（完成记忆后解锁）" % THEME_NAMES[i]
+			button.text = "%s / 未解锁" % THEME_NAMES[i]
 		elif i != THEME_MEMORY and not playable_after_memory:
-			button.text = "%s（后续）" % THEME_NAMES[i]
+			button.text = "%s / 后续" % THEME_NAMES[i]
 			unlocked = false
 			button.disabled = true
 		button.modulate = Color(1.0, 1.0, 1.0, 1.0) if not button.disabled else Color(0.55, 0.55, 0.55, 0.75)
@@ -6645,7 +7977,7 @@ func _start_manifest_sequence() -> void:
 	_set_city_collision_enabled(false)
 	var tween := create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(environment, "fog_density", fog_end_value, manifestation_duration).from(fog_start_value).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(environment, "fog_density", _city_fog_end_density(selected_theme_index), manifestation_duration).from(fog_start_value).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(environment, "adjustment_saturation", 1.0, manifestation_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(environment, "adjustment_contrast", 1.0, manifestation_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(grey_particles, "amount", MIN_GPU_PARTICLE_AMOUNT, max(particle_fade_end - particle_fade_start, 0.1)).set_delay(particle_fade_start).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
@@ -6690,7 +8022,7 @@ func _start_manifest_sequence() -> void:
 	player.set_locked(false)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_play_city_bgm()
-	_show_hint("%s 已显现。\n通关玩法：%s" % [MEMORY_CITY_TITLES[selected_memory_city_index], _city_entry_objective_text()], 6.0)
+	_show_hint("%s 已显现。\n目标：%s" % [MEMORY_CITY_TITLES[selected_memory_city_index], _city_entry_objective_text()], 6.0)
 
 func _apply_manifest_camera_offset(offset_degrees: float) -> void:
 	var delta := offset_degrees - manifest_camera_applied_offset
@@ -6700,7 +8032,7 @@ func _apply_manifest_camera_offset(offset_degrees: float) -> void:
 func _on_reading_trigger_entered(body: Node3D) -> void:
 	if body == player and phase == GamePhase.CITY and selected_theme_index == THEME_MEMORY:
 		can_read_tower = true
-		_show_hint("按 E 阅读回声塔。", 2.5)
+		_show_hint("E 阅读回声塔", 2.2)
 
 func _on_reading_trigger_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_MEMORY:
@@ -6730,8 +8062,8 @@ func _is_player_near_reading_trigger() -> bool:
 	if selected_theme_index == THEME_HIDDEN:
 		return hidden_goal_trigger != null and _is_hidden_reveal_complete() and player.global_position.distance_to(hidden_goal_trigger.global_position) <= reading_interact_radius + 3.0
 	if reading_trigger == null:
-		return false
-	return player.global_position.distance_to(reading_trigger.global_position) <= reading_interact_radius
+		return player.global_position.distance_to(Vector3.ZERO) <= reading_interact_radius + 5.0
+	return player.global_position.distance_to(reading_trigger.global_position) <= reading_interact_radius or player.global_position.distance_to(Vector3.ZERO) <= reading_interact_radius + 5.0
 
 func _on_desire_relic_entered(body: Node3D, relic_index: int) -> void:
 	if body != player or phase != GamePhase.CITY or selected_theme_index != THEME_DESIRE:
@@ -6740,7 +8072,7 @@ func _on_desire_relic_entered(body: Node3D, relic_index: int) -> void:
 		return
 	desire_active_relic_index = relic_index
 	var data: Array = DESIRE_RELICS[relic_index]
-	_show_hint("按 E 拾取：%s" % String(data[1]), 2.0)
+	_show_hint("E 拾取 %s" % String(data[1]), 2.0)
 
 func _on_desire_relic_exited(body: Node3D, relic_index: int) -> void:
 	if body == player and desire_active_relic_index == relic_index:
@@ -6762,7 +8094,7 @@ func _collect_desire_relic(relic_index: int) -> void:
 		desire_relic_areas[relic_index].set_deferred("monitorable", false)
 	var count := desire_collected_relics.size()
 	if _is_desire_collection_complete():
-		_show_hint("%s\n欲望已经成形。前往月光迷宫最深处。" % String(data[2]), 4.5)
+		_show_hint("%s\n线索足够了。前往月光迷宫深处。" % String(data[2]), 4.2)
 	else:
 		_show_hint("%s\n已收集 %d / %d。" % [String(data[2]), count, _desire_required_relic_count()], 4.0)
 
@@ -6791,10 +8123,10 @@ func _on_desire_goal_entered(body: Node3D) -> void:
 		return
 	if _is_desire_collection_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读月光陷阱广场。", 2.5)
+		_show_hint("E 阅读月光陷阱广场", 2.2)
 	else:
 		var missing := _desire_required_relic_count() - desire_collected_relics.size()
-		_show_hint("这里还没有回应。还需收集 %d 件欲望物。" % missing, 3.0)
+		_show_hint("还缺 %d 件欲望物。" % missing, 2.8)
 
 func _on_desire_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_DESIRE:
@@ -6807,7 +8139,7 @@ func _on_sign_node_entered(body: Node3D, node_index: int) -> void:
 		return
 	sign_active_node_index = node_index
 	var data: Array = SIGN_FRACTURE_NODES[node_index]
-	_show_hint("按 E 读取符号断点：%s" % String(data[1]), 2.4)
+	_show_hint("E 读取 %s" % String(data[1]), 2.3)
 
 func _on_sign_node_exited(body: Node3D, node_index: int) -> void:
 	if body == player and sign_active_node_index == node_index:
@@ -6828,7 +8160,7 @@ func _activate_sign_fracture_node(node_index: int) -> void:
 	var data: Array = SIGN_FRACTURE_NODES[node_index]
 	var count := sign_completed_nodes.size()
 	if _is_sign_fracture_complete():
-		_show_hint("%s\n五处符号断点已沉默。前往中心无名广场。" % String(data[2]), 4.6)
+		_show_hint("%s\n符号断点已完成。前往中心无名广场。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已读取 %d / %d。" % [String(data[2]), count, SIGN_FRACTURE_NODES.size()], 4.0)
 
@@ -6853,10 +8185,10 @@ func _on_sign_goal_entered(body: Node3D) -> void:
 		return
 	if _is_sign_fracture_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读无名广场。", 2.5)
+		_show_hint("E 阅读无名广场", 2.2)
 	else:
 		var missing := SIGN_FRACTURE_NODES.size() - sign_completed_nodes.size()
-		_show_hint("无名广场仍被符号覆盖。还需读取 %d 处符号断点。" % missing, 3.2)
+		_show_hint("还需读取 %d 处符号断点。" % missing, 2.9)
 
 func _on_sign_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_SIGNS:
@@ -6869,7 +8201,7 @@ func _on_thin_node_entered(body: Node3D, node_index: int) -> void:
 		return
 	thin_active_node_index = node_index
 	var data: Array = THIN_ASCENT_NODES[node_index]
-	_show_hint("按 E 读取悬空节点：%s" % String(data[1]), 2.4)
+	_show_hint("E 读取 %s" % String(data[1]), 2.3)
 
 func _on_thin_node_exited(body: Node3D, node_index: int) -> void:
 	if body == player and thin_active_node_index == node_index:
@@ -6890,7 +8222,7 @@ func _activate_thin_ascent_node(node_index: int) -> void:
 	var data: Array = THIN_ASCENT_NODES[node_index]
 	var count := thin_completed_nodes.size()
 	if _is_thin_ascent_complete():
-		_show_hint("%s\n五个悬空节点已经绷紧。回到中心网心瞭望台。" % String(data[2]), 4.6)
+		_show_hint("%s\n悬空节点已完成。回到网心瞭望台。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已读取 %d / %d。" % [String(data[2]), count, THIN_ASCENT_NODES.size()], 4.0)
 
@@ -6915,10 +8247,10 @@ func _on_thin_goal_entered(body: Node3D) -> void:
 		return
 	if _is_thin_ascent_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读网心瞭望台。", 2.5)
+		_show_hint("E 阅读网心瞭望台", 2.2)
 	else:
 		var missing := THIN_ASCENT_NODES.size() - thin_completed_nodes.size()
-		_show_hint("网心还没有完全绷紧。还需读取 %d 个悬空节点。" % missing, 3.2)
+		_show_hint("还需读取 %d 个悬空节点。" % missing, 2.9)
 
 func _on_thin_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_THIN:
@@ -6931,7 +8263,7 @@ func _on_trade_node_entered(body: Node3D, node_index: int) -> void:
 		return
 	trade_active_node_index = node_index
 	var data: Array = TRADE_EXCHANGE_NODES[node_index]
-	_show_hint("按 E 完成交换：%s" % String(data[1]), 2.4)
+	_show_hint("E 完成交换 %s" % String(data[1]), 2.3)
 
 func _on_trade_node_exited(body: Node3D, node_index: int) -> void:
 	if body == player and trade_active_node_index == node_index:
@@ -6952,7 +8284,7 @@ func _activate_trade_exchange_node(node_index: int) -> void:
 	var data: Array = TRADE_EXCHANGE_NODES[node_index]
 	var count := trade_completed_nodes.size()
 	if _is_trade_exchange_complete():
-		_show_hint("%s\n五次交换已经写入账本。回到中心交易核。" % String(data[2]), 4.6)
+		_show_hint("%s\n交换节点已完成。回到中心交易核。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已完成交换 %d / %d。" % [String(data[2]), count, TRADE_EXCHANGE_NODES.size()], 4.0)
 
@@ -6977,10 +8309,10 @@ func _on_trade_goal_entered(body: Node3D) -> void:
 		return
 	if _is_trade_exchange_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读中心交易核。", 2.5)
+		_show_hint("E 阅读中心交易核", 2.2)
 	else:
 		var missing := TRADE_EXCHANGE_NODES.size() - trade_completed_nodes.size()
-		_show_hint("中心交易核还没有开账。还需完成 %d 次交换。" % missing, 3.2)
+		_show_hint("还需完成 %d 次交换。" % missing, 2.9)
 
 func _on_trade_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_TRADE:
@@ -6993,7 +8325,7 @@ func _on_eye_observation_entered(body: Node3D, node_index: int) -> void:
 		return
 	eye_active_observation_index = node_index
 	var data: Array = EYE_OBSERVATION_NODES[node_index]
-	_show_hint("按 E 校准视线：%s" % String(data[1]), 2.4)
+	_show_hint("E 校准 %s" % String(data[1]), 2.3)
 
 func _on_eye_observation_exited(body: Node3D, node_index: int) -> void:
 	if body == player and eye_active_observation_index == node_index:
@@ -7014,7 +8346,7 @@ func _activate_eye_observation_node(node_index: int) -> void:
 	var data: Array = EYE_OBSERVATION_NODES[node_index]
 	var count := eye_completed_observations.size()
 	if _is_eye_observation_complete():
-		_show_hint("%s\n五处观察点已经校准。回到中心观景核。" % String(data[2]), 4.6)
+		_show_hint("%s\n观察点已完成。回到中心观景核。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已校准 %d / %d。" % [String(data[2]), count, EYE_OBSERVATION_NODES.size()], 4.0)
 
@@ -7039,10 +8371,10 @@ func _on_eye_goal_entered(body: Node3D) -> void:
 		return
 	if _is_eye_observation_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读中心观景核。", 2.5)
+		_show_hint("E 阅读中心观景核", 2.2)
 	else:
 		var missing := EYE_OBSERVATION_NODES.size() - eye_completed_observations.size()
-		_show_hint("中心观景核还没有对焦。还需校准 %d 处观察点。" % missing, 3.2)
+		_show_hint("还需校准 %d 处观察点。" % missing, 2.9)
 
 func _on_eye_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_EYES:
@@ -7055,7 +8387,7 @@ func _on_name_seal_entered(body: Node3D, node_index: int) -> void:
 		return
 	name_active_seal_index = node_index
 	var data: Array = NAME_SEAL_NODES[node_index]
-	_show_hint("按 E 解名：%s" % String(data[1]), 2.4)
+	_show_hint("E 解名 %s" % String(data[1]), 2.3)
 
 func _on_name_seal_exited(body: Node3D, node_index: int) -> void:
 	if body == player and name_active_seal_index == node_index:
@@ -7076,7 +8408,7 @@ func _activate_name_seal_node(node_index: int) -> void:
 	var data: Array = NAME_SEAL_NODES[node_index]
 	var count := name_completed_seals.size()
 	if _is_name_seal_complete():
-		_show_hint("%s\n五处命名封印已经松动。回到消逝名字碑。" % String(data[2]), 4.6)
+		_show_hint("%s\n命名封印已完成。回到消逝名字碑。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已解名 %d / %d。" % [String(data[2]), count, NAME_SEAL_NODES.size()], 4.0)
 
@@ -7101,10 +8433,10 @@ func _on_name_goal_entered(body: Node3D) -> void:
 		return
 	if _is_name_seal_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读消逝名字碑。", 2.5)
+		_show_hint("E 阅读消逝名字碑", 2.2)
 	else:
 		var missing := NAME_SEAL_NODES.size() - name_completed_seals.size()
-		_show_hint("消逝名字碑还被传说覆盖。还需解开 %d 处命名封印。" % missing, 3.2)
+		_show_hint("还需解开 %d 处命名封印。" % missing, 2.9)
 
 func _on_name_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_NAMES_CITY:
@@ -7117,7 +8449,7 @@ func _on_dead_echo_entered(body: Node3D, node_index: int) -> void:
 		return
 	dead_active_echo_index = node_index
 	var data: Array = DEAD_ECHO_NODES[node_index]
-	_show_hint("按 E 安放回声：%s" % String(data[1]), 2.4)
+	_show_hint("E 安放 %s" % String(data[1]), 2.3)
 
 func _on_dead_echo_exited(body: Node3D, node_index: int) -> void:
 	if body == player and dead_active_echo_index == node_index:
@@ -7138,7 +8470,7 @@ func _activate_dead_echo_node(node_index: int) -> void:
 	var data: Array = DEAD_ECHO_NODES[node_index]
 	var count := dead_completed_echoes.size()
 	if _is_dead_echo_complete():
-		_show_hint("%s\n五处亡者回声已经归位。前往沙漏塔。" % String(data[2]), 4.6)
+		_show_hint("%s\n亡者回声已完成。前往沙漏塔。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已安放 %d / %d。" % [String(data[2]), count, DEAD_ECHO_NODES.size()], 4.0)
 
@@ -7163,10 +8495,10 @@ func _on_dead_goal_entered(body: Node3D) -> void:
 		return
 	if _is_dead_echo_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读沙漏塔。", 2.5)
+		_show_hint("E 阅读沙漏塔", 2.2)
 	else:
 		var missing := DEAD_ECHO_NODES.size() - dead_completed_echoes.size()
-		_show_hint("沙漏塔仍在等待。还需安放 %d 处亡者回声。" % missing, 3.2)
+		_show_hint("还需安放 %d 处亡者回声。" % missing, 2.9)
 
 func _on_dead_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_DEAD:
@@ -7179,7 +8511,7 @@ func _on_sky_anchor_entered(body: Node3D, node_index: int) -> void:
 		return
 	sky_active_anchor_index = node_index
 	var data: Array = SKY_ANCHOR_NODES[node_index]
-	_show_hint("按 E 校准天体锚点：%s" % String(data[1]), 2.4)
+	_show_hint("E 校准 %s" % String(data[1]), 2.3)
 
 func _on_sky_anchor_exited(body: Node3D, node_index: int) -> void:
 	if body == player and sky_active_anchor_index == node_index:
@@ -7200,7 +8532,7 @@ func _activate_sky_anchor_node(node_index: int) -> void:
 	var data: Array = SKY_ANCHOR_NODES[node_index]
 	var count := sky_completed_anchors.size()
 	if _is_sky_anchor_complete():
-		_show_hint("%s\n五处天体锚点已经校准。前往星空观测塔。" % String(data[2]), 4.6)
+		_show_hint("%s\n天体锚点已完成。前往星空观测塔。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已校准 %d / %d。" % [String(data[2]), count, SKY_ANCHOR_NODES.size()], 4.0)
 
@@ -7225,10 +8557,10 @@ func _on_sky_goal_entered(body: Node3D) -> void:
 		return
 	if _is_sky_anchor_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读星空观测塔。", 2.5)
+		_show_hint("E 阅读星空观测塔", 2.2)
 	else:
 		var missing := SKY_ANCHOR_NODES.size() - sky_completed_anchors.size()
-		_show_hint("星空观测塔还没有对齐。还需校准 %d 处天体锚点。" % missing, 3.2)
+		_show_hint("还需校准 %d 处天体锚点。" % missing, 2.9)
 
 func _on_sky_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_SKY:
@@ -7241,7 +8573,7 @@ func _on_continuous_node_entered(body: Node3D, node_index: int) -> void:
 		return
 	continuous_active_node_index = node_index
 	var data: Array = CONTINUOUS_SPRAWL_NODES[node_index]
-	_show_hint("按 E 记录连续节点：%s" % String(data[1]), 2.4)
+	_show_hint("E 记录 %s" % String(data[1]), 2.3)
 
 func _on_continuous_node_exited(body: Node3D, node_index: int) -> void:
 	if body == player and continuous_active_node_index == node_index:
@@ -7262,7 +8594,7 @@ func _activate_continuous_sprawl_node(node_index: int) -> void:
 	var data: Array = CONTINUOUS_SPRAWL_NODES[node_index]
 	var count := continuous_completed_nodes.size()
 	if _is_continuous_sprawl_complete():
-		_show_hint("%s\n五处连续压力已经被记录。回到中心无中心指示牌。" % String(data[2]), 4.6)
+		_show_hint("%s\n连续节点已完成。回到无中心指示牌。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已记录 %d / %d。" % [String(data[2]), count, CONTINUOUS_SPRAWL_NODES.size()], 4.0)
 
@@ -7287,10 +8619,10 @@ func _on_continuous_goal_entered(body: Node3D) -> void:
 		return
 	if _is_continuous_sprawl_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读无中心指示牌。", 2.5)
+		_show_hint("E 阅读无中心指示牌", 2.2)
 	else:
 		var missing := CONTINUOUS_SPRAWL_NODES.size() - continuous_completed_nodes.size()
-		_show_hint("无中心指示牌仍指向太多方向。还需记录 %d 处连续节点。" % missing, 3.2)
+		_show_hint("还需记录 %d 处连续节点。" % missing, 2.9)
 
 func _on_continuous_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_CONTINUOUS:
@@ -7303,7 +8635,7 @@ func _on_hidden_node_entered(body: Node3D, node_index: int) -> void:
 		return
 	hidden_active_node_index = node_index
 	var data: Array = HIDDEN_REVEAL_NODES[node_index]
-	_show_hint("按 E 发现隐蔽节点：%s" % String(data[1]), 2.4)
+	_show_hint("E 发现 %s" % String(data[1]), 2.3)
 
 func _on_hidden_node_exited(body: Node3D, node_index: int) -> void:
 	if body == player and hidden_active_node_index == node_index:
@@ -7324,7 +8656,7 @@ func _activate_hidden_reveal_node(node_index: int) -> void:
 	var data: Array = HIDDEN_REVEAL_NODES[node_index]
 	var count := hidden_completed_nodes.size()
 	if _is_hidden_reveal_complete():
-		_show_hint("%s\n五处隐蔽节点已经显形。回到中心隐蔽裂光。" % String(data[2]), 4.6)
+		_show_hint("%s\n隐蔽节点已完成。回到中心隐蔽裂光。" % String(data[2]), 4.3)
 	else:
 		_show_hint("%s\n已发现 %d / %d。" % [String(data[2]), count, HIDDEN_REVEAL_NODES.size()], 4.0)
 
@@ -7349,10 +8681,10 @@ func _on_hidden_goal_entered(body: Node3D) -> void:
 		return
 	if _is_hidden_reveal_complete():
 		can_read_tower = true
-		_show_hint("按 E 阅读隐蔽裂光。", 2.5)
+		_show_hint("E 阅读隐蔽裂光", 2.2)
 	else:
 		var missing := HIDDEN_REVEAL_NODES.size() - hidden_completed_nodes.size()
-		_show_hint("裂光仍被暗处遮住。还需发现 %d 处隐蔽节点。" % missing, 3.2)
+		_show_hint("还需发现 %d 处隐蔽节点。" % missing, 2.9)
 
 func _on_hidden_goal_exited(body: Node3D) -> void:
 	if body == player and selected_theme_index == THEME_HIDDEN:
@@ -7405,27 +8737,27 @@ func _choose_stay() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	can_read_tower = _is_player_near_reading_trigger()
 	if selected_theme_index == THEME_DESIRE:
-		_show_hint("你仍在欲望之城。回到月光陷阱广场可再次阅读。", 3.0)
+		_show_hint("已留在欲望之城。回到月光陷阱广场可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_SIGNS:
-		_show_hint("你仍在符号之城。回到无名广场可再次阅读。", 3.0)
+		_show_hint("已留在符号之城。回到无名广场可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_THIN:
-		_show_hint("你仍在轻盈之城。回到网心瞭望台可再次阅读。", 3.0)
+		_show_hint("已留在轻盈之城。回到网心瞭望台可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_TRADE:
-		_show_hint("你仍在贸易之城。回到中心交易核可再次阅读。", 3.0)
+		_show_hint("已留在贸易之城。回到中心交易核可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_EYES:
-		_show_hint("你仍在眼睛之城。回到中心观景核可再次阅读。", 3.0)
+		_show_hint("已留在眼睛之城。回到中心观景核可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_NAMES_CITY:
-		_show_hint("你仍在姓名之城。回到消逝名字碑可再次阅读。", 3.0)
+		_show_hint("已留在姓名之城。回到消逝名字碑可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_DEAD:
-		_show_hint("你仍在死者之城。回到沙漏塔可再次阅读。", 3.0)
+		_show_hint("已留在死者之城。回到沙漏塔可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_SKY:
-		_show_hint("你仍在天空之城。回到星空观测塔可再次阅读。", 3.0)
+		_show_hint("已留在天空之城。回到星空观测塔可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_CONTINUOUS:
-		_show_hint("你仍在连续之城。回到无中心指示牌可再次阅读。", 3.0)
+		_show_hint("已留在连续之城。回到无中心指示牌可再次阅读。", 3.0)
 	elif selected_theme_index == THEME_HIDDEN:
-		_show_hint("你仍在隐蔽之城。回到隐蔽裂光可再次阅读。", 3.0)
+		_show_hint("已留在隐蔽之城。回到隐蔽裂光可再次阅读。", 3.0)
 	else:
-		_show_hint("你仍在记忆之城。回到塔底可再次阅读。", 3.0)
+		_show_hint("已留在记忆之城。回到塔底可再次阅读。", 3.0)
 
 func _choose_leave() -> void:
 	_enter_theme_select()
@@ -7519,6 +8851,8 @@ func _update_memory_audio() -> void:
 	memory_lowpass.cutoff_hz = lerp(160.0, 12500.0, seek_strength)
 	if theme_sfx_player != null:
 		theme_sfx_player.position = theme_pos
+		theme_sfx_player.max_distance = theme_sfx_hearing_distance
+		theme_sfx_player.unit_size = 96.0
 		theme_sfx_player.volume_db = lerp(theme_sfx_volume_far_db, theme_sfx_volume_near_db, seek_strength)
 		theme_sfx_player.pitch_scale = lerp(0.76, 1.08, seek_strength)
 
@@ -7572,7 +8906,8 @@ func _play_zone_sfx(zone_index: int, closeness := -1.0) -> void:
 	var sfx_index := rng.randi_range(0, maxi(1, generated_zone_sfx_variant_count) - 1)
 	var player_node := zone_audio_players[zone_index]
 	player_node.stream = _audio_stream_or_generator([])
-	player_node.volume_db = zone_sfx_volume_db + _zone_sfx_volume_offset(zone_index) + lerpf(-5.5, 6.5, closeness)
+	var non_selected_duck := non_selected_zone_sfx_duck_db if zone_index != selected_theme_index else 0.0
+	player_node.volume_db = zone_sfx_volume_db + _zone_sfx_volume_offset(zone_index) + lerpf(-7.5, 4.0, closeness) - non_selected_duck
 	player_node.pitch_scale = _zone_sfx_pitch(zone_index, sfx_index, closeness)
 	_set_generated_frequency(player_node, _generated_theme_sfx_frequency(zone_index, sfx_index))
 	_set_generated_sfx_profile(player_node, zone_index, sfx_index, "zone")
@@ -7596,7 +8931,7 @@ func _selected_theme_audio_closeness(distance := -1.0) -> float:
 func _seek_audio_strength(closeness: float) -> float:
 	var c := clampf(closeness, 0.0, 1.0)
 	var smooth := c * c * (3.0 - 2.0 * c)
-	return clampf(pow(smooth, 1.18), 0.0, 1.0)
+	return clampf(pow(smooth, 0.58), 0.0, 1.0)
 
 func _zone_audio_closeness(zone_index: int, pos: Vector3) -> float:
 	if zone_index < 0 or zone_index >= ZONE_POSITIONS.size():
@@ -7628,6 +8963,8 @@ func _generated_theme_sfx_frequency(theme_index: int, sfx_index: int) -> float:
 	return 170.0 + float(theme_index) * 31.0 + float(sfx_index) * 43.0
 
 func _generated_theme_sfx_duration(theme_index: int, sfx_index: int, role: String) -> float:
+	if theme_index == -2:
+		return 0.12
 	if role == "seek":
 		return theme_sfx_generated_duration + float(sfx_index % 2) * 0.24
 	match theme_index:
@@ -7686,10 +9023,7 @@ func _sfx_stream_duration(stream: AudioStream, fallback_duration: float) -> floa
 func _show_seek_sfx_text(theme_index: int, sfx_index: int) -> void:
 	var near_theme_text := _is_near_selected_theme_text_zone()
 	if quick_start_hint_locked:
-		if not _seek_sfx_texts_for_theme(theme_index).is_empty() or near_theme_text:
-			_hide_quick_start_hint()
-		else:
-			return
+		return
 	if near_theme_text:
 		_show_theme_sfx_text(theme_index, sfx_index)
 	else:
@@ -7831,7 +9165,7 @@ func _effective_bgm_volume(base_db: float) -> float:
 func _current_bgm_base_volume() -> float:
 	var active_phase := previous_phase if phase == GamePhase.PAUSED else phase
 	if active_phase in [GamePhase.GREY_VOID, GamePhase.MANIFESTING]:
-		return grey_bgm_volume_db
+		return -80.0
 	if active_phase in [GamePhase.CITY, GamePhase.READING, GamePhase.CHOICE]:
 		return city_bgm_volume_db
 	return intro_bgm_volume_db
@@ -7859,15 +9193,16 @@ func _play_intro_bgm(theme_index: int = THEME_MEMORY) -> void:
 func _blend_bgm_for_grey() -> void:
 	if global_music_player == null:
 		return
-	_ensure_bgm_stream_for_theme(selected_theme_index)
 	if global_music_tween != null:
 		global_music_tween.kill()
-	global_music_player.bus = "MemoryZone"
 	if not global_music_player.playing:
-		global_music_player.volume_db = _effective_bgm_volume(intro_bgm_volume_db)
-		global_music_player.play()
+		return
 	global_music_tween = create_tween()
 	global_music_tween.tween_property(global_music_player, "volume_db", _effective_bgm_volume(grey_bgm_volume_db), grey_bgm_fade_out_duration)
+	global_music_tween.tween_callback(func():
+		if phase in [GamePhase.GREY_VOID, GamePhase.MANIFESTING] and global_music_player != null:
+			global_music_player.stop()
+	)
 
 func _play_city_bgm() -> void:
 	if global_music_player == null:
@@ -7891,6 +9226,16 @@ func _reset_grey_sfx_timers() -> void:
 	zone_sfx_timers.clear()
 	for i in range(zone_audio_players.size()):
 		zone_sfx_timers.append(rng.randf_range(0.15, zone_sfx_max_interval))
+
+func _play_ui_click() -> void:
+	if ui_click_player == null:
+		return
+	ui_click_player.stop()
+	_set_generated_frequency(ui_click_player, 1180.0 + rng.randf_range(-60.0, 90.0))
+	_set_generated_sfx_profile(ui_click_player, -2, rng.randi_range(0, 2), "ui")
+	ui_click_player.volume_db = -15.0
+	ui_click_player.play()
+	_mark_generated_sfx_stop(ui_click_player, 0.12)
 
 func _stop_grey_sfx() -> void:
 	if theme_sfx_player != null:
@@ -7960,7 +9305,7 @@ func _update_city_guidance_countdown(target_delay: float) -> void:
 	var remaining := maxf(target_delay - city_guidance_timer, 0.0)
 	var seconds := int(ceil(remaining))
 	city_guidance_countdown_label.visible = true
-	city_guidance_countdown_label.text = "寻声 %02d:%02d" % [seconds / 60, seconds % 60]
+	city_guidance_countdown_label.text = "线索倒计时 %02d:%02d" % [seconds / 60, seconds % 60]
 	city_guidance_countdown_label.modulate.a = 0.84 if remaining > 0.0 else 0.50
 
 func _hide_city_guidance_countdown() -> void:
@@ -7971,69 +9316,69 @@ func _city_guidance_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
 			if _is_desire_collection_complete():
-				return "欲望物已经集齐。沿主街向北，进入月光白色迷宫，寻找白色陷阱广场。"
-			return "寻找彩色光柱包围的欲望物。靠近即可拾取；收集任意 %d 件后再去北侧月光迷宫。" % _desire_required_relic_count()
+				return "欲望物已足够。沿主街向北，去月光迷宫深处阅读。"
+			return "寻找彩色光柱里的欲望物。收集任意 %d 件后，前往北侧月光迷宫。" % _desire_required_relic_count()
 		THEME_SIGNS:
 			if _is_sign_fracture_complete():
-				return "五处符号断点已沉默。回到中心无名广场。"
-			return "寻找发光的符号断点。靠近后按 E 读取。"
+				return "符号断点已完成。回到中心无名广场。"
+			return "寻找发光的符号断点，靠近后按 E 读取。"
 		THEME_THIN:
 			if _is_thin_ascent_complete():
-				return "五个悬空节点已绷紧。回到中心网心瞭望台。"
-			return "寻找轻盈城中的悬空发光节点。靠近后按 E 读取。"
+				return "悬空节点已完成。回到网心瞭望台。"
+			return "寻找悬空发光节点，靠近后按 E 读取。"
 		THEME_TRADE:
 			if _is_trade_exchange_complete():
-				return "五次交换已经完成。回到中心交易核。"
-			return "寻找发光的交换节点。靠近后按 E 完成交换。"
+				return "交换节点已完成。回到中心交易核。"
+			return "寻找发光的交换节点，靠近后按 E 完成交换。"
 		THEME_EYES:
 			if _is_eye_observation_complete():
-				return "五处观察点已经校准。回到中心观景核。"
-			return "寻找冷白辉光的观察点。靠近后按 E 校准视线。"
+				return "观察点已完成。回到中心观景核。"
+			return "寻找冷白观察点，靠近后按 E 校准。"
 		THEME_NAMES_CITY:
 			if _is_name_seal_complete():
-				return "五处命名封印已经松动。回到中心消逝名字碑。"
-			return "寻找发光铭牌或石碑。靠近后按 E 解名。"
+				return "命名封印已完成。回到消逝名字碑。"
+			return "寻找发光铭牌或石碑，靠近后按 E 解名。"
 		THEME_DEAD:
 			if _is_dead_echo_complete():
-				return "五处亡者回声已经归位。前往北侧沙漏塔。"
-			return "寻找冷蓝烛火或骨白回声标记。靠近后按 E 安放。"
+				return "亡者回声已完成。前往北侧沙漏塔。"
+			return "寻找冷蓝烛火或骨白标记，靠近后按 E 安放。"
 		THEME_SKY:
 			if _is_sky_anchor_complete():
-				return "五处天体锚点已经校准。前往北侧星空观测塔。"
-			return "寻找蓝白星尘和天体锚点。靠近后按 E 校准。"
+				return "天体锚点已完成。前往北侧星空观测塔。"
+			return "寻找蓝白星尘和天体锚点，靠近后按 E 校准。"
 		THEME_CONTINUOUS:
 			if _is_continuous_sprawl_complete():
-				return "五处连续压力已经记录。回到中心无中心指示牌。"
-			return "寻找灰黄辉光的连续节点。靠近后按 E 记录扩张压力。"
+				return "连续节点已完成。回到无中心指示牌。"
+			return "寻找灰黄辉光的连续节点，靠近后按 E 记录。"
 		THEME_HIDDEN:
 			if _is_hidden_reveal_complete():
-				return "五处隐蔽节点已经显形。回到中心隐蔽裂光。"
-			return "寻找暗绿微光与裂缝。靠近后按 E 发现隐藏城市。"
+				return "隐蔽节点已完成。回到中心隐蔽裂光。"
+			return "寻找暗绿微光与裂缝，靠近后按 E 发现。"
 		_:
-			return "寻找城市最高处的回声塔。到塔底后按 E 阅读。"
+			return "寻找最高处的回声塔。到塔底后按 E 阅读。"
 
 func _city_entry_objective_text() -> String:
 	match selected_theme_index:
 		THEME_DESIRE:
-			return "寻找任意 %d 件彩色光柱包围的欲望物，然后去北侧月光迷宫最深处阅读。" % _desire_required_relic_count()
+			return "收集任意 %d 件彩色光柱里的欲望物，再去北侧月光迷宫阅读。" % _desire_required_relic_count()
 		THEME_SIGNS:
-			return "读取 5 处发光符号断点，然后回到中心无名广场阅读。"
+			return "读取 5 处符号断点，再回到中心无名广场阅读。"
 		THEME_THIN:
-			return "读取 5 个悬空节点，然后回到网心瞭望台阅读。"
+			return "读取 5 个悬空节点，再回到网心瞭望台阅读。"
 		THEME_TRADE:
-			return "完成 5 次交换节点，然后回到中心交易核阅读。"
+			return "完成 5 次交换，再回到中心交易核阅读。"
 		THEME_EYES:
-			return "校准 5 处冷白观察点，然后回到中心观景核阅读。"
+			return "校准 5 处观察点，再回到中心观景核阅读。"
 		THEME_NAMES_CITY:
-			return "解开 5 处命名封印，然后回到消逝名字碑阅读。"
+			return "解开 5 处命名封印，再回到消逝名字碑阅读。"
 		THEME_DEAD:
-			return "安放 5 处亡者回声，然后前往北侧沙漏塔阅读。"
+			return "安放 5 处亡者回声，再前往北侧沙漏塔阅读。"
 		THEME_SKY:
-			return "校准 5 处天体锚点，然后前往北侧星空观测塔阅读。"
+			return "校准 5 处天体锚点，再前往北侧星空观测塔阅读。"
 		THEME_CONTINUOUS:
-			return "记录 5 处连续节点，然后回到中心无中心指示牌阅读。"
+			return "记录 5 处连续节点，再回到无中心指示牌阅读。"
 		THEME_HIDDEN:
-			return "发现 5 处隐蔽节点，然后回到中心隐蔽裂光阅读。"
+			return "发现 5 处隐蔽节点，再回到中心隐蔽裂光阅读。"
 		_:
 			return "寻找最高处的回声塔，到塔底后按 E 阅读。"
 
@@ -8283,7 +9628,7 @@ func _show_quick_start_hint() -> void:
 	if theme_sfx_text_tween != null:
 		theme_sfx_text_tween.kill()
 	quick_start_hint_locked = true
-	quick_hint_label.text = "寻声 | WASD 移动 | Space 跳跃 | Shift 轻跑 | 按住左键看向 | E 交互 | Esc 暂停"
+	quick_hint_label.text = "寻声 / WASD 移动 / Space 跳 / Shift 轻跑 / E 交互 / H 恢复提示"
 	quick_hint_label.visible = true
 	quick_hint_label.modulate.a = 0.0
 	var total: float = maxf(quick_start_hint_duration, 0.1)
@@ -8319,12 +9664,17 @@ func _reset_grey_guidance() -> void:
 	for line in grey_guidance_lines:
 		if line != null:
 			line.color.a = 0.0
+	if grey_guidance_arrow_label != null:
+		grey_guidance_arrow_label.visible = false
+		grey_guidance_arrow_label.modulate.a = 0.0
 
 func _hide_grey_guidance() -> void:
 	if grey_countdown_label != null:
 		grey_countdown_label.visible = false
 	if grey_guidance_root != null:
 		grey_guidance_root.visible = false
+	if grey_guidance_arrow_label != null:
+		grey_guidance_arrow_label.visible = false
 
 func _update_grey_guidance(delta: float) -> void:
 	grey_search_elapsed += delta
@@ -8332,7 +9682,7 @@ func _update_grey_guidance(delta: float) -> void:
 	if grey_countdown_label != null:
 		var seconds := int(ceil(remaining))
 		grey_countdown_label.visible = true
-		grey_countdown_label.text = "寻声 %02d:%02d" % [seconds / 60, seconds % 60]
+		grey_countdown_label.text = "寻声倒计时 %02d:%02d" % [seconds / 60, seconds % 60]
 		grey_countdown_label.modulate.a = 0.82 if remaining > 0.0 else 0.48
 	if grey_guidance_root == null:
 		return
@@ -8360,20 +9710,44 @@ func _update_grey_guidance(delta: float) -> void:
 	var center: Vector2 = viewport_size * 0.5
 	var drift: Vector2 = Vector2(-screen_dir.y, screen_dir.x)
 	var time: float = float(Time.get_ticks_msec()) / 1000.0
-	var base: Vector2 = center + screen_dir * minf(viewport_size.x, viewport_size.y) * 0.10
+	var arrow_angle := screen_dir.angle()
+	var arrow_length: float = minf(minf(viewport_size.x, viewport_size.y) * 0.22, 170.0)
+	var tail: Vector2 = center + screen_dir * minf(viewport_size.x, viewport_size.y) * 0.055
+	var tip: Vector2 = tail + screen_dir * arrow_length
+	var alpha_base: float = grey_guidance_line_alpha * fade
 	for i in range(grey_guidance_lines.size()):
 		var line := grey_guidance_lines[i]
 		if line == null:
 			continue
 		var index := float(i)
 		var pulse := 0.5 + 0.5 * sin(time * 2.1 + index * 0.76)
-		var offset := screen_dir * (index - float(grey_guidance_lines.size() - 1) * 0.5) * grey_guidance_line_spacing
-		var side := drift * sin(time * 0.9 + index * 1.3) * 10.0
-		line.position = base + offset + side
-		line.rotation = screen_dir.angle()
-		line.size = Vector2(38.0 + float(i % 4) * 9.0, 1.4 + float(i % 2) * 0.7)
+		if i == 0:
+			line.position = tail
+			line.rotation = arrow_angle
+			line.size = Vector2(arrow_length, 4.0)
+			line.color = Color(0.96, 0.86, 0.48, alpha_base)
+		elif i == 1:
+			line.position = tip
+			line.rotation = arrow_angle + PI - 0.68
+			line.size = Vector2(42.0, 4.0)
+			line.color = Color(1.0, 0.90, 0.52, alpha_base)
+		elif i == 2:
+			line.position = tip
+			line.rotation = arrow_angle + PI + 0.68
+			line.size = Vector2(42.0, 4.0)
+			line.color = Color(1.0, 0.90, 0.52, alpha_base)
+		else:
+			var trail_index := float(i - 2)
+			var side := drift * sin(time * 0.9 + index * 1.3) * 6.0
+			line.position = tail - screen_dir * trail_index * grey_guidance_line_spacing * 0.55 + side
+			line.rotation = arrow_angle
+			line.size = Vector2(28.0 + pulse * 18.0, 2.2)
+			line.color = Color(0.88, 0.84, 0.64, alpha_base * (0.62 - minf(trail_index * 0.07, 0.32)))
 		line.pivot_offset = Vector2(0.0, line.size.y * 0.5)
-		line.color = Color(0.88, 0.84, 0.64, grey_guidance_line_alpha * fade * (0.45 + pulse * 0.55))
+	if grey_guidance_arrow_label != null:
+		grey_guidance_arrow_label.visible = true
+		grey_guidance_arrow_label.modulate.a = minf(alpha_base + 0.10, 1.0)
+		grey_guidance_arrow_label.position = tip + Vector2(12.0, -12.0)
 
 func _toggle_grey_debug_visibility() -> void:
 	show_grey_zone_debug = not show_grey_zone_debug
@@ -8530,33 +9904,339 @@ func _add_box_collision(name: String, pos: Vector3, size: Vector3, yaw_degrees :
 	shape.shape = box
 	body.add_child(shape)
 
-func _button(text: String, callback: Callable) -> Button:
+func _thin_rule(name: String, color: Color, width: float) -> ColorRect:
+	var rule := ColorRect.new()
+	rule.name = name
+	rule.color = color
+	rule.custom_minimum_size = Vector2(width, 1.0)
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return rule
+
+func _button(text: String, callback: Callable, style: String = "default") -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(300, 44)
-	button.pressed.connect(callback)
+	button.custom_minimum_size = _button_minimum_size(style)
+	button.focus_mode = Control.FOCUS_NONE
+	_apply_button_style(button, style)
+	button.pressed.connect(_on_text_button_pressed.bind(callback))
 	return button
 
-func _label(text: String, size: int) -> Label:
+func _label(text: String, size: int, style: String = "default") -> Label:
 	var label := Label.new()
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", size)
+	_apply_label_style(label, style)
 	return label
 
-func _center_panel(name: String) -> VBoxContainer:
+func _center_panel(name: String, style: String = "default") -> VBoxContainer:
 	var panel := VBoxContainer.new()
 	panel.name = name
 	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.offset_left = -260
-	panel.offset_right = 260
-	panel.offset_top = -190
-	panel.offset_bottom = 190
+	var size := _panel_size_for_style(style)
+	panel.offset_left = -size.x * 0.5
+	panel.offset_right = size.x * 0.5
+	panel.offset_top = -size.y * 0.5
+	panel.offset_bottom = size.y * 0.5
 	panel.alignment = BoxContainer.ALIGNMENT_CENTER
-	panel.add_theme_constant_override("separation", 14)
+	panel.add_theme_constant_override("separation", _panel_separation_for_style(style))
 	return panel
+
+func _panel_size_for_style(style: String) -> Vector2:
+	match style:
+		"main":
+			return Vector2(430, 340)
+		"select":
+			return Vector2(660, 500)
+		"reading":
+			return Vector2(720, 350)
+		"text":
+			return Vector2(600, 330)
+		"compact":
+			return Vector2(430, 300)
+	return Vector2(520, 380)
+
+func _panel_separation_for_style(style: String) -> int:
+	match style:
+		"select":
+			return 10
+		"reading":
+			return 12
+		"compact":
+			return 10
+		"main":
+			return 11
+	return 12
+
+func _button_minimum_size(style: String) -> Vector2:
+	match style:
+		"theme":
+			return Vector2(292, 34)
+		"main":
+			return Vector2(250, 38)
+		"quiet":
+			return Vector2(230, 34)
+		"choice":
+			return Vector2(250, 36)
+		"text":
+			return Vector2(220, 34)
+	return Vector2(240, 36)
+
+func _on_text_button_pressed(callback: Callable) -> void:
+	_play_ui_click()
+	callback.call()
+
+func _apply_button_style(button: Button, style: String) -> void:
+	var normal_bg := Color(0.055, 0.058, 0.060, 0.58)
+	var hover_bg := Color(0.13, 0.14, 0.13, 0.74)
+	var pressed_bg := Color(0.20, 0.18, 0.13, 0.82)
+	var border := Color(0.74, 0.70, 0.58, 0.76)
+	var font := Color(0.90, 0.88, 0.78, 0.94)
+	var hover_font := Color(1.0, 0.94, 0.74, 1.0)
+	var outline := Color(0.02, 0.022, 0.025, 0.78)
+	match style:
+		"main":
+			normal_bg = Color(0.035, 0.040, 0.043, 0.54)
+			hover_bg = Color(0.11, 0.12, 0.115, 0.82)
+			pressed_bg = Color(0.18, 0.16, 0.11, 0.90)
+			border = Color(0.84, 0.80, 0.66, 0.78)
+			font = Color(0.94, 0.91, 0.78, 0.96)
+		"theme":
+			normal_bg = Color(0.025, 0.035, 0.040, 0.44)
+			hover_bg = Color(0.050, 0.105, 0.120, 0.72)
+			pressed_bg = Color(0.055, 0.175, 0.190, 0.84)
+			border = Color(0.48, 0.86, 0.88, 0.50)
+			font = Color(0.80, 0.93, 0.92, 0.94)
+			hover_font = Color(0.96, 1.0, 0.92, 1.0)
+			outline = Color(0.0, 0.035, 0.045, 0.82)
+		"text":
+			normal_bg = Color(0.12, 0.10, 0.075, 0.42)
+			hover_bg = Color(0.19, 0.16, 0.105, 0.70)
+			pressed_bg = Color(0.26, 0.20, 0.12, 0.82)
+			border = Color(0.90, 0.77, 0.48, 0.52)
+			font = Color(0.94, 0.88, 0.72, 0.95)
+		"choice":
+			normal_bg = Color(0.060, 0.095, 0.085, 0.56)
+			hover_bg = Color(0.080, 0.18, 0.14, 0.82)
+			pressed_bg = Color(0.10, 0.26, 0.19, 0.88)
+			border = Color(0.58, 0.92, 0.70, 0.58)
+			font = Color(0.86, 0.96, 0.84, 0.96)
+		"quiet":
+			normal_bg = Color(0.035, 0.038, 0.042, 0.42)
+			hover_bg = Color(0.095, 0.096, 0.092, 0.66)
+			pressed_bg = Color(0.14, 0.13, 0.11, 0.80)
+			border = Color(0.66, 0.66, 0.60, 0.42)
+			font = Color(0.78, 0.80, 0.76, 0.90)
+	button.add_theme_font_size_override("font_size", 15)
+	button.add_theme_color_override("font_color", font)
+	button.add_theme_color_override("font_hover_color", hover_font)
+	button.add_theme_color_override("font_pressed_color", hover_font)
+	button.add_theme_color_override("font_disabled_color", Color(0.54, 0.56, 0.54, 0.60))
+	button.add_theme_color_override("font_outline_color", outline)
+	button.add_theme_constant_override("outline_size", 1)
+	button.add_theme_stylebox_override("normal", _button_style_box(normal_bg, border, 1, 3))
+	button.add_theme_stylebox_override("hover", _button_style_box(hover_bg, border.lightened(0.12), 1, 3))
+	button.add_theme_stylebox_override("pressed", _button_style_box(pressed_bg, border.lightened(0.18), 1, 3))
+	button.add_theme_stylebox_override("disabled", _button_style_box(Color(0.025, 0.025, 0.025, 0.28), Color(0.42, 0.42, 0.38, 0.22), 1, 3))
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
+func _button_style_box(bg: Color, border: Color, border_width: int, radius: int) -> StyleBoxFlat:
+	var box := StyleBoxFlat.new()
+	box.bg_color = bg
+	box.border_color = border
+	box.border_width_left = border_width
+	box.border_width_right = border_width
+	box.border_width_top = border_width
+	box.border_width_bottom = border_width
+	box.corner_radius_top_left = radius
+	box.corner_radius_top_right = radius
+	box.corner_radius_bottom_left = radius
+	box.corner_radius_bottom_right = radius
+	box.content_margin_left = 12
+	box.content_margin_right = 12
+	box.content_margin_top = 5
+	box.content_margin_bottom = 5
+	return box
+
+func _apply_label_style(label: Label, style: String) -> void:
+	label.add_theme_color_override("font_color", Color(0.88, 0.87, 0.80, 0.94))
+	label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.44))
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
+	label.add_theme_constant_override("outline_size", 0)
+	match style:
+		"main_title":
+			label.add_theme_color_override("font_color", Color(0.95, 0.92, 0.80, 0.98))
+			label.add_theme_color_override("font_outline_color", Color(0.04, 0.045, 0.045, 0.92))
+			label.add_theme_constant_override("outline_size", 2)
+			label.add_theme_constant_override("shadow_offset_x", 2)
+			label.add_theme_constant_override("shadow_offset_y", 2)
+		"main_subtitle":
+			label.add_theme_color_override("font_color", Color(0.64, 0.84, 0.84, 0.76))
+			label.add_theme_color_override("font_outline_color", Color(0.02, 0.04, 0.045, 0.68))
+			label.add_theme_constant_override("outline_size", 1)
+		"panel_title":
+			label.add_theme_color_override("font_color", Color(0.92, 0.88, 0.72, 0.96))
+			label.add_theme_color_override("font_outline_color", Color(0.055, 0.050, 0.040, 0.84))
+			label.add_theme_constant_override("outline_size", 1)
+		"menu_note":
+			label.add_theme_color_override("font_color", Color(0.82, 0.83, 0.77, 0.82))
+			label.add_theme_font_size_override("font_size", 15)
+		"story":
+			label.add_theme_color_override("font_color", Color(0.90, 0.86, 0.74, 0.94))
+			label.add_theme_color_override("font_outline_color", Color(0.055, 0.047, 0.036, 0.62))
+			label.add_theme_constant_override("outline_size", 1)
+			label.set("theme_override_constants/line_spacing", 5)
+		"reading":
+			label.add_theme_color_override("font_color", Color(0.88, 0.86, 0.78, 0.94))
+			label.add_theme_color_override("font_outline_color", Color(0.035, 0.035, 0.032, 0.70))
+			label.add_theme_constant_override("outline_size", 1)
+			label.set("theme_override_constants/line_spacing", 6)
+		"caption":
+			label.add_theme_font_size_override("font_size", 13)
+			label.add_theme_color_override("font_color", Color(0.72, 0.74, 0.70, 0.80))
+			label.add_theme_constant_override("shadow_offset_x", 0)
+			label.add_theme_constant_override("shadow_offset_y", 1)
+		"hint":
+			label.add_theme_font_size_override("font_size", 18)
+			label.add_theme_color_override("font_color", Color(0.94, 0.90, 0.76, 0.94))
+			label.add_theme_color_override("font_outline_color", Color(0.025, 0.025, 0.022, 0.86))
+			label.add_theme_constant_override("outline_size", 2)
+			label.set("theme_override_constants/line_spacing", 4)
+		"hud":
+			label.add_theme_font_size_override("font_size", 14)
+			label.add_theme_color_override("font_color", Color(0.70, 0.96, 0.98, 0.86))
+			label.add_theme_color_override("font_outline_color", Color(0.0, 0.035, 0.045, 0.86))
+			label.add_theme_constant_override("outline_size", 1)
+			label.add_theme_constant_override("shadow_offset_x", 0)
+			label.add_theme_constant_override("shadow_offset_y", 1)
+		"hud_counter":
+			label.add_theme_font_size_override("font_size", 14)
+			label.add_theme_color_override("font_color", Color(0.76, 0.96, 0.92, 0.86))
+			label.add_theme_color_override("font_outline_color", Color(0.0, 0.035, 0.030, 0.88))
+			label.add_theme_constant_override("outline_size", 1)
+
+func _set_child_material(parent: Node, child_name: String, material: Material) -> void:
+	if parent == null or material == null:
+		return
+	var child := parent.get_node_or_null(child_name)
+	if child != null:
+		_set_if_property_exists(child, "material", material)
+
+func _memory_chalk_stone_material(color: Color) -> StandardMaterial3D:
+	var material := _mat(color, color.a)
+	material.roughness = 0.96
+	_set_if_property_exists(material, "metallic", 0.0)
+	_set_if_property_exists(material, "specular_mode", 0)
+	return material
+
+func _memory_silver_dome_material() -> StandardMaterial3D:
+	var material := _mat(Color(0.82, 0.84, 0.82, 1.0), 1.0)
+	material.metallic = 1.0
+	material.roughness = 0.16
+	material.emission_enabled = true
+	material.emission = Color(0.50, 0.58, 0.62)
+	material.emission_energy_multiplier = 0.10
+	return material
+
+func _memory_shell_rim_material(color: Color) -> StandardMaterial3D:
+	var material := _emissive_mat(color, color.a, 0.26)
+	material.roughness = 0.34
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_set_if_property_exists(material, "rim_enabled", true)
+	_set_if_property_exists(material, "rim", 0.74)
+	_set_if_property_exists(material, "rim_tint", 0.58)
+	return material
+
+func _memory_crystal_material(color: Color, glow: Color, alpha: float) -> StandardMaterial3D:
+	var material := _emissive_mat(Color(color.r, color.g, color.b, alpha), alpha, 0.36)
+	material.roughness = 0.08
+	material.metallic = 0.0
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.emission = glow
+	material.emission_energy_multiplier = 0.44
+	_set_if_property_exists(material, "refraction_enabled", true)
+	_set_if_property_exists(material, "refraction_scale", 0.035)
+	return material
+
+func _memory_wet_stone_material(color: Color) -> StandardMaterial3D:
+	var material := _mat(color, color.a)
+	material.roughness = 0.18
+	_set_if_property_exists(material, "metallic", 0.0)
+	_set_if_property_exists(material, "specular_mode", 1)
+	_set_if_property_exists(material, "normal_enabled", true)
+	_set_if_property_exists(material, "normal_scale", 0.12)
+	_set_if_property_exists(material, "normal_texture", _make_noise_texture(72, 72, 34.0, 7))
+	return material
+
+func _memory_blue_grid_material(color: Color) -> StandardMaterial3D:
+	var material := _emissive_mat(color, color.a, 0.34)
+	material.roughness = 0.52
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_set_if_property_exists(material, "uv1_triplanar", true)
+	_set_if_property_exists(material, "albedo_texture", _make_noise_texture(96, 96, 18.0, 19))
+	return material
+
+func _memory_postcard_material(color: Color) -> StandardMaterial3D:
+	var material := _emissive_mat(color, color.a, 0.16)
+	material.roughness = 0.88
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_set_if_property_exists(material, "albedo_texture", _make_noise_texture(128, 128, 22.0, 31))
+	return material
+
+func _memory_server_core_material() -> StandardMaterial3D:
+	var material := _emissive_mat(Color(0.50, 0.68, 0.78, 0.22), 0.22, 0.12)
+	material.roughness = 0.54
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	_set_if_property_exists(material, "rim_enabled", true)
+	_set_if_property_exists(material, "rim", 0.34)
+	_set_if_property_exists(material, "rim_tint", 0.38)
+	return material
+
+func _make_noise_texture(width: int, height: int, frequency: float, seed: int) -> NoiseTexture2D:
+	var noise := FastNoiseLite.new()
+	noise.seed = seed
+	noise.frequency = frequency
+	var texture := NoiseTexture2D.new()
+	texture.width = width
+	texture.height = height
+	texture.noise = noise
+	return texture
+
+func _add_memory_pulsing_light(parent: Node3D, name: String, pos: Vector3, color: Color, min_energy: float, max_energy: float, range: float, duration: float) -> OmniLight3D:
+	var light := OmniLight3D.new()
+	light.name = name
+	light.position = pos
+	light.light_color = color
+	light.light_energy = min_energy
+	light.omni_range = range
+	_set_if_property_exists(light, "light_volumetric_fog_energy", 0.72)
+	parent.add_child(light)
+	_add_looping_light_energy_animation(parent, light, min_energy, max_energy, duration)
+	return light
+
+func _add_looping_light_energy_animation(parent: Node3D, light: Light3D, min_energy: float, max_energy: float, duration: float) -> void:
+	if parent == null or light == null:
+		return
+	var player_node := AnimationPlayer.new()
+	player_node.name = "%sAnimationPlayer" % light.name
+	player_node.root_node = NodePath("..")
+	parent.add_child(player_node)
+	var animation := Animation.new()
+	animation.length = maxf(duration, 0.2)
+	animation.loop_mode = Animation.LOOP_LINEAR
+	var track := animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(track, NodePath("%s:light_energy" % light.name))
+	animation.track_insert_key(track, 0.0, min_energy)
+	animation.track_insert_key(track, animation.length * 0.5, max_energy)
+	animation.track_insert_key(track, animation.length, min_energy)
+	var library := AnimationLibrary.new()
+	library.add_animation("pulse", animation)
+	if player_node.has_method("add_animation_library"):
+		player_node.call("add_animation_library", "", library)
+		player_node.play("pulse")
 
 func _mat(color: Color, alpha: float) -> StandardMaterial3D:
 	var material := StandardMaterial3D.new()
@@ -8573,6 +10253,26 @@ func _emissive_mat(color: Color, alpha: float, energy: float) -> StandardMateria
 	material.emission = Color(color.r, color.g, color.b)
 	material.emission_energy_multiplier = energy
 	material.no_depth_test = alpha < 0.45
+	return material
+
+func _desire_polished_heat_material(color: Color, seed: float, glassy := false) -> StandardMaterial3D:
+	var alpha := clampf(color.a, 0.18, 1.0)
+	if glassy:
+		alpha = minf(alpha, 0.76)
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(color.r, color.g, color.b, alpha)
+	material.roughness = 0.18 if glassy else 0.38
+	material.metallic = 0.18 if glassy else 0.04
+	if alpha < 0.995:
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.emission_enabled = true
+	material.emission = Color(1.0, 0.42, 0.14)
+	material.emission_energy_multiplier = 0.12 if glassy else 0.06
+	_set_if_property_exists(material, "rim_enabled", true)
+	_set_if_property_exists(material, "rim", 0.42 if glassy else 0.24)
+	_set_if_property_exists(material, "rim_tint", 0.64)
+	_set_if_property_exists(material, "uv1_triplanar", true)
+	_set_if_property_exists(material, "albedo_texture", _make_noise_texture(96, 96, 18.0 + fmod(seed, 11.0), int(seed) + 19))
 	return material
 
 func _thin_net_material(color: Color, alpha: float, seed: float, sway := 0.035, edge_strength := 0.78) -> Material:
@@ -8990,6 +10690,13 @@ func _fill_generated_audio() -> void:
 			playback.push_frame(Vector2(sample, sample))
 
 func _generated_sfx_sample(theme_index: int, sfx_index: int, local_t: float, t: float, base_hz: float, duration: float) -> float:
+	if theme_index == -2:
+		var click_env := clampf(1.0 - local_t / maxf(duration, 0.01), 0.0, 1.0)
+		click_env = click_env * click_env * click_env
+		var click_noise := _hash_noise(t * 7600.0 + float(sfx_index) * 17.0)
+		var click_tone := sin(t * TAU * base_hz) * 0.070 + sin(t * TAU * (base_hz * 1.72)) * 0.036
+		var click_tick := _decay_pulse(local_t, 18.0, 0.030) * 0.060
+		return (click_tone + click_noise * 0.035 + click_tick) * click_env
 	if theme_index < 0:
 		return sin(t * TAU * base_hz) * 0.05 + sin(t * TAU * base_hz * 1.5) * 0.025
 	var env := _one_shot_envelope(local_t, duration)
