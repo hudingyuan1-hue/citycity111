@@ -13,7 +13,7 @@ Playback rule:
 
 - Plays on the main menu as the global pre-game background.
 - Switches to the selected theme background after choosing a theme, during the mechanic prompt before entering the grey domain.
-- Keeps playing in the grey domain at a lower level on the `MemoryZone` bus so environmental SFX remain clear.
+- Fades out and stops in the grey domain; the grey domain uses only the seeking SFX and zone ambience.
 - Fades back up as the selected theme city music when the city manifests.
 - Volume is controlled by the options menu BGM slider.
 

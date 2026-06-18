@@ -2,6 +2,9 @@
 .godot/
 .nomedia
 
+# Local source asset drop folder; Godot uses citycity/assets/ instead.
+/assets/
+
 # Godot-specific ignores
 .import/
 export.cfg
