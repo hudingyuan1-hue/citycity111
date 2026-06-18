@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://da2yoyi0r3cbk"
-path="res://.godot/imported/NewArchBridge_texture_pbr_20250901.png-a812732ef57033d623e260aee4d57735.ctex"
+path.s3tc="res://.godot/imported/NewArchBridge_texture_pbr_20250901.png-a812732ef57033d623e260aee4d57735.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "f3636c41677cccb223b6a79c7623a271"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/NewArchBridge_texture_pbr_20250901.png"
-dest_files=["res://.godot/imported/NewArchBridge_texture_pbr_20250901.png-a812732ef57033d623e260aee4d57735.ctex"]
+dest_files=["res://.godot/imported/NewArchBridge_texture_pbr_20250901.png-a812732ef57033d623e260aee4d57735.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

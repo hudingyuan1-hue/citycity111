@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dp3x2xpm3i7hb"
-path="res://.godot/imported/LeadPavedAvenue_texture_pbr_20250901.png-e2cd3e1a703caf4ae0b260e6f41d413b.ctex"
+path.s3tc="res://.godot/imported/LeadPavedAvenue_texture_pbr_20250901.png-e2cd3e1a703caf4ae0b260e6f41d413b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "0d39e18a3d0a2f56c5daa456652eb952"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/LeadPavedAvenue_texture_pbr_20250901.png"
-dest_files=["res://.godot/imported/LeadPavedAvenue_texture_pbr_20250901.png-e2cd3e1a703caf4ae0b260e6f41d413b.ctex"]
+dest_files=["res://.godot/imported/LeadPavedAvenue_texture_pbr_20250901.png-e2cd3e1a703caf4ae0b260e6f41d413b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

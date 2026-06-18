@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://broba67h3q0g5"
-path="res://.godot/imported/PowderFactory_texture_pbr_20250901.png-dcbc4b6b322545f9e1af8c42471f201c.ctex"
+path.s3tc="res://.godot/imported/PowderFactory_texture_pbr_20250901.png-dcbc4b6b322545f9e1af8c42471f201c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "f7c2c77e692e719eb61e3a841e6f173e"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/PowderFactory_texture_pbr_20250901.png"
-dest_files=["res://.godot/imported/PowderFactory_texture_pbr_20250901.png-dcbc4b6b322545f9e1af8c42471f201c.ctex"]
+dest_files=["res://.godot/imported/PowderFactory_texture_pbr_20250901.png-dcbc4b6b322545f9e1af8c42471f201c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

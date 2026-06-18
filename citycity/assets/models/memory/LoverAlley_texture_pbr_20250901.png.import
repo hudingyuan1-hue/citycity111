@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b47mu2n8ri2r4"
-path="res://.godot/imported/LoverAlley_texture_pbr_20250901.png-d394ca4055b4c03ecf2766b4907a654e.ctex"
+path.s3tc="res://.godot/imported/LoverAlley_texture_pbr_20250901.png-d394ca4055b4c03ecf2766b4907a654e.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "4e5baa818422abaf1a42f5bc2a519192"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/LoverAlley_texture_pbr_20250901.png"
-dest_files=["res://.godot/imported/LoverAlley_texture_pbr_20250901.png-d394ca4055b4c03ecf2766b4907a654e.ctex"]
+dest_files=["res://.godot/imported/LoverAlley_texture_pbr_20250901.png-d394ca4055b4c03ecf2766b4907a654e.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

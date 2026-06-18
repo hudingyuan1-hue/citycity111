@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dt6jdhwvv22v2"
-path="res://.godot/imported/TwilightFryShop_texture_pbr_20250901.png-93f6bab06823df8a6c9207657d8ff331.ctex"
+path.s3tc="res://.godot/imported/TwilightFryShop_texture_pbr_20250901.png-93f6bab06823df8a6c9207657d8ff331.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "446b7f5a2c4de7559e7519459f9ee910"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/TwilightFryShop_texture_pbr_20250901.png"
-dest_files=["res://.godot/imported/TwilightFryShop_texture_pbr_20250901.png-93f6bab06823df8a6c9207657d8ff331.ctex"]
+dest_files=["res://.godot/imported/TwilightFryShop_texture_pbr_20250901.png-93f6bab06823df8a6c9207657d8ff331.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

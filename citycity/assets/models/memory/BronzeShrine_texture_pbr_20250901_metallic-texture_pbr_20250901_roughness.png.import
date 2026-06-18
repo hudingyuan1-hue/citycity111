@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bp02d855ehrjb"
-path="res://.godot/imported/BronzeShrine_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-9bb0326ca6b8dc7766fba1cfa6d4a344.ctex"
+path.s3tc="res://.godot/imported/BronzeShrine_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-9bb0326ca6b8dc7766fba1cfa6d4a344.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "dac40dd6dda9d173b91f9b82a116874e"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/BronzeShrine_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png"
-dest_files=["res://.godot/imported/BronzeShrine_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-9bb0326ca6b8dc7766fba1cfa6d4a344.ctex"]
+dest_files=["res://.godot/imported/BronzeShrine_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-9bb0326ca6b8dc7766fba1cfa6d4a344.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

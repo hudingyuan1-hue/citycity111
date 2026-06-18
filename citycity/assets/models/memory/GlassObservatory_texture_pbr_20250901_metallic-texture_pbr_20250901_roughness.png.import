@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1ucs5rga2hai"
-path="res://.godot/imported/GlassObservatory_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-af0a6366d7293304af0ad04a65c0f936.ctex"
+path.s3tc="res://.godot/imported/GlassObservatory_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-af0a6366d7293304af0ad04a65c0f936.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "8a425d2acb7fc6c105f7f3dc391df68b"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/memory/GlassObservatory_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png"
-dest_files=["res://.godot/imported/GlassObservatory_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-af0a6366d7293304af0ad04a65c0f936.ctex"]
+dest_files=["res://.godot/imported/GlassObservatory_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png-af0a6366d7293304af0ad04a65c0f936.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
