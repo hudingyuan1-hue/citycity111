@@ -919,6 +919,7 @@ var zone_sfx_timers: Array[float] = []
 var theme_sfx_timer := 0.0
 var theme_sfx_active_duck_timer := 0.0
 var grey_debug_guidance_visible := false
+var city_debug_guidance_visible := false
 var hint_cache := ""
 var story_page := 0
 var pre_grey_page := 0
@@ -7913,7 +7914,7 @@ func _build_ui() -> void:
 	hint_style.corner_radius_bottom_right = 6
 	operation_hint_panel.add_theme_stylebox_override("panel", hint_style)
 	operation_hint_label = Label.new()
-	operation_hint_label.text = "移动  W/A/S/D\n跳跃  Space\n轻跑  Shift\n视角  按住左键拖动\n交互  E\n暂停  Esc\n恢复提示  H\n调试区域  F2\n灰域调试指引  F3"
+	operation_hint_label.text = "移动  W/A/S/D\n跳跃  Space\n轻跑  Shift\n视角  按住左键拖动\n交互  E\n暂停  Esc\n恢复提示  H\n调试区域  F2\n调试指引  F3"
 	operation_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	operation_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_apply_label_style(operation_hint_label, "caption")
@@ -8095,6 +8096,8 @@ func _advance_pre_grey_text() -> void:
 
 func _begin_memory_level() -> void:
 	phase = GamePhase.GREY_VOID
+	grey_debug_guidance_visible = false
+	city_debug_guidance_visible = false
 	_hide_all_ui()
 	_apply_grey_environment_style()
 	memory_center_trigger.position = _selected_theme_position()
@@ -8251,6 +8254,8 @@ func _start_manifest_sequence() -> void:
 	_set_extra_grey_environment_active(false)
 	_set_city_collision_enabled(true)
 	phase = GamePhase.CITY
+	grey_debug_guidance_visible = false
+	city_debug_guidance_visible = false
 	_reset_city_guidance_timer()
 	player.set_footstep_set("city")
 	player.set_look_locked(false)
@@ -8928,6 +8933,7 @@ func _on_hidden_goal_exited(body: Node3D) -> void:
 
 func _open_reading() -> void:
 	_reset_city_guidance_timer()
+	city_debug_guidance_visible = false
 	_hide_city_guidance_countdown()
 	phase = GamePhase.READING
 	player.set_locked(true)
@@ -9028,6 +9034,8 @@ func _hide_pause_menu() -> void:
 func _reset_level_state() -> void:
 	manifest_started = false
 	can_read_tower = false
+	grey_debug_guidance_visible = false
+	city_debug_guidance_visible = false
 	_apply_grey_environment_style()
 	_reset_city_guidance_timer()
 	_reset_desire_relics()
@@ -9877,7 +9885,7 @@ func _show_quick_start_hint() -> void:
 	if theme_sfx_text_tween != null:
 		theme_sfx_text_tween.kill()
 	quick_start_hint_locked = true
-	quick_hint_label.text = "寻声 / WASD 移动 / Space 跳 / Shift 轻跑 / E 交互 / H 恢复提示 / F3 灰域调试指引"
+	quick_hint_label.text = "寻声 / WASD 移动 / Space 跳 / Shift 轻跑 / E 交互 / H 恢复提示 / F3 调试指引"
 	quick_hint_label.visible = true
 	quick_hint_label.modulate.a = 0.0
 	var total: float = maxf(quick_start_hint_duration, 0.1)
@@ -9942,7 +9950,15 @@ func _trigger_debug_seek_guidance() -> void:
 			_hide_grey_guidance()
 			_show_hint("F3：灰域调试指引隐藏。", 1.8)
 	elif phase == GamePhase.CITY:
-		_show_hint("F3 调试指引仅用于灰域；城市线索会在倒计时结束后出现。", 2.4)
+		city_debug_guidance_visible = not city_debug_guidance_visible
+		if city_debug_guidance_visible:
+			_hide_city_guidance_countdown()
+			_update_city_route_guidance(0.0)
+			_show_hint("F3：城市指引显示。", 1.8)
+		else:
+			_hide_grey_guidance()
+			_hide_city_objective_beacon()
+			_show_hint("F3：城市指引隐藏。", 1.8)
 
 func _update_grey_guidance(delta: float) -> void:
 	grey_search_elapsed += delta
@@ -10017,7 +10033,7 @@ func _update_city_route_guidance(_delta: float) -> void:
 		_hide_grey_guidance()
 		_hide_city_objective_beacon()
 		return
-	if city_route_guidance_after_hint_only and not city_guidance_has_shown:
+	if city_route_guidance_after_hint_only and not city_guidance_has_shown and not city_debug_guidance_visible:
 		_hide_grey_guidance()
 		_hide_city_objective_beacon()
 		return
@@ -10038,7 +10054,8 @@ func _update_city_route_guidance(_delta: float) -> void:
 	else:
 		_hide_city_objective_beacon()
 	if city_route_guidance_enabled:
-		var alpha: float = city_route_guidance_line_alpha * clampf(lerp(1.0, 0.68, minf(distance / 150.0, 1.0)), 0.2, 1.0)
+		var route_alpha := maxf(city_route_guidance_line_alpha, 0.42) if city_debug_guidance_visible else city_route_guidance_line_alpha
+		var alpha: float = route_alpha * clampf(lerp(1.0, 0.68, minf(distance / 150.0, 1.0)), 0.2, 1.0)
 		_draw_screen_route_guidance(target_pos, Color(color.r, color.g, color.b, 0.72), alpha, _city_route_guidance_label(), 0.20, 150.0)
 	else:
 		_hide_grey_guidance()
